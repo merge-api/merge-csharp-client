@@ -1,0 +1,78 @@
+using System.Text.Json.Serialization;
+using StringEnum;
+using Merge.Client.Accounting;
+using OneOf;
+
+namespace Merge.Client.Accounting;
+
+public class ContactRequest
+{
+    /// <summary>
+    /// The contact's name.
+    /// </summary>
+    [JsonPropertyName("name")]
+    public string? Name { get; init; }
+
+    /// <summary>
+    /// Whether the contact is a supplier.
+    /// </summary>
+    [JsonPropertyName("is_supplier")]
+    public bool? IsSupplier { get; init; }
+
+    /// <summary>
+    /// Whether the contact is a customer.
+    /// </summary>
+    [JsonPropertyName("is_customer")]
+    public bool? IsCustomer { get; init; }
+
+    /// <summary>
+    /// The contact's email address.
+    /// </summary>
+    [JsonPropertyName("email_address")]
+    public string? EmailAddress { get; init; }
+
+    /// <summary>
+    /// The contact's tax number.
+    /// </summary>
+    [JsonPropertyName("tax_number")]
+    public string? TaxNumber { get; init; }
+
+    /// <summary>
+    /// The contact's status
+    /// 
+    /// - `ACTIVE` - ACTIVE
+    /// - `ARCHIVED` - ARCHIVED
+    /// </summary>
+    [JsonPropertyName("status")]
+    public StringEnum<Status7D1Enum>? Status { get; init; }
+
+    /// <summary>
+    /// The currency the contact's transactions are in.
+    /// </summary>
+    [JsonPropertyName("currency")]
+    public string? Currency { get; init; }
+
+    /// <summary>
+    /// The company the contact belongs to.
+    /// </summary>
+    [JsonPropertyName("company")]
+    public string? Company { get; init; }
+
+    /// <summary>
+    /// `Address` object IDs for the given `Contacts` object.
+    /// </summary>
+    [JsonPropertyName("addresses")]
+    public List<OneOf<string, Address>?>? Addresses { get; init; }
+
+    /// <summary>
+    /// `AccountingPhoneNumber` object for the given `Contacts` object.
+    /// </summary>
+    [JsonPropertyName("phone_numbers")]
+    public List<AccountingPhoneNumberRequest>? PhoneNumbers { get; init; }
+
+    [JsonPropertyName("integration_params")]
+    public Dictionary<string, object>? IntegrationParams { get; init; }
+
+    [JsonPropertyName("linked_account_params")]
+    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+}

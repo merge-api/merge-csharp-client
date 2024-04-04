@@ -1,0 +1,89 @@
+using System.Text.Json.Serialization;
+using OneOf;
+using Merge.Client.Ats;
+using StringEnum;
+
+namespace Merge.Client.Ats;
+
+public class Activity
+{
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
+    /// <summary>
+    /// The third-party API ID of the matching object.
+    /// </summary>
+    [JsonPropertyName("remote_id")]
+    public string? RemoteId { get; init; }
+
+    /// <summary>
+    /// The user that performed the action.
+    /// </summary>
+    [JsonPropertyName("user")]
+    public OneOf<string, RemoteUser>? User { get; init; }
+
+    /// <summary>
+    /// When the third party's activity was created.
+    /// </summary>
+    [JsonPropertyName("remote_created_at")]
+    public DateTime? RemoteCreatedAt { get; init; }
+
+    /// <summary>
+    /// The activity's type.
+    /// 
+    /// - `NOTE` - NOTE
+    /// - `EMAIL` - EMAIL
+    /// - `OTHER` - OTHER
+    /// </summary>
+    [JsonPropertyName("activity_type")]
+    public StringEnum<ActivityTypeEnum>? ActivityType { get; init; }
+
+    /// <summary>
+    /// The activity's subject.
+    /// </summary>
+    [JsonPropertyName("subject")]
+    public string? Subject { get; init; }
+
+    /// <summary>
+    /// The activity's body.
+    /// </summary>
+    [JsonPropertyName("body")]
+    public string? Body { get; init; }
+
+    /// <summary>
+    /// The activity's visibility.
+    /// 
+    /// - `ADMIN_ONLY` - ADMIN_ONLY
+    /// - `PUBLIC` - PUBLIC
+    /// - `PRIVATE` - PRIVATE
+    /// </summary>
+    [JsonPropertyName("visibility")]
+    public StringEnum<VisibilityEnum>? Visibility { get; init; }
+
+    /// <summary>
+    /// The activity’s candidate.
+    /// </summary>
+    [JsonPropertyName("candidate")]
+    public string? Candidate { get; init; }
+
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// </summary>
+    [JsonPropertyName("remote_was_deleted")]
+    public bool? RemoteWasDeleted { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
+    [JsonPropertyName("field_mappings")]
+    public Dictionary<string, object>? FieldMappings { get; init; }
+
+    [JsonPropertyName("remote_data")]
+    public List<RemoteData>? RemoteData { get; init; }
+}
