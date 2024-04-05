@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Filestorage;
 
 namespace Merge.Client.Filestorage;
@@ -48,7 +47,7 @@ public class ConditionSchema
     /// - `LIST_OF_STRINGS` - LIST_OF_STRINGS
     /// </summary>
     [JsonPropertyName("condition_type")]
-    public StringEnum<ConditionTypeEnum> ConditionType { get; init; }
+    public ConditionTypeEnum ConditionType { get; init; }
 
     /// <summary>
     /// The schemas for the operators that can be used on a condition.

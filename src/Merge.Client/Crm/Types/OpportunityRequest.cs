@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Crm;
-using StringEnum;
 
 namespace Merge.Client.Crm;
 
@@ -51,7 +50,7 @@ public class OpportunityRequest
     /// - `LOST` - LOST
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<OpportunityStatusEnum>? Status { get; init; }
+    public OpportunityStatusEnum? Status { get; init; }
 
     /// <summary>
     /// When the opportunity's last activity occurred.

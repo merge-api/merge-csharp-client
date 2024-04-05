@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Accounting;
 
 namespace Merge.Client.Accounting;
@@ -28,7 +27,7 @@ public class AccountRequest
     /// - `REVENUE` - REVENUE
     /// </summary>
     [JsonPropertyName("classification")]
-    public StringEnum<ClassificationEnum>? Classification { get; init; }
+    public ClassificationEnum? Classification { get; init; }
 
     /// <summary>
     /// The account's type is a narrower and more specific grouping within the account's classification.
@@ -44,7 +43,7 @@ public class AccountRequest
     /// - `INACTIVE` - INACTIVE
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<AccountStatusEnum>? Status { get; init; }
+    public AccountStatusEnum? Status { get; init; }
 
     /// <summary>
     /// The account's current balance.
@@ -363,7 +362,7 @@ public class AccountRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public StringEnum<CurrencyEnum>? Currency { get; init; }
+    public CurrencyEnum? Currency { get; init; }
 
     /// <summary>
     /// The account's number.

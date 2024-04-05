@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Hris;
 
 namespace Merge.Client.Hris;
@@ -25,7 +24,7 @@ public class EmployerBenefit
     /// - `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("benefit_plan_type")]
-    public StringEnum<BenefitPlanTypeEnum>? BenefitPlanType { get; init; }
+    public BenefitPlanTypeEnum? BenefitPlanType { get; init; }
 
     /// <summary>
     /// The employer benefit's name - typically the carrier or network name.

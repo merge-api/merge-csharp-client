@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Accounting;
 
 namespace Merge.Client.Accounting;
@@ -16,7 +15,7 @@ public class Issue
     /// - `RESOLVED` - RESOLVED
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<IssueStatusEnum>? Status { get; init; }
+    public IssueStatusEnum? Status { get; init; }
 
     [JsonPropertyName("error_description")]
     public string ErrorDescription { get; init; }

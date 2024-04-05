@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Hris;
 
 namespace Merge.Client.Hris;
@@ -33,7 +32,7 @@ public class Earning
     /// - `BONUS` - BONUS
     /// </summary>
     [JsonPropertyName("type")]
-    public StringEnum<EarningTypeEnum>? Type { get; init; }
+    public EarningTypeEnum? Type { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.

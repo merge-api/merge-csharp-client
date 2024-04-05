@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Hris;
 
 namespace Merge.Client.Hris;
@@ -41,7 +40,7 @@ public class Dependent
     /// - `DOMESTIC_PARTNER` - DOMESTIC_PARTNER
     /// </summary>
     [JsonPropertyName("relationship")]
-    public StringEnum<RelationshipEnum>? Relationship { get; init; }
+    public RelationshipEnum? Relationship { get; init; }
 
     /// <summary>
     /// The employee this person is a dependent of.
@@ -65,7 +64,7 @@ public class Dependent
     /// - `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
     /// </summary>
     [JsonPropertyName("gender")]
-    public StringEnum<GenderEnum>? Gender { get; init; }
+    public GenderEnum? Gender { get; init; }
 
     /// <summary>
     /// The dependent's phone number.

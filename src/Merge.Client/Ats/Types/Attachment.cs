@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ats;
 
 namespace Merge.Client.Ats;
@@ -42,7 +41,7 @@ public class Attachment
     /// - `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("attachment_type")]
-    public StringEnum<AttachmentTypeEnum>? AttachmentType { get; init; }
+    public AttachmentTypeEnum? AttachmentType { get; init; }
 
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Filestorage;
 
 namespace Merge.Client.Filestorage;
@@ -22,7 +21,7 @@ public class RemoteResponse
     public Dictionary<string, object>? ResponseHeaders { get; init; }
 
     [JsonPropertyName("response_type")]
-    public StringEnum<ResponseTypeEnum>? ResponseType { get; init; }
+    public ResponseTypeEnum? ResponseType { get; init; }
 
     [JsonPropertyName("headers")]
     public Dictionary<string, object>? Headers { get; init; }

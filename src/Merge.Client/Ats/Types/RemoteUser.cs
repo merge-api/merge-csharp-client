@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ats;
 
 namespace Merge.Client.Ats;
@@ -55,7 +54,7 @@ public class RemoteUser
     /// - `INTERVIEWER` - INTERVIEWER
     /// </summary>
     [JsonPropertyName("access_role")]
-    public StringEnum<AccessRoleEnum>? AccessRole { get; init; }
+    public AccessRoleEnum? AccessRole { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.

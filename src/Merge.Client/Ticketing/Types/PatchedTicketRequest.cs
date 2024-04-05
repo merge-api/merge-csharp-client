@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ticketing;
 
 namespace Merge.Client.Ticketing;
@@ -36,7 +35,7 @@ public class PatchedTicketRequest
     /// - `ON_HOLD` - ON_HOLD
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<TicketStatusEnum>? Status { get; init; }
+    public TicketStatusEnum? Status { get; init; }
 
     /// <summary>
     /// The ticket’s description. HTML version of description is mapped if supported by the third-party platform.
@@ -95,7 +94,7 @@ public class PatchedTicketRequest
     /// - `LOW` - LOW
     /// </summary>
     [JsonPropertyName("priority")]
-    public StringEnum<PriorityEnum>? Priority { get; init; }
+    public PriorityEnum? Priority { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }

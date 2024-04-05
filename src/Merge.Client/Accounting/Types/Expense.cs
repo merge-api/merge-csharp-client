@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Accounting;
-using StringEnum;
 
 namespace Merge.Client.Accounting;
 
@@ -360,7 +359,7 @@ public class Expense
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public StringEnum<CurrencyEnum>? Currency { get; init; }
+    public CurrencyEnum? Currency { get; init; }
 
     /// <summary>
     /// The expense's exchange rate.
