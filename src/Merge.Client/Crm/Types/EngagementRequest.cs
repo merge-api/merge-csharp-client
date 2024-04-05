@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Crm;
-using StringEnum;
 
 namespace Merge.Client.Crm;
 
@@ -32,7 +31,7 @@ public class EngagementRequest
     /// - `OUTBOUND` - OUTBOUND
     /// </summary>
     [JsonPropertyName("direction")]
-    public StringEnum<DirectionEnum>? Direction { get; init; }
+    public DirectionEnum? Direction { get; init; }
 
     /// <summary>
     /// The engagement type of the engagement.

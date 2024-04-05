@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Hris;
-using StringEnum;
 
 namespace Merge.Client.Hris;
 
@@ -48,7 +47,7 @@ public class Employment
     /// - `YEAR` - YEAR
     /// </summary>
     [JsonPropertyName("pay_period")]
-    public StringEnum<PayPeriodEnum>? PayPeriod { get; init; }
+    public PayPeriodEnum? PayPeriod { get; init; }
 
     /// <summary>
     /// The position's pay frequency.
@@ -64,7 +63,7 @@ public class Employment
     /// - `SEMIMONTHLY` - SEMIMONTHLY
     /// </summary>
     [JsonPropertyName("pay_frequency")]
-    public StringEnum<PayFrequencyEnum>? PayFrequency { get; init; }
+    public PayFrequencyEnum? PayFrequency { get; init; }
 
     /// <summary>
     /// The position's currency code.
@@ -377,7 +376,7 @@ public class Employment
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("pay_currency")]
-    public StringEnum<PayCurrencyEnum>? PayCurrency { get; init; }
+    public PayCurrencyEnum? PayCurrency { get; init; }
 
     /// <summary>
     /// The employment's pay group
@@ -394,7 +393,7 @@ public class Employment
     /// - `OWNER` - OWNER
     /// </summary>
     [JsonPropertyName("flsa_status")]
-    public StringEnum<FlsaStatusEnum>? FlsaStatus { get; init; }
+    public FlsaStatusEnum? FlsaStatus { get; init; }
 
     /// <summary>
     /// The position's effective date.
@@ -412,7 +411,7 @@ public class Employment
     /// - `FREELANCE` - FREELANCE
     /// </summary>
     [JsonPropertyName("employment_type")]
-    public StringEnum<EmploymentTypeEnum>? EmploymentType { get; init; }
+    public EmploymentTypeEnum? EmploymentType { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.

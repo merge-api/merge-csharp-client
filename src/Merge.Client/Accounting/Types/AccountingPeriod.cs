@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Accounting;
 
 namespace Merge.Client.Accounting;
@@ -19,7 +18,7 @@ public class AccountingPeriod
     public DateTime? EndDate { get; init; }
 
     [JsonPropertyName("status")]
-    public StringEnum<AccountingPeriodStatusEnum>? Status { get; init; }
+    public AccountingPeriodStatusEnum? Status { get; init; }
 
     /// <summary>
     /// Name of the accounting period.

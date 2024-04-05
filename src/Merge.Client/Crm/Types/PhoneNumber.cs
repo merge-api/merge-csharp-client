@@ -8,7 +8,7 @@ public class PhoneNumber
     /// The phone number.
     /// </summary>
     [JsonPropertyName("phone_number")]
-    public string? PhoneNumber { get; init; }
+    public string? PhoneNumber_ { get; init; }
 
     /// <summary>
     /// The phone number's type.

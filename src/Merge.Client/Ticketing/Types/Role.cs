@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ticketing;
 
 namespace Merge.Client.Ticketing;
@@ -25,7 +24,7 @@ public class Role
     /// The set of actions that a User with this Role can perform. Possible enum values include: `VIEW`, `CREATE`, `EDIT`, `DELETE`, `CLOSE`, and `ASSIGN`.
     /// </summary>
     [JsonPropertyName("ticket_actions")]
-    public List<StringEnum<TicketActionsEnum>>? TicketActions { get; init; }
+    public List<TicketActionsEnum>? TicketActions { get; init; }
 
     /// <summary>
     /// The level of Ticket access that a User with this Role can perform.
@@ -35,7 +34,7 @@ public class Role
     /// - `TEAM_ONLY` - TEAM_ONLY
     /// </summary>
     [JsonPropertyName("ticket_access")]
-    public StringEnum<TicketAccessEnum>? TicketAccess { get; init; }
+    public TicketAccessEnum? TicketAccess { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.

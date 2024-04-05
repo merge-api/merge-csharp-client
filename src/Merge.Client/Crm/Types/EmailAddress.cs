@@ -8,7 +8,7 @@ public class EmailAddress
     /// The email address.
     /// </summary>
     [JsonPropertyName("email_address")]
-    public string? EmailAddress { get; init; }
+    public string? EmailAddress_ { get; init; }
 
     /// <summary>
     /// The email address's type.

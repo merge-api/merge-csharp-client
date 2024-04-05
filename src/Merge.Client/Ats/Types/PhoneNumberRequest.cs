@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ats;
 
 namespace Merge.Client.Ats;
@@ -22,7 +21,7 @@ public class PhoneNumberRequest
     /// - `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("phone_number_type")]
-    public StringEnum<PhoneNumberTypeEnum>? PhoneNumberType { get; init; }
+    public PhoneNumberTypeEnum? PhoneNumberType { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }

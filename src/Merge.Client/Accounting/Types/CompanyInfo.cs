@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Accounting;
 
 namespace Merge.Client.Accounting;
@@ -356,7 +355,7 @@ public class CompanyInfo
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public StringEnum<CurrencyEnum>? Currency { get; init; }
+    public CurrencyEnum? Currency { get; init; }
 
     /// <summary>
     /// When the third party's company was created.

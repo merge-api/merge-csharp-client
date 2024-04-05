@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ticketing;
 
 namespace Merge.Client.Ticketing;
@@ -16,7 +15,7 @@ public class AccountIntegration
     /// Category or categories this integration belongs to. Multiple categories should be comma separated, i.e. [ats, hris].
     /// </summary>
     [JsonPropertyName("categories")]
-    public List<StringEnum<CategoriesEnum>>? Categories { get; init; }
+    public List<CategoriesEnum>? Categories { get; init; }
 
     /// <summary>
     /// Company logo in rectangular shape. <b>Upload an image with a clear background.</b>

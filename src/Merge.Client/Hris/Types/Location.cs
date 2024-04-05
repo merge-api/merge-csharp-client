@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Hris;
 
 namespace Merge.Client.Hris;
@@ -311,7 +310,7 @@ public class Location
     /// - `ZW` - Zimbabwe
     /// </summary>
     [JsonPropertyName("country")]
-    public StringEnum<CountryEnum>? Country { get; init; }
+    public CountryEnum? Country { get; init; }
 
     /// <summary>
     /// The location's type. Can be either WORK or HOME
@@ -320,7 +319,7 @@ public class Location
     /// - `WORK` - WORK
     /// </summary>
     [JsonPropertyName("location_type")]
-    public StringEnum<LocationTypeEnum>? LocationType { get; init; }
+    public LocationTypeEnum? LocationType { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.

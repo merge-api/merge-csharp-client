@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Crm;
 
 namespace Merge.Client.Crm;
@@ -31,7 +30,7 @@ public class PatchedEngagementRequest
     /// - `OUTBOUND` - OUTBOUND
     /// </summary>
     [JsonPropertyName("direction")]
-    public StringEnum<DirectionEnum>? Direction { get; init; }
+    public DirectionEnum? Direction { get; init; }
 
     /// <summary>
     /// The engagement type of the engagement.

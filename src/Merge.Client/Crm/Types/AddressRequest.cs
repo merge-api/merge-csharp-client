@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Crm;
 
 namespace Merge.Client.Crm;
@@ -290,7 +289,7 @@ public class AddressRequest
     /// - `ZW` - Zimbabwe
     /// </summary>
     [JsonPropertyName("country")]
-    public StringEnum<CountryEnum>? Country { get; init; }
+    public CountryEnum? Country { get; init; }
 
     /// <summary>
     /// The address type.
@@ -299,7 +298,7 @@ public class AddressRequest
     /// - `SHIPPING` - SHIPPING
     /// </summary>
     [JsonPropertyName("address_type")]
-    public StringEnum<AddressTypeEnum>? AddressType { get; init; }
+    public AddressTypeEnum? AddressType { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }

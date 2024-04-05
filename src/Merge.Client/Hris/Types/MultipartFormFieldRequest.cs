@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Hris;
 
 namespace Merge.Client.Hris;
@@ -26,7 +25,7 @@ public class MultipartFormFieldRequest
     /// - `GZIP_BASE64` - GZIP_BASE64
     /// </summary>
     [JsonPropertyName("encoding")]
-    public StringEnum<EncodingEnum>? Encoding { get; init; }
+    public EncodingEnum? Encoding { get; init; }
 
     /// <summary>
     /// The file name of the form field, if the field is for a file.

@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Ats;
-using StringEnum;
 
 namespace Merge.Client.Ats;
 
@@ -56,7 +55,7 @@ public class Scorecard
     /// - `NO_DECISION` - NO_DECISION
     /// </summary>
     [JsonPropertyName("overall_recommendation")]
-    public StringEnum<OverallRecommendationEnum>? OverallRecommendation { get; init; }
+    public OverallRecommendationEnum? OverallRecommendation { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.

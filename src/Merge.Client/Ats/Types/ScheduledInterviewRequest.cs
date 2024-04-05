@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Ats;
-using StringEnum;
 
 namespace Merge.Client.Ats;
 
@@ -57,7 +56,7 @@ public class ScheduledInterviewRequest
     /// - `COMPLETE` - COMPLETE
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<ScheduledInterviewStatusEnum>? Status { get; init; }
+    public ScheduledInterviewStatusEnum? Status { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }

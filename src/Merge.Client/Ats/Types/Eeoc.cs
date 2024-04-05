@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Ats;
-using StringEnum;
 
 namespace Merge.Client.Ats;
 
@@ -41,7 +40,7 @@ public class Eeoc
     /// - `DECLINE_TO_SELF_IDENTIFY` - DECLINE_TO_SELF_IDENTIFY
     /// </summary>
     [JsonPropertyName("race")]
-    public StringEnum<RaceEnum>? Race { get; init; }
+    public RaceEnum? Race { get; init; }
 
     /// <summary>
     /// The candidate's gender.
@@ -53,7 +52,7 @@ public class Eeoc
     /// - `DECLINE_TO_SELF_IDENTIFY` - DECLINE_TO_SELF_IDENTIFY
     /// </summary>
     [JsonPropertyName("gender")]
-    public StringEnum<GenderEnum>? Gender { get; init; }
+    public GenderEnum? Gender { get; init; }
 
     /// <summary>
     /// The candidate's veteran status.
@@ -63,7 +62,7 @@ public class Eeoc
     /// - `I_DONT_WISH_TO_ANSWER` - I_DONT_WISH_TO_ANSWER
     /// </summary>
     [JsonPropertyName("veteran_status")]
-    public StringEnum<VeteranStatusEnum>? VeteranStatus { get; init; }
+    public VeteranStatusEnum? VeteranStatus { get; init; }
 
     /// <summary>
     /// The candidate's disability status.
@@ -73,7 +72,7 @@ public class Eeoc
     /// - `I_DONT_WISH_TO_ANSWER` - I_DONT_WISH_TO_ANSWER
     /// </summary>
     [JsonPropertyName("disability_status")]
-    public StringEnum<DisabilityStatusEnum>? DisabilityStatus { get; init; }
+    public DisabilityStatusEnum? DisabilityStatus { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.

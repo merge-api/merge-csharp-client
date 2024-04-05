@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ticketing;
 
 namespace Merge.Client.Ticketing;
@@ -32,7 +31,7 @@ public class AuditLogEvent
     /// - `MERGE_TEAM` - MERGE_TEAM
     /// </summary>
     [JsonPropertyName("role")]
-    public StringEnum<RoleEnum> Role { get; init; }
+    public RoleEnum Role { get; init; }
 
     [JsonPropertyName("ip_address")]
     public string IpAddress { get; init; }
@@ -72,7 +71,7 @@ public class AuditLogEvent
     /// - `DELETED_LINKED_ACCOUNT_FIELD_MAPPING` - DELETED_LINKED_ACCOUNT_FIELD_MAPPING
     /// </summary>
     [JsonPropertyName("event_type")]
-    public StringEnum<EventTypeEnum> EventType { get; init; }
+    public EventTypeEnum EventType { get; init; }
 
     [JsonPropertyName("event_description")]
     public string EventDescription { get; init; }

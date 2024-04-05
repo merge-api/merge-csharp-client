@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Hris;
 
 namespace Merge.Client.Hris;
@@ -37,7 +36,7 @@ public class Group
     /// - `GROUP` - GROUP
     /// </summary>
     [JsonPropertyName("type")]
-    public StringEnum<GroupTypeEnum>? Type { get; init; }
+    public GroupTypeEnum? Type { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.

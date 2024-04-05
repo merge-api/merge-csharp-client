@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Crm;
 
 namespace Merge.Client.Crm;
@@ -10,10 +9,10 @@ public class AccountDetailsAndActions
     public string Id { get; init; }
 
     [JsonPropertyName("category")]
-    public StringEnum<CategoryEnum>? Category { get; init; }
+    public CategoryEnum? Category { get; init; }
 
     [JsonPropertyName("status")]
-    public StringEnum<AccountDetailsAndActionsStatusEnum> Status { get; init; }
+    public AccountDetailsAndActionsStatusEnum Status { get; init; }
 
     [JsonPropertyName("status_detail")]
     public string? StatusDetail { get; init; }

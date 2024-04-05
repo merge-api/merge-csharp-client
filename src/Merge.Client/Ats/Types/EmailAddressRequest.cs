@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ats;
 
 namespace Merge.Client.Ats;
@@ -20,7 +19,7 @@ public class EmailAddressRequest
     /// - `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("email_address_type")]
-    public StringEnum<EmailAddressTypeEnum>? EmailAddressType { get; init; }
+    public EmailAddressTypeEnum? EmailAddressType { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }
