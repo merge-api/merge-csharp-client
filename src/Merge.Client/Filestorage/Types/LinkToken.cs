@@ -5,7 +5,7 @@ namespace Merge.Client.Filestorage;
 public class LinkToken
 {
     [JsonPropertyName("link_token")]
-    public string LinkToken { get; init; }
+    public string LinkToken_ { get; init; }
 
     [JsonPropertyName("integration_name")]
     public string? IntegrationName { get; init; }

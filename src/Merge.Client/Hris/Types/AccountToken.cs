@@ -6,7 +6,7 @@ namespace Merge.Client.Hris;
 public class AccountToken
 {
     [JsonPropertyName("account_token")]
-    public string AccountToken { get; init; }
+    public string AccountToken_ { get; init; }
 
     [JsonPropertyName("integration")]
     public AccountIntegration Integration { get; init; }

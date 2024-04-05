@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merge.Client", "Merge.Client\Merge.Client.csproj", "{F92C3555-78DA-4071-9D68-A417A2EA2B66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merge.Client", "Merge.Client\Merge.Client.csproj", "{B9790C03-4560-43F9-B106-A3D83E06E07C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merge.Client.Test", "Merge.Client.Test\Merge.Client.Test.csproj", "{B25CBCAD-7EAB-42F2-B1C7-2E1E8AE150BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merge.Client.Test", "Merge.Client.Test\Merge.Client.Test.csproj", "{CD84FF5B-086D-4B6E-AB85-3056ED2E382E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F92C3555-78DA-4071-9D68-A417A2EA2B66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F92C3555-78DA-4071-9D68-A417A2EA2B66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F92C3555-78DA-4071-9D68-A417A2EA2B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F92C3555-78DA-4071-9D68-A417A2EA2B66}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B25CBCAD-7EAB-42F2-B1C7-2E1E8AE150BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B25CBCAD-7EAB-42F2-B1C7-2E1E8AE150BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B25CBCAD-7EAB-42F2-B1C7-2E1E8AE150BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B25CBCAD-7EAB-42F2-B1C7-2E1E8AE150BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9790C03-4560-43F9-B106-A3D83E06E07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9790C03-4560-43F9-B106-A3D83E06E07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9790C03-4560-43F9-B106-A3D83E06E07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9790C03-4560-43F9-B106-A3D83E06E07C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD84FF5B-086D-4B6E-AB85-3056ED2E382E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD84FF5B-086D-4B6E-AB85-3056ED2E382E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD84FF5B-086D-4B6E-AB85-3056ED2E382E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD84FF5B-086D-4B6E-AB85-3056ED2E382E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
