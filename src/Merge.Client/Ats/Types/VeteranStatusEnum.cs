@@ -1,10 +1,7 @@
-using System.Text.Json.Serialization;
-using System;
-using Merge.Client.Utilities;
+using System.Runtime.Serialization;
 
 namespace Merge.Client.Ats;
 
-[JsonConverter(typeof(TolerantEnumConverter))]
 public enum VeteranStatusEnum
 {
     [EnumMember(Value = "I_AM_NOT_A_PROTECTED_VETERAN")]

@@ -1,10 +1,7 @@
-using System.Text.Json.Serialization;
-using System;
-using Merge.Client.Utilities;
+using System.Runtime.Serialization;
 
 namespace Merge.Client.Crm;
 
-[JsonConverter(typeof(TolerantEnumConverter))]
 public enum ResponseTypeEnum
 {
     [EnumMember(Value = "JSON")]
