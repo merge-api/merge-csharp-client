@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Accounting;
 using OneOf;
 
@@ -17,7 +16,7 @@ public class PurchaseOrder
     /// - `DELETED` - DELETED
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<PurchaseOrderStatusEnum>? Status { get; init; }
+    public PurchaseOrderStatusEnum? Status { get; init; }
 
     /// <summary>
     /// The purchase order's issue date.
@@ -384,7 +383,7 @@ public class PurchaseOrder
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public StringEnum<CurrencyEnum>? Currency { get; init; }
+    public CurrencyEnum? Currency { get; init; }
 
     /// <summary>
     /// The purchase order's exchange rate.

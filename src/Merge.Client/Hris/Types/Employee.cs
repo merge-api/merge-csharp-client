@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Hris;
-using StringEnum;
 
 namespace Merge.Client.Hris;
 
@@ -131,7 +130,7 @@ public class Employee
     /// - `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
     /// </summary>
     [JsonPropertyName("gender")]
-    public StringEnum<GenderEnum>? Gender { get; init; }
+    public GenderEnum? Gender { get; init; }
 
     /// <summary>
     /// The employee's ethnicity.
@@ -146,7 +145,7 @@ public class Employee
     /// - `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
     /// </summary>
     [JsonPropertyName("ethnicity")]
-    public StringEnum<EthnicityEnum>? Ethnicity { get; init; }
+    public EthnicityEnum? Ethnicity { get; init; }
 
     /// <summary>
     /// The employee's filing status as related to marital status.
@@ -158,7 +157,7 @@ public class Employee
     /// - `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD
     /// </summary>
     [JsonPropertyName("marital_status")]
-    public StringEnum<MaritalStatusEnum>? MaritalStatus { get; init; }
+    public MaritalStatusEnum? MaritalStatus { get; init; }
 
     /// <summary>
     /// The employee's date of birth.
@@ -192,7 +191,7 @@ public class Employee
     /// - `INACTIVE` - INACTIVE
     /// </summary>
     [JsonPropertyName("employment_status")]
-    public StringEnum<EmploymentStatusEnum>? EmploymentStatus { get; init; }
+    public EmploymentStatusEnum? EmploymentStatus { get; init; }
 
     /// <summary>
     /// The employee's termination date.

@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Hris;
-using StringEnum;
 
 namespace Merge.Client.Hris;
 
@@ -47,7 +46,7 @@ public class BankInfo
     /// - `CHECKING` - CHECKING
     /// </summary>
     [JsonPropertyName("account_type")]
-    public StringEnum<AccountTypeEnum>? AccountType { get; init; }
+    public AccountTypeEnum? AccountType { get; init; }
 
     /// <summary>
     /// When the matching bank object was created in the third party system.

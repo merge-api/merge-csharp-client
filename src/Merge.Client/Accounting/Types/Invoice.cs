@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Accounting;
 using OneOf;
 
@@ -17,7 +16,7 @@ public class Invoice
     /// - `ACCOUNTS_PAYABLE` - ACCOUNTS_PAYABLE
     /// </summary>
     [JsonPropertyName("type")]
-    public StringEnum<InvoiceTypeEnum>? Type { get; init; }
+    public InvoiceTypeEnum? Type { get; init; }
 
     /// <summary>
     /// The invoice's contact.
@@ -372,7 +371,7 @@ public class Invoice
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public StringEnum<CurrencyEnum>? Currency { get; init; }
+    public CurrencyEnum? Currency { get; init; }
 
     /// <summary>
     /// The invoice's exchange rate.
@@ -403,7 +402,7 @@ public class Invoice
     /// - `VOID` - VOID
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<InvoiceStatusEnum>? Status { get; init; }
+    public InvoiceStatusEnum? Status { get; init; }
 
     /// <summary>
     /// The total amount being paid in taxes.

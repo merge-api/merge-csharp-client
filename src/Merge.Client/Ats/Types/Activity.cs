@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Ats;
-using StringEnum;
 
 namespace Merge.Client.Ats;
 
@@ -36,7 +35,7 @@ public class Activity
     /// - `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("activity_type")]
-    public StringEnum<ActivityTypeEnum>? ActivityType { get; init; }
+    public ActivityTypeEnum? ActivityType { get; init; }
 
     /// <summary>
     /// The activity's subject.
@@ -58,7 +57,7 @@ public class Activity
     /// - `PRIVATE` - PRIVATE
     /// </summary>
     [JsonPropertyName("visibility")]
-    public StringEnum<VisibilityEnum>? Visibility { get; init; }
+    public VisibilityEnum? Visibility { get; init; }
 
     /// <summary>
     /// The activity’s candidate.

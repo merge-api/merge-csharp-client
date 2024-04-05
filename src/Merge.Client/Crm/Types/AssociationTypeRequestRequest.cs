@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Crm;
-using StringEnum;
 
 namespace Merge.Client.Crm;
 
@@ -19,7 +18,7 @@ public class AssociationTypeRequestRequest
     public string? DisplayName { get; init; }
 
     [JsonPropertyName("cardinality")]
-    public StringEnum<CardinalityEnum>? Cardinality { get; init; }
+    public CardinalityEnum? Cardinality { get; init; }
 
     [JsonPropertyName("is_required")]
     public bool? IsRequired { get; init; }

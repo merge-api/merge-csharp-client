@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Ats;
-using StringEnum;
 
 namespace Merge.Client.Ats;
 
@@ -66,7 +65,7 @@ public class Offer
     /// - `DEPRECATED` - DEPRECATED
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<OfferStatusEnum>? Status { get; init; }
+    public OfferStatusEnum? Status { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.

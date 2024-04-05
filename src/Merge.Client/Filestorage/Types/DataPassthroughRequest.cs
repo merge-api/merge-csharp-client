@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Filestorage;
 
 namespace Merge.Client.Filestorage;
@@ -7,7 +6,7 @@ namespace Merge.Client.Filestorage;
 public class DataPassthroughRequest
 {
     [JsonPropertyName("method")]
-    public StringEnum<MethodEnum> Method { get; init; }
+    public MethodEnum Method { get; init; }
 
     [JsonPropertyName("path")]
     public string Path { get; init; }
@@ -31,7 +30,7 @@ public class DataPassthroughRequest
     public Dictionary<string, object>? Headers { get; init; }
 
     [JsonPropertyName("request_format")]
-    public StringEnum<RequestFormatEnum>? RequestFormat { get; init; }
+    public RequestFormatEnum? RequestFormat { get; init; }
 
     /// <summary>
     /// Optional. If true, the response will always be an object of the form `{"type": T, "value": ...}` where `T` will be one of `string, boolean, number, null, array, object`.

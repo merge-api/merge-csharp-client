@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ats;
 
 namespace Merge.Client.Ats;
@@ -24,7 +23,7 @@ public class UrlRequest
     /// - `JOB_POSTING` - JOB_POSTING
     /// </summary>
     [JsonPropertyName("url_type")]
-    public StringEnum<UrlTypeEnum>? UrlType { get; init; }
+    public UrlTypeEnum? UrlType { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }

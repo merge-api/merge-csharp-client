@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ticketing;
 
 namespace Merge.Client.Ticketing;
@@ -19,11 +18,11 @@ public class SyncStatus
     public DateTime? NextSyncStart { get; init; }
 
     [JsonPropertyName("status")]
-    public StringEnum<SyncStatusStatusEnum> Status { get; init; }
+    public SyncStatusStatusEnum Status { get; init; }
 
     [JsonPropertyName("is_initial_sync")]
     public bool IsInitialSync { get; init; }
 
     [JsonPropertyName("selective_sync_configurations_usage")]
-    public StringEnum<SelectiveSyncConfigurationsUsageEnum>? SelectiveSyncConfigurationsUsage { get; init; }
+    public SelectiveSyncConfigurationsUsageEnum? SelectiveSyncConfigurationsUsage { get; init; }
 }

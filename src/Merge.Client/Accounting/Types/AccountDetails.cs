@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Accounting;
 
 namespace Merge.Client.Accounting;
@@ -16,7 +15,7 @@ public class AccountDetails
     public string? IntegrationSlug { get; init; }
 
     [JsonPropertyName("category")]
-    public StringEnum<CategoryEnum>? Category { get; init; }
+    public CategoryEnum? Category { get; init; }
 
     [JsonPropertyName("end_user_origin_id")]
     public string? EndUserOriginId { get; init; }

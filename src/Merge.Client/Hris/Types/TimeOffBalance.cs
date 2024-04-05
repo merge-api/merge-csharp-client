@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Hris;
-using StringEnum;
 
 namespace Merge.Client.Hris;
 
@@ -45,7 +44,7 @@ public class TimeOffBalance
     /// - `BEREAVEMENT` - BEREAVEMENT
     /// </summary>
     [JsonPropertyName("policy_type")]
-    public StringEnum<PolicyTypeEnum>? PolicyType { get; init; }
+    public PolicyTypeEnum? PolicyType { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.

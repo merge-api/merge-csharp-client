@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Hris;
-using StringEnum;
 
 namespace Merge.Client.Hris;
 
@@ -38,7 +37,7 @@ public class TimeOff
     /// - `DELETED` - DELETED
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<TimeOffStatusEnum>? Status { get; init; }
+    public TimeOffStatusEnum? Status { get; init; }
 
     /// <summary>
     /// The employee note for this time off request.
@@ -53,7 +52,7 @@ public class TimeOff
     /// - `DAYS` - DAYS
     /// </summary>
     [JsonPropertyName("units")]
-    public StringEnum<UnitsEnum>? Units { get; init; }
+    public UnitsEnum? Units { get; init; }
 
     /// <summary>
     /// The time off quantity measured by the prescribed “units”.
@@ -72,7 +71,7 @@ public class TimeOff
     /// - `BEREAVEMENT` - BEREAVEMENT
     /// </summary>
     [JsonPropertyName("request_type")]
-    public StringEnum<RequestTypeEnum>? RequestType { get; init; }
+    public RequestTypeEnum? RequestType { get; init; }
 
     /// <summary>
     /// The day and time of the start of the time requested off.

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ats;
 using OneOf;
 
@@ -44,7 +43,7 @@ public class Job
     /// - `PENDING` - PENDING
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<JobStatusEnum>? Status { get; init; }
+    public JobStatusEnum? Status { get; init; }
 
     [JsonPropertyName("job_posting_urls")]
     public List<Url>? JobPostingUrls { get; init; }

@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Accounting;
-using StringEnum;
 
 namespace Merge.Client.Accounting;
 
@@ -336,7 +335,7 @@ public class JournalEntryRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public StringEnum<CurrencyEnum>? Currency { get; init; }
+    public CurrencyEnum? Currency { get; init; }
 
     /// <summary>
     /// The journal entry's exchange rate.
@@ -369,7 +368,7 @@ public class JournalEntryRequest
     /// - `POSTED` - POSTED
     /// </summary>
     [JsonPropertyName("posting_status")]
-    public StringEnum<PostingStatusEnum>? PostingStatus { get; init; }
+    public PostingStatusEnum? PostingStatus { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Hris;
 
 namespace Merge.Client.Hris;
@@ -25,7 +24,7 @@ public class PayrollRun
     /// - `CLOSED` - CLOSED
     /// </summary>
     [JsonPropertyName("run_state")]
-    public StringEnum<RunStateEnum>? RunState { get; init; }
+    public RunStateEnum? RunState { get; init; }
 
     /// <summary>
     /// The type of the payroll run
@@ -37,7 +36,7 @@ public class PayrollRun
     /// - `SIGN_ON_BONUS` - SIGN_ON_BONUS
     /// </summary>
     [JsonPropertyName("run_type")]
-    public StringEnum<RunTypeEnum>? RunType { get; init; }
+    public RunTypeEnum? RunType { get; init; }
 
     /// <summary>
     /// The day and time the payroll run started.

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Crm;
 
 namespace Merge.Client.Crm;
@@ -19,10 +18,10 @@ public class RemoteFieldClassForCustomObjectClass
     public bool? IsRequired { get; init; }
 
     [JsonPropertyName("field_type")]
-    public StringEnum<FieldTypeEnum>? FieldType { get; init; }
+    public FieldTypeEnum? FieldType { get; init; }
 
     [JsonPropertyName("field_format")]
-    public StringEnum<FieldFormatEnum>? FieldFormat { get; init; }
+    public FieldFormatEnum? FieldFormat { get; init; }
 
     [JsonPropertyName("field_choices")]
     public List<RemoteFieldClassForCustomObjectClassFieldChoicesItem>? FieldChoices { get; init; }

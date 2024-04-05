@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Crm;
-using StringEnum;
 
 namespace Merge.Client.Crm;
 
@@ -56,7 +55,7 @@ public class Task
     /// - `CLOSED` - CLOSED
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<TaskStatusEnum>? Status { get; init; }
+    public TaskStatusEnum? Status { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.

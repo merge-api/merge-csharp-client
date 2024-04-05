@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Crm;
 
 namespace Merge.Client.Crm;
@@ -55,7 +54,7 @@ public class PatchedTaskRequest
     /// - `CLOSED` - CLOSED
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<TaskStatusEnum>? Status { get; init; }
+    public TaskStatusEnum? Status { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }

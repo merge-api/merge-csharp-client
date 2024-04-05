@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Accounting;
 using OneOf;
 
@@ -20,7 +19,7 @@ public class TrackingCategory
     /// - `ARCHIVED` - ARCHIVED
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<Status7D1Enum>? Status { get; init; }
+    public Status7D1Enum? Status { get; init; }
 
     /// <summary>
     /// The tracking category’s type.
@@ -29,7 +28,7 @@ public class TrackingCategory
     /// - `DEPARTMENT` - DEPARTMENT
     /// </summary>
     [JsonPropertyName("category_type")]
-    public StringEnum<CategoryTypeEnum>? CategoryType { get; init; }
+    public CategoryTypeEnum? CategoryType { get; init; }
 
     /// <summary>
     /// ID of the parent tracking category.

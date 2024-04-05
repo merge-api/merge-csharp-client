@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Ticketing;
 using OneOf;
 
@@ -35,7 +34,7 @@ public class Collection
     /// - `PROJECT` - PROJECT
     /// </summary>
     [JsonPropertyName("collection_type")]
-    public StringEnum<CollectionTypeEnum>? CollectionType { get; init; }
+    public CollectionTypeEnum? CollectionType { get; init; }
 
     /// <summary>
     /// The parent collection for this collection.
@@ -57,7 +56,7 @@ public class Collection
     /// - `PUBLIC` - PUBLIC
     /// </summary>
     [JsonPropertyName("access_level")]
-    public StringEnum<AccessLevelEnum>? AccessLevel { get; init; }
+    public AccessLevelEnum? AccessLevel { get; init; }
 
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; init; }

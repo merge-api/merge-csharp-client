@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using Merge.Client.Accounting;
 using OneOf;
 
@@ -29,7 +28,7 @@ public class Item
     /// - `ARCHIVED` - ARCHIVED
     /// </summary>
     [JsonPropertyName("status")]
-    public StringEnum<Status7D1Enum>? Status { get; init; }
+    public Status7D1Enum? Status { get; init; }
 
     /// <summary>
     /// The item's unit price.

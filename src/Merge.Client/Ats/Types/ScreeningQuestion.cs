@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using Merge.Client.Ats;
-using StringEnum;
 
 namespace Merge.Client.Ats;
 
@@ -47,7 +46,7 @@ public class ScreeningQuestion
     /// - `BOOLEAN` - BOOLEAN
     /// </summary>
     [JsonPropertyName("type")]
-    public StringEnum<TypeEnum>? Type { get; init; }
+    public TypeEnum? Type { get; init; }
 
     /// <summary>
     /// Whether or not the screening question is required.
