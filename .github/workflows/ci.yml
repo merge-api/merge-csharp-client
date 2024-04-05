@@ -40,6 +40,6 @@ jobs:
 
       - name: Publish
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          NUGET_API_KEY: ${{ secrets.MERGE_NUGET_TOKEN }}
         run: |
-          dotnet nuget push nuget/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source "nuget.org"
+          dotnet nuget push nuget/*.nupkg --api-key ${{ secrets.MERGE_NUGET_TOKEN }} --source "nuget.org"
