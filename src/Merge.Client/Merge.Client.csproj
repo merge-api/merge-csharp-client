@@ -3,6 +3,11 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
+        <NuGetAudit>false</NuGetAudit>
+        <Version>0.0.1</Version>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageProjectUrl>https://github.com/merge/merge-csharp-client</PackageProjectUrl>
     </PropertyGroup>
 
     <ItemGroup>
