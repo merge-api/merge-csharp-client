@@ -26,6 +26,12 @@ public class AccountDetailsAndActions
     [JsonPropertyName("end_user_email_address")]
     public string EndUserEmailAddress { get; init; }
 
+    /// <summary>
+    /// The tenant or domain the customer has provided access to.
+    /// </summary>
+    [JsonPropertyName("subdomain")]
+    public string? Subdomain { get; init; }
+
     [JsonPropertyName("webhook_listener_url")]
     public string WebhookListenerUrl { get; init; }
 

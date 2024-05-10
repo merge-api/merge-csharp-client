@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Ats;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -29,6 +29,9 @@ public class ApplicationRequest
     /// </summary>
     [JsonPropertyName("rejected_at")]
     public DateTime? RejectedAt { get; init; }
+
+    [JsonPropertyName("offers")]
+    public List<OneOf<string, Offer>?>? Offers { get; init; }
 
     /// <summary>
     /// The application's source.

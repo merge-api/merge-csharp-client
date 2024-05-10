@@ -5,18 +5,6 @@ namespace Merge.Client.Crm;
 
 public class Stage
 {
-    /// <summary>
-    /// The stage's name.
-    /// </summary>
-    [JsonPropertyName("name")]
-    public string? Name { get; init; }
-
-    /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
-    /// </summary>
-    [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
-
     [JsonPropertyName("id")]
     public string? Id { get; init; }
 
@@ -34,6 +22,18 @@ public class Stage
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
+
+    /// <summary>
+    /// The stage's name.
+    /// </summary>
+    [JsonPropertyName("name")]
+    public string? Name { get; init; }
+
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// </summary>
+    [JsonPropertyName("remote_was_deleted")]
+    public bool? RemoteWasDeleted { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

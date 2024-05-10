@@ -64,19 +64,25 @@ public enum CreditNotesRetrieveRequestExpand
     [EnumMember(Value = "applied_payments,line_items,tracking_categories,company")]
     AppliedPaymentsLineItemsTrackingCategoriesCompany,
 
-    [EnumMember(Value = "applied_payments,line_items,tracking_categories,company,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,line_items,tracking_categories,company,accounting_period"
+    )]
     AppliedPaymentsLineItemsTrackingCategoriesCompanyAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,line_items,tracking_categories,contact")]
     AppliedPaymentsLineItemsTrackingCategoriesContact,
 
-    [EnumMember(Value = "applied_payments,line_items,tracking_categories,contact,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,line_items,tracking_categories,contact,accounting_period"
+    )]
     AppliedPaymentsLineItemsTrackingCategoriesContactAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,line_items,tracking_categories,contact,company")]
     AppliedPaymentsLineItemsTrackingCategoriesContactCompany,
 
-    [EnumMember(Value = "applied_payments,line_items,tracking_categories,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,line_items,tracking_categories,contact,company,accounting_period"
+    )]
     AppliedPaymentsLineItemsTrackingCategoriesContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,tracking_categories")]
@@ -226,25 +232,33 @@ public enum CreditNotesRetrieveRequestExpand
     [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories")]
     PaymentsAppliedPaymentsLineItemsTrackingCategories,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,company")]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesCompany,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,contact")]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesContact,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,contact,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,contact,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesContactAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,contact,company")]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesContactCompany,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,contact,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,tracking_categories")]
@@ -268,7 +282,9 @@ public enum CreditNotesRetrieveRequestExpand
     [EnumMember(Value = "payments,applied_payments,tracking_categories,contact,company")]
     PaymentsAppliedPaymentsTrackingCategoriesContactCompany,
 
-    [EnumMember(Value = "payments,applied_payments,tracking_categories,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,tracking_categories,contact,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsTrackingCategoriesContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,company")]
@@ -334,7 +350,9 @@ public enum CreditNotesRetrieveRequestExpand
     [EnumMember(Value = "payments,line_items,tracking_categories,contact,company")]
     PaymentsLineItemsTrackingCategoriesContactCompany,
 
-    [EnumMember(Value = "payments,line_items,tracking_categories,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,line_items,tracking_categories,contact,company,accounting_period"
+    )]
     PaymentsLineItemsTrackingCategoriesContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,tracking_categories")]

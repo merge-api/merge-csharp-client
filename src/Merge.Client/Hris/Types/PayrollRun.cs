@@ -14,9 +14,18 @@ public class PayrollRun
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
 
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The state of the payroll run
-    /// 
+    ///
     /// - `PAID` - PAID
     /// - `DRAFT` - DRAFT
     /// - `APPROVED` - APPROVED
@@ -28,7 +37,7 @@ public class PayrollRun
 
     /// <summary>
     /// The type of the payroll run
-    /// 
+    ///
     /// - `REGULAR` - REGULAR
     /// - `OFF_CYCLE` - OFF_CYCLE
     /// - `CORRECTION` - CORRECTION
@@ -61,15 +70,6 @@ public class PayrollRun
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

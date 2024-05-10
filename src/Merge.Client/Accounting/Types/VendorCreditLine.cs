@@ -1,16 +1,28 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Accounting;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
 public class VendorCreditLine
 {
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
 
     /// <summary>
     /// The full value of the credit.
@@ -59,16 +71,4 @@ public class VendorCreditLine
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
-
-    [JsonPropertyName("id")]
-    public string? Id { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 }

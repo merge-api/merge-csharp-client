@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Ats;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -14,6 +14,15 @@ public class JobInterviewStage
     /// </summary>
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
 
     /// <summary>
     /// Standard stage names are offered by ATS systems but can be modified by users.
@@ -38,15 +47,6 @@ public class JobInterviewStage
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

@@ -94,7 +94,9 @@ public enum PurchaseOrdersListRequestExpand
     [EnumMember(Value = "line_items,tracking_categories,delivery_address,company")]
     LineItemsTrackingCategoriesDeliveryAddressCompany,
 
-    [EnumMember(Value = "line_items,tracking_categories,delivery_address,company,accounting_period")]
+    [EnumMember(
+        Value = "line_items,tracking_categories,delivery_address,company,accounting_period"
+    )]
     LineItemsTrackingCategoriesDeliveryAddressCompanyAccountingPeriod,
 
     [EnumMember(Value = "line_items,tracking_categories,delivery_address,vendor")]
@@ -106,7 +108,9 @@ public enum PurchaseOrdersListRequestExpand
     [EnumMember(Value = "line_items,tracking_categories,delivery_address,vendor,company")]
     LineItemsTrackingCategoriesDeliveryAddressVendorCompany,
 
-    [EnumMember(Value = "line_items,tracking_categories,delivery_address,vendor,company,accounting_period")]
+    [EnumMember(
+        Value = "line_items,tracking_categories,delivery_address,vendor,company,accounting_period"
+    )]
     LineItemsTrackingCategoriesDeliveryAddressVendorCompanyAccountingPeriod,
 
     [EnumMember(Value = "line_items,tracking_categories,vendor")]

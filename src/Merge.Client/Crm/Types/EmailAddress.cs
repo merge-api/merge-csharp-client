@@ -4,6 +4,15 @@ namespace Merge.Client.Crm;
 
 public class EmailAddress
 {
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The email address.
     /// </summary>
@@ -15,13 +24,4 @@ public class EmailAddress
     /// </summary>
     [JsonPropertyName("email_address_type")]
     public string? EmailAddressType { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 }

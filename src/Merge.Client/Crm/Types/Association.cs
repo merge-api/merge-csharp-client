@@ -1,20 +1,11 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Crm;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
 public class Association
 {
-    [JsonPropertyName("source_object")]
-    public Dictionary<string, object>? SourceObject { get; init; }
-
-    [JsonPropertyName("target_object")]
-    public Dictionary<string, object>? TargetObject { get; init; }
-
-    [JsonPropertyName("association_type")]
-    public OneOf<string, AssociationType>? AssociationType { get; init; }
-
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; init; }
 
@@ -23,4 +14,13 @@ public class Association
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
+
+    [JsonPropertyName("source_object")]
+    public Dictionary<string, object>? SourceObject { get; init; }
+
+    [JsonPropertyName("target_object")]
+    public Dictionary<string, object>? TargetObject { get; init; }
+
+    [JsonPropertyName("association_type")]
+    public OneOf<string, AssociationType>? AssociationType { get; init; }
 }

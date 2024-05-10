@@ -5,24 +5,6 @@ namespace Merge.Client.Crm;
 
 public class AssociationType
 {
-    [JsonPropertyName("source_object_class")]
-    public Dictionary<string, object>? SourceObjectClass { get; init; }
-
-    [JsonPropertyName("target_object_classes")]
-    public List<AssociationSubType>? TargetObjectClasses { get; init; }
-
-    [JsonPropertyName("remote_key_name")]
-    public string? RemoteKeyName { get; init; }
-
-    [JsonPropertyName("display_name")]
-    public string? DisplayName { get; init; }
-
-    [JsonPropertyName("cardinality")]
-    public CardinalityEnum? Cardinality { get; init; }
-
-    [JsonPropertyName("is_required")]
-    public bool? IsRequired { get; init; }
-
     [JsonPropertyName("id")]
     public string? Id { get; init; }
 
@@ -40,4 +22,22 @@ public class AssociationType
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
+
+    [JsonPropertyName("source_object_class")]
+    public Dictionary<string, object>? SourceObjectClass { get; init; }
+
+    [JsonPropertyName("target_object_classes")]
+    public List<AssociationSubType>? TargetObjectClasses { get; init; }
+
+    [JsonPropertyName("remote_key_name")]
+    public string? RemoteKeyName { get; init; }
+
+    [JsonPropertyName("display_name")]
+    public string? DisplayName { get; init; }
+
+    [JsonPropertyName("cardinality")]
+    public CardinalityEnum? Cardinality { get; init; }
+
+    [JsonPropertyName("is_required")]
+    public bool? IsRequired { get; init; }
 }

@@ -38,7 +38,7 @@ public class ContactRequest
 
     /// <summary>
     /// The contact's status
-    /// 
+    ///
     /// - `ACTIVE` - ACTIVE
     /// - `ARCHIVED` - ARCHIVED
     /// </summary>

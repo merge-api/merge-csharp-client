@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Ats;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -14,6 +14,15 @@ public class Activity
     /// </summary>
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
 
     /// <summary>
     /// The user that performed the action.
@@ -29,7 +38,7 @@ public class Activity
 
     /// <summary>
     /// The activity's type.
-    /// 
+    ///
     /// - `NOTE` - NOTE
     /// - `EMAIL` - EMAIL
     /// - `OTHER` - OTHER
@@ -51,7 +60,7 @@ public class Activity
 
     /// <summary>
     /// The activity's visibility.
-    /// 
+    ///
     /// - `ADMIN_ONLY` - ADMIN_ONLY
     /// - `PUBLIC` - PUBLIC
     /// - `PRIVATE` - PRIVATE
@@ -70,15 +79,6 @@ public class Activity
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

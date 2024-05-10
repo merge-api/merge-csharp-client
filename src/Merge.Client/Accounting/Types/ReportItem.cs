@@ -10,6 +10,15 @@ public class ReportItem
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
 
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The report item's name.
     /// </summary>
@@ -30,13 +39,4 @@ public class ReportItem
     /// </summary>
     [JsonPropertyName("company")]
     public string? Company { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 }

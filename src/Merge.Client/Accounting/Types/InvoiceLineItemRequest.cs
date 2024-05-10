@@ -38,7 +38,7 @@ public class InvoiceLineItemRequest
 
     /// <summary>
     /// The line item's currency.
-    /// 
+    ///
     /// - `XUA` - ADB Unit of Account
     /// - `AFN` - Afghan Afghani
     /// - `AFA` - Afghan Afghani (1927–2002)

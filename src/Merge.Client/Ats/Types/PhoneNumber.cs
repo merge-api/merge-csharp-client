@@ -5,24 +5,6 @@ namespace Merge.Client.Ats;
 
 public class PhoneNumber
 {
-    /// <summary>
-    /// The phone number.
-    /// </summary>
-    [JsonPropertyName("value")]
-    public string? Value { get; init; }
-
-    /// <summary>
-    /// The type of phone number.
-    /// 
-    /// - `HOME` - HOME
-    /// - `WORK` - WORK
-    /// - `MOBILE` - MOBILE
-    /// - `SKYPE` - SKYPE
-    /// - `OTHER` - OTHER
-    /// </summary>
-    [JsonPropertyName("phone_number_type")]
-    public PhoneNumberTypeEnum? PhoneNumberType { get; init; }
-
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; init; }
 
@@ -31,4 +13,22 @@ public class PhoneNumber
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
+
+    /// <summary>
+    /// The phone number.
+    /// </summary>
+    [JsonPropertyName("value")]
+    public string? Value { get; init; }
+
+    /// <summary>
+    /// The type of phone number.
+    ///
+    /// - `HOME` - HOME
+    /// - `WORK` - WORK
+    /// - `MOBILE` - MOBILE
+    /// - `SKYPE` - SKYPE
+    /// - `OTHER` - OTHER
+    /// </summary>
+    [JsonPropertyName("phone_number_type")]
+    public PhoneNumberTypeEnum? PhoneNumberType { get; init; }
 }

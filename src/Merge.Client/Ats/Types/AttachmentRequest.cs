@@ -18,14 +18,14 @@ public class AttachmentRequest
     public string? FileUrl { get; init; }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [JsonPropertyName("candidate")]
     public string? Candidate { get; init; }
 
     /// <summary>
     /// The attachment's type.
-    /// 
+    ///
     /// - `RESUME` - RESUME
     /// - `COVER_LETTER` - COVER_LETTER
     /// - `OFFER_LETTER` - OFFER_LETTER

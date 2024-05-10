@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Ticketing;
+using OneOf;
 
 namespace Merge.Client.Ticketing;
 
@@ -29,7 +29,7 @@ public class TicketRequest
 
     /// <summary>
     /// The current status of the ticket.
-    /// 
+    ///
     /// - `OPEN` - OPEN
     /// - `CLOSED` - CLOSED
     /// - `IN_PROGRESS` - IN_PROGRESS
@@ -48,7 +48,7 @@ public class TicketRequest
     public List<OneOf<string, Collection>?>? Collections { get; init; }
 
     /// <summary>
-    /// The ticket's type.
+    /// The sub category of the ticket within the 3rd party system. Examples include incident, task, subtask or to-do.
     /// </summary>
     [JsonPropertyName("ticket_type")]
     public string? TicketType { get; init; }
@@ -91,7 +91,7 @@ public class TicketRequest
 
     /// <summary>
     /// The priority or urgency of the Ticket.
-    /// 
+    ///
     /// - `URGENT` - URGENT
     /// - `HIGH` - HIGH
     /// - `NORMAL` - NORMAL

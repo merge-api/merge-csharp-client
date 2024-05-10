@@ -22,7 +22,7 @@ public class AuditLogEvent
 
     /// <summary>
     /// Designates the role of the user (or SYSTEM/API if action not taken by a user) at the time of this Event occurring.
-    /// 
+    ///
     /// - `ADMIN` - ADMIN
     /// - `DEVELOPER` - DEVELOPER
     /// - `MEMBER` - MEMBER
@@ -38,7 +38,7 @@ public class AuditLogEvent
 
     /// <summary>
     /// Designates the type of event that occurred.
-    /// 
+    ///
     /// - `CREATED_REMOTE_PRODUCTION_API_KEY` - CREATED_REMOTE_PRODUCTION_API_KEY
     /// - `DELETED_REMOTE_PRODUCTION_API_KEY` - DELETED_REMOTE_PRODUCTION_API_KEY
     /// - `CREATED_TEST_API_KEY` - CREATED_TEST_API_KEY
@@ -50,6 +50,7 @@ public class AuditLogEvent
     /// - `DELETED_LINKED_ACCOUNT` - DELETED_LINKED_ACCOUNT
     /// - `CREATED_DESTINATION` - CREATED_DESTINATION
     /// - `DELETED_DESTINATION` - DELETED_DESTINATION
+    /// - `CHANGED_DESTINATION` - CHANGED_DESTINATION
     /// - `CHANGED_SCOPES` - CHANGED_SCOPES
     /// - `CHANGED_PERSONAL_INFORMATION` - CHANGED_PERSONAL_INFORMATION
     /// - `CHANGED_ORGANIZATION_SETTINGS` - CHANGED_ORGANIZATION_SETTINGS
@@ -69,6 +70,9 @@ public class AuditLogEvent
     /// - `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING` - CHANGED_LINKED_ACCOUNT_FIELD_MAPPING
     /// - `DELETED_INTEGRATION_WIDE_FIELD_MAPPING` - DELETED_INTEGRATION_WIDE_FIELD_MAPPING
     /// - `DELETED_LINKED_ACCOUNT_FIELD_MAPPING` - DELETED_LINKED_ACCOUNT_FIELD_MAPPING
+    /// - `FORCED_LINKED_ACCOUNT_RESYNC` - FORCED_LINKED_ACCOUNT_RESYNC
+    /// - `MUTED_ISSUE` - MUTED_ISSUE
+    /// - `GENERATED_MAGIC_LINK` - GENERATED_MAGIC_LINK
     /// </summary>
     [JsonPropertyName("event_type")]
     public EventTypeEnum EventType { get; init; }

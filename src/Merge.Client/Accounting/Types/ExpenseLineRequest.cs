@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Accounting;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
@@ -38,7 +38,7 @@ public class ExpenseLineRequest
 
     /// <summary>
     /// The expense line item's currency.
-    /// 
+    ///
     /// - `XUA` - ADB Unit of Account
     /// - `AFN` - Afghan Afghani
     /// - `AFA` - Afghan Afghani (1927–2002)

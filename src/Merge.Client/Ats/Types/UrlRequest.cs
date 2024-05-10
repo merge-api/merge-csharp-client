@@ -13,7 +13,7 @@ public class UrlRequest
 
     /// <summary>
     /// The type of site.
-    /// 
+    ///
     /// - `PERSONAL` - PERSONAL
     /// - `COMPANY` - COMPANY
     /// - `PORTFOLIO` - PORTFOLIO

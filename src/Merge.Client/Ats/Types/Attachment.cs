@@ -14,6 +14,15 @@ public class Attachment
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
 
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The attachment's name.
     /// </summary>
@@ -27,14 +36,14 @@ public class Attachment
     public string? FileUrl { get; init; }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [JsonPropertyName("candidate")]
     public string? Candidate { get; init; }
 
     /// <summary>
     /// The attachment's type.
-    /// 
+    ///
     /// - `RESUME` - RESUME
     /// - `COVER_LETTER` - COVER_LETTER
     /// - `OFFER_LETTER` - OFFER_LETTER
@@ -45,15 +54,6 @@ public class Attachment
 
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

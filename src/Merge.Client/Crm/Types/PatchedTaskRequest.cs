@@ -49,7 +49,7 @@ public class PatchedTaskRequest
 
     /// <summary>
     /// The task's status.
-    /// 
+    ///
     /// - `OPEN` - OPEN
     /// - `CLOSED` - CLOSED
     /// </summary>

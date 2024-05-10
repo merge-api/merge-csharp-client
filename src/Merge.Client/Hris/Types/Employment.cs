@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Hris;
+using OneOf;
 
 namespace Merge.Client.Hris;
 
@@ -14,6 +14,15 @@ public class Employment
     /// </summary>
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
 
     /// <summary>
     /// The employee holding this position.
@@ -35,7 +44,7 @@ public class Employment
 
     /// <summary>
     /// The time period this pay rate encompasses.
-    /// 
+    ///
     /// - `HOUR` - HOUR
     /// - `DAY` - DAY
     /// - `WEEK` - WEEK
@@ -51,7 +60,7 @@ public class Employment
 
     /// <summary>
     /// The position's pay frequency.
-    /// 
+    ///
     /// - `WEEKLY` - WEEKLY
     /// - `BIWEEKLY` - BIWEEKLY
     /// - `MONTHLY` - MONTHLY
@@ -67,7 +76,7 @@ public class Employment
 
     /// <summary>
     /// The position's currency code.
-    /// 
+    ///
     /// - `XUA` - ADB Unit of Account
     /// - `AFN` - Afghan Afghani
     /// - `AFA` - Afghan Afghani (1927–2002)
@@ -386,7 +395,7 @@ public class Employment
 
     /// <summary>
     /// The position's FLSA status.
-    /// 
+    ///
     /// - `EXEMPT` - EXEMPT
     /// - `SALARIED_NONEXEMPT` - SALARIED_NONEXEMPT
     /// - `NONEXEMPT` - NONEXEMPT
@@ -403,7 +412,7 @@ public class Employment
 
     /// <summary>
     /// The position's type of employment.
-    /// 
+    ///
     /// - `FULL_TIME` - FULL_TIME
     /// - `PART_TIME` - PART_TIME
     /// - `INTERN` - INTERN
@@ -418,15 +427,6 @@ public class Employment
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

@@ -13,6 +13,15 @@ public class TimesheetEntry
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
 
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The employee the timesheet entry is for.
     /// </summary>
@@ -37,12 +46,15 @@ public class TimesheetEntry
     [JsonPropertyName("end_time")]
     public DateTime? EndTime { get; init; }
 
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
     /// <summary>
-    /// This is the datetime that this object was last updated by Merge
+    /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    [JsonPropertyName("remote_was_deleted")]
+    public bool? RemoteWasDeleted { get; init; }
+
+    [JsonPropertyName("field_mappings")]
+    public Dictionary<string, object>? FieldMappings { get; init; }
+
+    [JsonPropertyName("remote_data")]
+    public List<Dictionary<string, object>?>? RemoteData { get; init; }
 }

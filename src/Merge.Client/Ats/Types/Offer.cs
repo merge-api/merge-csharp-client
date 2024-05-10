@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Ats;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -14,6 +14,15 @@ public class Offer
     /// </summary>
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
 
     /// <summary>
     /// The application who is receiving the offer.
@@ -53,7 +62,7 @@ public class Offer
 
     /// <summary>
     /// The offer's status.
-    /// 
+    ///
     /// - `DRAFT` - DRAFT
     /// - `APPROVAL-SENT` - APPROVAL-SENT
     /// - `APPROVED` - APPROVED
@@ -72,15 +81,6 @@ public class Offer
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

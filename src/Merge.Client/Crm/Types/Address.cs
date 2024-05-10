@@ -5,6 +5,15 @@ namespace Merge.Client.Crm;
 
 public class Address
 {
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// Line 1 of the address's street.
     /// </summary>
@@ -37,7 +46,7 @@ public class Address
 
     /// <summary>
     /// The address's country.
-    /// 
+    ///
     /// - `AF` - Afghanistan
     /// - `AX` - Åland Islands
     /// - `AL` - Albania
@@ -293,19 +302,10 @@ public class Address
 
     /// <summary>
     /// The address type.
-    /// 
+    ///
     /// - `BILLING` - BILLING
     /// - `SHIPPING` - SHIPPING
     /// </summary>
     [JsonPropertyName("address_type")]
     public AddressTypeEnum? AddressType { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 }

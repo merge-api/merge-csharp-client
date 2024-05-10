@@ -5,6 +5,15 @@ namespace Merge.Client.Crm;
 
 public class RemoteFieldClassForCustomObjectClass
 {
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     [JsonPropertyName("display_name")]
     public string? DisplayName { get; init; }
 
@@ -28,13 +37,4 @@ public class RemoteFieldClassForCustomObjectClass
 
     [JsonPropertyName("item_schema")]
     public RemoteFieldClassForCustomObjectClassItemSchema? ItemSchema { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 }

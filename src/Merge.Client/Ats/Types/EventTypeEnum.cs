@@ -37,6 +37,9 @@ public enum EventTypeEnum
     [EnumMember(Value = "DELETED_DESTINATION")]
     DeletedDestination,
 
+    [EnumMember(Value = "CHANGED_DESTINATION")]
+    ChangedDestination,
+
     [EnumMember(Value = "CHANGED_SCOPES")]
     ChangedScopes,
 
@@ -92,5 +95,14 @@ public enum EventTypeEnum
     DeletedIntegrationWideFieldMapping,
 
     [EnumMember(Value = "DELETED_LINKED_ACCOUNT_FIELD_MAPPING")]
-    DeletedLinkedAccountFieldMapping
+    DeletedLinkedAccountFieldMapping,
+
+    [EnumMember(Value = "FORCED_LINKED_ACCOUNT_RESYNC")]
+    ForcedLinkedAccountResync,
+
+    [EnumMember(Value = "MUTED_ISSUE")]
+    MutedIssue,
+
+    [EnumMember(Value = "GENERATED_MAGIC_LINK")]
+    GeneratedMagicLink
 }

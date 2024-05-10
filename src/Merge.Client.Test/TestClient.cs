@@ -1,5 +1,3 @@
 namespace Merge.Client.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

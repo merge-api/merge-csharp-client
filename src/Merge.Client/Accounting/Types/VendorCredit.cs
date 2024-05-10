@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Accounting;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
@@ -14,6 +14,15 @@ public class VendorCredit
     /// </summary>
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
 
     /// <summary>
     /// The vendor credit's number.
@@ -41,7 +50,7 @@ public class VendorCredit
 
     /// <summary>
     /// The vendor credit's currency.
-    /// 
+    ///
     /// - `XUA` - ADB Unit of Account
     /// - `AFN` - Afghan Afghani
     /// - `AFA` - Afghan Afghani (1927–2002)
@@ -381,15 +390,6 @@ public class VendorCredit
     /// </summary>
     [JsonPropertyName("accounting_period")]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

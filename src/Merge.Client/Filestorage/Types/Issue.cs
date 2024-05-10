@@ -10,7 +10,7 @@ public class Issue
 
     /// <summary>
     /// Status of the issue. Options: ('ONGOING', 'RESOLVED')
-    /// 
+    ///
     /// - `ONGOING` - ONGOING
     /// - `RESOLVED` - RESOLVED
     /// </summary>

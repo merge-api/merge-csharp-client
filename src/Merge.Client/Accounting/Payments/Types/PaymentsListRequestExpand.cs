@@ -151,7 +151,9 @@ public enum PaymentsListRequestExpand
     [EnumMember(Value = "tracking_categories,applied_to_lines,contact,account,company")]
     TrackingCategoriesAppliedToLinesContactAccountCompany,
 
-    [EnumMember(Value = "tracking_categories,applied_to_lines,contact,account,company,accounting_period")]
+    [EnumMember(
+        Value = "tracking_categories,applied_to_lines,contact,account,company,accounting_period"
+    )]
     TrackingCategoriesAppliedToLinesContactAccountCompanyAccountingPeriod,
 
     [EnumMember(Value = "tracking_categories,applied_to_lines,contact,accounting_period")]

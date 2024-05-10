@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Ticketing;
+using OneOf;
 
 namespace Merge.Client.Ticketing;
 

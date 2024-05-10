@@ -7,8 +7,8 @@ namespace Merge.Client.Accounting;
 public class InvoiceRequest
 {
     /// <summary>
-    /// Whether the invoice is an accounts receivable or accounts payable. If `type` is `accounts_payable`, the invoice is a bill. If `type` is `accounts_receivable`, it is an invoice.
-    /// 
+    /// Whether the invoice is an accounts receivable or accounts payable. If `type` is `ACCOUNTS_PAYABLE`, the invoice is a bill. If `type` is `ACCOUNTS_RECEIVABLE`, it is an invoice.
+    ///
     /// - `ACCOUNTS_RECEIVABLE` - ACCOUNTS_RECEIVABLE
     /// - `ACCOUNTS_PAYABLE` - ACCOUNTS_PAYABLE
     /// </summary>
@@ -53,7 +53,7 @@ public class InvoiceRequest
 
     /// <summary>
     /// The status of the invoice.
-    /// 
+    ///
     /// - `PAID` - PAID
     /// - `DRAFT` - DRAFT
     /// - `SUBMITTED` - SUBMITTED
@@ -72,7 +72,7 @@ public class InvoiceRequest
 
     /// <summary>
     /// The invoice's currency.
-    /// 
+    ///
     /// - `XUA` - ADB Unit of Account
     /// - `AFN` - Afghan Afghani
     /// - `AFA` - Afghan Afghani (1927–2002)
