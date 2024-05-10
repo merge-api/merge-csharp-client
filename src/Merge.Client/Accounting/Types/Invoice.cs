@@ -10,8 +10,23 @@ public class Invoice
     public string? Id { get; init; }
 
     /// <summary>
-    /// Whether the invoice is an accounts receivable or accounts payable. If `type` is `accounts_payable`, the invoice is a bill. If `type` is `accounts_receivable`, it is an invoice.
-    /// 
+    /// The third-party API ID of the matching object.
+    /// </summary>
+    [JsonPropertyName("remote_id")]
+    public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
+    /// <summary>
+    /// Whether the invoice is an accounts receivable or accounts payable. If `type` is `ACCOUNTS_PAYABLE`, the invoice is a bill. If `type` is `ACCOUNTS_RECEIVABLE`, it is an invoice.
+    ///
     /// - `ACCOUNTS_RECEIVABLE` - ACCOUNTS_RECEIVABLE
     /// - `ACCOUNTS_PAYABLE` - ACCOUNTS_PAYABLE
     /// </summary>
@@ -62,7 +77,7 @@ public class Invoice
 
     /// <summary>
     /// The invoice's currency.
-    /// 
+    ///
     /// - `XUA` - ADB Unit of Account
     /// - `AFN` - Afghan Afghani
     /// - `AFA` - Afghan Afghani (1927–2002)
@@ -393,7 +408,7 @@ public class Invoice
 
     /// <summary>
     /// The status of the invoice.
-    /// 
+    ///
     /// - `PAID` - PAID
     /// - `DRAFT` - DRAFT
     /// - `SUBMITTED` - SUBMITTED
@@ -457,21 +472,6 @@ public class Invoice
 
     [JsonPropertyName("purchase_orders")]
     public List<OneOf<string, PurchaseOrder>?>? PurchaseOrders { get; init; }
-
-    /// <summary>
-    /// The third-party API ID of the matching object.
-    /// </summary>
-    [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

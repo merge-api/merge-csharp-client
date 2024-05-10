@@ -5,6 +5,12 @@ namespace Merge.Client.Hris;
 public class LinkedAccountConditionRequest
 {
     /// <summary>
+    /// The ID indicating which Linked Account Condition this is.
+    /// </summary>
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
+    /// <summary>
     /// The ID indicating which condition schema to use for a specific condition.
     /// </summary>
     [JsonPropertyName("condition_schema_id")]

@@ -4,6 +4,15 @@ namespace Merge.Client.Crm;
 
 public class PhoneNumber
 {
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The phone number.
     /// </summary>
@@ -15,13 +24,4 @@ public class PhoneNumber
     /// </summary>
     [JsonPropertyName("phone_number_type")]
     public string? PhoneNumberType { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 }

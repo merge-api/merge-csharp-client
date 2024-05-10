@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Crm;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -44,7 +44,7 @@ public class OpportunityRequest
 
     /// <summary>
     /// The opportunity's status.
-    /// 
+    ///
     /// - `OPEN` - OPEN
     /// - `WON` - WON
     /// - `LOST` - LOST

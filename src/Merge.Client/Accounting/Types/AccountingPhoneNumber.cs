@@ -4,6 +4,15 @@ namespace Merge.Client.Accounting;
 
 public class AccountingPhoneNumber
 {
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The phone number.
     /// </summary>
@@ -15,13 +24,4 @@ public class AccountingPhoneNumber
     /// </summary>
     [JsonPropertyName("type")]
     public string? Type { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 }

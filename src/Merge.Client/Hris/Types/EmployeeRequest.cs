@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Hris;
+using OneOf;
 
 namespace Merge.Client.Hris;
 
@@ -113,7 +113,7 @@ public class EmployeeRequest
 
     /// <summary>
     /// The employee's gender.
-    /// 
+    ///
     /// - `MALE` - MALE
     /// - `FEMALE` - FEMALE
     /// - `NON-BINARY` - NON-BINARY
@@ -125,7 +125,7 @@ public class EmployeeRequest
 
     /// <summary>
     /// The employee's ethnicity.
-    /// 
+    ///
     /// - `AMERICAN_INDIAN_OR_ALASKA_NATIVE` - AMERICAN_INDIAN_OR_ALASKA_NATIVE
     /// - `ASIAN_OR_INDIAN_SUBCONTINENT` - ASIAN_OR_INDIAN_SUBCONTINENT
     /// - `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN
@@ -140,7 +140,7 @@ public class EmployeeRequest
 
     /// <summary>
     /// The employee's filing status as related to marital status.
-    /// 
+    ///
     /// - `SINGLE` - SINGLE
     /// - `MARRIED_FILING_JOINTLY` - MARRIED_FILING_JOINTLY
     /// - `MARRIED_FILING_SEPARATELY` - MARRIED_FILING_SEPARATELY
@@ -170,7 +170,7 @@ public class EmployeeRequest
 
     /// <summary>
     /// The employment status of the employee.
-    /// 
+    ///
     /// - `ACTIVE` - ACTIVE
     /// - `PENDING` - PENDING
     /// - `INACTIVE` - INACTIVE

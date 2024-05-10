@@ -19,7 +19,7 @@ public class AccountRequest
 
     /// <summary>
     /// The account's broadest grouping.
-    /// 
+    ///
     /// - `ASSET` - ASSET
     /// - `EQUITY` - EQUITY
     /// - `EXPENSE` - EXPENSE
@@ -37,7 +37,7 @@ public class AccountRequest
 
     /// <summary>
     /// The account's status.
-    /// 
+    ///
     /// - `ACTIVE` - ACTIVE
     /// - `PENDING` - PENDING
     /// - `INACTIVE` - INACTIVE
@@ -53,7 +53,7 @@ public class AccountRequest
 
     /// <summary>
     /// The account's currency.
-    /// 
+    ///
     /// - `XUA` - ADB Unit of Account
     /// - `AFN` - Afghan Afghani
     /// - `AFA` - Afghan Afghani (1927–2002)

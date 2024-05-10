@@ -14,6 +14,15 @@ public class Role
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
 
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The name of the Role.
     /// </summary>
@@ -28,7 +37,7 @@ public class Role
 
     /// <summary>
     /// The level of Ticket access that a User with this Role can perform.
-    /// 
+    ///
     /// - `ALL` - ALL
     /// - `ASSIGNED_ONLY` - ASSIGNED_ONLY
     /// - `TEAM_ONLY` - TEAM_ONLY
@@ -41,15 +50,6 @@ public class Role
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

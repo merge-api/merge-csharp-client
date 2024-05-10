@@ -15,6 +15,15 @@ public class Collection
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
 
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The collection's name.
     /// </summary>
@@ -29,7 +38,7 @@ public class Collection
 
     /// <summary>
     /// The collection's type.
-    /// 
+    ///
     /// - `LIST` - LIST
     /// - `PROJECT` - PROJECT
     /// </summary>
@@ -50,22 +59,13 @@ public class Collection
 
     /// <summary>
     /// The level of access a User has to the Collection and its sub-objects.
-    /// 
+    ///
     /// - `PRIVATE` - PRIVATE
     /// - `COMPANY` - COMPANY
     /// - `PUBLIC` - PUBLIC
     /// </summary>
     [JsonPropertyName("access_level")]
     public AccessLevelEnum? AccessLevel { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

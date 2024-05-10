@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Hris;
+using OneOf;
 
 namespace Merge.Client.Hris;
 
@@ -20,7 +20,7 @@ public class TimeOffRequest
 
     /// <summary>
     /// The status of this time off request.
-    /// 
+    ///
     /// - `REQUESTED` - REQUESTED
     /// - `APPROVED` - APPROVED
     /// - `DECLINED` - DECLINED
@@ -38,7 +38,7 @@ public class TimeOffRequest
 
     /// <summary>
     /// The measurement that the third-party integration uses to count time requested.
-    /// 
+    ///
     /// - `HOURS` - HOURS
     /// - `DAYS` - DAYS
     /// </summary>
@@ -53,7 +53,7 @@ public class TimeOffRequest
 
     /// <summary>
     /// The type of time off request.
-    /// 
+    ///
     /// - `VACATION` - VACATION
     /// - `SICK` - SICK
     /// - `PERSONAL` - PERSONAL

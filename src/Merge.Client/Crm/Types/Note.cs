@@ -1,11 +1,29 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Crm;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
 public class Note
 {
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
+    /// <summary>
+    /// The third-party API ID of the matching object.
+    /// </summary>
+    [JsonPropertyName("remote_id")]
+    public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The note's owner.
     /// </summary>
@@ -50,24 +68,6 @@ public class Note
 
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
-
-    [JsonPropertyName("id")]
-    public string? Id { get; init; }
-
-    /// <summary>
-    /// The third-party API ID of the matching object.
-    /// </summary>
-    [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

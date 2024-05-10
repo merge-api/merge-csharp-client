@@ -5,22 +5,6 @@ namespace Merge.Client.Ats;
 
 public class EmailAddress
 {
-    /// <summary>
-    /// The email address.
-    /// </summary>
-    [JsonPropertyName("value")]
-    public string? Value { get; init; }
-
-    /// <summary>
-    /// The type of email address.
-    /// 
-    /// - `PERSONAL` - PERSONAL
-    /// - `WORK` - WORK
-    /// - `OTHER` - OTHER
-    /// </summary>
-    [JsonPropertyName("email_address_type")]
-    public EmailAddressTypeEnum? EmailAddressType { get; init; }
-
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; init; }
 
@@ -29,4 +13,20 @@ public class EmailAddress
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
+
+    /// <summary>
+    /// The email address.
+    /// </summary>
+    [JsonPropertyName("value")]
+    public string? Value { get; init; }
+
+    /// <summary>
+    /// The type of email address.
+    ///
+    /// - `PERSONAL` - PERSONAL
+    /// - `WORK` - WORK
+    /// - `OTHER` - OTHER
+    /// </summary>
+    [JsonPropertyName("email_address_type")]
+    public EmailAddressTypeEnum? EmailAddressType { get; init; }
 }

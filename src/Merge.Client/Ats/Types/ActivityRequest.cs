@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Ats;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -14,7 +14,7 @@ public class ActivityRequest
 
     /// <summary>
     /// The activity's type.
-    /// 
+    ///
     /// - `NOTE` - NOTE
     /// - `EMAIL` - EMAIL
     /// - `OTHER` - OTHER
@@ -36,7 +36,7 @@ public class ActivityRequest
 
     /// <summary>
     /// The activity's visibility.
-    /// 
+    ///
     /// - `ADMIN_ONLY` - ADMIN_ONLY
     /// - `PUBLIC` - PUBLIC
     /// - `PRIVATE` - PRIVATE

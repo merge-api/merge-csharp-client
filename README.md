@@ -26,10 +26,10 @@ of the SDK methods are awaitable!
 
 ```csharp
 using Merge;
-using Merge.ATS;
+using Merge.Ats;
 
-MergeClient merge = new MergeClient(
-  "YOUR_API_KEY", "YOUR_ACCOUNT_ID"
+Merge merge = new Merge(
+  "YOUR_API_KEY", "YOUR_ACCOUNT_TOKEN"
 )
 ```
 
@@ -41,8 +41,8 @@ using more than one Merge API category right now, the SDK provides upgrade-flexi
 Each category is namespaced:
 
 ```csharp
-MergeClient merge = new MergeClient(
-  "YOUR_API_KEY", "YOUR_ACCOUNT_ID"
+Merge merge = new Merge(
+  "YOUR_API_KEY", "YOUR_ACCOUNT_TOKEN"
 )
 
 merge.ATS. # APIs specific to the ATS Category
@@ -54,7 +54,7 @@ merge.HRIS. # APIs specific to the HRIS Category
 You can override the HttpClient by passing in `ClientOptions`. 
 
 ```csharp
-merge = new MergeClient("YOUR_API_KEY", "YOUR_ACCOUNT_ID", new ClientOptions{
+merge = new Merge("YOUR_API_KEY", "YOUR_ACCOUNT_ID", new ClientOptions{
     HttpClient = ... // Override the Http Client
     BaseURL = ... // Override the Base URL
 })
@@ -68,7 +68,7 @@ a subclass of MergeException will be thrown:
 using Merge;
 
 try {
-  merge.ATS.Candidates.Retrieve(...);    
+  merge.Ats.Candidates.Retrieve(...);    
 } catch (MergeException e) {
   System.Console.WriteLine(e.Message) 
   System.Console.WriteLine(e.StatusCode) 
@@ -83,18 +83,14 @@ Below are code snippets of how you can use the C# SDK.
 
 ```c#
 using Merge;
-using Merge.ATS;
+using Merge.Ats;
 
-MergeClient merge = new MergeClient(
-  "YOUR_API_KEY", 
-  "YOUR_ACCOUNT_ID"
-)
+Merge merge = new Merge("YOUR_API_KEY", "YOUR_ACCOUNT_TOKEN")
 
-merge.ATS.LinkToken.Create(new EndUserDetailsRequest{
+merge.Ats.LinkToken.Create(new EndUserDetailsRequest{
   EndUserEmailAddress = "john.smith@gmail.com",
   EndUserOrganizationName = "acme",
   EndUserOriginId = "1234",
-  Categories = 
 })
 ```
 
@@ -102,13 +98,12 @@ merge.ATS.LinkToken.Create(new EndUserDetailsRequest{
 
 ```c#
 using Merge;
-using Merge.HRIS;
+using Merge.Hris;
 
-MergeClient merge = new MergeClient(
-  "YOUR_API_KEY", 
-  "YOUR_ACCOUNT_ID"
+MergeClient merge = new Merge(
+  "YOUR_API_KEY", "YOUR_ACCOUNT_ID"
 )
-Employee employee = merge.HRIS.Employees.Retrieve("0958cbc6-6040-430a-848e-aafacbadf4ae",
+Employee employee = merge.Hris.Employees.RetrieveAsync("0958cbc6-6040-430a-848e-aafacbadf4ae",
     new EmployeesRetrieveRequest{
         IncludeRemoteData = true
     }
@@ -124,9 +119,6 @@ globally or per-request.
 var merge = new Merge("...", new ClientOptions{
     MaxRetries = 1 // Only retry once
 });
-merge.ATS.Candidates.Retrieve(new CandidatesRetrieveRequest{ ... }, new RequestOptions {
-    MaxRetries = 0 // Disable retries
-});
 ```
 
 ## Timeouts
@@ -136,9 +128,6 @@ globally or per-request.
 ```csharp
 var merge = new Merge("...", new ClientOptions{
     TimeoutInSeconds = 20 // Lower timeout
-});
-merge.ATS.Candidates.Retrieve(new Merge{ ... }, new RequestOptions {
-    TimeoutInSeconds = 90 // Raise timeout
 });
 ```
 

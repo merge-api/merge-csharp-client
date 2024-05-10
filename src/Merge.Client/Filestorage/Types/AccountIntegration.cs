@@ -39,12 +39,6 @@ public class AccountIntegration
     public string? Slug { get; init; }
 
     /// <summary>
-    /// If checked, this integration will not appear in the linking flow, and will appear elsewhere with a Beta tag.
-    /// </summary>
-    [JsonPropertyName("is_in_beta")]
-    public bool? IsInBeta { get; init; }
-
-    /// <summary>
     /// Mapping of API endpoints to documentation urls for support. Example: {'GET': [['/common-model-scopes', 'https://docs.merge.dev/accounting/common-model-scopes/#common_model_scopes_retrieve'],['/common-model-actions', 'https://docs.merge.dev/accounting/common-model-actions/#common_model_actions_retrieve']], 'POST': []}
     /// </summary>
     [JsonPropertyName("api_endpoints_to_documentation_urls")]
@@ -55,4 +49,10 @@ public class AccountIntegration
     /// </summary>
     [JsonPropertyName("webhook_setup_guide_url")]
     public string? WebhookSetupGuideUrl { get; init; }
+
+    /// <summary>
+    /// Category or categories this integration is in beta status for.
+    /// </summary>
+    [JsonPropertyName("category_beta_status")]
+    public Dictionary<string, object>? CategoryBetaStatus { get; init; }
 }

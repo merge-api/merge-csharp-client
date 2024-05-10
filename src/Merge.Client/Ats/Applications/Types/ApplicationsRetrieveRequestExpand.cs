@@ -94,6 +94,102 @@ public enum ApplicationsRetrieveRequestExpand
     [EnumMember(Value = "job,reject_reason")]
     JobRejectReason,
 
+    [EnumMember(Value = "offers")]
+    Offers,
+
+    [EnumMember(Value = "offers,candidate")]
+    OffersCandidate,
+
+    [EnumMember(Value = "offers,candidate,credited_to")]
+    OffersCandidateCreditedTo,
+
+    [EnumMember(Value = "offers,candidate,credited_to,current_stage")]
+    OffersCandidateCreditedToCurrentStage,
+
+    [EnumMember(Value = "offers,candidate,credited_to,current_stage,reject_reason")]
+    OffersCandidateCreditedToCurrentStageRejectReason,
+
+    [EnumMember(Value = "offers,candidate,credited_to,reject_reason")]
+    OffersCandidateCreditedToRejectReason,
+
+    [EnumMember(Value = "offers,candidate,current_stage")]
+    OffersCandidateCurrentStage,
+
+    [EnumMember(Value = "offers,candidate,current_stage,reject_reason")]
+    OffersCandidateCurrentStageRejectReason,
+
+    [EnumMember(Value = "offers,candidate,job")]
+    OffersCandidateJob,
+
+    [EnumMember(Value = "offers,candidate,job,credited_to")]
+    OffersCandidateJobCreditedTo,
+
+    [EnumMember(Value = "offers,candidate,job,credited_to,current_stage")]
+    OffersCandidateJobCreditedToCurrentStage,
+
+    [EnumMember(Value = "offers,candidate,job,credited_to,current_stage,reject_reason")]
+    OffersCandidateJobCreditedToCurrentStageRejectReason,
+
+    [EnumMember(Value = "offers,candidate,job,credited_to,reject_reason")]
+    OffersCandidateJobCreditedToRejectReason,
+
+    [EnumMember(Value = "offers,candidate,job,current_stage")]
+    OffersCandidateJobCurrentStage,
+
+    [EnumMember(Value = "offers,candidate,job,current_stage,reject_reason")]
+    OffersCandidateJobCurrentStageRejectReason,
+
+    [EnumMember(Value = "offers,candidate,job,reject_reason")]
+    OffersCandidateJobRejectReason,
+
+    [EnumMember(Value = "offers,candidate,reject_reason")]
+    OffersCandidateRejectReason,
+
+    [EnumMember(Value = "offers,credited_to")]
+    OffersCreditedTo,
+
+    [EnumMember(Value = "offers,credited_to,current_stage")]
+    OffersCreditedToCurrentStage,
+
+    [EnumMember(Value = "offers,credited_to,current_stage,reject_reason")]
+    OffersCreditedToCurrentStageRejectReason,
+
+    [EnumMember(Value = "offers,credited_to,reject_reason")]
+    OffersCreditedToRejectReason,
+
+    [EnumMember(Value = "offers,current_stage")]
+    OffersCurrentStage,
+
+    [EnumMember(Value = "offers,current_stage,reject_reason")]
+    OffersCurrentStageRejectReason,
+
+    [EnumMember(Value = "offers,job")]
+    OffersJob,
+
+    [EnumMember(Value = "offers,job,credited_to")]
+    OffersJobCreditedTo,
+
+    [EnumMember(Value = "offers,job,credited_to,current_stage")]
+    OffersJobCreditedToCurrentStage,
+
+    [EnumMember(Value = "offers,job,credited_to,current_stage,reject_reason")]
+    OffersJobCreditedToCurrentStageRejectReason,
+
+    [EnumMember(Value = "offers,job,credited_to,reject_reason")]
+    OffersJobCreditedToRejectReason,
+
+    [EnumMember(Value = "offers,job,current_stage")]
+    OffersJobCurrentStage,
+
+    [EnumMember(Value = "offers,job,current_stage,reject_reason")]
+    OffersJobCurrentStageRejectReason,
+
+    [EnumMember(Value = "offers,job,reject_reason")]
+    OffersJobRejectReason,
+
+    [EnumMember(Value = "offers,reject_reason")]
+    OffersRejectReason,
+
     [EnumMember(Value = "reject_reason")]
     RejectReason
 }

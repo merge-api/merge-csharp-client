@@ -100,7 +100,9 @@ public enum JournalEntriesRetrieveRequestExpand
     [EnumMember(Value = "lines,payments,applied_payments,tracking_categories,company")]
     LinesPaymentsAppliedPaymentsTrackingCategoriesCompany,
 
-    [EnumMember(Value = "lines,payments,applied_payments,tracking_categories,company,accounting_period")]
+    [EnumMember(
+        Value = "lines,payments,applied_payments,tracking_categories,company,accounting_period"
+    )]
     LinesPaymentsAppliedPaymentsTrackingCategoriesCompanyAccountingPeriod,
 
     [EnumMember(Value = "lines,payments,company")]

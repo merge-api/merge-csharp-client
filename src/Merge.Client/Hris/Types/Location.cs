@@ -14,6 +14,15 @@ public class Location
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
 
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The location's name.
     /// </summary>
@@ -58,7 +67,7 @@ public class Location
 
     /// <summary>
     /// The location's country.
-    /// 
+    ///
     /// - `AF` - Afghanistan
     /// - `AX` - Åland Islands
     /// - `AL` - Albania
@@ -314,7 +323,7 @@ public class Location
 
     /// <summary>
     /// The location's type. Can be either WORK or HOME
-    /// 
+    ///
     /// - `HOME` - HOME
     /// - `WORK` - WORK
     /// </summary>
@@ -326,15 +335,6 @@ public class Location
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

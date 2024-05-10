@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Crm;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -26,7 +26,7 @@ public class EngagementRequest
 
     /// <summary>
     /// The engagement's direction.
-    /// 
+    ///
     /// - `INBOUND` - INBOUND
     /// - `OUTBOUND` - OUTBOUND
     /// </summary>

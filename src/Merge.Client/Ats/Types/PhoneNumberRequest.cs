@@ -13,7 +13,7 @@ public class PhoneNumberRequest
 
     /// <summary>
     /// The type of phone number.
-    /// 
+    ///
     /// - `HOME` - HOME
     /// - `WORK` - WORK
     /// - `MOBILE` - MOBILE

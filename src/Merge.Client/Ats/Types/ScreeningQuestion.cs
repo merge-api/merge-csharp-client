@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Ats;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -14,6 +14,15 @@ public class ScreeningQuestion
     /// </summary>
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
 
     /// <summary>
     /// The job associated with the screening question.
@@ -35,7 +44,7 @@ public class ScreeningQuestion
 
     /// <summary>
     /// The data type for the screening question.
-    /// 
+    ///
     /// - `DATE` - DATE
     /// - `FILE` - FILE
     /// - `SINGLE_SELECT` - SINGLE_SELECT
@@ -46,7 +55,7 @@ public class ScreeningQuestion
     /// - `BOOLEAN` - BOOLEAN
     /// </summary>
     [JsonPropertyName("type")]
-    public TypeEnum? Type { get; init; }
+    public ScreeningQuestionTypeEnum? Type { get; init; }
 
     /// <summary>
     /// Whether or not the screening question is required.
@@ -56,13 +65,4 @@ public class ScreeningQuestion
 
     [JsonPropertyName("options")]
     public List<object>? Options { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 }

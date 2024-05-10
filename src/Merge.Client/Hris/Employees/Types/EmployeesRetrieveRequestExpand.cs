@@ -103,7 +103,9 @@ public enum EmployeesRetrieveRequestExpand
     [EnumMember(Value = "employments,groups,home_location,work_location,manager,team,company")]
     EmploymentsGroupsHomeLocationWorkLocationManagerTeamCompany,
 
-    [EnumMember(Value = "employments,groups,home_location,work_location,manager,team,company,pay_group")]
+    [EnumMember(
+        Value = "employments,groups,home_location,work_location,manager,team,company,pay_group"
+    )]
     EmploymentsGroupsHomeLocationWorkLocationManagerTeamCompanyPayGroup,
 
     [EnumMember(Value = "employments,groups,home_location,work_location,manager,team,pay_group")]

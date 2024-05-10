@@ -7,7 +7,7 @@ public class AddressRequest
 {
     /// <summary>
     /// The address type.
-    /// 
+    ///
     /// - `BILLING` - BILLING
     /// - `SHIPPING` - SHIPPING
     /// </summary>
@@ -40,7 +40,7 @@ public class AddressRequest
 
     /// <summary>
     /// The address's country.
-    /// 
+    ///
     /// - `AF` - Afghanistan
     /// - `AX` - Åland Islands
     /// - `AL` - Albania

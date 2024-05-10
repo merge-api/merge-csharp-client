@@ -17,15 +17,9 @@ public class ConditionSchema
     [JsonPropertyName("common_model")]
     public string? CommonModel { get; init; }
 
-    /// <summary>
-    /// User-facing _native condition_ name. e.g. "Skip Manager".
-    /// </summary>
     [JsonPropertyName("native_name")]
     public string? NativeName { get; init; }
 
-    /// <summary>
-    /// The name of the field on the common model that this condition corresponds to, if they conceptually match. e.g. "location_type".
-    /// </summary>
     [JsonPropertyName("field_name")]
     public string? FieldName { get; init; }
 
@@ -37,7 +31,7 @@ public class ConditionSchema
 
     /// <summary>
     /// The type of value(s) that can be set for this condition.
-    /// 
+    ///
     /// - `BOOLEAN` - BOOLEAN
     /// - `DATE` - DATE
     /// - `DATE_TIME` - DATE_TIME

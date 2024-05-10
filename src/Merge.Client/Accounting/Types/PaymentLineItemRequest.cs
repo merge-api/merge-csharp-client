@@ -5,6 +5,12 @@ namespace Merge.Client.Accounting;
 public class PaymentLineItemRequest
 {
     /// <summary>
+    /// The third-party API ID of the matching object.
+    /// </summary>
+    [JsonPropertyName("remote_id")]
+    public string? RemoteId { get; init; }
+
+    /// <summary>
     /// The amount being applied to the transaction.
     /// </summary>
     [JsonPropertyName("applied_amount")]
@@ -15,12 +21,6 @@ public class PaymentLineItemRequest
     /// </summary>
     [JsonPropertyName("applied_date")]
     public DateTime? AppliedDate { get; init; }
-
-    /// <summary>
-    /// The third-party API ID of the matching object.
-    /// </summary>
-    [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
 
     /// <summary>
     /// The Merge ID of the transaction the payment portion is being applied to.

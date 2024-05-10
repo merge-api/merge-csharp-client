@@ -4,6 +4,24 @@ namespace Merge.Client.Accounting;
 
 public class PaymentLineItem
 {
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
+    /// <summary>
+    /// The third-party API ID of the matching object.
+    /// </summary>
+    [JsonPropertyName("remote_id")]
+    public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The amount being applied to the transaction.
     /// </summary>
@@ -17,12 +35,6 @@ public class PaymentLineItem
     public DateTime? AppliedDate { get; init; }
 
     /// <summary>
-    /// The third-party API ID of the matching object.
-    /// </summary>
-    [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
-
-    /// <summary>
     /// The Merge ID of the transaction the payment portion is being applied to.
     /// </summary>
     [JsonPropertyName("related_object_id")]
@@ -33,16 +45,4 @@ public class PaymentLineItem
     /// </summary>
     [JsonPropertyName("related_object_type")]
     public string? RelatedObjectType { get; init; }
-
-    [JsonPropertyName("id")]
-    public string? Id { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 }

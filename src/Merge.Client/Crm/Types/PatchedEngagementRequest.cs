@@ -25,7 +25,7 @@ public class PatchedEngagementRequest
 
     /// <summary>
     /// The engagement's direction.
-    /// 
+    ///
     /// - `INBOUND` - INBOUND
     /// - `OUTBOUND` - OUTBOUND
     /// </summary>

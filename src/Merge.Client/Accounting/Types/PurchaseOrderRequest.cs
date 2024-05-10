@@ -8,7 +8,7 @@ public class PurchaseOrderRequest
 {
     /// <summary>
     /// The purchase order's status.
-    /// 
+    ///
     /// - `DRAFT` - DRAFT
     /// - `SUBMITTED` - SUBMITTED
     /// - `AUTHORIZED` - AUTHORIZED
@@ -68,7 +68,7 @@ public class PurchaseOrderRequest
 
     /// <summary>
     /// The purchase order's currency.
-    /// 
+    ///
     /// - `XUA` - ADB Unit of Account
     /// - `AFN` - Afghan Afghani
     /// - `AFA` - Afghan Afghani (1927–2002)

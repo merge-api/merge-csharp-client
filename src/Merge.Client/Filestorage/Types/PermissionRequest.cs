@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Filestorage;
+using OneOf;
 
 namespace Merge.Client.Filestorage;
 
@@ -26,7 +26,7 @@ public class PermissionRequest
 
     /// <summary>
     /// Denotes what type of people have access to the file.
-    /// 
+    ///
     /// - `USER` - USER
     /// - `GROUP` - GROUP
     /// - `COMPANY` - COMPANY

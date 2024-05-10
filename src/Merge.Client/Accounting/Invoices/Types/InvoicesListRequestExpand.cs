@@ -76,7 +76,9 @@ public enum InvoicesListRequestExpand
     [EnumMember(Value = "applied_payments,line_items,purchase_orders,contact,company")]
     AppliedPaymentsLineItemsPurchaseOrdersContactCompany,
 
-    [EnumMember(Value = "applied_payments,line_items,purchase_orders,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,line_items,purchase_orders,contact,company,accounting_period"
+    )]
     AppliedPaymentsLineItemsPurchaseOrdersContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,line_items,tracking_categories")]
@@ -88,43 +90,59 @@ public enum InvoicesListRequestExpand
     [EnumMember(Value = "applied_payments,line_items,tracking_categories,company")]
     AppliedPaymentsLineItemsTrackingCategoriesCompany,
 
-    [EnumMember(Value = "applied_payments,line_items,tracking_categories,company,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,line_items,tracking_categories,company,accounting_period"
+    )]
     AppliedPaymentsLineItemsTrackingCategoriesCompanyAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,line_items,tracking_categories,contact")]
     AppliedPaymentsLineItemsTrackingCategoriesContact,
 
-    [EnumMember(Value = "applied_payments,line_items,tracking_categories,contact,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,line_items,tracking_categories,contact,accounting_period"
+    )]
     AppliedPaymentsLineItemsTrackingCategoriesContactAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,line_items,tracking_categories,contact,company")]
     AppliedPaymentsLineItemsTrackingCategoriesContactCompany,
 
-    [EnumMember(Value = "applied_payments,line_items,tracking_categories,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,line_items,tracking_categories,contact,company,accounting_period"
+    )]
     AppliedPaymentsLineItemsTrackingCategoriesContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,line_items,tracking_categories,purchase_orders")]
     AppliedPaymentsLineItemsTrackingCategoriesPurchaseOrders,
 
-    [EnumMember(Value = "applied_payments,line_items,tracking_categories,purchase_orders,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,line_items,tracking_categories,purchase_orders,accounting_period"
+    )]
     AppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,line_items,tracking_categories,purchase_orders,company")]
     AppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersCompany,
 
-    [EnumMember(Value = "applied_payments,line_items,tracking_categories,purchase_orders,company,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,line_items,tracking_categories,purchase_orders,company,accounting_period"
+    )]
     AppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersCompanyAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,line_items,tracking_categories,purchase_orders,contact")]
     AppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersContact,
 
-    [EnumMember(Value = "applied_payments,line_items,tracking_categories,purchase_orders,contact,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,line_items,tracking_categories,purchase_orders,contact,accounting_period"
+    )]
     AppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersContactAccountingPeriod,
 
-    [EnumMember(Value = "applied_payments,line_items,tracking_categories,purchase_orders,contact,company")]
+    [EnumMember(
+        Value = "applied_payments,line_items,tracking_categories,purchase_orders,contact,company"
+    )]
     AppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersContactCompany,
 
-    [EnumMember(Value = "applied_payments,line_items,tracking_categories,purchase_orders,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,line_items,tracking_categories,purchase_orders,contact,company,accounting_period"
+    )]
     AppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,purchase_orders")]
@@ -184,19 +202,25 @@ public enum InvoicesListRequestExpand
     [EnumMember(Value = "applied_payments,tracking_categories,purchase_orders,company")]
     AppliedPaymentsTrackingCategoriesPurchaseOrdersCompany,
 
-    [EnumMember(Value = "applied_payments,tracking_categories,purchase_orders,company,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,tracking_categories,purchase_orders,company,accounting_period"
+    )]
     AppliedPaymentsTrackingCategoriesPurchaseOrdersCompanyAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,tracking_categories,purchase_orders,contact")]
     AppliedPaymentsTrackingCategoriesPurchaseOrdersContact,
 
-    [EnumMember(Value = "applied_payments,tracking_categories,purchase_orders,contact,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,tracking_categories,purchase_orders,contact,accounting_period"
+    )]
     AppliedPaymentsTrackingCategoriesPurchaseOrdersContactAccountingPeriod,
 
     [EnumMember(Value = "applied_payments,tracking_categories,purchase_orders,contact,company")]
     AppliedPaymentsTrackingCategoriesPurchaseOrdersContactCompany,
 
-    [EnumMember(Value = "applied_payments,tracking_categories,purchase_orders,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "applied_payments,tracking_categories,purchase_orders,contact,company,accounting_period"
+    )]
     AppliedPaymentsTrackingCategoriesPurchaseOrdersContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "company")]
@@ -310,7 +334,9 @@ public enum InvoicesListRequestExpand
     [EnumMember(Value = "line_items,tracking_categories,purchase_orders,contact,company")]
     LineItemsTrackingCategoriesPurchaseOrdersContactCompany,
 
-    [EnumMember(Value = "line_items,tracking_categories,purchase_orders,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "line_items,tracking_categories,purchase_orders,contact,company,accounting_period"
+    )]
     LineItemsTrackingCategoriesPurchaseOrdersContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments")]
@@ -376,67 +402,95 @@ public enum InvoicesListRequestExpand
     [EnumMember(Value = "payments,applied_payments,line_items,purchase_orders,company")]
     PaymentsAppliedPaymentsLineItemsPurchaseOrdersCompany,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,purchase_orders,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,purchase_orders,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsPurchaseOrdersCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,line_items,purchase_orders,contact")]
     PaymentsAppliedPaymentsLineItemsPurchaseOrdersContact,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,purchase_orders,contact,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,purchase_orders,contact,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsPurchaseOrdersContactAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,line_items,purchase_orders,contact,company")]
     PaymentsAppliedPaymentsLineItemsPurchaseOrdersContactCompany,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,purchase_orders,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,purchase_orders,contact,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsPurchaseOrdersContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories")]
     PaymentsAppliedPaymentsLineItemsTrackingCategories,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,company")]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesCompany,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,contact")]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesContact,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,contact,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,contact,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesContactAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,contact,company")]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesContactCompany,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,contact,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders")]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesPurchaseOrders,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersAccountingPeriod,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,company")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,company"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersCompany,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersCompanyAccountingPeriod,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,contact")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,contact"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersContact,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,contact,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,contact,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersContactAccountingPeriod,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,contact,company")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,contact,company"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersContactCompany,
 
-    [EnumMember(Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,line_items,tracking_categories,purchase_orders,contact,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsLineItemsTrackingCategoriesPurchaseOrdersContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,purchase_orders")]
@@ -460,7 +514,9 @@ public enum InvoicesListRequestExpand
     [EnumMember(Value = "payments,applied_payments,purchase_orders,contact,company")]
     PaymentsAppliedPaymentsPurchaseOrdersContactCompany,
 
-    [EnumMember(Value = "payments,applied_payments,purchase_orders,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,purchase_orders,contact,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsPurchaseOrdersContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,tracking_categories")]
@@ -484,31 +540,43 @@ public enum InvoicesListRequestExpand
     [EnumMember(Value = "payments,applied_payments,tracking_categories,contact,company")]
     PaymentsAppliedPaymentsTrackingCategoriesContactCompany,
 
-    [EnumMember(Value = "payments,applied_payments,tracking_categories,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,tracking_categories,contact,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsTrackingCategoriesContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,tracking_categories,purchase_orders")]
     PaymentsAppliedPaymentsTrackingCategoriesPurchaseOrders,
 
-    [EnumMember(Value = "payments,applied_payments,tracking_categories,purchase_orders,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,tracking_categories,purchase_orders,accounting_period"
+    )]
     PaymentsAppliedPaymentsTrackingCategoriesPurchaseOrdersAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,tracking_categories,purchase_orders,company")]
     PaymentsAppliedPaymentsTrackingCategoriesPurchaseOrdersCompany,
 
-    [EnumMember(Value = "payments,applied_payments,tracking_categories,purchase_orders,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,tracking_categories,purchase_orders,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsTrackingCategoriesPurchaseOrdersCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,applied_payments,tracking_categories,purchase_orders,contact")]
     PaymentsAppliedPaymentsTrackingCategoriesPurchaseOrdersContact,
 
-    [EnumMember(Value = "payments,applied_payments,tracking_categories,purchase_orders,contact,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,tracking_categories,purchase_orders,contact,accounting_period"
+    )]
     PaymentsAppliedPaymentsTrackingCategoriesPurchaseOrdersContactAccountingPeriod,
 
-    [EnumMember(Value = "payments,applied_payments,tracking_categories,purchase_orders,contact,company")]
+    [EnumMember(
+        Value = "payments,applied_payments,tracking_categories,purchase_orders,contact,company"
+    )]
     PaymentsAppliedPaymentsTrackingCategoriesPurchaseOrdersContactCompany,
 
-    [EnumMember(Value = "payments,applied_payments,tracking_categories,purchase_orders,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,applied_payments,tracking_categories,purchase_orders,contact,company,accounting_period"
+    )]
     PaymentsAppliedPaymentsTrackingCategoriesPurchaseOrdersContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,company")]
@@ -598,31 +666,41 @@ public enum InvoicesListRequestExpand
     [EnumMember(Value = "payments,line_items,tracking_categories,contact,company")]
     PaymentsLineItemsTrackingCategoriesContactCompany,
 
-    [EnumMember(Value = "payments,line_items,tracking_categories,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,line_items,tracking_categories,contact,company,accounting_period"
+    )]
     PaymentsLineItemsTrackingCategoriesContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,line_items,tracking_categories,purchase_orders")]
     PaymentsLineItemsTrackingCategoriesPurchaseOrders,
 
-    [EnumMember(Value = "payments,line_items,tracking_categories,purchase_orders,accounting_period")]
+    [EnumMember(
+        Value = "payments,line_items,tracking_categories,purchase_orders,accounting_period"
+    )]
     PaymentsLineItemsTrackingCategoriesPurchaseOrdersAccountingPeriod,
 
     [EnumMember(Value = "payments,line_items,tracking_categories,purchase_orders,company")]
     PaymentsLineItemsTrackingCategoriesPurchaseOrdersCompany,
 
-    [EnumMember(Value = "payments,line_items,tracking_categories,purchase_orders,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,line_items,tracking_categories,purchase_orders,company,accounting_period"
+    )]
     PaymentsLineItemsTrackingCategoriesPurchaseOrdersCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,line_items,tracking_categories,purchase_orders,contact")]
     PaymentsLineItemsTrackingCategoriesPurchaseOrdersContact,
 
-    [EnumMember(Value = "payments,line_items,tracking_categories,purchase_orders,contact,accounting_period")]
+    [EnumMember(
+        Value = "payments,line_items,tracking_categories,purchase_orders,contact,accounting_period"
+    )]
     PaymentsLineItemsTrackingCategoriesPurchaseOrdersContactAccountingPeriod,
 
     [EnumMember(Value = "payments,line_items,tracking_categories,purchase_orders,contact,company")]
     PaymentsLineItemsTrackingCategoriesPurchaseOrdersContactCompany,
 
-    [EnumMember(Value = "payments,line_items,tracking_categories,purchase_orders,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,line_items,tracking_categories,purchase_orders,contact,company,accounting_period"
+    )]
     PaymentsLineItemsTrackingCategoriesPurchaseOrdersContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "payments,purchase_orders")]
@@ -694,7 +772,9 @@ public enum InvoicesListRequestExpand
     [EnumMember(Value = "payments,tracking_categories,purchase_orders,contact,company")]
     PaymentsTrackingCategoriesPurchaseOrdersContactCompany,
 
-    [EnumMember(Value = "payments,tracking_categories,purchase_orders,contact,company,accounting_period")]
+    [EnumMember(
+        Value = "payments,tracking_categories,purchase_orders,contact,company,accounting_period"
+    )]
     PaymentsTrackingCategoriesPurchaseOrdersContactCompanyAccountingPeriod,
 
     [EnumMember(Value = "purchase_orders")]

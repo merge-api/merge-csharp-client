@@ -8,12 +8,21 @@ public class DataPassthroughRequest
     [JsonPropertyName("method")]
     public MethodEnum Method { get; init; }
 
+    /// <summary>
+    /// The path of the request in the third party's platform.
+    /// </summary>
     [JsonPropertyName("path")]
     public string Path { get; init; }
 
+    /// <summary>
+    /// An optional override of the third party's base url for the request.
+    /// </summary>
     [JsonPropertyName("base_url_override")]
     public string? BaseUrlOverride { get; init; }
 
+    /// <summary>
+    /// The data with the request. You must include a `request_format` parameter matching the data's format
+    /// </summary>
     [JsonPropertyName("data")]
     public string? Data { get; init; }
 

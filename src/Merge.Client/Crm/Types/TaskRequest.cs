@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Crm;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -50,7 +50,7 @@ public class TaskRequest
 
     /// <summary>
     /// The task's status.
-    /// 
+    ///
     /// - `OPEN` - OPEN
     /// - `CLOSED` - CLOSED
     /// </summary>

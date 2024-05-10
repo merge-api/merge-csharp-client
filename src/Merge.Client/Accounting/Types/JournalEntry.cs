@@ -1,11 +1,29 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Accounting;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
 public class JournalEntry
 {
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
+    /// <summary>
+    /// The third-party API ID of the matching object.
+    /// </summary>
+    [JsonPropertyName("remote_id")]
+    public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
+
     /// <summary>
     /// The journal entry's transaction date.
     /// </summary>
@@ -44,7 +62,7 @@ public class JournalEntry
 
     /// <summary>
     /// The journal's currency.
-    /// 
+    ///
     /// - `XUA` - ADB Unit of Account
     /// - `AFN` - Afghan Afghani
     /// - `AFA` - Afghan Afghani (1927–2002)
@@ -384,7 +402,7 @@ public class JournalEntry
 
     /// <summary>
     /// The journal's posting status.
-    /// 
+    ///
     /// - `UNPOSTED` - UNPOSTED
     /// - `POSTED` - POSTED
     /// </summary>
@@ -396,24 +414,6 @@ public class JournalEntry
     /// </summary>
     [JsonPropertyName("accounting_period")]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; init; }
-
-    [JsonPropertyName("id")]
-    public string? Id { get; init; }
-
-    /// <summary>
-    /// The third-party API ID of the matching object.
-    /// </summary>
-    [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

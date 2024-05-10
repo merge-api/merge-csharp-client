@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Hris;
+using OneOf;
 
 namespace Merge.Client.Hris;
 
@@ -14,6 +14,15 @@ public class Employee
     /// </summary>
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
 
     /// <summary>
     /// The employee's number that appears in the third-party integration's UI.
@@ -122,7 +131,7 @@ public class Employee
 
     /// <summary>
     /// The employee's gender.
-    /// 
+    ///
     /// - `MALE` - MALE
     /// - `FEMALE` - FEMALE
     /// - `NON-BINARY` - NON-BINARY
@@ -134,7 +143,7 @@ public class Employee
 
     /// <summary>
     /// The employee's ethnicity.
-    /// 
+    ///
     /// - `AMERICAN_INDIAN_OR_ALASKA_NATIVE` - AMERICAN_INDIAN_OR_ALASKA_NATIVE
     /// - `ASIAN_OR_INDIAN_SUBCONTINENT` - ASIAN_OR_INDIAN_SUBCONTINENT
     /// - `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN
@@ -149,7 +158,7 @@ public class Employee
 
     /// <summary>
     /// The employee's filing status as related to marital status.
-    /// 
+    ///
     /// - `SINGLE` - SINGLE
     /// - `MARRIED_FILING_JOINTLY` - MARRIED_FILING_JOINTLY
     /// - `MARRIED_FILING_SEPARATELY` - MARRIED_FILING_SEPARATELY
@@ -185,7 +194,7 @@ public class Employee
 
     /// <summary>
     /// The employment status of the employee.
-    /// 
+    ///
     /// - `ACTIVE` - ACTIVE
     /// - `PENDING` - PENDING
     /// - `INACTIVE` - INACTIVE
@@ -213,15 +222,6 @@ public class Employee
 
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

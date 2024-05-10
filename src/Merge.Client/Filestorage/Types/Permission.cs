@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Filestorage;
+using OneOf;
 
 namespace Merge.Client.Filestorage;
 
@@ -14,6 +14,15 @@ public class Permission
     /// </summary>
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
+
+    [JsonPropertyName("created_at")]
+    public DateTime? CreatedAt { get; init; }
+
+    /// <summary>
+    /// This is the datetime that this object was last updated by Merge
+    /// </summary>
+    [JsonPropertyName("modified_at")]
+    public DateTime? ModifiedAt { get; init; }
 
     /// <summary>
     /// The user that is granted this permission.
@@ -29,7 +38,7 @@ public class Permission
 
     /// <summary>
     /// Denotes what type of people have access to the file.
-    /// 
+    ///
     /// - `USER` - USER
     /// - `GROUP` - GROUP
     /// - `COMPANY` - COMPANY
@@ -43,13 +52,4 @@ public class Permission
     /// </summary>
     [JsonPropertyName("roles")]
     public List<RolesEnum>? Roles { get; init; }
-
-    [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
-
-    /// <summary>
-    /// This is the datetime that this object was last updated by Merge
-    /// </summary>
-    [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
 }

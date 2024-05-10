@@ -43,7 +43,7 @@ public class PatchedOpportunityRequest
 
     /// <summary>
     /// The opportunity's status.
-    /// 
+    ///
     /// - `OPEN` - OPEN
     /// - `WON` - WON
     /// - `LOST` - LOST

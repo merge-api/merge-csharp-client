@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Merge.Client.Accounting;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
@@ -26,7 +26,7 @@ public class JournalEntryRequest
 
     /// <summary>
     /// The journal's currency.
-    /// 
+    ///
     /// - `XUA` - ADB Unit of Account
     /// - `AFN` - Afghan Afghani
     /// - `AFA` - Afghan Afghani (1927–2002)
@@ -363,7 +363,7 @@ public class JournalEntryRequest
 
     /// <summary>
     /// The journal's posting status.
-    /// 
+    ///
     /// - `UNPOSTED` - UNPOSTED
     /// - `POSTED` - POSTED
     /// </summary>

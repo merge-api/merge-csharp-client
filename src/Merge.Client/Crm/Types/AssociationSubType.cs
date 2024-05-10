@@ -7,9 +7,6 @@ public class AssociationSubType
     [JsonPropertyName("id")]
     public string? Id { get; init; }
 
-    [JsonPropertyName("origin_type")]
-    public string? OriginType { get; init; }
-
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; init; }
 
@@ -18,4 +15,7 @@ public class AssociationSubType
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
+
+    [JsonPropertyName("origin_type")]
+    public string? OriginType { get; init; }
 }

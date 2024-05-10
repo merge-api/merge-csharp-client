@@ -5,22 +5,6 @@ namespace Merge.Client.Crm;
 
 public class EngagementType
 {
-    /// <summary>
-    /// The engagement type's activity type.
-    /// 
-    /// - `CALL` - CALL
-    /// - `MEETING` - MEETING
-    /// - `EMAIL` - EMAIL
-    /// </summary>
-    [JsonPropertyName("activity_type")]
-    public ActivityTypeEnum? ActivityType { get; init; }
-
-    /// <summary>
-    /// The engagement type's name.
-    /// </summary>
-    [JsonPropertyName("name")]
-    public string? Name { get; init; }
-
     [JsonPropertyName("id")]
     public string? Id { get; init; }
 
@@ -38,6 +22,22 @@ public class EngagementType
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
+
+    /// <summary>
+    /// The engagement type's activity type.
+    ///
+    /// - `CALL` - CALL
+    /// - `MEETING` - MEETING
+    /// - `EMAIL` - EMAIL
+    /// </summary>
+    [JsonPropertyName("activity_type")]
+    public ActivityTypeEnum? ActivityType { get; init; }
+
+    /// <summary>
+    /// The engagement type's name.
+    /// </summary>
+    [JsonPropertyName("name")]
+    public string? Name { get; init; }
 
     [JsonPropertyName("remote_fields")]
     public List<RemoteField>? RemoteFields { get; init; }
