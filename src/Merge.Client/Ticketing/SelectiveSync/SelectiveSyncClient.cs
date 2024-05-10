@@ -46,7 +46,8 @@ public class SelectiveSyncClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Put,
-                Path = "/ticketing/v1/selective-sync/configurations"
+                Path = "/ticketing/v1/selective-sync/configurations",
+                Body = request
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

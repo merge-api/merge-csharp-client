@@ -22,7 +22,8 @@ public class GenerateKeyClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/filestorage/v1/generate-key"
+                Path = "/filestorage/v1/generate-key",
+                Body = request
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

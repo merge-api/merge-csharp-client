@@ -42,7 +42,8 @@ public class WebhookReceiversClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/hris/v1/webhook-receivers"
+                Path = "/hris/v1/webhook-receivers",
+                Body = request
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

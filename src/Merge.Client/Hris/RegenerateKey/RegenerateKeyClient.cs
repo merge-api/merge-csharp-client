@@ -19,7 +19,12 @@ public class RegenerateKeyClient
     public async Task<RemoteKey> CreateAsync(RemoteKeyForRegenerationRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/hris/v1/regenerate-key" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/hris/v1/regenerate-key",
+                Body = request
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)

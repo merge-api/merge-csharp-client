@@ -22,7 +22,8 @@ public class LinkTokenClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/accounting/v1/link-token"
+                Path = "/accounting/v1/link-token",
+                Body = request
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

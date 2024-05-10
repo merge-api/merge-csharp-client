@@ -19,7 +19,12 @@ public class LinkTokenClient
     public async Task<LinkToken> CreateAsync(EndUserDetailsRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/crm/v1/link-token" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/crm/v1/link-token",
+                Body = request
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)

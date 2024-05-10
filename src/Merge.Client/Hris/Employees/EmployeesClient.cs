@@ -244,7 +244,8 @@ public class EmployeesClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/hris/v1/employees/ignore/{modelId}"
+                Path = $"/hris/v1/employees/ignore/{modelId}",
+                Body = request
             }
         );
     }

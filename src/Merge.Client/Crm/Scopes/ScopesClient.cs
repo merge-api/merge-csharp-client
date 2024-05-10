@@ -60,7 +60,8 @@ public class ScopesClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/crm/v1/linked-account-scopes"
+                Path = "/crm/v1/linked-account-scopes",
+                Body = request
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -22,7 +22,8 @@ public class RegenerateKeyClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ticketing/v1/regenerate-key"
+                Path = "/ticketing/v1/regenerate-key",
+                Body = request
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

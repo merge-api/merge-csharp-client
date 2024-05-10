@@ -44,7 +44,8 @@ public class FieldMappingClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/filestorage/v1/field-mappings"
+                Path = "/filestorage/v1/field-mappings",
+                Body = request
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -87,7 +88,8 @@ public class FieldMappingClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Patch,
-                Path = $"/filestorage/v1/field-mappings/{fieldMappingId}"
+                Path = $"/filestorage/v1/field-mappings/{fieldMappingId}",
+                Body = request
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

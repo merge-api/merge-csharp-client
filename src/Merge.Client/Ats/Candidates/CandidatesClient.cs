@@ -193,7 +193,8 @@ public class CandidatesClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/ats/v1/candidates/ignore/{modelId}"
+                Path = $"/ats/v1/candidates/ignore/{modelId}",
+                Body = request
             }
         );
     }

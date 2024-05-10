@@ -64,7 +64,8 @@ public class ScopesClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/filestorage/v1/linked-account-scopes"
+                Path = "/filestorage/v1/linked-account-scopes",
+                Body = request
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

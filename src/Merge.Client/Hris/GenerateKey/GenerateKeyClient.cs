@@ -19,7 +19,12 @@ public class GenerateKeyClient
     public async Task<RemoteKey> CreateAsync(GenerateRemoteKeyRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/hris/v1/generate-key" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/hris/v1/generate-key",
+                Body = request
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
