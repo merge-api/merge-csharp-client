@@ -1,10 +1,3 @@
 # Specify files that shouldn't be modified by Fern
 
 README.md
-
-# Workflows
-.github/
-
-# Version Twekas
-src/Merge.Client/Merge.Client.csproj
-src/Merge.Client/Merge.cs
