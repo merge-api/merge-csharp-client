@@ -5,19 +5,23 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <NuGetAudit>false</NuGetAudit>
-        <Version>0.0.5</Version>
+        <Version>0.0.6</Version>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageProjectUrl>https://github.com/merge-api/merge-csharp-client</PackageProjectUrl>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="OneOf" Version="3.0.263" />
+        <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
         <None Include="..\..\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="OneOf" Version="3.0.263" />
-      <PackageReference Include="System.Text.Json" Version="8.0.3" />
+        <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
     </ItemGroup>
 
 </Project>

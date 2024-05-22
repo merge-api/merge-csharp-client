@@ -25,7 +25,7 @@ public partial class Merge
                 { "X-Account-Token", accountToken },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Merge.Client" },
-                { "X-Fern-SDK-Version", "0.0.5" },
+                { "X-Fern-SDK-Version", "0.0.6" },
             },
             clientOptions ?? new ClientOptions()
         );
