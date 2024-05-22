@@ -1,14 +1,19 @@
+
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <NuGetAudit>false</NuGetAudit>
-        <Version>0.0.3</Version>
+        <Version>0.0.5</Version>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageProjectUrl>https://github.com/merge/merge-csharp-client</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/merge-api/merge-csharp-client</PackageProjectUrl>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="OneOf" Version="3.0.263" />
