@@ -20,6 +20,11 @@ public class JobPostingsListRequest
     public string? Cursor { get; init; }
 
     /// <summary>
+    /// Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+    /// </summary>
+    public string? Expand { get; init; }
+
+    /// <summary>
     /// Whether to include data that was marked as deleted by third party webhooks.
     /// </summary>
     public bool? IncludeDeletedData { get; init; }

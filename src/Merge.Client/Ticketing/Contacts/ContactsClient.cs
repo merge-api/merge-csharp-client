@@ -76,6 +76,36 @@ public class ContactsClient
     }
 
     /// <summary>
+    /// Creates a `Contact` object with the given values.
+    /// </summary>
+    public async Task<TicketingContactResponse> CreateAsync(TicketingContactEndpointRequest request)
+    {
+        var _query = new Dictionary<string, object>() { };
+        if (request.IsDebugMode != null)
+        {
+            _query["is_debug_mode"] = request.IsDebugMode;
+        }
+        if (request.RunAsync != null)
+        {
+            _query["run_async"] = request.RunAsync;
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/ticketing/v1/contacts",
+                Query = _query
+            }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<TicketingContactResponse>(responseBody);
+        }
+        throw new Exception();
+    }
+
+    /// <summary>
     /// Returns a `Contact` object with the given `id`.
     /// </summary>
     public async Task<Contact> RetrieveAsync(string id, ContactsRetrieveRequest request)
@@ -101,6 +131,26 @@ public class ContactsClient
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<Contact>(responseBody);
+        }
+        throw new Exception();
+    }
+
+    /// <summary>
+    /// Returns metadata for `TicketingContact` POSTs.
+    /// </summary>
+    public async Task<MetaResponse> MetaPostRetrieveAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "/ticketing/v1/contacts/meta/post"
+            }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
         throw new Exception();
     }

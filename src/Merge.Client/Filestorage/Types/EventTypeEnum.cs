@@ -104,5 +104,14 @@ public enum EventTypeEnum
     MutedIssue,
 
     [EnumMember(Value = "GENERATED_MAGIC_LINK")]
-    GeneratedMagicLink
+    GeneratedMagicLink,
+
+    [EnumMember(Value = "ENABLED_MERGE_WEBHOOK")]
+    EnabledMergeWebhook,
+
+    [EnumMember(Value = "DISABLED_MERGE_WEBHOOK")]
+    DisabledMergeWebhook,
+
+    [EnumMember(Value = "MERGE_WEBHOOK_TARGET_CHANGED")]
+    MergeWebhookTargetChanged
 }

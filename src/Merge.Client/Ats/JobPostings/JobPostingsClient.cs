@@ -31,6 +31,10 @@ public class JobPostingsClient
         {
             _query["cursor"] = request.Cursor;
         }
+        if (request.Expand != null)
+        {
+            _query["expand"] = request.Expand;
+        }
         if (request.IncludeDeletedData != null)
         {
             _query["include_deleted_data"] = request.IncludeDeletedData;
@@ -81,6 +85,10 @@ public class JobPostingsClient
     public async Task<JobPosting> RetrieveAsync(string id, JobPostingsRetrieveRequest request)
     {
         var _query = new Dictionary<string, object>() { };
+        if (request.Expand != null)
+        {
+            _query["expand"] = request.Expand;
+        }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData;

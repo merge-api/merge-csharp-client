@@ -41,7 +41,6 @@ public class AccountingClient
         PhoneNumbers = new PhoneNumbersClient(_client);
         PurchaseOrders = new PurchaseOrdersClient(_client);
         RegenerateKey = new RegenerateKeyClient(_client);
-        SelectiveSync = new SelectiveSyncClient(_client);
         SyncStatus = new SyncStatusClient(_client);
         ForceResync = new ForceResyncClient(_client);
         TaxRates = new TaxRatesClient(_client);
@@ -112,8 +111,6 @@ public class AccountingClient
     public PurchaseOrdersClient PurchaseOrders { get; }
 
     public RegenerateKeyClient RegenerateKey { get; }
-
-    public SelectiveSyncClient SelectiveSync { get; }
 
     public SyncStatusClient SyncStatus { get; }
 

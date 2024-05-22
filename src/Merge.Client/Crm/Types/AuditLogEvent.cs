@@ -73,6 +73,9 @@ public class AuditLogEvent
     /// - `FORCED_LINKED_ACCOUNT_RESYNC` - FORCED_LINKED_ACCOUNT_RESYNC
     /// - `MUTED_ISSUE` - MUTED_ISSUE
     /// - `GENERATED_MAGIC_LINK` - GENERATED_MAGIC_LINK
+    /// - `ENABLED_MERGE_WEBHOOK` - ENABLED_MERGE_WEBHOOK
+    /// - `DISABLED_MERGE_WEBHOOK` - DISABLED_MERGE_WEBHOOK
+    /// - `MERGE_WEBHOOK_TARGET_CHANGED` - MERGE_WEBHOOK_TARGET_CHANGED
     /// </summary>
     [JsonPropertyName("event_type")]
     public EventTypeEnum EventType { get; init; }

@@ -15,11 +15,14 @@ public class Payment
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
 
+    /// <summary>
+    /// The datetime that this object was created by Merge.
+    /// </summary>
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; init; }
 
     /// <summary>
-    /// This is the datetime that this object was last updated by Merge
+    /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
@@ -372,6 +375,15 @@ public class Payment
     /// </summary>
     [JsonPropertyName("total_amount")]
     public double? TotalAmount { get; init; }
+
+    /// <summary>
+    /// The type of the invoice.
+    ///
+    /// - `ACCOUNTS_PAYABLE` - ACCOUNTS_PAYABLE
+    /// - `ACCOUNTS_RECEIVABLE` - ACCOUNTS_RECEIVABLE
+    /// </summary>
+    [JsonPropertyName("type")]
+    public PaymentTypeEnum? Type { get; init; }
 
     [JsonPropertyName("tracking_categories")]
     public List<OneOf<string, TrackingCategory>?>? TrackingCategories { get; init; }

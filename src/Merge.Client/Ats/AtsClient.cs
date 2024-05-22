@@ -38,7 +38,6 @@ public class AtsClient
         RegenerateKey = new RegenerateKeyClient(_client);
         RejectReasons = new RejectReasonsClient(_client);
         Scorecards = new ScorecardsClient(_client);
-        SelectiveSync = new SelectiveSyncClient(_client);
         SyncStatus = new SyncStatusClient(_client);
         ForceResync = new ForceResyncClient(_client);
         Tags = new TagsClient(_client);
@@ -101,8 +100,6 @@ public class AtsClient
     public RejectReasonsClient RejectReasons { get; }
 
     public ScorecardsClient Scorecards { get; }
-
-    public SelectiveSyncClient SelectiveSync { get; }
 
     public SyncStatusClient SyncStatus { get; }
 

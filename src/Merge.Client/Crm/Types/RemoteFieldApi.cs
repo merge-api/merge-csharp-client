@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Crm;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -19,4 +20,7 @@ public class RemoteFieldApi
 
     [JsonPropertyName("advanced_metadata")]
     public AdvancedMetadata? AdvancedMetadata { get; init; }
+
+    [JsonPropertyName("coverage")]
+    public OneOf<int, double>? Coverage { get; init; }
 }

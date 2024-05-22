@@ -28,6 +28,11 @@ public class GroupsListRequest
     public bool? IncludeRemoteData { get; init; }
 
     /// <summary>
+    /// If provided, specifies whether to return only Group objects which refer to a team in the third party platform. Note that this is an opinionated view based on how a team may be represented in the third party platform.
+    /// </summary>
+    public string? IsCommonlyUsedAsTeam { get; init; }
+
+    /// <summary>
     /// If provided, only objects synced by Merge after this date time will be returned.
     /// </summary>
     public DateTime? ModifiedAfter { get; init; }

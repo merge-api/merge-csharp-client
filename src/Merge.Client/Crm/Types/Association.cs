@@ -6,11 +6,14 @@ namespace Merge.Client.Crm;
 
 public class Association
 {
+    /// <summary>
+    /// The datetime that this object was created by Merge.
+    /// </summary>
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; init; }
 
     /// <summary>
-    /// This is the datetime that this object was last updated by Merge
+    /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
@@ -21,6 +24,9 @@ public class Association
     [JsonPropertyName("target_object")]
     public Dictionary<string, object>? TargetObject { get; init; }
 
+    /// <summary>
+    /// The association type the association belongs to.
+    /// </summary>
     [JsonPropertyName("association_type")]
     public OneOf<string, AssociationType>? AssociationType { get; init; }
 }

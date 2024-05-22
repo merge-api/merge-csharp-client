@@ -39,6 +39,10 @@ public class GroupsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData;
         }
+        if (request.IsCommonlyUsedAsTeam != null)
+        {
+            _query["is_commonly_used_as_team"] = request.IsCommonlyUsedAsTeam;
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter;

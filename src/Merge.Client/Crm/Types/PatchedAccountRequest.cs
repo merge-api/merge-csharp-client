@@ -41,6 +41,9 @@ public class PatchedAccountRequest
     [JsonPropertyName("number_of_employees")]
     public int? NumberOfEmployees { get; init; }
 
+    [JsonPropertyName("addresses")]
+    public List<AddressRequest>? Addresses { get; init; }
+
     /// <summary>
     /// The last date (either most recent or furthest in the future) of when an activity occurs in an account.
     /// </summary>
