@@ -36,7 +36,6 @@ public class HrisClient
         PayGroups = new PayGroupsClient(_client);
         PayrollRuns = new PayrollRunsClient(_client);
         RegenerateKey = new RegenerateKeyClient(_client);
-        SelectiveSync = new SelectiveSyncClient(_client);
         SyncStatus = new SyncStatusClient(_client);
         ForceResync = new ForceResyncClient(_client);
         Teams = new TeamsClient(_client);
@@ -97,8 +96,6 @@ public class HrisClient
     public PayrollRunsClient PayrollRuns { get; }
 
     public RegenerateKeyClient RegenerateKey { get; }
-
-    public SelectiveSyncClient SelectiveSync { get; }
 
     public SyncStatusClient SyncStatus { get; }
 

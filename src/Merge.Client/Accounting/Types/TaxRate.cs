@@ -15,11 +15,14 @@ public class TaxRate
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
 
+    /// <summary>
+    /// The datetime that this object was created by Merge.
+    /// </summary>
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; init; }
 
     /// <summary>
-    /// This is the datetime that this object was last updated by Merge
+    /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
@@ -31,19 +34,19 @@ public class TaxRate
     public string? Description { get; init; }
 
     /// <summary>
-    /// The tax rate's total tax rate.
+    /// The tax’s total tax rate - sum of the tax components (not compounded).
     /// </summary>
     [JsonPropertyName("total_tax_rate")]
     public double? TotalTaxRate { get; init; }
 
     /// <summary>
-    /// The tax rate's effective tax rate.
+    /// The tax rate’s effective tax rate - total amount of tax with compounding.
     /// </summary>
     [JsonPropertyName("effective_tax_rate")]
     public double? EffectiveTaxRate { get; init; }
 
     /// <summary>
-    /// The company the tax rate belongs to.
+    /// The subsidiary that the tax rate belongs to (in the case of multi-entity systems).
     /// </summary>
     [JsonPropertyName("company")]
     public OneOf<string, CompanyInfo>? Company { get; init; }

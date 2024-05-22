@@ -56,4 +56,9 @@ public class EndUserDetailsRequest
     /// The language code for the language to localize Merge Link to.
     /// </summary>
     public string? Language { get; init; }
+
+    /// <summary>
+    /// A JSON object containing integration-specific configuration options.
+    /// </summary>
+    public Dictionary<string, object>? IntegrationSpecificConfig { get; init; }
 }

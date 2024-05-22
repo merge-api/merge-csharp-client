@@ -31,7 +31,6 @@ public class TicketingClient
         Projects = new ProjectsClient(_client);
         RegenerateKey = new RegenerateKeyClient(_client);
         Roles = new RolesClient(_client);
-        SelectiveSync = new SelectiveSyncClient(_client);
         SyncStatus = new SyncStatusClient(_client);
         ForceResync = new ForceResyncClient(_client);
         Tags = new TagsClient(_client);
@@ -82,8 +81,6 @@ public class TicketingClient
     public RegenerateKeyClient RegenerateKey { get; }
 
     public RolesClient Roles { get; }
-
-    public SelectiveSyncClient SelectiveSync { get; }
 
     public SyncStatusClient SyncStatus { get; }
 

@@ -355,6 +355,15 @@ public class PaymentRequest
     [JsonPropertyName("total_amount")]
     public double? TotalAmount { get; init; }
 
+    /// <summary>
+    /// The type of the invoice.
+    ///
+    /// - `ACCOUNTS_PAYABLE` - ACCOUNTS_PAYABLE
+    /// - `ACCOUNTS_RECEIVABLE` - ACCOUNTS_RECEIVABLE
+    /// </summary>
+    [JsonPropertyName("type")]
+    public PaymentTypeEnum? Type { get; init; }
+
     [JsonPropertyName("tracking_categories")]
     public List<OneOf<string, TrackingCategory>?>? TrackingCategories { get; init; }
 

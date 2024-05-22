@@ -15,11 +15,14 @@ public class CreditNoteLineItem
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
 
+    /// <summary>
+    /// The datetime that this object was created by Merge.
+    /// </summary>
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; init; }
 
     /// <summary>
-    /// This is the datetime that this object was last updated by Merge
+    /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
@@ -56,12 +59,6 @@ public class CreditNoteLineItem
     /// </summary>
     [JsonPropertyName("unit_price")]
     public string? UnitPrice { get; init; }
-
-    /// <summary>
-    /// The credit note line item's tax rate.
-    /// </summary>
-    [JsonPropertyName("tax_rate")]
-    public string? TaxRate { get; init; }
 
     /// <summary>
     /// The credit note line item's total.

@@ -28,7 +28,6 @@ public class FilestorageClient
         LinkedAccounts = new LinkedAccountsClient(_client);
         Passthrough = new PassthroughClient(_client);
         RegenerateKey = new RegenerateKeyClient(_client);
-        SelectiveSync = new SelectiveSyncClient(_client);
         SyncStatus = new SyncStatusClient(_client);
         ForceResync = new ForceResyncClient(_client);
         Users = new UsersClient(_client);
@@ -70,8 +69,6 @@ public class FilestorageClient
     public PassthroughClient Passthrough { get; }
 
     public RegenerateKeyClient RegenerateKey { get; }
-
-    public SelectiveSyncClient SelectiveSync { get; }
 
     public SyncStatusClient SyncStatus { get; }
 

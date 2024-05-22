@@ -14,11 +14,14 @@ public class Group
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; init; }
 
+    /// <summary>
+    /// The datetime that this object was created by Merge.
+    /// </summary>
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; init; }
 
     /// <summary>
-    /// This is the datetime that this object was last updated by Merge
+    /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
@@ -52,6 +55,12 @@ public class Group
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
+
+    /// <summary>
+    /// Indicates whether the Group refers to a team in the third party platform. Note that this is an opinionated view based on how Merge observes most organizations representing teams in each third party platform. If your customer uses a platform different from most, there is a chance this will not be correct.
+    /// </summary>
+    [JsonPropertyName("is_commonly_used_as_team")]
+    public bool? IsCommonlyUsedAsTeam { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }

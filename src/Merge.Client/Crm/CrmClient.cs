@@ -35,7 +35,6 @@ public class CrmClient
         Opportunities = new OpportunitiesClient(_client);
         Passthrough = new PassthroughClient(_client);
         RegenerateKey = new RegenerateKeyClient(_client);
-        SelectiveSync = new SelectiveSyncClient(_client);
         Stages = new StagesClient(_client);
         SyncStatus = new SyncStatusClient(_client);
         ForceResync = new ForceResyncClient(_client);
@@ -93,8 +92,6 @@ public class CrmClient
     public PassthroughClient Passthrough { get; }
 
     public RegenerateKeyClient RegenerateKey { get; }
-
-    public SelectiveSyncClient SelectiveSync { get; }
 
     public StagesClient Stages { get; }
 
