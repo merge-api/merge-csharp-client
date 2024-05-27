@@ -25,27 +25,27 @@ public partial class Merge
                 { "X-Account-Token", accountToken },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Merge.Client" },
-                { "X-Fern-SDK-Version", "0.0.7" },
+                { "X-Fern-SDK-Version", "0.0.8" },
             },
             clientOptions ?? new ClientOptions()
         );
         Ats = new AtsClient(_client);
-        Filestorage = new FilestorageClient(_client);
-        Hris = new HrisClient(_client);
-        Ticketing = new TicketingClient(_client);
         Crm = new CrmClient(_client);
+        Filestorage = new FilestorageClient(_client);
+        Ticketing = new TicketingClient(_client);
+        Hris = new HrisClient(_client);
         Accounting = new AccountingClient(_client);
     }
 
     public AtsClient Ats { get; }
 
-    public FilestorageClient Filestorage { get; }
+    public CrmClient Crm { get; }
 
-    public HrisClient Hris { get; }
+    public FilestorageClient Filestorage { get; }
 
     public TicketingClient Ticketing { get; }
 
-    public CrmClient Crm { get; }
+    public HrisClient Hris { get; }
 
     public AccountingClient Accounting { get; }
 
