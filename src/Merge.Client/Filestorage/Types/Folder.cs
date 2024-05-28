@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using Merge.Client.Filestorage;
 using OneOf;
 
+#nullable enable
+
 namespace Merge.Client.Filestorage;
 
 public class Folder

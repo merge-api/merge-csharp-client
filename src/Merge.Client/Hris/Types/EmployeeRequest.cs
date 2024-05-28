@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using Merge.Client.Hris;
 using OneOf;
 
+#nullable enable
+
 namespace Merge.Client.Hris;
 
 public class EmployeeRequest

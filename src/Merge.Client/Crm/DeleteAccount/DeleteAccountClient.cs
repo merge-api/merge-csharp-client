@@ -1,5 +1,7 @@
 using Merge.Client;
 
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public class DeleteAccountClient

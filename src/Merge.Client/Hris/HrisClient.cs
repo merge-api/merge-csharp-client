@@ -1,6 +1,8 @@
 using Merge.Client;
 using Merge.Client.Hris;
 
+#nullable enable
+
 namespace Merge.Client.Hris;
 
 public class HrisClient

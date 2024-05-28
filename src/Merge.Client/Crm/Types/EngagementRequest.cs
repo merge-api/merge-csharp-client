@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using Merge.Client.Crm;
 using OneOf;
 
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public class EngagementRequest

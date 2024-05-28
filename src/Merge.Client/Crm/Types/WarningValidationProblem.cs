@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Crm;
 
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public class WarningValidationProblem

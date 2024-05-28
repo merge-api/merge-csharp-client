@@ -2,6 +2,8 @@ using System.Text.Json;
 using Merge.Client;
 using Merge.Client.Ats;
 
+#nullable enable
+
 namespace Merge.Client.Ats;
 
 public class CandidatesClient

@@ -2,6 +2,8 @@ using System.Text.Json;
 using Merge.Client;
 using Merge.Client.Filestorage;
 
+#nullable enable
+
 namespace Merge.Client.Filestorage;
 
 public class LinkTokenClient

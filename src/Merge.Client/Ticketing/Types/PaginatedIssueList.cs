@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ticketing;
 
+#nullable enable
+
 namespace Merge.Client.Ticketing;
 
 public class PaginatedIssueList

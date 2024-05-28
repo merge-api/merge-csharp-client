@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merge.Client", "Merge.Client\Merge.Client.csproj", "{31F9475D-AC14-401A-8ED2-A9BACF4FA24D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merge.Client", "Merge.Client\Merge.Client.csproj", "{87C34C5E-67D1-46EC-9D8D-F9E92660E2BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merge.Client.Test", "Merge.Client.Test\Merge.Client.Test.csproj", "{C7706E95-22FC-4F98-B44D-9D683BE2289F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merge.Client.Test", "Merge.Client.Test\Merge.Client.Test.csproj", "{B2B0C304-B04D-491F-B22D-A152D9BD7CBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{31F9475D-AC14-401A-8ED2-A9BACF4FA24D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31F9475D-AC14-401A-8ED2-A9BACF4FA24D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31F9475D-AC14-401A-8ED2-A9BACF4FA24D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31F9475D-AC14-401A-8ED2-A9BACF4FA24D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7706E95-22FC-4F98-B44D-9D683BE2289F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7706E95-22FC-4F98-B44D-9D683BE2289F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7706E95-22FC-4F98-B44D-9D683BE2289F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7706E95-22FC-4F98-B44D-9D683BE2289F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87C34C5E-67D1-46EC-9D8D-F9E92660E2BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87C34C5E-67D1-46EC-9D8D-F9E92660E2BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87C34C5E-67D1-46EC-9D8D-F9E92660E2BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87C34C5E-67D1-46EC-9D8D-F9E92660E2BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2B0C304-B04D-491F-B22D-A152D9BD7CBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2B0C304-B04D-491F-B22D-A152D9BD7CBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2B0C304-B04D-491F-B22D-A152D9BD7CBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2B0C304-B04D-491F-B22D-A152D9BD7CBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
