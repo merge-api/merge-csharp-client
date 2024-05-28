@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
 
+#nullable enable
+
 namespace Merge.Client.Ats;
 
 public class Office

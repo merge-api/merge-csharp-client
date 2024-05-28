@@ -2,6 +2,8 @@ using System.Text.Json;
 using Merge.Client;
 using Merge.Client.Accounting;
 
+#nullable enable
+
 namespace Merge.Client.Accounting;
 
 public class AccountingPeriodsClient

@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Filestorage;
 
+#nullable enable
+
 namespace Merge.Client.Filestorage;
 
 public class PaginatedFileList

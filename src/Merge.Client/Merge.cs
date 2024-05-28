@@ -6,6 +6,8 @@ using Merge.Client.Filestorage;
 using Merge.Client.Hris;
 using Merge.Client.Ticketing;
 
+#nullable enable
+
 namespace Merge.Client;
 
 public partial class Merge
@@ -25,13 +27,13 @@ public partial class Merge
                 { "X-Account-Token", accountToken },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Merge.Client" },
-                { "X-Fern-SDK-Version", "0.0.8" },
+                { "X-Fern-SDK-Version", "0.0.9" },
             },
             clientOptions ?? new ClientOptions()
         );
         Ats = new AtsClient(_client);
-        Crm = new CrmClient(_client);
         Filestorage = new FilestorageClient(_client);
+        Crm = new CrmClient(_client);
         Ticketing = new TicketingClient(_client);
         Hris = new HrisClient(_client);
         Accounting = new AccountingClient(_client);
@@ -39,9 +41,9 @@ public partial class Merge
 
     public AtsClient Ats { get; }
 
-    public CrmClient Crm { get; }
-
     public FilestorageClient Filestorage { get; }
+
+    public CrmClient Crm { get; }
 
     public TicketingClient Ticketing { get; }
 

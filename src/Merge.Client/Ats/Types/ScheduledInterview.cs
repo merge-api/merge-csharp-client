@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using Merge.Client.Ats;
 using OneOf;
 
+#nullable enable
+
 namespace Merge.Client.Ats;
 
 public class ScheduledInterview

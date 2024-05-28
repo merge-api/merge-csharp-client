@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
 using OneOf;
 
+#nullable enable
+
 namespace Merge.Client.Accounting;
 
 public class Payment

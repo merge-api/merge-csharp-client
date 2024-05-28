@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using Merge.Client.Ticketing;
 using OneOf;
 
+#nullable enable
+
 namespace Merge.Client.Ticketing;
 
 public class AttachmentRequest

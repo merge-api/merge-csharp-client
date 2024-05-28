@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
 
+#nullable enable
+
 namespace Merge.Client.Accounting;
 
 public class PaginatedAccountDetailsAndActionsList

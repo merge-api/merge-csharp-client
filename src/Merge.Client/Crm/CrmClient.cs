@@ -1,6 +1,8 @@
 using Merge.Client;
 using Merge.Client.Crm;
 
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public class CrmClient

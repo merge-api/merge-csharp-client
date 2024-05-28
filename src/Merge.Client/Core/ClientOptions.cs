@@ -1,5 +1,7 @@
 using Merge.Client.Core;
 
+#nullable enable
+
 namespace Merge.Client;
 
 public partial class ClientOptions

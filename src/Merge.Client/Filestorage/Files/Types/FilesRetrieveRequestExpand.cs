@@ -1,5 +1,7 @@
 using System.Runtime.Serialization;
 
+#nullable enable
+
 namespace Merge.Client.Filestorage;
 
 public enum FilesRetrieveRequestExpand

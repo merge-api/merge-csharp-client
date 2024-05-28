@@ -2,6 +2,8 @@ using System.Text.Json;
 using Merge.Client;
 using Merge.Client.Ticketing;
 
+#nullable enable
+
 namespace Merge.Client.Ticketing;
 
 public class TeamsClient
