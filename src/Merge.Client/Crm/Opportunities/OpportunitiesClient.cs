@@ -102,7 +102,7 @@ public class OpportunitiesClient
         {
             return JsonSerializer.Deserialize<PaginatedOpportunityList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -132,7 +132,7 @@ public class OpportunitiesClient
         {
             return JsonSerializer.Deserialize<OpportunityResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -174,7 +174,7 @@ public class OpportunitiesClient
         {
             return JsonSerializer.Deserialize<Opportunity>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -207,7 +207,7 @@ public class OpportunitiesClient
         {
             return JsonSerializer.Deserialize<OpportunityResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -227,7 +227,7 @@ public class OpportunitiesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -247,7 +247,7 @@ public class OpportunitiesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -291,6 +291,6 @@ public class OpportunitiesClient
         {
             return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

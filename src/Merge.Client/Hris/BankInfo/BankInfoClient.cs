@@ -98,7 +98,7 @@ public class BankInfoClient
         {
             return JsonSerializer.Deserialize<PaginatedBankInfoList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -136,6 +136,6 @@ public class BankInfoClient
         {
             return JsonSerializer.Deserialize<BankInfo>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

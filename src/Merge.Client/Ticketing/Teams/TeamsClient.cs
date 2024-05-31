@@ -70,7 +70,7 @@ public class TeamsClient
         {
             return JsonSerializer.Deserialize<PaginatedTeamList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -96,6 +96,6 @@ public class TeamsClient
         {
             return JsonSerializer.Deserialize<Team>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

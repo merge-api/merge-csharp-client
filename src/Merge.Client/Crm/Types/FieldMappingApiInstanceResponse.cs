@@ -8,29 +8,29 @@ namespace Merge.Client.Crm;
 public class FieldMappingApiInstanceResponse
 {
     [JsonPropertyName("Account")]
-    public List<FieldMappingApiInstance>? Account { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Account { get; init; }
 
     [JsonPropertyName("Contact")]
-    public List<FieldMappingApiInstance>? Contact { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Contact { get; init; }
 
     [JsonPropertyName("Lead")]
-    public List<FieldMappingApiInstance>? Lead { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Lead { get; init; }
 
     [JsonPropertyName("Note")]
-    public List<FieldMappingApiInstance>? Note { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Note { get; init; }
 
     [JsonPropertyName("Opportunity")]
-    public List<FieldMappingApiInstance>? Opportunity { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Opportunity { get; init; }
 
     [JsonPropertyName("Stage")]
-    public List<FieldMappingApiInstance>? Stage { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Stage { get; init; }
 
     [JsonPropertyName("User")]
-    public List<FieldMappingApiInstance>? User { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? User { get; init; }
 
     [JsonPropertyName("Task")]
-    public List<FieldMappingApiInstance>? Task { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Task { get; init; }
 
     [JsonPropertyName("Engagement")]
-    public List<FieldMappingApiInstance>? Engagement { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Engagement { get; init; }
 }

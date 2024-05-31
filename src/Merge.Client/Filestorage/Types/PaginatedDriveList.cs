@@ -14,5 +14,5 @@ public class PaginatedDriveList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<Drive>? Results { get; init; }
+    public IEnumerable<Drive>? Results { get; init; }
 }

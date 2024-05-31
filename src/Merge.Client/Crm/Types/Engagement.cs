@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Crm;
 using OneOf;
 
@@ -33,6 +34,7 @@ public class Engagement
     /// The engagement's owner.
     /// </summary>
     [JsonPropertyName("owner")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; init; }
 
     /// <summary>
@@ -60,6 +62,7 @@ public class Engagement
     /// The engagement type of the engagement.
     /// </summary>
     [JsonPropertyName("engagement_type")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, EngagementType>>))]
     public OneOf<string, EngagementType>? EngagementType { get; init; }
 
     /// <summary>
@@ -78,10 +81,17 @@ public class Engagement
     /// The account of the engagement.
     /// </summary>
     [JsonPropertyName("account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; init; }
 
     [JsonPropertyName("contacts")]
-    public List<OneOf<string, Contact>?>? Contacts { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Contact>,
+            OneOfSerializer<OneOf<string, Contact>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Contact>>? Contacts { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
@@ -93,8 +103,8 @@ public class Engagement
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteField>? RemoteFields { get; init; }
+    public IEnumerable<RemoteField>? RemoteFields { get; init; }
 }

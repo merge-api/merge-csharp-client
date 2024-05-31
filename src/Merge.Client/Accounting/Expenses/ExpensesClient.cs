@@ -86,7 +86,7 @@ public class ExpensesClient
         {
             return JsonSerializer.Deserialize<PaginatedExpenseList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class ExpensesClient
         {
             return JsonSerializer.Deserialize<ExpenseResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public class ExpensesClient
         {
             return JsonSerializer.Deserialize<Expense>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -166,6 +166,6 @@ public class ExpensesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

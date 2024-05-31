@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -73,10 +74,10 @@ public class Job
     /// IDs of `JobPosting` objects that serve as job postings for this `Job`.
     /// </summary>
     [JsonPropertyName("job_postings")]
-    public List<string?>? JobPostings { get; init; }
+    public IEnumerable<string>? JobPostings { get; init; }
 
     [JsonPropertyName("job_posting_urls")]
-    public List<Url>? JobPostingUrls { get; init; }
+    public IEnumerable<Url>? JobPostingUrls { get; init; }
 
     /// <summary>
     /// When the third party's job was created.
@@ -100,25 +101,49 @@ public class Job
     /// IDs of `Department` objects for this `Job`.
     /// </summary>
     [JsonPropertyName("departments")]
-    public List<OneOf<string, Department>?>? Departments { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Department>,
+            OneOfSerializer<OneOf<string, Department>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Department>>? Departments { get; init; }
 
     /// <summary>
     /// IDs of `Office` objects for this `Job`.
     /// </summary>
     [JsonPropertyName("offices")]
-    public List<OneOf<string, Office>?>? Offices { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Office>,
+            OneOfSerializer<OneOf<string, Office>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Office>>? Offices { get; init; }
 
     /// <summary>
     /// IDs of `RemoteUser` objects that serve as hiring managers for this `Job`.
     /// </summary>
     [JsonPropertyName("hiring_managers")]
-    public List<OneOf<string, RemoteUser>?>? HiringManagers { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, RemoteUser>,
+            OneOfSerializer<OneOf<string, RemoteUser>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, RemoteUser>>? HiringManagers { get; init; }
 
     /// <summary>
     /// IDs of `RemoteUser` objects that serve as recruiters for this `Job`.
     /// </summary>
     [JsonPropertyName("recruiters")]
-    public List<OneOf<string, RemoteUser>?>? Recruiters { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, RemoteUser>,
+            OneOfSerializer<OneOf<string, RemoteUser>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, RemoteUser>>? Recruiters { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
@@ -130,5 +155,5 @@ public class Job
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

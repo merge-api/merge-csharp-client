@@ -74,7 +74,7 @@ public class EngagementTypesClient
         {
             return JsonSerializer.Deserialize<PaginatedEngagementTypeList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ public class EngagementTypesClient
         {
             return JsonSerializer.Deserialize<EngagementType>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -151,6 +151,6 @@ public class EngagementTypesClient
         {
             return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -21,6 +22,7 @@ public class InvoiceRequest
     /// The invoice's contact.
     /// </summary>
     [JsonPropertyName("contact")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; init; }
 
     /// <summary>
@@ -70,6 +72,7 @@ public class InvoiceRequest
     /// The company the invoice belongs to.
     /// </summary>
     [JsonPropertyName("company")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; init; }
 
     /// <summary>
@@ -425,16 +428,34 @@ public class InvoiceRequest
     /// Array of `Payment` object IDs.
     /// </summary>
     [JsonPropertyName("payments")]
-    public List<OneOf<string, Payment>?>? Payments { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Payment>,
+            OneOfSerializer<OneOf<string, Payment>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Payment>>? Payments { get; init; }
 
     [JsonPropertyName("tracking_categories")]
-    public List<OneOf<string, TrackingCategory>?>? TrackingCategories { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, TrackingCategory>,
+            OneOfSerializer<OneOf<string, TrackingCategory>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
 
     [JsonPropertyName("line_items")]
-    public List<InvoiceLineItemRequest>? LineItems { get; init; }
+    public IEnumerable<InvoiceLineItemRequest>? LineItems { get; init; }
 
     [JsonPropertyName("purchase_orders")]
-    public List<OneOf<string, PurchaseOrder>?>? PurchaseOrders { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, PurchaseOrder>,
+            OneOfSerializer<OneOf<string, PurchaseOrder>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, PurchaseOrder>>? PurchaseOrders { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }

@@ -86,7 +86,7 @@ public class JournalEntriesClient
         {
             return JsonSerializer.Deserialize<PaginatedJournalEntryList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class JournalEntriesClient
         {
             return JsonSerializer.Deserialize<JournalEntryResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public class JournalEntriesClient
         {
             return JsonSerializer.Deserialize<JournalEntry>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -166,6 +166,6 @@ public class JournalEntriesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

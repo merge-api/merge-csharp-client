@@ -1,9 +1,13 @@
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using Merge.Client.Core;
+using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
+[JsonConverter(typeof(StringEnumSerializer<SyncStatusStatusEnum>))]
 public enum SyncStatusStatusEnum
 {
     [EnumMember(Value = "SYNCING")]

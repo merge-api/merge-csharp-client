@@ -14,7 +14,7 @@ public class PatchedTicketRequest
     public string? Name { get; init; }
 
     [JsonPropertyName("assignees")]
-    public List<string?>? Assignees { get; init; }
+    public IEnumerable<string>? Assignees { get; init; }
 
     /// <summary>
     /// The user who created this ticket.
@@ -46,7 +46,7 @@ public class PatchedTicketRequest
     public string? Description { get; init; }
 
     [JsonPropertyName("collections")]
-    public List<string?>? Collections { get; init; }
+    public IEnumerable<string>? Collections { get; init; }
 
     /// <summary>
     /// The sub category of the ticket within the 3rd party system. Examples include incident, task, subtask or to-do.
@@ -73,7 +73,7 @@ public class PatchedTicketRequest
     public string? ParentTicket { get; init; }
 
     [JsonPropertyName("tags")]
-    public List<string?>? Tags { get; init; }
+    public IEnumerable<string>? Tags { get; init; }
 
     /// <summary>
     /// When the ticket was completed.
@@ -105,5 +105,5 @@ public class PatchedTicketRequest
     public Dictionary<string, object>? LinkedAccountParams { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteFieldRequest>? RemoteFields { get; init; }
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; init; }
 }

@@ -50,7 +50,7 @@ public class AccountingPeriodsClient
         {
             return JsonSerializer.Deserialize<PaginatedAccountingPeriodList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -79,6 +79,6 @@ public class AccountingPeriodsClient
         {
             return JsonSerializer.Deserialize<AccountingPeriod>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

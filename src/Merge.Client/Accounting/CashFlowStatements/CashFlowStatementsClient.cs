@@ -80,7 +80,7 @@ public class CashFlowStatementsClient
         {
             return JsonSerializer.Deserialize<PaginatedCashFlowStatementList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -113,6 +113,6 @@ public class CashFlowStatementsClient
         {
             return JsonSerializer.Deserialize<CashFlowStatement>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -17,7 +17,7 @@ public class AccountIntegration
     /// Category or categories this integration belongs to. Multiple categories should be comma separated, i.e. [ats, hris].
     /// </summary>
     [JsonPropertyName("categories")]
-    public List<CategoriesEnum>? Categories { get; init; }
+    public IEnumerable<CategoriesEnum>? Categories { get; init; }
 
     /// <summary>
     /// Company logo in rectangular shape. <b>Upload an image with a clear background.</b>

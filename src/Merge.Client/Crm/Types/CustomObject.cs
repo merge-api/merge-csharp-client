@@ -41,5 +41,5 @@ public class CustomObject
     public Dictionary<string, object>? Fields { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteField>? RemoteFields { get; init; }
+    public IEnumerable<RemoteField>? RemoteFields { get; init; }
 }

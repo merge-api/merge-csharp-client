@@ -8,35 +8,35 @@ namespace Merge.Client.Ticketing;
 public class FieldMappingApiInstanceResponse
 {
     [JsonPropertyName("Ticket")]
-    public List<FieldMappingApiInstance>? Ticket { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Ticket { get; init; }
 
     [JsonPropertyName("Comment")]
-    public List<FieldMappingApiInstance>? Comment { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Comment { get; init; }
 
     [JsonPropertyName("Project")]
-    public List<FieldMappingApiInstance>? Project { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Project { get; init; }
 
     [JsonPropertyName("Collection")]
-    public List<FieldMappingApiInstance>? Collection { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Collection { get; init; }
 
     [JsonPropertyName("User")]
-    public List<FieldMappingApiInstance>? User { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? User { get; init; }
 
     [JsonPropertyName("Role")]
-    public List<FieldMappingApiInstance>? Role { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Role { get; init; }
 
     [JsonPropertyName("Account")]
-    public List<FieldMappingApiInstance>? Account { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Account { get; init; }
 
     [JsonPropertyName("Team")]
-    public List<FieldMappingApiInstance>? Team { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Team { get; init; }
 
     [JsonPropertyName("Attachment")]
-    public List<FieldMappingApiInstance>? Attachment { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Attachment { get; init; }
 
     [JsonPropertyName("Tag")]
-    public List<FieldMappingApiInstance>? Tag { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Tag { get; init; }
 
     [JsonPropertyName("Contact")]
-    public List<FieldMappingApiInstance>? Contact { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Contact { get; init; }
 }

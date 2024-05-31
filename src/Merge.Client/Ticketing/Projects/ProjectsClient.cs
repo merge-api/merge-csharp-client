@@ -70,7 +70,7 @@ public class ProjectsClient
         {
             return JsonSerializer.Deserialize<PaginatedProjectList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -96,7 +96,7 @@ public class ProjectsClient
         {
             return JsonSerializer.Deserialize<Project>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -141,6 +141,6 @@ public class ProjectsClient
         {
             return JsonSerializer.Deserialize<PaginatedUserList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

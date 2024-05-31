@@ -8,50 +8,50 @@ namespace Merge.Client.Hris;
 public class RemoteFieldApiResponse
 {
     [JsonPropertyName("Benefit")]
-    public List<RemoteFieldApi>? Benefit { get; init; }
+    public IEnumerable<RemoteFieldApi>? Benefit { get; init; }
 
     [JsonPropertyName("EmployerBenefit")]
-    public List<RemoteFieldApi>? EmployerBenefit { get; init; }
+    public IEnumerable<RemoteFieldApi>? EmployerBenefit { get; init; }
 
     [JsonPropertyName("Company")]
-    public List<RemoteFieldApi>? Company { get; init; }
+    public IEnumerable<RemoteFieldApi>? Company { get; init; }
 
     [JsonPropertyName("EmployeePayrollRun")]
-    public List<RemoteFieldApi>? EmployeePayrollRun { get; init; }
+    public IEnumerable<RemoteFieldApi>? EmployeePayrollRun { get; init; }
 
     [JsonPropertyName("Employee")]
-    public List<RemoteFieldApi>? Employee { get; init; }
+    public IEnumerable<RemoteFieldApi>? Employee { get; init; }
 
     [JsonPropertyName("Employment")]
-    public List<RemoteFieldApi>? Employment { get; init; }
+    public IEnumerable<RemoteFieldApi>? Employment { get; init; }
 
     [JsonPropertyName("Location")]
-    public List<RemoteFieldApi>? Location { get; init; }
+    public IEnumerable<RemoteFieldApi>? Location { get; init; }
 
     [JsonPropertyName("PayrollRun")]
-    public List<RemoteFieldApi>? PayrollRun { get; init; }
+    public IEnumerable<RemoteFieldApi>? PayrollRun { get; init; }
 
     [JsonPropertyName("Team")]
-    public List<RemoteFieldApi>? Team { get; init; }
+    public IEnumerable<RemoteFieldApi>? Team { get; init; }
 
     [JsonPropertyName("TimeOff")]
-    public List<RemoteFieldApi>? TimeOff { get; init; }
+    public IEnumerable<RemoteFieldApi>? TimeOff { get; init; }
 
     [JsonPropertyName("TimeOffBalance")]
-    public List<RemoteFieldApi>? TimeOffBalance { get; init; }
+    public IEnumerable<RemoteFieldApi>? TimeOffBalance { get; init; }
 
     [JsonPropertyName("BankInfo")]
-    public List<RemoteFieldApi>? BankInfo { get; init; }
+    public IEnumerable<RemoteFieldApi>? BankInfo { get; init; }
 
     [JsonPropertyName("PayGroup")]
-    public List<RemoteFieldApi>? PayGroup { get; init; }
+    public IEnumerable<RemoteFieldApi>? PayGroup { get; init; }
 
     [JsonPropertyName("Group")]
-    public List<RemoteFieldApi>? Group { get; init; }
+    public IEnumerable<RemoteFieldApi>? Group { get; init; }
 
     [JsonPropertyName("Dependent")]
-    public List<RemoteFieldApi>? Dependent { get; init; }
+    public IEnumerable<RemoteFieldApi>? Dependent { get; init; }
 
     [JsonPropertyName("TimesheetEntry")]
-    public List<RemoteFieldApi>? TimesheetEntry { get; init; }
+    public IEnumerable<RemoteFieldApi>? TimesheetEntry { get; init; }
 }

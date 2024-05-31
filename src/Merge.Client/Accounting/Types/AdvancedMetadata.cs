@@ -22,5 +22,5 @@ public class AdvancedMetadata
     public bool? IsCustom { get; init; }
 
     [JsonPropertyName("field_choices")]
-    public List<object>? FieldChoices { get; init; }
+    public IEnumerable<object>? FieldChoices { get; init; }
 }

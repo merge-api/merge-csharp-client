@@ -13,5 +13,5 @@ public class FieldMappingApiInstanceRemoteFieldRemoteEndpointInfo
     public string? UrlPath { get; init; }
 
     [JsonPropertyName("field_traversal_path")]
-    public List<string>? FieldTraversalPath { get; init; }
+    public IEnumerable<string>? FieldTraversalPath { get; init; }
 }

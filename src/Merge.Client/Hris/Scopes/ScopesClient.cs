@@ -28,7 +28,7 @@ public class ScopesClient
         {
             return JsonSerializer.Deserialize<CommonModelScopeApi>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ public class ScopesClient
         {
             return JsonSerializer.Deserialize<CommonModelScopeApi>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -71,6 +71,6 @@ public class ScopesClient
         {
             return JsonSerializer.Deserialize<CommonModelScopeApi>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Ticketing;
 using OneOf;
 
@@ -36,12 +37,16 @@ public class Ticket
     public string? Name { get; init; }
 
     [JsonPropertyName("assignees")]
-    public List<OneOf<string, User>?>? Assignees { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<OneOf<string, User>, OneOfSerializer<OneOf<string, User>>>)
+    )]
+    public IEnumerable<OneOf<string, User>>? Assignees { get; init; }
 
     /// <summary>
     /// The user who created this ticket.
     /// </summary>
     [JsonPropertyName("creator")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Creator { get; init; }
 
     /// <summary>
@@ -68,7 +73,13 @@ public class Ticket
     public string? Description { get; init; }
 
     [JsonPropertyName("collections")]
-    public List<OneOf<string, Collection>?>? Collections { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Collection>,
+            OneOfSerializer<OneOf<string, Collection>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Collection>>? Collections { get; init; }
 
     /// <summary>
     /// The sub category of the ticket within the 3rd party system. Examples include incident, task, subtask or to-do.
@@ -80,25 +91,34 @@ public class Ticket
     /// The account associated with the ticket.
     /// </summary>
     [JsonPropertyName("account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; init; }
 
     /// <summary>
     /// The contact associated with the ticket.
     /// </summary>
     [JsonPropertyName("contact")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; init; }
 
     /// <summary>
     /// The ticket's parent ticket.
     /// </summary>
     [JsonPropertyName("parent_ticket")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Ticket>>))]
     public OneOf<string, Ticket>? ParentTicket { get; init; }
 
     [JsonPropertyName("attachments")]
-    public List<OneOf<string, Attachment>?>? Attachments { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Attachment>,
+            OneOfSerializer<OneOf<string, Attachment>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Attachment>>? Attachments { get; init; }
 
     [JsonPropertyName("tags")]
-    public List<string?>? Tags { get; init; }
+    public IEnumerable<string>? Tags { get; init; }
 
     /// <summary>
     /// When the third party's ticket was created.
@@ -142,8 +162,8 @@ public class Ticket
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteField>? RemoteFields { get; init; }
+    public IEnumerable<RemoteField>? RemoteFields { get; init; }
 }

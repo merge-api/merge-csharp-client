@@ -98,7 +98,7 @@ public class LeadsClient
         {
             return JsonSerializer.Deserialize<PaginatedLeadList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ public class LeadsClient
         {
             return JsonSerializer.Deserialize<LeadResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -162,7 +162,7 @@ public class LeadsClient
         {
             return JsonSerializer.Deserialize<Lead>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -178,7 +178,7 @@ public class LeadsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -222,6 +222,6 @@ public class LeadsClient
         {
             return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

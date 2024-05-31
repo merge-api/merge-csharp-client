@@ -90,7 +90,7 @@ public class OffersClient
         {
             return JsonSerializer.Deserialize<PaginatedOfferList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -128,6 +128,6 @@ public class OffersClient
         {
             return JsonSerializer.Deserialize<Offer>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

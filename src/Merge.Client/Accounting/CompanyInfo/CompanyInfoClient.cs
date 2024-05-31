@@ -74,7 +74,7 @@ public class CompanyInfoClient
         {
             return JsonSerializer.Deserialize<PaginatedCompanyInfoList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -104,6 +104,6 @@ public class CompanyInfoClient
         {
             return JsonSerializer.Deserialize<CompanyInfo>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

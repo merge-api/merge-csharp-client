@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -30,6 +31,7 @@ public class CreditNoteLineItem
     public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("item")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
     public OneOf<string, Item>? Item { get; init; }
 
     /// <summary>
@@ -78,7 +80,7 @@ public class CreditNoteLineItem
     /// The credit note line item's associated tracking categories.
     /// </summary>
     [JsonPropertyName("tracking_categories")]
-    public List<string> TrackingCategories { get; init; }
+    public IEnumerable<string> TrackingCategories { get; init; }
 
     /// <summary>
     /// The credit note line item's account.
@@ -90,6 +92,7 @@ public class CreditNoteLineItem
     /// The company the credit note belongs to.
     /// </summary>
     [JsonPropertyName("company")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; init; }
 
     /// <summary>

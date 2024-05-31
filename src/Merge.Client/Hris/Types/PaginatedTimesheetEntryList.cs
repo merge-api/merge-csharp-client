@@ -14,5 +14,5 @@ public class PaginatedTimesheetEntryList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<TimesheetEntry>? Results { get; init; }
+    public IEnumerable<TimesheetEntry>? Results { get; init; }
 }

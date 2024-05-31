@@ -58,6 +58,6 @@ public class AuditTrailClient
         {
             return JsonSerializer.Deserialize<PaginatedAuditLogEventList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -11,5 +11,5 @@ public class LinkedAccountCommonModelScopeDeserializerRequest
     /// The common models you want to update the scopes for
     /// </summary>
     [JsonPropertyName("common_models")]
-    public List<IndividualCommonModelScopeDeserializerRequest> CommonModels { get; init; }
+    public IEnumerable<IndividualCommonModelScopeDeserializerRequest> CommonModels { get; init; }
 }

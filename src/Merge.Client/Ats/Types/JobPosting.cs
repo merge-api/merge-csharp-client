@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -39,12 +40,16 @@ public class JobPosting
     /// The Url object is used to represent hyperlinks for a candidate to apply to a given job.
     /// </summary>
     [JsonPropertyName("job_posting_urls")]
-    public List<OneOf<string, Url>>? JobPostingUrls { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<OneOf<string, Url>, OneOfSerializer<OneOf<string, Url>>>)
+    )]
+    public IEnumerable<OneOf<string, Url>>? JobPostingUrls { get; init; }
 
     /// <summary>
     /// ID of `Job` object for this `JobPosting`.
     /// </summary>
     [JsonPropertyName("job")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Job>>))]
     public OneOf<string, Job>? Job { get; init; }
 
     /// <summary>
@@ -93,5 +98,5 @@ public class JobPosting
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

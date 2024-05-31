@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Hris;
 using OneOf;
 
@@ -33,12 +34,14 @@ public class EmployeePayrollRun
     /// The employee whose payroll is being run.
     /// </summary>
     [JsonPropertyName("employee")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Employee { get; init; }
 
     /// <summary>
     /// The payroll being run.
     /// </summary>
     [JsonPropertyName("payroll_run")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, PayrollRun>>))]
     public OneOf<string, PayrollRun>? PayrollRun { get; init; }
 
     /// <summary>
@@ -72,13 +75,13 @@ public class EmployeePayrollRun
     public DateTime? CheckDate { get; init; }
 
     [JsonPropertyName("earnings")]
-    public List<Earning>? Earnings { get; init; }
+    public IEnumerable<Earning>? Earnings { get; init; }
 
     [JsonPropertyName("deductions")]
-    public List<Deduction>? Deductions { get; init; }
+    public IEnumerable<Deduction>? Deductions { get; init; }
 
     [JsonPropertyName("taxes")]
-    public List<Tax>? Taxes { get; init; }
+    public IEnumerable<Tax>? Taxes { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
@@ -90,5 +93,5 @@ public class EmployeePayrollRun
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

@@ -14,5 +14,5 @@ public class PaginatedTrackingCategoryList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<TrackingCategory>? Results { get; init; }
+    public IEnumerable<TrackingCategory>? Results { get; init; }
 }

@@ -53,34 +53,34 @@ public class PatchedCandidateRequest
     /// The candidate's locations.
     /// </summary>
     [JsonPropertyName("locations")]
-    public List<string?>? Locations { get; init; }
+    public IEnumerable<string>? Locations { get; init; }
 
     [JsonPropertyName("phone_numbers")]
-    public List<PhoneNumberRequest>? PhoneNumbers { get; init; }
+    public IEnumerable<PhoneNumberRequest>? PhoneNumbers { get; init; }
 
     [JsonPropertyName("email_addresses")]
-    public List<EmailAddressRequest>? EmailAddresses { get; init; }
+    public IEnumerable<EmailAddressRequest>? EmailAddresses { get; init; }
 
     [JsonPropertyName("urls")]
-    public List<UrlRequest>? Urls { get; init; }
+    public IEnumerable<UrlRequest>? Urls { get; init; }
 
     /// <summary>
     /// Array of `Tag` names as strings.
     /// </summary>
     [JsonPropertyName("tags")]
-    public List<string?>? Tags { get; init; }
+    public IEnumerable<string>? Tags { get; init; }
 
     /// <summary>
     /// Array of `Application` object IDs.
     /// </summary>
     [JsonPropertyName("applications")]
-    public List<string?>? Applications { get; init; }
+    public IEnumerable<string>? Applications { get; init; }
 
     /// <summary>
     /// Array of `Attachment` object IDs.
     /// </summary>
     [JsonPropertyName("attachments")]
-    public List<string?>? Attachments { get; init; }
+    public IEnumerable<string>? Attachments { get; init; }
 
     [JsonPropertyName("remote_template_id")]
     public string? RemoteTemplateId { get; init; }

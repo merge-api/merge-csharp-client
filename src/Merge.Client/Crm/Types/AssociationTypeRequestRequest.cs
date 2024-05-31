@@ -11,7 +11,7 @@ public class AssociationTypeRequestRequest
     public ObjectClassDescriptionRequest SourceObjectClass { get; init; }
 
     [JsonPropertyName("target_object_classes")]
-    public List<ObjectClassDescriptionRequest> TargetObjectClasses { get; init; }
+    public IEnumerable<ObjectClassDescriptionRequest> TargetObjectClasses { get; init; }
 
     [JsonPropertyName("remote_key_name")]
     public string RemoteKeyName { get; init; }

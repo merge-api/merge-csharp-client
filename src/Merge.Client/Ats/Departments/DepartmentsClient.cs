@@ -70,7 +70,7 @@ public class DepartmentsClient
         {
             return JsonSerializer.Deserialize<PaginatedDepartmentList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -96,6 +96,6 @@ public class DepartmentsClient
         {
             return JsonSerializer.Deserialize<Department>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

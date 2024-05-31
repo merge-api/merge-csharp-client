@@ -14,5 +14,5 @@ public class PaginatedCustomObjectList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<CustomObject>? Results { get; init; }
+    public IEnumerable<CustomObject>? Results { get; init; }
 }

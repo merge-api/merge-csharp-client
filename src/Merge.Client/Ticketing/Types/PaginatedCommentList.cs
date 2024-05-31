@@ -14,5 +14,5 @@ public class PaginatedCommentList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<Comment>? Results { get; init; }
+    public IEnumerable<Comment>? Results { get; init; }
 }

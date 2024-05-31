@@ -33,6 +33,6 @@ public class RegenerateKeyClient
         {
             return JsonSerializer.Deserialize<RemoteKey>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

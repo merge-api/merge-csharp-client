@@ -86,7 +86,7 @@ public class FoldersClient
         {
             return JsonSerializer.Deserialize<PaginatedFolderList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ public class FoldersClient
         {
             return JsonSerializer.Deserialize<FileStorageFolderResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -148,7 +148,7 @@ public class FoldersClient
         {
             return JsonSerializer.Deserialize<Folder>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -168,6 +168,6 @@ public class FoldersClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

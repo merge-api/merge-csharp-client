@@ -33,7 +33,7 @@ public class AsyncPassthroughClient
         {
             return JsonSerializer.Deserialize<AsyncPassthroughReciept>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -53,6 +53,6 @@ public class AsyncPassthroughClient
         {
             return JsonSerializer.Deserialize<RemoteResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

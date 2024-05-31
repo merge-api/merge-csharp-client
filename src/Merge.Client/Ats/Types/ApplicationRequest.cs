@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -12,12 +13,14 @@ public class ApplicationRequest
     /// The candidate applying.
     /// </summary>
     [JsonPropertyName("candidate")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Candidate>>))]
     public OneOf<string, Candidate>? Candidate { get; init; }
 
     /// <summary>
     /// The job being applied for.
     /// </summary>
     [JsonPropertyName("job")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Job>>))]
     public OneOf<string, Job>? Job { get; init; }
 
     /// <summary>
@@ -33,7 +36,13 @@ public class ApplicationRequest
     public DateTime? RejectedAt { get; init; }
 
     [JsonPropertyName("offers")]
-    public List<OneOf<string, Offer>?>? Offers { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Offer>,
+            OneOfSerializer<OneOf<string, Offer>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Offer>>? Offers { get; init; }
 
     /// <summary>
     /// The application's source.
@@ -45,18 +54,21 @@ public class ApplicationRequest
     /// The user credited for this application.
     /// </summary>
     [JsonPropertyName("credited_to")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? CreditedTo { get; init; }
 
     /// <summary>
     /// The application's current stage.
     /// </summary>
     [JsonPropertyName("current_stage")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, JobInterviewStage>>))]
     public OneOf<string, JobInterviewStage>? CurrentStage { get; init; }
 
     /// <summary>
     /// The application's reason for rejection.
     /// </summary>
     [JsonPropertyName("reject_reason")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RejectReason>>))]
     public OneOf<string, RejectReason>? RejectReason { get; init; }
 
     [JsonPropertyName("remote_template_id")]

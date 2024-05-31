@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Crm;
 using OneOf;
 
@@ -30,16 +31,17 @@ public class PatchedContactRequest
     /// The contact's owner.
     /// </summary>
     [JsonPropertyName("owner")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; init; }
 
     [JsonPropertyName("addresses")]
-    public List<AddressRequest>? Addresses { get; init; }
+    public IEnumerable<AddressRequest>? Addresses { get; init; }
 
     [JsonPropertyName("email_addresses")]
-    public List<EmailAddressRequest>? EmailAddresses { get; init; }
+    public IEnumerable<EmailAddressRequest>? EmailAddresses { get; init; }
 
     [JsonPropertyName("phone_numbers")]
-    public List<PhoneNumberRequest>? PhoneNumbers { get; init; }
+    public IEnumerable<PhoneNumberRequest>? PhoneNumbers { get; init; }
 
     /// <summary>
     /// When the contact's last activity occurred.
@@ -54,5 +56,5 @@ public class PatchedContactRequest
     public Dictionary<string, object>? LinkedAccountParams { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteFieldRequest>? RemoteFields { get; init; }
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; init; }
 }

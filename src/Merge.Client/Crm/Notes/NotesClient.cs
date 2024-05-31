@@ -94,7 +94,7 @@ public class NotesClient
         {
             return JsonSerializer.Deserialize<PaginatedNoteList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -124,7 +124,7 @@ public class NotesClient
         {
             return JsonSerializer.Deserialize<NoteResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ public class NotesClient
         {
             return JsonSerializer.Deserialize<Note>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -174,7 +174,7 @@ public class NotesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -218,6 +218,6 @@ public class NotesClient
         {
             return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

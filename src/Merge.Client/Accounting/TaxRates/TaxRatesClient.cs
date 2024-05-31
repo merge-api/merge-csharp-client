@@ -78,7 +78,7 @@ public class TaxRatesClient
         {
             return JsonSerializer.Deserialize<PaginatedTaxRateList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -108,6 +108,6 @@ public class TaxRatesClient
         {
             return JsonSerializer.Deserialize<TaxRate>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

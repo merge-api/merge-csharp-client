@@ -78,7 +78,7 @@ public class TasksClient
         {
             return JsonSerializer.Deserialize<PaginatedTaskList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ public class TasksClient
         {
             return JsonSerializer.Deserialize<TaskResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -142,7 +142,7 @@ public class TasksClient
         {
             return JsonSerializer.Deserialize<Task>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -175,7 +175,7 @@ public class TasksClient
         {
             return JsonSerializer.Deserialize<TaskResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -195,7 +195,7 @@ public class TasksClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -211,7 +211,7 @@ public class TasksClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -255,6 +255,6 @@ public class TasksClient
         {
             return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

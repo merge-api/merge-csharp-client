@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -33,18 +34,21 @@ public class Scorecard
     /// The application being scored.
     /// </summary>
     [JsonPropertyName("application")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Application>>))]
     public OneOf<string, Application>? Application { get; init; }
 
     /// <summary>
     /// The interview being scored.
     /// </summary>
     [JsonPropertyName("interview")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, ScheduledInterview>>))]
     public OneOf<string, ScheduledInterview>? Interview { get; init; }
 
     /// <summary>
     /// The interviewer doing the scoring.
     /// </summary>
     [JsonPropertyName("interviewer")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? Interviewer { get; init; }
 
     /// <summary>
@@ -81,5 +85,5 @@ public class Scorecard
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

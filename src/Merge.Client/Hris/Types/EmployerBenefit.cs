@@ -68,5 +68,5 @@ public class EmployerBenefit
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<Dictionary<string, object>?>? RemoteData { get; init; }
+    public IEnumerable<Dictionary<string, object>>? RemoteData { get; init; }
 }

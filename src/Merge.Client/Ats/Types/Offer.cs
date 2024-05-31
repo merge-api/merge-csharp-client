@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -33,12 +34,14 @@ public class Offer
     /// The application who is receiving the offer.
     /// </summary>
     [JsonPropertyName("application")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Application>>))]
     public OneOf<string, Application>? Application { get; init; }
 
     /// <summary>
     /// The user who created the offer.
     /// </summary>
     [JsonPropertyName("creator")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? Creator { get; init; }
 
     /// <summary>
@@ -91,5 +94,5 @@ public class Offer
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

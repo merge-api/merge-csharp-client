@@ -94,7 +94,7 @@ public class ScorecardsClient
         {
             return JsonSerializer.Deserialize<PaginatedScorecardList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -132,6 +132,6 @@ public class ScorecardsClient
         {
             return JsonSerializer.Deserialize<Scorecard>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Ticketing;
 using OneOf;
 
@@ -54,6 +55,7 @@ public class Collection
     /// The parent collection for this collection.
     /// </summary>
     [JsonPropertyName("parent_collection")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Collection>>))]
     public OneOf<string, Collection>? ParentCollection { get; init; }
 
     /// <summary>
@@ -76,5 +78,5 @@ public class Collection
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

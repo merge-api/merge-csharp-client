@@ -94,7 +94,7 @@ public class TimesheetEntriesClient
         {
             return JsonSerializer.Deserialize<PaginatedTimesheetEntryList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -124,7 +124,7 @@ public class TimesheetEntriesClient
         {
             return JsonSerializer.Deserialize<TimesheetEntryResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -153,7 +153,7 @@ public class TimesheetEntriesClient
         {
             return JsonSerializer.Deserialize<TimesheetEntry>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -173,6 +173,6 @@ public class TimesheetEntriesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

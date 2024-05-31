@@ -41,11 +41,11 @@ public class CustomObjectClass
     public Dictionary<string, string?>? Labels { get; init; }
 
     [JsonPropertyName("fields")]
-    public List<RemoteFieldClassForCustomObjectClass>? Fields { get; init; }
+    public IEnumerable<RemoteFieldClassForCustomObjectClass>? Fields { get; init; }
 
     /// <summary>
     /// The types of associations with other models that the custom object class can have.
     /// </summary>
     [JsonPropertyName("association_types")]
-    public List<Dictionary<string, object>>? AssociationTypes { get; init; }
+    public IEnumerable<Dictionary<string, object>>? AssociationTypes { get; init; }
 }

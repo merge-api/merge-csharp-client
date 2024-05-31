@@ -78,7 +78,7 @@ public class BenefitsClient
         {
             return JsonSerializer.Deserialize<PaginatedBenefitList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -108,6 +108,6 @@ public class BenefitsClient
         {
             return JsonSerializer.Deserialize<Benefit>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

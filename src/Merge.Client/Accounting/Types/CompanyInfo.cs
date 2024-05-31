@@ -381,13 +381,13 @@ public class CompanyInfo
     /// The company's urls.
     /// </summary>
     [JsonPropertyName("urls")]
-    public List<string?>? Urls { get; init; }
+    public IEnumerable<string>? Urls { get; init; }
 
     [JsonPropertyName("addresses")]
-    public List<Address>? Addresses { get; init; }
+    public IEnumerable<Address>? Addresses { get; init; }
 
     [JsonPropertyName("phone_numbers")]
-    public List<AccountingPhoneNumber>? PhoneNumbers { get; init; }
+    public IEnumerable<AccountingPhoneNumber>? PhoneNumbers { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
@@ -399,5 +399,5 @@ public class CompanyInfo
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

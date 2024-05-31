@@ -32,7 +32,7 @@ public class FieldMappingClient
         {
             return JsonSerializer.Deserialize<FieldMappingApiInstanceResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class FieldMappingClient
         {
             return JsonSerializer.Deserialize<FieldMappingInstanceResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ public class FieldMappingClient
         {
             return JsonSerializer.Deserialize<FieldMappingInstanceResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ public class FieldMappingClient
         {
             return JsonSerializer.Deserialize<FieldMappingInstanceResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -131,7 +131,7 @@ public class FieldMappingClient
         {
             return JsonSerializer.Deserialize<RemoteFieldApiResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -151,6 +151,6 @@ public class FieldMappingClient
         {
             return JsonSerializer.Deserialize<ExternalTargetFieldApiResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

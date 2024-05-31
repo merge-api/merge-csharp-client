@@ -94,7 +94,7 @@ public class PaymentsClient
         {
             return JsonSerializer.Deserialize<PaginatedPaymentList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -124,7 +124,7 @@ public class PaymentsClient
         {
             return JsonSerializer.Deserialize<PaymentResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ public class PaymentsClient
         {
             return JsonSerializer.Deserialize<Payment>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -187,7 +187,7 @@ public class PaymentsClient
         {
             return JsonSerializer.Deserialize<PaymentResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -207,7 +207,7 @@ public class PaymentsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -227,6 +227,6 @@ public class PaymentsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

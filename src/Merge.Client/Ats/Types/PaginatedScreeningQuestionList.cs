@@ -14,5 +14,5 @@ public class PaginatedScreeningQuestionList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<ScreeningQuestion>? Results { get; init; }
+    public IEnumerable<ScreeningQuestion>? Results { get; init; }
 }

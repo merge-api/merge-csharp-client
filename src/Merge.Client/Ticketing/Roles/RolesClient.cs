@@ -70,7 +70,7 @@ public class RolesClient
         {
             return JsonSerializer.Deserialize<PaginatedRoleList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -96,6 +96,6 @@ public class RolesClient
         {
             return JsonSerializer.Deserialize<Role>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

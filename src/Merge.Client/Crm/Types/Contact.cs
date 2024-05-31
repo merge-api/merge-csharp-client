@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Crm;
 using OneOf;
 
@@ -45,22 +46,24 @@ public class Contact
     /// The contact's account.
     /// </summary>
     [JsonPropertyName("account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; init; }
 
     /// <summary>
     /// The contact's owner.
     /// </summary>
     [JsonPropertyName("owner")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; init; }
 
     [JsonPropertyName("addresses")]
-    public List<Address>? Addresses { get; init; }
+    public IEnumerable<Address>? Addresses { get; init; }
 
     [JsonPropertyName("email_addresses")]
-    public List<EmailAddress>? EmailAddresses { get; init; }
+    public IEnumerable<EmailAddress>? EmailAddresses { get; init; }
 
     [JsonPropertyName("phone_numbers")]
-    public List<PhoneNumber>? PhoneNumbers { get; init; }
+    public IEnumerable<PhoneNumber>? PhoneNumbers { get; init; }
 
     /// <summary>
     /// When the contact's last activity occurred.
@@ -81,8 +84,8 @@ public class Contact
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteField>? RemoteFields { get; init; }
+    public IEnumerable<RemoteField>? RemoteFields { get; init; }
 }

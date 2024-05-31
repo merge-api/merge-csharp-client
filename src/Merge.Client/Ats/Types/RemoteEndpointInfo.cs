@@ -13,5 +13,5 @@ public class RemoteEndpointInfo
     public string UrlPath { get; init; }
 
     [JsonPropertyName("field_traversal_path")]
-    public List<object> FieldTraversalPath { get; init; }
+    public IEnumerable<object> FieldTraversalPath { get; init; }
 }

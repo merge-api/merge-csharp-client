@@ -14,5 +14,5 @@ public class PaginatedScorecardList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<Scorecard>? Results { get; init; }
+    public IEnumerable<Scorecard>? Results { get; init; }
 }

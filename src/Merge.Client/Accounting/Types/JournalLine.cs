@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -30,6 +31,7 @@ public class JournalLine
     public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; init; }
 
     /// <summary>
@@ -39,10 +41,17 @@ public class JournalLine
     public double? NetAmount { get; init; }
 
     [JsonPropertyName("tracking_category")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, TrackingCategory>>))]
     public OneOf<string, TrackingCategory>? TrackingCategory { get; init; }
 
     [JsonPropertyName("tracking_categories")]
-    public List<OneOf<string, TrackingCategory>?>? TrackingCategories { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, TrackingCategory>,
+            OneOfSerializer<OneOf<string, TrackingCategory>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
 
     /// <summary>
     /// The journal line item's currency.

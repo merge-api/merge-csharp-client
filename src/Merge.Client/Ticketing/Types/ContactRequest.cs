@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Ticketing;
 using OneOf;
 
@@ -36,6 +37,7 @@ public class ContactRequest
     /// The contact's account.
     /// </summary>
     [JsonPropertyName("account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; init; }
 
     [JsonPropertyName("integration_params")]

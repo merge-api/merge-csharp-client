@@ -94,7 +94,7 @@ public class JobsClient
         {
             return JsonSerializer.Deserialize<PaginatedJobList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -132,7 +132,7 @@ public class JobsClient
         {
             return JsonSerializer.Deserialize<Job>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -177,6 +177,6 @@ public class JobsClient
         {
             return JsonSerializer.Deserialize<PaginatedScreeningQuestionList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

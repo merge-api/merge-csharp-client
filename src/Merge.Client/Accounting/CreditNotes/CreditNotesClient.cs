@@ -94,7 +94,7 @@ public class CreditNotesClient
         {
             return JsonSerializer.Deserialize<PaginatedCreditNoteList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -132,6 +132,6 @@ public class CreditNotesClient
         {
             return JsonSerializer.Deserialize<CreditNote>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

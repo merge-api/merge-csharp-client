@@ -90,7 +90,7 @@ public class CandidatesClient
         {
             return JsonSerializer.Deserialize<PaginatedCandidateList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -120,7 +120,7 @@ public class CandidatesClient
         {
             return JsonSerializer.Deserialize<CandidateResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -150,7 +150,7 @@ public class CandidatesClient
         {
             return JsonSerializer.Deserialize<Candidate>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -183,7 +183,7 @@ public class CandidatesClient
         {
             return JsonSerializer.Deserialize<CandidateResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -218,7 +218,7 @@ public class CandidatesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -238,6 +238,6 @@ public class CandidatesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -1,9 +1,13 @@
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using Merge.Client.Core;
+using Merge.Client.Hris;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
+[JsonConverter(typeof(StringEnumSerializer<EventTypeEnum>))]
 public enum EventTypeEnum
 {
     [EnumMember(Value = "CREATED_REMOTE_PRODUCTION_API_KEY")]

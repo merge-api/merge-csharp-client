@@ -59,7 +59,7 @@ public class PatchedEngagementRequest
     public string? Account { get; init; }
 
     [JsonPropertyName("contacts")]
-    public List<string?>? Contacts { get; init; }
+    public IEnumerable<string>? Contacts { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }
@@ -68,5 +68,5 @@ public class PatchedEngagementRequest
     public Dictionary<string, object>? LinkedAccountParams { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteFieldRequest>? RemoteFields { get; init; }
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; init; }
 }

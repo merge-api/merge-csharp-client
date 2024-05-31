@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -33,6 +34,7 @@ public class Eeoc
     /// The candidate being represented.
     /// </summary>
     [JsonPropertyName("candidate")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Candidate>>))]
     public OneOf<string, Candidate>? Candidate { get; init; }
 
     /// <summary>
@@ -98,5 +100,5 @@ public class Eeoc
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

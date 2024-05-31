@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Ticketing;
 using OneOf;
 
@@ -48,10 +49,16 @@ public class User
     public bool? IsActive { get; init; }
 
     [JsonPropertyName("teams")]
-    public List<OneOf<string, Team>?>? Teams { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<OneOf<string, Team>, OneOfSerializer<OneOf<string, Team>>>)
+    )]
+    public IEnumerable<OneOf<string, Team>>? Teams { get; init; }
 
     [JsonPropertyName("roles")]
-    public List<OneOf<string, Role>?>? Roles { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<OneOf<string, Role>, OneOfSerializer<OneOf<string, Role>>>)
+    )]
+    public IEnumerable<OneOf<string, Role>>? Roles { get; init; }
 
     /// <summary>
     /// The user's avatar picture.
@@ -69,5 +76,5 @@ public class User
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

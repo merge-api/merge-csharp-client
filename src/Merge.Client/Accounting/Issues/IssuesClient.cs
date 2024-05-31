@@ -86,7 +86,7 @@ public class IssuesClient
         {
             return JsonSerializer.Deserialize<PaginatedIssueList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -106,6 +106,6 @@ public class IssuesClient
         {
             return JsonSerializer.Deserialize<Issue>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

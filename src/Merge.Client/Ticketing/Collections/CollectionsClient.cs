@@ -90,7 +90,7 @@ public class CollectionsClient
         {
             return JsonSerializer.Deserialize<PaginatedCollectionList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ public class CollectionsClient
         {
             return JsonSerializer.Deserialize<Collection>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -173,6 +173,6 @@ public class CollectionsClient
         {
             return JsonSerializer.Deserialize<PaginatedUserList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

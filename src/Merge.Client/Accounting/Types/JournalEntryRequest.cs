@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -18,7 +19,13 @@ public class JournalEntryRequest
     /// Array of `Payment` object IDs.
     /// </summary>
     [JsonPropertyName("payments")]
-    public List<OneOf<string, Payment>?>? Payments { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Payment>,
+            OneOfSerializer<OneOf<string, Payment>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Payment>>? Payments { get; init; }
 
     /// <summary>
     /// The journal entry's private note.
@@ -349,13 +356,20 @@ public class JournalEntryRequest
     /// The company the journal entry belongs to.
     /// </summary>
     [JsonPropertyName("company")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; init; }
 
     [JsonPropertyName("tracking_categories")]
-    public List<OneOf<string, TrackingCategory>?>? TrackingCategories { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, TrackingCategory>,
+            OneOfSerializer<OneOf<string, TrackingCategory>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
 
     [JsonPropertyName("lines")]
-    public List<JournalLineRequest>? Lines { get; init; }
+    public IEnumerable<JournalLineRequest>? Lines { get; init; }
 
     /// <summary>
     /// Reference number for identifying journal entries.

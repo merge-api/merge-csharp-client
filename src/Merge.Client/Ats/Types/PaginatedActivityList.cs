@@ -14,5 +14,5 @@ public class PaginatedActivityList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<Activity>? Results { get; init; }
+    public IEnumerable<Activity>? Results { get; init; }
 }

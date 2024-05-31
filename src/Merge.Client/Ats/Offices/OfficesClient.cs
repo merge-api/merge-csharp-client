@@ -70,7 +70,7 @@ public class OfficesClient
         {
             return JsonSerializer.Deserialize<PaginatedOfficeList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -96,6 +96,6 @@ public class OfficesClient
         {
             return JsonSerializer.Deserialize<Office>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

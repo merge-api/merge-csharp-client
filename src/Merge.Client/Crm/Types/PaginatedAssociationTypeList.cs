@@ -14,5 +14,5 @@ public class PaginatedAssociationTypeList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<AssociationType>? Results { get; init; }
+    public IEnumerable<AssociationType>? Results { get; init; }
 }

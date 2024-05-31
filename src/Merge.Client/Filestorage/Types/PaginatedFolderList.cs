@@ -14,5 +14,5 @@ public class PaginatedFolderList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<Folder>? Results { get; init; }
+    public IEnumerable<Folder>? Results { get; init; }
 }

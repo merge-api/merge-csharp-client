@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -39,6 +40,7 @@ public class JobInterviewStage
     /// This field is populated only if the stage is specific to a particular job. If the stage is generic, this field will not be populated.
     /// </summary>
     [JsonPropertyName("job")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Job>>))]
     public OneOf<string, Job>? Job { get; init; }
 
     /// <summary>
@@ -57,5 +59,5 @@ public class JobInterviewStage
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

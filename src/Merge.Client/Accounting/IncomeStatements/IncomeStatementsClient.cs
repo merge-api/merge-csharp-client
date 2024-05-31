@@ -78,7 +78,7 @@ public class IncomeStatementsClient
         {
             return JsonSerializer.Deserialize<PaginatedIncomeStatementList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -111,6 +111,6 @@ public class IncomeStatementsClient
         {
             return JsonSerializer.Deserialize<IncomeStatement>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

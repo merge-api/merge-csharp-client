@@ -80,7 +80,7 @@ public class JobInterviewStagesClient
         {
             return JsonSerializer.Deserialize<PaginatedJobInterviewStageList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -113,6 +113,6 @@ public class JobInterviewStagesClient
         {
             return JsonSerializer.Deserialize<JobInterviewStage>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

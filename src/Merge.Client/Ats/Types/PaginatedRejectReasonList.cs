@@ -14,5 +14,5 @@ public class PaginatedRejectReasonList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<RejectReason>? Results { get; init; }
+    public IEnumerable<RejectReason>? Results { get; init; }
 }

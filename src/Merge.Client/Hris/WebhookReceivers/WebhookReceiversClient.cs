@@ -18,7 +18,7 @@ public class WebhookReceiversClient
     /// <summary>
     /// Returns a list of `WebhookReceiver` objects.
     /// </summary>
-    public async Task<List<WebhookReceiver>> ListAsync()
+    public async Task<IEnumerable<WebhookReceiver>> ListAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -30,9 +30,9 @@ public class WebhookReceiversClient
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<WebhookReceiver>>(responseBody);
+            return JsonSerializer.Deserialize<IEnumerable<WebhookReceiver>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -53,6 +53,6 @@ public class WebhookReceiversClient
         {
             return JsonSerializer.Deserialize<WebhookReceiver>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

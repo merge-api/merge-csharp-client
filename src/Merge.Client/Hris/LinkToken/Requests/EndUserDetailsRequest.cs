@@ -29,7 +29,7 @@ public class EndUserDetailsRequest
     /// The integration categories to show in Merge Link.
     /// </summary>
     [JsonPropertyName("categories")]
-    public List<CategoriesEnum> Categories { get; init; }
+    public IEnumerable<CategoriesEnum> Categories { get; init; }
 
     /// <summary>
     /// The slug of a specific pre-selected integration for this linking flow token. For examples of slugs, see https://docs.merge.dev/guides/merge-link/single-integration/.
@@ -53,7 +53,7 @@ public class EndUserDetailsRequest
     /// An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.
     /// </summary>
     [JsonPropertyName("common_models")]
-    public List<CommonModelScopesBodyRequest>? CommonModels { get; init; }
+    public IEnumerable<CommonModelScopesBodyRequest>? CommonModels { get; init; }
 
     /// <summary>
     /// When creating a Link Token, you can set permissions for Common Models that will apply to the account that is going to be linked. Any model or field not specified in link token payload will default to existing settings.
@@ -61,7 +61,7 @@ public class EndUserDetailsRequest
     [JsonPropertyName("category_common_model_scopes")]
     public Dictionary<
         string,
-        List<IndividualCommonModelScopeDeserializerRequest>?
+        IEnumerable<IndividualCommonModelScopeDeserializerRequest>?
     >? CategoryCommonModelScopes { get; init; }
 
     /// <summary>

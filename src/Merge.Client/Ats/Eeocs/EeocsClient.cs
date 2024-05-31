@@ -86,7 +86,7 @@ public class EeocsClient
         {
             return JsonSerializer.Deserialize<PaginatedEeocList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -124,6 +124,6 @@ public class EeocsClient
         {
             return JsonSerializer.Deserialize<Eeoc>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -33,6 +34,7 @@ public class ScreeningQuestion
     /// The job associated with the screening question.
     /// </summary>
     [JsonPropertyName("job")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Job>>))]
     public OneOf<string, Job>? Job { get; init; }
 
     /// <summary>
@@ -69,5 +71,5 @@ public class ScreeningQuestion
     public bool? Required { get; init; }
 
     [JsonPropertyName("options")]
-    public List<object>? Options { get; init; }
+    public IEnumerable<object>? Options { get; init; }
 }

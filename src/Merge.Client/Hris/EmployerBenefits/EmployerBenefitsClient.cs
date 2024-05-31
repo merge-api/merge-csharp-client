@@ -70,7 +70,7 @@ public class EmployerBenefitsClient
         {
             return JsonSerializer.Deserialize<PaginatedEmployerBenefitList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -99,6 +99,6 @@ public class EmployerBenefitsClient
         {
             return JsonSerializer.Deserialize<EmployerBenefit>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

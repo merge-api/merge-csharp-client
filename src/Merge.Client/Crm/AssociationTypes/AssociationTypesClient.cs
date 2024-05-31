@@ -77,7 +77,7 @@ public class AssociationTypesClient
         {
             return JsonSerializer.Deserialize<PaginatedAssociationTypeList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ public class AssociationTypesClient
         {
             return JsonSerializer.Deserialize<CrmAssociationTypeResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -145,7 +145,7 @@ public class AssociationTypesClient
         {
             return JsonSerializer.Deserialize<AssociationType>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -168,6 +168,6 @@ public class AssociationTypesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

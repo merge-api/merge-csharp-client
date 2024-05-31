@@ -70,7 +70,7 @@ public class PayGroupsClient
         {
             return JsonSerializer.Deserialize<PaginatedPayGroupList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -96,6 +96,6 @@ public class PayGroupsClient
         {
             return JsonSerializer.Deserialize<PayGroup>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Hris;
 using OneOf;
 
@@ -33,6 +34,7 @@ public class Employment
     /// The employee holding this position.
     /// </summary>
     [JsonPropertyName("employee")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Employee { get; init; }
 
     /// <summary>
@@ -396,6 +398,7 @@ public class Employment
     /// The employment's pay group
     /// </summary>
     [JsonPropertyName("pay_group")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, PayGroup>>))]
     public OneOf<string, PayGroup>? PayGroup { get; init; }
 
     /// <summary>
@@ -437,5 +440,5 @@ public class Employment
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

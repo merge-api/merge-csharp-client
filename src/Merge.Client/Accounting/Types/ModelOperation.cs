@@ -10,11 +10,11 @@ public class ModelOperation
     public string ModelName { get; init; }
 
     [JsonPropertyName("available_operations")]
-    public List<string> AvailableOperations { get; init; }
+    public IEnumerable<string> AvailableOperations { get; init; }
 
     [JsonPropertyName("required_post_parameters")]
-    public List<string> RequiredPostParameters { get; init; }
+    public IEnumerable<string> RequiredPostParameters { get; init; }
 
     [JsonPropertyName("supported_fields")]
-    public List<string> SupportedFields { get; init; }
+    public IEnumerable<string> SupportedFields { get; init; }
 }

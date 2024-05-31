@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -63,6 +64,7 @@ public class PurchaseOrder
     /// The purchase order's delivery address.
     /// </summary>
     [JsonPropertyName("delivery_address")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Address>>))]
     public OneOf<string, Address>? DeliveryAddress { get; init; }
 
     /// <summary>
@@ -75,6 +77,7 @@ public class PurchaseOrder
     /// The party fulfilling the purchase order.
     /// </summary>
     [JsonPropertyName("vendor")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Vendor { get; init; }
 
     /// <summary>
@@ -87,6 +90,7 @@ public class PurchaseOrder
     /// The company the purchase order belongs to.
     /// </summary>
     [JsonPropertyName("company")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; init; }
 
     /// <summary>
@@ -415,10 +419,16 @@ public class PurchaseOrder
     public string? ExchangeRate { get; init; }
 
     [JsonPropertyName("line_items")]
-    public List<PurchaseOrderLineItem>? LineItems { get; init; }
+    public IEnumerable<PurchaseOrderLineItem>? LineItems { get; init; }
 
     [JsonPropertyName("tracking_categories")]
-    public List<OneOf<string, TrackingCategory>?>? TrackingCategories { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, TrackingCategory>,
+            OneOfSerializer<OneOf<string, TrackingCategory>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
 
     /// <summary>
     /// When the third party's purchase order note was created.
@@ -442,11 +452,12 @@ public class PurchaseOrder
     /// The accounting period that the PurchaseOrder was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }
