@@ -90,7 +90,7 @@ public class TimeOffBalancesClient
         {
             return JsonSerializer.Deserialize<PaginatedTimeOffBalanceList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -131,6 +131,6 @@ public class TimeOffBalancesClient
         {
             return JsonSerializer.Deserialize<TimeOffBalance>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

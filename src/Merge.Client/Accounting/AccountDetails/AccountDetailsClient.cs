@@ -32,6 +32,6 @@ public class AccountDetailsClient
         {
             return JsonSerializer.Deserialize<AccountDetails>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

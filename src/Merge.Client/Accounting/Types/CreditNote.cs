@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -55,12 +56,14 @@ public class CreditNote
     /// The credit note's contact.
     /// </summary>
     [JsonPropertyName("contact")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; init; }
 
     /// <summary>
     /// The company the credit note belongs to.
     /// </summary>
     [JsonPropertyName("company")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; init; }
 
     /// <summary>
@@ -82,10 +85,16 @@ public class CreditNote
     public double? RemainingCredit { get; init; }
 
     [JsonPropertyName("line_items")]
-    public List<CreditNoteLineItem>? LineItems { get; init; }
+    public IEnumerable<CreditNoteLineItem>? LineItems { get; init; }
 
     [JsonPropertyName("tracking_categories")]
-    public List<OneOf<string, TrackingCategory>?>? TrackingCategories { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, TrackingCategory>,
+            OneOfSerializer<OneOf<string, TrackingCategory>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
 
     /// <summary>
     /// The credit note's currency.
@@ -416,13 +425,25 @@ public class CreditNote
     /// Array of `Payment` object IDs
     /// </summary>
     [JsonPropertyName("payments")]
-    public List<OneOf<string, Payment>?>? Payments { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Payment>,
+            OneOfSerializer<OneOf<string, Payment>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Payment>>? Payments { get; init; }
 
     /// <summary>
     /// A list of the Payment Applied to Lines common models related to a given Invoice, Credit Note, or Journal Entry.
     /// </summary>
     [JsonPropertyName("applied_payments")]
-    public List<OneOf<string, PaymentLineItem>?>? AppliedPayments { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, PaymentLineItem>,
+            OneOfSerializer<OneOf<string, PaymentLineItem>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedPayments { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
@@ -434,11 +455,12 @@ public class CreditNote
     /// The accounting period that the CreditNote was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

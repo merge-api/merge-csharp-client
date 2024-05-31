@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -90,13 +91,19 @@ public class Contact
     /// `Address` object IDs for the given `Contacts` object.
     /// </summary>
     [JsonPropertyName("addresses")]
-    public List<OneOf<string, Address>?>? Addresses { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Address>,
+            OneOfSerializer<OneOf<string, Address>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Address>>? Addresses { get; init; }
 
     /// <summary>
     /// `AccountingPhoneNumber` object for the given `Contacts` object.
     /// </summary>
     [JsonPropertyName("phone_numbers")]
-    public List<AccountingPhoneNumber>? PhoneNumbers { get; init; }
+    public IEnumerable<AccountingPhoneNumber>? PhoneNumbers { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
@@ -108,5 +115,5 @@ public class Contact
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

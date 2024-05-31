@@ -88,6 +88,6 @@ public class LinkedAccountsClient
         {
             return JsonSerializer.Deserialize<PaginatedAccountDetailsAndActionsList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

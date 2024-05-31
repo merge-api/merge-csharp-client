@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Crm;
 using OneOf;
 
@@ -51,18 +52,21 @@ public class Opportunity
     /// The opportunity's owner.
     /// </summary>
     [JsonPropertyName("owner")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; init; }
 
     /// <summary>
     /// The account of the opportunity.
     /// </summary>
     [JsonPropertyName("account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; init; }
 
     /// <summary>
     /// The stage of the opportunity.
     /// </summary>
     [JsonPropertyName("stage")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Stage>>))]
     public OneOf<string, Stage>? Stage { get; init; }
 
     /// <summary>
@@ -100,8 +104,8 @@ public class Opportunity
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteField>? RemoteFields { get; init; }
+    public IEnumerable<RemoteField>? RemoteFields { get; init; }
 }

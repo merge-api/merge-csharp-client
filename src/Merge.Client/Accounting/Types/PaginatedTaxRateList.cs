@@ -14,5 +14,5 @@ public class PaginatedTaxRateList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<TaxRate>? Results { get; init; }
+    public IEnumerable<TaxRate>? Results { get; init; }
 }

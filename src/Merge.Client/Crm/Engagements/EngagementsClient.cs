@@ -86,7 +86,7 @@ public class EngagementsClient
         {
             return JsonSerializer.Deserialize<PaginatedEngagementList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class EngagementsClient
         {
             return JsonSerializer.Deserialize<EngagementResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -150,7 +150,7 @@ public class EngagementsClient
         {
             return JsonSerializer.Deserialize<Engagement>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -183,7 +183,7 @@ public class EngagementsClient
         {
             return JsonSerializer.Deserialize<EngagementResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -203,7 +203,7 @@ public class EngagementsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -223,7 +223,7 @@ public class EngagementsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -267,6 +267,6 @@ public class EngagementsClient
         {
             return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

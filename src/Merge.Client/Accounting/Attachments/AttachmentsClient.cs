@@ -74,7 +74,7 @@ public class AttachmentsClient
         {
             return JsonSerializer.Deserialize<PaginatedAccountingAttachmentList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ public class AttachmentsClient
         {
             return JsonSerializer.Deserialize<AccountingAttachmentResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -135,7 +135,7 @@ public class AttachmentsClient
         {
             return JsonSerializer.Deserialize<AccountingAttachment>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -155,6 +155,6 @@ public class AttachmentsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

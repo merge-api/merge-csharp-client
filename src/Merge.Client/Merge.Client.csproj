@@ -5,7 +5,7 @@
         <TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <NuGetAudit>false</NuGetAudit>
-        <Version>0.0.9</Version>
+        <Version>0.0.10</Version>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageProjectUrl>https://github.com/merge-api/merge-csharp-client</PackageProjectUrl>

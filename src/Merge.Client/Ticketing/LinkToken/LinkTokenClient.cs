@@ -33,6 +33,6 @@ public class LinkTokenClient
         {
             return JsonSerializer.Deserialize<LinkToken>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

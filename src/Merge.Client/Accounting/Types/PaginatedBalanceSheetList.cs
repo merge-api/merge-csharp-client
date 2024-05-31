@@ -14,5 +14,5 @@ public class PaginatedBalanceSheetList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<BalanceSheet>? Results { get; init; }
+    public IEnumerable<BalanceSheet>? Results { get; init; }
 }

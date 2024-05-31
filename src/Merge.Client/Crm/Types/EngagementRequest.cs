@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Crm;
 using OneOf;
 
@@ -12,6 +13,7 @@ public class EngagementRequest
     /// The engagement's owner.
     /// </summary>
     [JsonPropertyName("owner")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; init; }
 
     /// <summary>
@@ -39,6 +41,7 @@ public class EngagementRequest
     /// The engagement type of the engagement.
     /// </summary>
     [JsonPropertyName("engagement_type")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, EngagementType>>))]
     public OneOf<string, EngagementType>? EngagementType { get; init; }
 
     /// <summary>
@@ -57,10 +60,17 @@ public class EngagementRequest
     /// The account of the engagement.
     /// </summary>
     [JsonPropertyName("account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; init; }
 
     [JsonPropertyName("contacts")]
-    public List<OneOf<string, Contact>?>? Contacts { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Contact>,
+            OneOfSerializer<OneOf<string, Contact>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Contact>>? Contacts { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }
@@ -69,5 +79,5 @@ public class EngagementRequest
     public Dictionary<string, object>? LinkedAccountParams { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteFieldRequest>? RemoteFields { get; init; }
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; init; }
 }

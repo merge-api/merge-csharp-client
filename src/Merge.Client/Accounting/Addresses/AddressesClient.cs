@@ -46,6 +46,6 @@ public class AddressesClient
         {
             return JsonSerializer.Deserialize<Address>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -14,5 +14,5 @@ public class PaginatedEeocList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<Eeoc>? Results { get; init; }
+    public IEnumerable<Eeoc>? Results { get; init; }
 }

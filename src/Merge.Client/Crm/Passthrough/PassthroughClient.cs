@@ -33,6 +33,6 @@ public class PassthroughClient
         {
             return JsonSerializer.Deserialize<RemoteResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

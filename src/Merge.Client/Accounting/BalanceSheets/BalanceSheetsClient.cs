@@ -78,7 +78,7 @@ public class BalanceSheetsClient
         {
             return JsonSerializer.Deserialize<PaginatedBalanceSheetList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -108,6 +108,6 @@ public class BalanceSheetsClient
         {
             return JsonSerializer.Deserialize<BalanceSheet>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

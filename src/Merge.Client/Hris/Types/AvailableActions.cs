@@ -14,5 +14,5 @@ public class AvailableActions
     public bool PassthroughAvailable { get; init; }
 
     [JsonPropertyName("available_model_operations")]
-    public List<ModelOperation>? AvailableModelOperations { get; init; }
+    public IEnumerable<ModelOperation>? AvailableModelOperations { get; init; }
 }

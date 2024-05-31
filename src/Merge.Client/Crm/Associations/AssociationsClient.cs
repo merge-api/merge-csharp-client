@@ -83,7 +83,7 @@ public class AssociationsClient
         {
             return JsonSerializer.Deserialize<PaginatedAssociationList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -121,6 +121,6 @@ public class AssociationsClient
         {
             return JsonSerializer.Deserialize<Association>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

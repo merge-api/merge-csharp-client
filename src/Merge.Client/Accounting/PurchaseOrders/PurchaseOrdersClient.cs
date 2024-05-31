@@ -94,7 +94,7 @@ public class PurchaseOrdersClient
         {
             return JsonSerializer.Deserialize<PaginatedPurchaseOrderList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -124,7 +124,7 @@ public class PurchaseOrdersClient
         {
             return JsonSerializer.Deserialize<PurchaseOrderResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -162,7 +162,7 @@ public class PurchaseOrdersClient
         {
             return JsonSerializer.Deserialize<PurchaseOrder>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -182,6 +182,6 @@ public class PurchaseOrdersClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

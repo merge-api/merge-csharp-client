@@ -14,5 +14,5 @@ public class PaginatedJobInterviewStageList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<JobInterviewStage>? Results { get; init; }
+    public IEnumerable<JobInterviewStage>? Results { get; init; }
 }

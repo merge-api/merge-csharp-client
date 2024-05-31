@@ -14,5 +14,5 @@ public class PaginatedCreditNoteList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<CreditNote>? Results { get; init; }
+    public IEnumerable<CreditNote>? Results { get; init; }
 }

@@ -102,7 +102,7 @@ public class InvoicesClient
         {
             return JsonSerializer.Deserialize<PaginatedInvoiceList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -132,7 +132,7 @@ public class InvoicesClient
         {
             return JsonSerializer.Deserialize<InvoiceResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -170,7 +170,7 @@ public class InvoicesClient
         {
             return JsonSerializer.Deserialize<Invoice>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -203,7 +203,7 @@ public class InvoicesClient
         {
             return JsonSerializer.Deserialize<InvoiceResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -223,7 +223,7 @@ public class InvoicesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -243,6 +243,6 @@ public class InvoicesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

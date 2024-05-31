@@ -74,7 +74,7 @@ public class ContactsClient
         {
             return JsonSerializer.Deserialize<PaginatedContactList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -104,7 +104,7 @@ public class ContactsClient
         {
             return JsonSerializer.Deserialize<TicketingContactResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -134,7 +134,7 @@ public class ContactsClient
         {
             return JsonSerializer.Deserialize<Contact>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -154,6 +154,6 @@ public class ContactsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

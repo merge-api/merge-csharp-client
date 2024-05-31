@@ -82,7 +82,7 @@ public class UsersClient
         {
             return JsonSerializer.Deserialize<PaginatedRemoteUserList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -116,6 +116,6 @@ public class UsersClient
         {
             return JsonSerializer.Deserialize<RemoteUser>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

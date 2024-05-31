@@ -14,5 +14,5 @@ public class PaginatedAccountingAttachmentList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<AccountingAttachment>? Results { get; init; }
+    public IEnumerable<AccountingAttachment>? Results { get; init; }
 }

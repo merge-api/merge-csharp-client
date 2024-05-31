@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Ticketing;
 using OneOf;
 
@@ -12,12 +13,14 @@ public class CommentRequest
     /// The author of the Comment, if the author is a User.
     /// </summary>
     [JsonPropertyName("user")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? User { get; init; }
 
     /// <summary>
     /// The author of the Comment, if the author is a Contact.
     /// </summary>
     [JsonPropertyName("contact")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; init; }
 
     /// <summary>
@@ -36,6 +39,7 @@ public class CommentRequest
     /// The ticket associated with the comment.
     /// </summary>
     [JsonPropertyName("ticket")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Ticket>>))]
     public OneOf<string, Ticket>? Ticket { get; init; }
 
     /// <summary>

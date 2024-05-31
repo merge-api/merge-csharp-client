@@ -86,7 +86,7 @@ public class ActivitiesClient
         {
             return JsonSerializer.Deserialize<PaginatedActivityList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class ActivitiesClient
         {
             return JsonSerializer.Deserialize<ActivityResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ public class ActivitiesClient
         {
             return JsonSerializer.Deserialize<Activity>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -174,6 +174,6 @@ public class ActivitiesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

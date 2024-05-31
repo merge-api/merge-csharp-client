@@ -32,7 +32,7 @@ public class RemoteFieldClass
     public FieldFormatEnum? FieldFormat { get; init; }
 
     [JsonPropertyName("field_choices")]
-    public List<RemoteFieldClassFieldChoicesItem>? FieldChoices { get; init; }
+    public IEnumerable<RemoteFieldClassFieldChoicesItem>? FieldChoices { get; init; }
 
     [JsonPropertyName("item_schema")]
     public ItemSchema? ItemSchema { get; init; }

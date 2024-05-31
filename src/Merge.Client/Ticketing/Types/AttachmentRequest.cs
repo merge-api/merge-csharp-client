@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Ticketing;
 using OneOf;
 
@@ -18,6 +19,7 @@ public class AttachmentRequest
     /// The ticket associated with the attachment.
     /// </summary>
     [JsonPropertyName("ticket")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Ticket>>))]
     public OneOf<string, Ticket>? Ticket { get; init; }
 
     /// <summary>

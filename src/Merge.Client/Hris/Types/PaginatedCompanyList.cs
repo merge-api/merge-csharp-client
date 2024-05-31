@@ -14,5 +14,5 @@ public class PaginatedCompanyList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<Company>? Results { get; init; }
+    public IEnumerable<Company>? Results { get; init; }
 }

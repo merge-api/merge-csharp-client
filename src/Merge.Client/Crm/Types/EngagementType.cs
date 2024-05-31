@@ -45,5 +45,5 @@ public class EngagementType
     public string? Name { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteField>? RemoteFields { get; init; }
+    public IEnumerable<RemoteField>? RemoteFields { get; init; }
 }

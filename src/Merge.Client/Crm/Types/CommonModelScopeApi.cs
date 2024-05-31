@@ -11,5 +11,5 @@ public class CommonModelScopeApi
     /// The common models you want to update the scopes for
     /// </summary>
     [JsonPropertyName("common_models")]
-    public List<IndividualCommonModelScopeDeserializer> CommonModels { get; init; }
+    public IEnumerable<IndividualCommonModelScopeDeserializer> CommonModels { get; init; }
 }

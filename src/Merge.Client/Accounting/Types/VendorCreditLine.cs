@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -45,7 +46,7 @@ public class VendorCreditLine
     /// The line's associated tracking categories.
     /// </summary>
     [JsonPropertyName("tracking_categories")]
-    public List<string> TrackingCategories { get; init; }
+    public IEnumerable<string> TrackingCategories { get; init; }
 
     /// <summary>
     /// The line's description.
@@ -57,6 +58,7 @@ public class VendorCreditLine
     /// The line's account.
     /// </summary>
     [JsonPropertyName("account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; init; }
 
     /// <summary>

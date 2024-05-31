@@ -76,7 +76,7 @@ public class CustomObjectClassesClient
         {
             return JsonSerializer.Deserialize<PaginatedCustomObjectClassList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -109,6 +109,6 @@ public class CustomObjectClassesClient
         {
             return JsonSerializer.Deserialize<CustomObjectClass>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

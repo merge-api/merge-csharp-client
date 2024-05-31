@@ -8,17 +8,17 @@ namespace Merge.Client.Filestorage;
 public class ExternalTargetFieldApiResponse
 {
     [JsonPropertyName("File")]
-    public List<ExternalTargetFieldApi>? File { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? File { get; init; }
 
     [JsonPropertyName("Folder")]
-    public List<ExternalTargetFieldApi>? Folder { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Folder { get; init; }
 
     [JsonPropertyName("Drive")]
-    public List<ExternalTargetFieldApi>? Drive { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Drive { get; init; }
 
     [JsonPropertyName("Group")]
-    public List<ExternalTargetFieldApi>? Group { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Group { get; init; }
 
     [JsonPropertyName("User")]
-    public List<ExternalTargetFieldApi>? User { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? User { get; init; }
 }

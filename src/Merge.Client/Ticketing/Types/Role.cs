@@ -38,7 +38,7 @@ public class Role
     /// The set of actions that a User with this Role can perform. Possible enum values include: `VIEW`, `CREATE`, `EDIT`, `DELETE`, `CLOSE`, and `ASSIGN`.
     /// </summary>
     [JsonPropertyName("ticket_actions")]
-    public List<TicketActionsEnum>? TicketActions { get; init; }
+    public IEnumerable<TicketActionsEnum>? TicketActions { get; init; }
 
     /// <summary>
     /// The level of Ticket access that a User with this Role can perform.
@@ -60,5 +60,5 @@ public class Role
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

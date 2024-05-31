@@ -98,7 +98,7 @@ public class ApplicationsClient
         {
             return JsonSerializer.Deserialize<PaginatedApplicationList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ public class ApplicationsClient
         {
             return JsonSerializer.Deserialize<ApplicationResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ public class ApplicationsClient
         {
             return JsonSerializer.Deserialize<Application>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -191,7 +191,7 @@ public class ApplicationsClient
         {
             return JsonSerializer.Deserialize<ApplicationResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -219,6 +219,6 @@ public class ApplicationsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

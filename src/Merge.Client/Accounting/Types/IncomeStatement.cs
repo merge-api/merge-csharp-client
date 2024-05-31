@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -352,6 +353,7 @@ public class IncomeStatement
     /// The company the income statement belongs to.
     /// </summary>
     [JsonPropertyName("company")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; init; }
 
     /// <summary>
@@ -367,10 +369,10 @@ public class IncomeStatement
     public DateTime? EndPeriod { get; init; }
 
     [JsonPropertyName("income")]
-    public List<ReportItem>? Income { get; init; }
+    public IEnumerable<ReportItem>? Income { get; init; }
 
     [JsonPropertyName("cost_of_sales")]
-    public List<ReportItem>? CostOfSales { get; init; }
+    public IEnumerable<ReportItem>? CostOfSales { get; init; }
 
     /// <summary>
     /// The revenue minus the cost of sale.
@@ -379,7 +381,7 @@ public class IncomeStatement
     public double? GrossProfit { get; init; }
 
     [JsonPropertyName("operating_expenses")]
-    public List<ReportItem>? OperatingExpenses { get; init; }
+    public IEnumerable<ReportItem>? OperatingExpenses { get; init; }
 
     /// <summary>
     /// The revenue minus the operating expenses.
@@ -388,7 +390,7 @@ public class IncomeStatement
     public double? NetOperatingIncome { get; init; }
 
     [JsonPropertyName("non_operating_expenses")]
-    public List<ReportItem>? NonOperatingExpenses { get; init; }
+    public IEnumerable<ReportItem>? NonOperatingExpenses { get; init; }
 
     /// <summary>
     /// The gross profit minus the total expenses.
@@ -406,5 +408,5 @@ public class IncomeStatement
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

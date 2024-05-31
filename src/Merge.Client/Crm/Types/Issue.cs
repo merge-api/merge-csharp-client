@@ -35,5 +35,5 @@ public class Issue
     public bool? IsMuted { get; init; }
 
     [JsonPropertyName("error_details")]
-    public List<string>? ErrorDetails { get; init; }
+    public IEnumerable<string>? ErrorDetails { get; init; }
 }

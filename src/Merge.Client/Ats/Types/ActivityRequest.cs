@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -12,6 +13,7 @@ public class ActivityRequest
     /// The user that performed the action.
     /// </summary>
     [JsonPropertyName("user")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? User { get; init; }
 
     /// <summary>

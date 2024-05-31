@@ -32,6 +32,6 @@ public class AccountTokenClient
         {
             return JsonSerializer.Deserialize<AccountToken>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

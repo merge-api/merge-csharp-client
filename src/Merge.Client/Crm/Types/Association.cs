@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Crm;
 using OneOf;
 
@@ -30,5 +31,6 @@ public class Association
     /// The association type the association belongs to.
     /// </summary>
     [JsonPropertyName("association_type")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AssociationType>>))]
     public OneOf<string, AssociationType>? AssociationType { get; init; }
 }

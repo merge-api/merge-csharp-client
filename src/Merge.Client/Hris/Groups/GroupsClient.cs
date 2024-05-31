@@ -90,7 +90,7 @@ public class GroupsClient
         {
             return JsonSerializer.Deserialize<PaginatedGroupList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -124,6 +124,6 @@ public class GroupsClient
         {
             return JsonSerializer.Deserialize<Group>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -70,7 +70,7 @@ public class AccountsClient
         {
             return JsonSerializer.Deserialize<PaginatedAccountList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -96,6 +96,6 @@ public class AccountsClient
         {
             return JsonSerializer.Deserialize<Account>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

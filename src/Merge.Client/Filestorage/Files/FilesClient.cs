@@ -90,7 +90,7 @@ public class FilesClient
         {
             return JsonSerializer.Deserialize<PaginatedFileList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -120,7 +120,7 @@ public class FilesClient
         {
             return JsonSerializer.Deserialize<FileStorageFileResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -150,7 +150,7 @@ public class FilesClient
         {
             return JsonSerializer.Deserialize<File>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -190,6 +190,6 @@ public class FilesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

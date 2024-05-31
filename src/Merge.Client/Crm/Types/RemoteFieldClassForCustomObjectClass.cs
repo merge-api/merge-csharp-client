@@ -38,7 +38,7 @@ public class RemoteFieldClassForCustomObjectClass
     public FieldFormatEnum? FieldFormat { get; init; }
 
     [JsonPropertyName("field_choices")]
-    public List<RemoteFieldClassForCustomObjectClassFieldChoicesItem>? FieldChoices { get; init; }
+    public IEnumerable<RemoteFieldClassForCustomObjectClassFieldChoicesItem>? FieldChoices { get; init; }
 
     [JsonPropertyName("item_schema")]
     public RemoteFieldClassForCustomObjectClassItemSchema? ItemSchema { get; init; }

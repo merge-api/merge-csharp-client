@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -87,34 +88,46 @@ public class Candidate
     /// The candidate's locations.
     /// </summary>
     [JsonPropertyName("locations")]
-    public List<string?>? Locations { get; init; }
+    public IEnumerable<string>? Locations { get; init; }
 
     [JsonPropertyName("phone_numbers")]
-    public List<PhoneNumber>? PhoneNumbers { get; init; }
+    public IEnumerable<PhoneNumber>? PhoneNumbers { get; init; }
 
     [JsonPropertyName("email_addresses")]
-    public List<EmailAddress>? EmailAddresses { get; init; }
+    public IEnumerable<EmailAddress>? EmailAddresses { get; init; }
 
     [JsonPropertyName("urls")]
-    public List<Url>? Urls { get; init; }
+    public IEnumerable<Url>? Urls { get; init; }
 
     /// <summary>
     /// Array of `Tag` names as strings.
     /// </summary>
     [JsonPropertyName("tags")]
-    public List<string?>? Tags { get; init; }
+    public IEnumerable<string>? Tags { get; init; }
 
     /// <summary>
     /// Array of `Application` object IDs.
     /// </summary>
     [JsonPropertyName("applications")]
-    public List<OneOf<string, Application>?>? Applications { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Application>,
+            OneOfSerializer<OneOf<string, Application>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Application>>? Applications { get; init; }
 
     /// <summary>
     /// Array of `Attachment` object IDs.
     /// </summary>
     [JsonPropertyName("attachments")]
-    public List<OneOf<string, Attachment>?>? Attachments { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Attachment>,
+            OneOfSerializer<OneOf<string, Attachment>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Attachment>>? Attachments { get; init; }
 
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; init; }
@@ -123,5 +136,5 @@ public class Candidate
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

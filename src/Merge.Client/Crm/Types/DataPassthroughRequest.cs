@@ -32,7 +32,7 @@ public class DataPassthroughRequest
     /// Pass an array of `MultipartFormField` objects in here instead of using the `data` param if `request_format` is set to `MULTIPART`.
     /// </summary>
     [JsonPropertyName("multipart_form_data")]
-    public List<MultipartFormFieldRequest>? MultipartFormData { get; init; }
+    public IEnumerable<MultipartFormFieldRequest>? MultipartFormData { get; init; }
 
     /// <summary>
     /// The headers to use for the request (Merge will handle the account's authorization headers). `Content-Type` header is required for passthrough. Choose content type corresponding to expected format of receiving server.

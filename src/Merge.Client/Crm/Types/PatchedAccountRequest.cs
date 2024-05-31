@@ -44,7 +44,7 @@ public class PatchedAccountRequest
     public int? NumberOfEmployees { get; init; }
 
     [JsonPropertyName("addresses")]
-    public List<AddressRequest>? Addresses { get; init; }
+    public IEnumerable<AddressRequest>? Addresses { get; init; }
 
     /// <summary>
     /// The last date (either most recent or furthest in the future) of when an activity occurs in an account.
@@ -59,5 +59,5 @@ public class PatchedAccountRequest
     public Dictionary<string, object>? LinkedAccountParams { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteFieldRequest>? RemoteFields { get; init; }
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; init; }
 }

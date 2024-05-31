@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -33,6 +34,7 @@ public class ExpenseLine
     /// The line's item.
     /// </summary>
     [JsonPropertyName("item")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
     public OneOf<string, Item>? Item { get; init; }
 
     /// <summary>
@@ -42,10 +44,17 @@ public class ExpenseLine
     public double? NetAmount { get; init; }
 
     [JsonPropertyName("tracking_category")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, TrackingCategory>>))]
     public OneOf<string, TrackingCategory>? TrackingCategory { get; init; }
 
     [JsonPropertyName("tracking_categories")]
-    public List<OneOf<string, TrackingCategory>?>? TrackingCategories { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, TrackingCategory>,
+            OneOfSerializer<OneOf<string, TrackingCategory>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
 
     /// <summary>
     /// The company the line belongs to.
@@ -370,12 +379,14 @@ public class ExpenseLine
     /// The expense's payment account.
     /// </summary>
     [JsonPropertyName("account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; init; }
 
     /// <summary>
     /// The expense's contact.
     /// </summary>
     [JsonPropertyName("contact")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; init; }
 
     /// <summary>

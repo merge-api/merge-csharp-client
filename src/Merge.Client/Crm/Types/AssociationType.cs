@@ -35,7 +35,7 @@ public class AssociationType
     public Dictionary<string, object>? SourceObjectClass { get; init; }
 
     [JsonPropertyName("target_object_classes")]
-    public List<AssociationSubType>? TargetObjectClasses { get; init; }
+    public IEnumerable<AssociationSubType>? TargetObjectClasses { get; init; }
 
     [JsonPropertyName("remote_key_name")]
     public string? RemoteKeyName { get; init; }

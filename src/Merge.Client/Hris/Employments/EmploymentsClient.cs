@@ -90,7 +90,7 @@ public class EmploymentsClient
         {
             return JsonSerializer.Deserialize<PaginatedEmploymentList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -128,6 +128,6 @@ public class EmploymentsClient
         {
             return JsonSerializer.Deserialize<Employment>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

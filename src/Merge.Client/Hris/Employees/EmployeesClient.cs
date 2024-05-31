@@ -162,7 +162,7 @@ public class EmployeesClient
         {
             return JsonSerializer.Deserialize<PaginatedEmployeeList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -192,7 +192,7 @@ public class EmployeesClient
         {
             return JsonSerializer.Deserialize<EmployeeResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -234,7 +234,7 @@ public class EmployeesClient
         {
             return JsonSerializer.Deserialize<Employee>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -269,6 +269,6 @@ public class EmployeesClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

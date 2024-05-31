@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Hris;
 using OneOf;
 
@@ -39,6 +40,7 @@ public class Employee
     /// The ID of the employee's company.
     /// </summary>
     [JsonPropertyName("company")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Company>>))]
     public OneOf<string, Company>? Company { get; init; }
 
     /// <summary>
@@ -72,7 +74,13 @@ public class Employee
     public string? Username { get; init; }
 
     [JsonPropertyName("groups")]
-    public List<OneOf<string, Group>?>? Groups { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Group>,
+            OneOfSerializer<OneOf<string, Group>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Group>>? Groups { get; init; }
 
     /// <summary>
     /// The employee's work email.
@@ -96,36 +104,47 @@ public class Employee
     /// Array of `Employment` IDs for this Employee.
     /// </summary>
     [JsonPropertyName("employments")]
-    public List<OneOf<string, Employment>?>? Employments { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Employment>,
+            OneOfSerializer<OneOf<string, Employment>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Employment>>? Employments { get; init; }
 
     /// <summary>
     /// The employee's home address.
     /// </summary>
     [JsonPropertyName("home_location")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Location>>))]
     public OneOf<string, Location>? HomeLocation { get; init; }
 
     /// <summary>
     /// The employee's work address.
     /// </summary>
     [JsonPropertyName("work_location")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Location>>))]
     public OneOf<string, Location>? WorkLocation { get; init; }
 
     /// <summary>
     /// The employee ID of the employee's manager.
     /// </summary>
     [JsonPropertyName("manager")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Manager { get; init; }
 
     /// <summary>
     /// The employee's team.
     /// </summary>
     [JsonPropertyName("team")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Team>>))]
     public OneOf<string, Team>? Team { get; init; }
 
     /// <summary>
     /// The employee's pay group
     /// </summary>
     [JsonPropertyName("pay_group")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, PayGroup>>))]
     public OneOf<string, PayGroup>? PayGroup { get; init; }
 
     /// <summary>
@@ -232,5 +251,5 @@ public class Employee
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

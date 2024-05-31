@@ -74,7 +74,7 @@ public class DrivesClient
         {
             return JsonSerializer.Deserialize<PaginatedDriveList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -100,6 +100,6 @@ public class DrivesClient
         {
             return JsonSerializer.Deserialize<Drive>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

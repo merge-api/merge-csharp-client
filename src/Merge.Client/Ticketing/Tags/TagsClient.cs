@@ -70,7 +70,7 @@ public class TagsClient
         {
             return JsonSerializer.Deserialize<PaginatedTagList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -96,6 +96,6 @@ public class TagsClient
         {
             return JsonSerializer.Deserialize<Tag>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

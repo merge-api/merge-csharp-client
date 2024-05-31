@@ -100,7 +100,7 @@ public class EmployeePayrollRunsClient
         {
             return JsonSerializer.Deserialize<PaginatedEmployeePayrollRunList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -133,6 +133,6 @@ public class EmployeePayrollRunsClient
         {
             return JsonSerializer.Deserialize<EmployeePayrollRun>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

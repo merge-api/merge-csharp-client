@@ -14,5 +14,5 @@ public class PaginatedAuditLogEventList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<AuditLogEvent>? Results { get; init; }
+    public IEnumerable<AuditLogEvent>? Results { get; init; }
 }

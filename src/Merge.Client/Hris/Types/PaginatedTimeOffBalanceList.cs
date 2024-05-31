@@ -14,5 +14,5 @@ public class PaginatedTimeOffBalanceList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<TimeOffBalance>? Results { get; init; }
+    public IEnumerable<TimeOffBalance>? Results { get; init; }
 }

@@ -82,7 +82,7 @@ public class CommentsClient
         {
             return JsonSerializer.Deserialize<PaginatedCommentList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public class CommentsClient
         {
             return JsonSerializer.Deserialize<CommentResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -142,7 +142,7 @@ public class CommentsClient
         {
             return JsonSerializer.Deserialize<Comment>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -162,6 +162,6 @@ public class CommentsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

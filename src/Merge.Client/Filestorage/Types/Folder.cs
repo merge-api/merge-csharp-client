@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Filestorage;
 using OneOf;
 
@@ -57,22 +58,29 @@ public class Folder
     /// The folder that the folder belongs to.
     /// </summary>
     [JsonPropertyName("parent_folder")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Folder>>))]
     public OneOf<string, Folder>? ParentFolder { get; init; }
 
     /// <summary>
     /// The drive that the folder belongs to.
     /// </summary>
     [JsonPropertyName("drive")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Drive>>))]
     public OneOf<string, Drive>? Drive { get; init; }
 
     /// <summary>
     /// The Permission object is used to represent a user's or group's access to a File or Folder. Permissions are unexpanded by default. Use the query param `expand=permissions` to see more details under `GET /folders`.
     /// </summary>
     [JsonPropertyName("permissions")]
+    [JsonConverter(
+        typeof(OneOfSerializer<
+            OneOf<string, PermissionRequest, IEnumerable<OneOf<string, PermissionRequest>>>
+        >)
+    )]
     public OneOf<
         string,
         PermissionRequest,
-        List<OneOf<string, PermissionRequest>>
+        IEnumerable<OneOf<string, PermissionRequest>>
     >? Permissions { get; init; }
 
     /// <summary>
@@ -97,5 +105,5 @@ public class Folder
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<Dictionary<string, object>?>? RemoteData { get; init; }
+    public IEnumerable<Dictionary<string, object>>? RemoteData { get; init; }
 }

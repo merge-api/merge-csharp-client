@@ -86,7 +86,7 @@ public class AccountsClient
         {
             return JsonSerializer.Deserialize<PaginatedAccountList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class AccountsClient
         {
             return JsonSerializer.Deserialize<CrmAccountResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -150,7 +150,7 @@ public class AccountsClient
         {
             return JsonSerializer.Deserialize<Account>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -183,7 +183,7 @@ public class AccountsClient
         {
             return JsonSerializer.Deserialize<CrmAccountResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -203,7 +203,7 @@ public class AccountsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -223,7 +223,7 @@ public class AccountsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -267,6 +267,6 @@ public class AccountsClient
         {
             return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

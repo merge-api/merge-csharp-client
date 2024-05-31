@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Crm;
 using OneOf;
 
@@ -33,6 +34,7 @@ public class Lead
     /// The lead's owner.
     /// </summary>
     [JsonPropertyName("owner")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; init; }
 
     /// <summary>
@@ -66,13 +68,13 @@ public class Lead
     public string? LastName { get; init; }
 
     [JsonPropertyName("addresses")]
-    public List<Address>? Addresses { get; init; }
+    public IEnumerable<Address>? Addresses { get; init; }
 
     [JsonPropertyName("email_addresses")]
-    public List<EmailAddress>? EmailAddresses { get; init; }
+    public IEnumerable<EmailAddress>? EmailAddresses { get; init; }
 
     [JsonPropertyName("phone_numbers")]
-    public List<PhoneNumber>? PhoneNumbers { get; init; }
+    public IEnumerable<PhoneNumber>? PhoneNumbers { get; init; }
 
     /// <summary>
     /// When the third party's lead was updated.
@@ -96,12 +98,14 @@ public class Lead
     /// The contact of the converted lead.
     /// </summary>
     [JsonPropertyName("converted_contact")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? ConvertedContact { get; init; }
 
     /// <summary>
     /// The account of the converted lead.
     /// </summary>
     [JsonPropertyName("converted_account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? ConvertedAccount { get; init; }
 
     [JsonPropertyName("remote_was_deleted")]
@@ -111,8 +115,8 @@ public class Lead
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteField>? RemoteFields { get; init; }
+    public IEnumerable<RemoteField>? RemoteFields { get; init; }
 }

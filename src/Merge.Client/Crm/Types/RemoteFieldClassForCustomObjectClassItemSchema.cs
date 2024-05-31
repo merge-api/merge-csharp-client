@@ -13,5 +13,5 @@ public class RemoteFieldClassForCustomObjectClassItemSchema
     public string? ItemFormat { get; init; }
 
     [JsonPropertyName("item_choices")]
-    public List<string?>? ItemChoices { get; init; }
+    public IEnumerable<string>? ItemChoices { get; init; }
 }

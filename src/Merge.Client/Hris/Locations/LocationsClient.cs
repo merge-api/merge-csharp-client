@@ -82,7 +82,7 @@ public class LocationsClient
         {
             return JsonSerializer.Deserialize<PaginatedLocationList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -116,6 +116,6 @@ public class LocationsClient
         {
             return JsonSerializer.Deserialize<Location>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

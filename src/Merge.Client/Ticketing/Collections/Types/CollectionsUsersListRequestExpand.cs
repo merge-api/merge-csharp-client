@@ -1,9 +1,13 @@
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using Merge.Client.Core;
+using Merge.Client.Ticketing;
 
 #nullable enable
 
 namespace Merge.Client.Ticketing;
 
+[JsonConverter(typeof(StringEnumSerializer<CollectionsUsersListRequestExpand>))]
 public enum CollectionsUsersListRequestExpand
 {
     [EnumMember(Value = "roles")]

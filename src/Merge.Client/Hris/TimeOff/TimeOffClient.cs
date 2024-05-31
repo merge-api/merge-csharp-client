@@ -114,7 +114,7 @@ public class TimeOffClient
         {
             return JsonSerializer.Deserialize<PaginatedTimeOffList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ public class TimeOffClient
         {
             return JsonSerializer.Deserialize<TimeOffResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -182,7 +182,7 @@ public class TimeOffClient
         {
             return JsonSerializer.Deserialize<TimeOff>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -202,6 +202,6 @@ public class TimeOffClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

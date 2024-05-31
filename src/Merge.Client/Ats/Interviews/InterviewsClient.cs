@@ -98,7 +98,7 @@ public class InterviewsClient
         {
             return JsonSerializer.Deserialize<PaginatedScheduledInterviewList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -130,7 +130,7 @@ public class InterviewsClient
         {
             return JsonSerializer.Deserialize<ScheduledInterviewResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -171,7 +171,7 @@ public class InterviewsClient
         {
             return JsonSerializer.Deserialize<ScheduledInterview>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -191,6 +191,6 @@ public class InterviewsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

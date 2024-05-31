@@ -37,7 +37,7 @@ public class Group
     /// The users that belong in the group. If null, this typically means it's either a domain or the third-party platform does not surface this information.
     /// </summary>
     [JsonPropertyName("users")]
-    public List<string> Users { get; init; }
+    public IEnumerable<string> Users { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
@@ -49,5 +49,5 @@ public class Group
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<Dictionary<string, object>?>? RemoteData { get; init; }
+    public IEnumerable<Dictionary<string, object>>? RemoteData { get; init; }
 }

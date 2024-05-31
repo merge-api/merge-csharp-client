@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -63,13 +64,19 @@ public class ContactRequest
     /// `Address` object IDs for the given `Contacts` object.
     /// </summary>
     [JsonPropertyName("addresses")]
-    public List<OneOf<string, Address>?>? Addresses { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, Address>,
+            OneOfSerializer<OneOf<string, Address>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, Address>>? Addresses { get; init; }
 
     /// <summary>
     /// `AccountingPhoneNumber` object for the given `Contacts` object.
     /// </summary>
     [JsonPropertyName("phone_numbers")]
-    public List<AccountingPhoneNumberRequest>? PhoneNumbers { get; init; }
+    public IEnumerable<AccountingPhoneNumberRequest>? PhoneNumbers { get; init; }
 
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object>? IntegrationParams { get; init; }

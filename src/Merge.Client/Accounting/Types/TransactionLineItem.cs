@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -48,6 +49,7 @@ public class TransactionLineItem
     public string? Quantity { get; init; }
 
     [JsonPropertyName("item")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
     public OneOf<string, Item>? Item { get; init; }
 
     /// <summary>
@@ -66,7 +68,7 @@ public class TransactionLineItem
     /// The line's associated tracking categories.
     /// </summary>
     [JsonPropertyName("tracking_categories")]
-    public List<string> TrackingCategories { get; init; }
+    public IEnumerable<string> TrackingCategories { get; init; }
 
     /// <summary>
     /// The line item's total.

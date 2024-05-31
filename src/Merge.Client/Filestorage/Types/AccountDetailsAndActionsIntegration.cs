@@ -11,7 +11,7 @@ public class AccountDetailsAndActionsIntegration
     public string Name { get; init; }
 
     [JsonPropertyName("categories")]
-    public List<CategoriesEnum> Categories { get; init; }
+    public IEnumerable<CategoriesEnum> Categories { get; init; }
 
     [JsonPropertyName("image")]
     public string? Image { get; init; }
@@ -29,5 +29,5 @@ public class AccountDetailsAndActionsIntegration
     public bool PassthroughAvailable { get; init; }
 
     [JsonPropertyName("available_model_operations")]
-    public List<ModelOperation>? AvailableModelOperations { get; init; }
+    public IEnumerable<ModelOperation>? AvailableModelOperations { get; init; }
 }

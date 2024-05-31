@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -33,25 +34,34 @@ public class ScheduledInterview
     /// The application being interviewed.
     /// </summary>
     [JsonPropertyName("application")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Application>>))]
     public OneOf<string, Application>? Application { get; init; }
 
     /// <summary>
     /// The stage of the interview.
     /// </summary>
     [JsonPropertyName("job_interview_stage")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, JobInterviewStage>>))]
     public OneOf<string, JobInterviewStage>? JobInterviewStage { get; init; }
 
     /// <summary>
     /// The user organizing the interview.
     /// </summary>
     [JsonPropertyName("organizer")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? Organizer { get; init; }
 
     /// <summary>
     /// Array of `RemoteUser` IDs.
     /// </summary>
     [JsonPropertyName("interviewers")]
-    public List<OneOf<string, RemoteUser>?>? Interviewers { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, RemoteUser>,
+            OneOfSerializer<OneOf<string, RemoteUser>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, RemoteUser>>? Interviewers { get; init; }
 
     /// <summary>
     /// The interview's location.
@@ -103,5 +113,5 @@ public class ScheduledInterview
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

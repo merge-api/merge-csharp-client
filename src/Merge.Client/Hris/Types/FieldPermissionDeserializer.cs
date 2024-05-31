@@ -7,8 +7,8 @@ namespace Merge.Client.Hris;
 public class FieldPermissionDeserializer
 {
     [JsonPropertyName("enabled")]
-    public List<object>? Enabled { get; init; }
+    public IEnumerable<object>? Enabled { get; init; }
 
     [JsonPropertyName("disabled")]
-    public List<object>? Disabled { get; init; }
+    public IEnumerable<object>? Disabled { get; init; }
 }

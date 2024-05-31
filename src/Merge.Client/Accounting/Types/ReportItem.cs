@@ -37,7 +37,7 @@ public class ReportItem
     public double? Value { get; init; }
 
     [JsonPropertyName("sub_items")]
-    public List<Dictionary<string, object>>? SubItems { get; init; }
+    public IEnumerable<Dictionary<string, object>>? SubItems { get; init; }
 
     /// <summary>
     /// The company the report item belongs to.

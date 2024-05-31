@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Accounting;
+using Merge.Client.Core;
 using OneOf;
 
 #nullable enable
@@ -45,12 +46,14 @@ public class Expense
     /// The expense's payment account.
     /// </summary>
     [JsonPropertyName("account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; init; }
 
     /// <summary>
     /// The expense's contact.
     /// </summary>
     [JsonPropertyName("contact")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; init; }
 
     /// <summary>
@@ -394,6 +397,7 @@ public class Expense
     /// The company the expense belongs to.
     /// </summary>
     [JsonPropertyName("company")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; init; }
 
     /// <summary>
@@ -403,10 +407,16 @@ public class Expense
     public string? Memo { get; init; }
 
     [JsonPropertyName("lines")]
-    public List<ExpenseLine>? Lines { get; init; }
+    public IEnumerable<ExpenseLine>? Lines { get; init; }
 
     [JsonPropertyName("tracking_categories")]
-    public List<OneOf<string, TrackingCategory>?>? TrackingCategories { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, TrackingCategory>,
+            OneOfSerializer<OneOf<string, TrackingCategory>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
@@ -418,11 +428,12 @@ public class Expense
     /// The accounting period that the Expense was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; init; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

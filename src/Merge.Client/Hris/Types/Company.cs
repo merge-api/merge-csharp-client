@@ -44,7 +44,7 @@ public class Company
     /// The company's Employer Identification Numbers.
     /// </summary>
     [JsonPropertyName("eins")]
-    public List<string?>? Eins { get; init; }
+    public IEnumerable<string>? Eins { get; init; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
@@ -56,5 +56,5 @@ public class Company
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

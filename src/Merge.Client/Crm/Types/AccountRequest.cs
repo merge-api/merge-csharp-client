@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Crm;
 using OneOf;
 
@@ -12,6 +13,7 @@ public class AccountRequest
     /// The account's owner.
     /// </summary>
     [JsonPropertyName("owner")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; init; }
 
     /// <summary>
@@ -45,7 +47,7 @@ public class AccountRequest
     public int? NumberOfEmployees { get; init; }
 
     [JsonPropertyName("addresses")]
-    public List<AddressRequest>? Addresses { get; init; }
+    public IEnumerable<AddressRequest>? Addresses { get; init; }
 
     /// <summary>
     /// The last date (either most recent or furthest in the future) of when an activity occurs in an account.
@@ -60,5 +62,5 @@ public class AccountRequest
     public Dictionary<string, object>? LinkedAccountParams { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteFieldRequest>? RemoteFields { get; init; }
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; init; }
 }

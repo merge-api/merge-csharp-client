@@ -41,6 +41,6 @@ public class PhoneNumbersClient
         {
             return JsonSerializer.Deserialize<AccountingPhoneNumber>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -14,5 +14,5 @@ public class PaginatedVendorCreditList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<VendorCredit>? Results { get; init; }
+    public IEnumerable<VendorCredit>? Results { get; init; }
 }

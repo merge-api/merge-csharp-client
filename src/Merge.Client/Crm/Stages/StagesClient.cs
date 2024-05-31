@@ -74,7 +74,7 @@ public class StagesClient
         {
             return JsonSerializer.Deserialize<PaginatedStageList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -104,7 +104,7 @@ public class StagesClient
         {
             return JsonSerializer.Deserialize<Stage>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -148,6 +148,6 @@ public class StagesClient
         {
             return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

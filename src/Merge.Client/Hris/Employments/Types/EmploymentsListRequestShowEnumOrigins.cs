@@ -1,9 +1,13 @@
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using Merge.Client.Core;
+using Merge.Client.Hris;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
+[JsonConverter(typeof(StringEnumSerializer<EmploymentsListRequestShowEnumOrigins>))]
 public enum EmploymentsListRequestShowEnumOrigins
 {
     [EnumMember(Value = "employment_type")]

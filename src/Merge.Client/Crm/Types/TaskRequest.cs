@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Crm;
 using OneOf;
 
@@ -24,18 +25,21 @@ public class TaskRequest
     /// The task's owner.
     /// </summary>
     [JsonPropertyName("owner")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; init; }
 
     /// <summary>
     /// The task's account.
     /// </summary>
     [JsonPropertyName("account")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; init; }
 
     /// <summary>
     /// The task's opportunity.
     /// </summary>
     [JsonPropertyName("opportunity")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Opportunity>>))]
     public OneOf<string, Opportunity>? Opportunity { get; init; }
 
     /// <summary>
@@ -66,5 +70,5 @@ public class TaskRequest
     public Dictionary<string, object>? LinkedAccountParams { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteFieldRequest>? RemoteFields { get; init; }
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; init; }
 }

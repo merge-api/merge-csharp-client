@@ -32,6 +32,6 @@ public class AvailableActionsClient
         {
             return JsonSerializer.Deserialize<AvailableActions>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

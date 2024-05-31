@@ -74,7 +74,7 @@ public class DependentsClient
         {
             return JsonSerializer.Deserialize<PaginatedDependentList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -104,6 +104,6 @@ public class DependentsClient
         {
             return JsonSerializer.Deserialize<Dependent>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

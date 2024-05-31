@@ -42,6 +42,6 @@ public class SyncStatusClient
         {
             return JsonSerializer.Deserialize<PaginatedSyncStatusList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

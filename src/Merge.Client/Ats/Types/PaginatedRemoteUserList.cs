@@ -14,5 +14,5 @@ public class PaginatedRemoteUserList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<RemoteUser>? Results { get; init; }
+    public IEnumerable<RemoteUser>? Results { get; init; }
 }

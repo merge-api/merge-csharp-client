@@ -154,7 +154,7 @@ public class TicketsClient
         {
             return JsonSerializer.Deserialize<PaginatedTicketList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -184,7 +184,7 @@ public class TicketsClient
         {
             return JsonSerializer.Deserialize<TicketResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -226,7 +226,7 @@ public class TicketsClient
         {
             return JsonSerializer.Deserialize<Ticket>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -259,7 +259,7 @@ public class TicketsClient
         {
             return JsonSerializer.Deserialize<TicketResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -304,7 +304,7 @@ public class TicketsClient
         {
             return JsonSerializer.Deserialize<PaginatedUserList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -324,7 +324,7 @@ public class TicketsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -344,7 +344,7 @@ public class TicketsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -384,6 +384,6 @@ public class TicketsClient
         {
             return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

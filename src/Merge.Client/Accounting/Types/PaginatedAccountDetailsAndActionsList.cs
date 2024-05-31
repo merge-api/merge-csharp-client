@@ -14,5 +14,5 @@ public class PaginatedAccountDetailsAndActionsList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<AccountDetailsAndActions>? Results { get; init; }
+    public IEnumerable<AccountDetailsAndActions>? Results { get; init; }
 }

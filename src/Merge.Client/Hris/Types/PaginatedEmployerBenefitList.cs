@@ -14,5 +14,5 @@ public class PaginatedEmployerBenefitList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<EmployerBenefit>? Results { get; init; }
+    public IEnumerable<EmployerBenefit>? Results { get; init; }
 }

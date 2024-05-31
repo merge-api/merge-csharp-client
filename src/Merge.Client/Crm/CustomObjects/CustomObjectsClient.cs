@@ -77,7 +77,7 @@ public class CustomObjectsClient
         {
             return JsonSerializer.Deserialize<PaginatedCustomObjectList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ public class CustomObjectsClient
         {
             return JsonSerializer.Deserialize<CrmCustomObjectResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ public class CustomObjectsClient
         {
             return JsonSerializer.Deserialize<CustomObject>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -167,6 +167,6 @@ public class CustomObjectsClient
         {
             return JsonSerializer.Deserialize<MetaResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

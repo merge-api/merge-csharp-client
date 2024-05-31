@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 using Merge.Client.Hris;
 using OneOf;
 
@@ -33,6 +34,7 @@ public class TimeOffBalance
     /// The employee the balance belongs to.
     /// </summary>
     [JsonPropertyName("employee")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Employee { get; init; }
 
     /// <summary>
@@ -70,5 +72,5 @@ public class TimeOffBalance
     public Dictionary<string, object>? FieldMappings { get; init; }
 
     [JsonPropertyName("remote_data")]
-    public List<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; init; }
 }

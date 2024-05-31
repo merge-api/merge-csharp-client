@@ -14,5 +14,5 @@ public class PaginatedRemoteFieldClassList
     public string? Previous { get; init; }
 
     [JsonPropertyName("results")]
-    public List<RemoteFieldClass>? Results { get; init; }
+    public IEnumerable<RemoteFieldClass>? Results { get; init; }
 }

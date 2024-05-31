@@ -88,7 +88,7 @@ public class TrackingCategoriesClient
         {
             return JsonSerializer.Deserialize<PaginatedTrackingCategoryList>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -129,6 +129,6 @@ public class TrackingCategoriesClient
         {
             return JsonSerializer.Deserialize<TrackingCategory>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

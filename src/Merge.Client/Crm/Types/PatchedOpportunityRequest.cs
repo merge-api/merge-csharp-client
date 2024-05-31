@@ -72,5 +72,5 @@ public class PatchedOpportunityRequest
     public Dictionary<string, object>? LinkedAccountParams { get; init; }
 
     [JsonPropertyName("remote_fields")]
-    public List<RemoteFieldRequest>? RemoteFields { get; init; }
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; init; }
 }
