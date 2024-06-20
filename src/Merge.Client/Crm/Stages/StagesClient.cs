@@ -23,11 +23,11 @@ public class StagesClient
         var _query = new Dictionary<string, object>() { };
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter;
+            _query["created_after"] = request.CreatedAfter.ToString("o0");
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore;
+            _query["created_before"] = request.CreatedBefore.ToString("o0");
         }
         if (request.Cursor != null)
         {
@@ -35,27 +35,27 @@ public class StagesClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData;
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.IncludeRemoteFields != null)
         {
-            _query["include_remote_fields"] = request.IncludeRemoteFields;
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter;
+            _query["modified_after"] = request.ModifiedAfter.ToString("o0");
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore;
+            _query["modified_before"] = request.ModifiedBefore.ToString("o0");
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         if (request.RemoteId != null)
         {
@@ -85,11 +85,11 @@ public class StagesClient
         var _query = new Dictionary<string, object>() { };
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.IncludeRemoteFields != null)
         {
-            _query["include_remote_fields"] = request.IncludeRemoteFields;
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -121,19 +121,19 @@ public class StagesClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData;
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.IncludeRemoteFields != null)
         {
-            _query["include_remote_fields"] = request.IncludeRemoteFields;
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

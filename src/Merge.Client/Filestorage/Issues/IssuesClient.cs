@@ -39,11 +39,11 @@ public class IssuesClient
         }
         if (request.FirstIncidentTimeAfter != null)
         {
-            _query["first_incident_time_after"] = request.FirstIncidentTimeAfter;
+            _query["first_incident_time_after"] = request.FirstIncidentTimeAfter.ToString("o0");
         }
         if (request.FirstIncidentTimeBefore != null)
         {
-            _query["first_incident_time_before"] = request.FirstIncidentTimeBefore;
+            _query["first_incident_time_before"] = request.FirstIncidentTimeBefore.ToString("o0");
         }
         if (request.IncludeMuted != null)
         {
@@ -55,15 +55,15 @@ public class IssuesClient
         }
         if (request.LastIncidentTimeAfter != null)
         {
-            _query["last_incident_time_after"] = request.LastIncidentTimeAfter;
+            _query["last_incident_time_after"] = request.LastIncidentTimeAfter.ToString("o0");
         }
         if (request.LastIncidentTimeBefore != null)
         {
-            _query["last_incident_time_before"] = request.LastIncidentTimeBefore;
+            _query["last_incident_time_before"] = request.LastIncidentTimeBefore.ToString("o0");
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         if (request.StartDate != null)
         {
@@ -71,7 +71,7 @@ public class IssuesClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status;
+            _query["status"] = request.Status.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

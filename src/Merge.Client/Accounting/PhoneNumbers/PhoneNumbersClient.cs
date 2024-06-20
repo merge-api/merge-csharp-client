@@ -26,7 +26,7 @@ public class PhoneNumbersClient
         var _query = new Dictionary<string, object>() { };
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

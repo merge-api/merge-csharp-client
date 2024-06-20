@@ -27,11 +27,11 @@ public class EmployeesClient
         }
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter;
+            _query["created_after"] = request.CreatedAfter.ToString("o0");
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore;
+            _query["created_before"] = request.CreatedBefore.ToString("o0");
         }
         if (request.Cursor != null)
         {
@@ -43,7 +43,7 @@ public class EmployeesClient
         }
         if (request.EmploymentStatus != null)
         {
-            _query["employment_status"] = request.EmploymentStatus;
+            _query["employment_status"] = request.EmploymentStatus.ToString();
         }
         if (request.EmploymentType != null)
         {
@@ -51,7 +51,7 @@ public class EmployeesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand;
+            _query["expand"] = request.Expand.ToString();
         }
         if (request.FirstName != null)
         {
@@ -67,15 +67,15 @@ public class EmployeesClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData;
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.IncludeSensitiveFields != null)
         {
-            _query["include_sensitive_fields"] = request.IncludeSensitiveFields;
+            _query["include_sensitive_fields"] = request.IncludeSensitiveFields.ToString();
         }
         if (request.JobTitle != null)
         {
@@ -91,15 +91,15 @@ public class EmployeesClient
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter;
+            _query["modified_after"] = request.ModifiedAfter.ToString("o0");
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore;
+            _query["modified_before"] = request.ModifiedBefore.ToString("o0");
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         if (request.PayGroupId != null)
         {
@@ -111,7 +111,7 @@ public class EmployeesClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields;
+            _query["remote_fields"] = request.RemoteFields.ToString();
         }
         if (request.RemoteId != null)
         {
@@ -119,15 +119,15 @@ public class EmployeesClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins;
+            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter;
+            _query["started_after"] = request.StartedAfter.ToString("o0");
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore;
+            _query["started_before"] = request.StartedBefore.ToString("o0");
         }
         if (request.TeamId != null)
         {
@@ -135,11 +135,11 @@ public class EmployeesClient
         }
         if (request.TerminatedAfter != null)
         {
-            _query["terminated_after"] = request.TerminatedAfter;
+            _query["terminated_after"] = request.TerminatedAfter.ToString("o0");
         }
         if (request.TerminatedBefore != null)
         {
-            _query["terminated_before"] = request.TerminatedBefore;
+            _query["terminated_before"] = request.TerminatedBefore.ToString("o0");
         }
         if (request.WorkEmail != null)
         {
@@ -173,11 +173,11 @@ public class EmployeesClient
         var _query = new Dictionary<string, object>() { };
         if (request.IsDebugMode != null)
         {
-            _query["is_debug_mode"] = request.IsDebugMode;
+            _query["is_debug_mode"] = request.IsDebugMode.ToString();
         }
         if (request.RunAsync != null)
         {
-            _query["run_async"] = request.RunAsync;
+            _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -203,23 +203,23 @@ public class EmployeesClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand;
+            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.IncludeSensitiveFields != null)
         {
-            _query["include_sensitive_fields"] = request.IncludeSensitiveFields;
+            _query["include_sensitive_fields"] = request.IncludeSensitiveFields.ToString();
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields;
+            _query["remote_fields"] = request.RemoteFields.ToString();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins;
+            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
