@@ -23,11 +23,11 @@ public class PayrollRunsClient
         var _query = new Dictionary<string, object>() { };
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter;
+            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore;
+            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
         }
         if (request.Cursor != null)
         {
@@ -35,35 +35,35 @@ public class PayrollRunsClient
         }
         if (request.EndedAfter != null)
         {
-            _query["ended_after"] = request.EndedAfter;
+            _query["ended_after"] = request.EndedAfter.Value.ToString("o0");
         }
         if (request.EndedBefore != null)
         {
-            _query["ended_before"] = request.EndedBefore;
+            _query["ended_before"] = request.EndedBefore.Value.ToString("o0");
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData;
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter;
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore;
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields;
+            _query["remote_fields"] = request.RemoteFields.ToString();
         }
         if (request.RemoteId != null)
         {
@@ -71,19 +71,19 @@ public class PayrollRunsClient
         }
         if (request.RunType != null)
         {
-            _query["run_type"] = request.RunType;
+            _query["run_type"] = request.RunType.ToString();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins;
+            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter;
+            _query["started_after"] = request.StartedAfter.Value.ToString("o0");
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore;
+            _query["started_before"] = request.StartedBefore.Value.ToString("o0");
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -109,15 +109,15 @@ public class PayrollRunsClient
         var _query = new Dictionary<string, object>() { };
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields;
+            _query["remote_fields"] = request.RemoteFields.ToString();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins;
+            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

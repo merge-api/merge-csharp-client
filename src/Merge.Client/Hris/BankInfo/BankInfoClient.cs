@@ -23,7 +23,7 @@ public class BankInfoClient
         var _query = new Dictionary<string, object>() { };
         if (request.AccountType != null)
         {
-            _query["account_type"] = request.AccountType;
+            _query["account_type"] = request.AccountType.ToString();
         }
         if (request.BankName != null)
         {
@@ -31,11 +31,11 @@ public class BankInfoClient
         }
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter;
+            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore;
+            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
         }
         if (request.Cursor != null)
         {
@@ -47,35 +47,35 @@ public class BankInfoClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand;
+            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData;
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter;
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore;
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
         }
         if (request.OrderBy != null)
         {
-            _query["order_by"] = request.OrderBy;
+            _query["order_by"] = request.OrderBy.ToString();
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields;
+            _query["remote_fields"] = request.RemoteFields.ToString();
         }
         if (request.RemoteId != null)
         {
@@ -83,7 +83,7 @@ public class BankInfoClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins;
+            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -109,19 +109,19 @@ public class BankInfoClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand;
+            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields;
+            _query["remote_fields"] = request.RemoteFields.ToString();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins;
+            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

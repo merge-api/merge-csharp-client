@@ -35,7 +35,7 @@ public class AuditTrailClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         if (request.StartDate != null)
         {
