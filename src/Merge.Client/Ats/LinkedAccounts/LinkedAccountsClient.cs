@@ -25,7 +25,7 @@ public class LinkedAccountsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Category != null)
         {
-            _query["category"] = request.Category;
+            _query["category"] = request.Category.ToString();
         }
         if (request.Cursor != null)
         {
@@ -57,7 +57,7 @@ public class LinkedAccountsClient
         }
         if (request.IncludeDuplicates != null)
         {
-            _query["include_duplicates"] = request.IncludeDuplicates;
+            _query["include_duplicates"] = request.IncludeDuplicates.ToString();
         }
         if (request.IntegrationName != null)
         {
@@ -69,7 +69,7 @@ public class LinkedAccountsClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         if (request.Status != null)
         {

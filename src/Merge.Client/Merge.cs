@@ -27,33 +27,33 @@ public partial class Merge
                 { "X-Account-Token", accountToken },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Merge.Client" },
-                { "X-Fern-SDK-Version", "0.0.10" },
+                { "X-Fern-SDK-Version", "0.0.11" },
             },
             clientOptions ?? new ClientOptions()
         );
         Ats = new AtsClient(_client);
-        Filestorage = new FilestorageClient(_client);
         Crm = new CrmClient(_client);
-        Ticketing = new TicketingClient(_client);
+        Filestorage = new FilestorageClient(_client);
         Hris = new HrisClient(_client);
+        Ticketing = new TicketingClient(_client);
         Accounting = new AccountingClient(_client);
     }
 
     public AtsClient Ats { get; }
 
-    public FilestorageClient Filestorage { get; }
-
     public CrmClient Crm { get; }
 
-    public TicketingClient Ticketing { get; }
+    public FilestorageClient Filestorage { get; }
 
     public HrisClient Hris { get; }
+
+    public TicketingClient Ticketing { get; }
 
     public AccountingClient Accounting { get; }
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        var value = Environment.GetEnvironmentVariable(env);
+        var value = System.Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

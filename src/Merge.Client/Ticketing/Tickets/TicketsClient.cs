@@ -35,11 +35,11 @@ public class TicketsClient
         }
         if (request.CompletedAfter != null)
         {
-            _query["completed_after"] = request.CompletedAfter;
+            _query["completed_after"] = request.CompletedAfter.Value.ToString("o0");
         }
         if (request.CompletedBefore != null)
         {
-            _query["completed_before"] = request.CompletedBefore;
+            _query["completed_before"] = request.CompletedBefore.Value.ToString("o0");
         }
         if (request.ContactId != null)
         {
@@ -47,11 +47,11 @@ public class TicketsClient
         }
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter;
+            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore;
+            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
         }
         if (request.Cursor != null)
         {
@@ -59,39 +59,39 @@ public class TicketsClient
         }
         if (request.DueAfter != null)
         {
-            _query["due_after"] = request.DueAfter;
+            _query["due_after"] = request.DueAfter.Value.ToString("o0");
         }
         if (request.DueBefore != null)
         {
-            _query["due_before"] = request.DueBefore;
+            _query["due_before"] = request.DueBefore.Value.ToString("o0");
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand;
+            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData;
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.IncludeRemoteFields != null)
         {
-            _query["include_remote_fields"] = request.IncludeRemoteFields;
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter;
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore;
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         if (request.ParentTicketId != null)
         {
@@ -99,19 +99,19 @@ public class TicketsClient
         }
         if (request.Priority != null)
         {
-            _query["priority"] = request.Priority;
+            _query["priority"] = request.Priority.ToString();
         }
         if (request.RemoteCreatedAfter != null)
         {
-            _query["remote_created_after"] = request.RemoteCreatedAfter;
+            _query["remote_created_after"] = request.RemoteCreatedAfter.Value.ToString("o0");
         }
         if (request.RemoteCreatedBefore != null)
         {
-            _query["remote_created_before"] = request.RemoteCreatedBefore;
+            _query["remote_created_before"] = request.RemoteCreatedBefore.Value.ToString("o0");
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields;
+            _query["remote_fields"] = request.RemoteFields.ToString();
         }
         if (request.RemoteId != null)
         {
@@ -119,19 +119,19 @@ public class TicketsClient
         }
         if (request.RemoteUpdatedAfter != null)
         {
-            _query["remote_updated_after"] = request.RemoteUpdatedAfter;
+            _query["remote_updated_after"] = request.RemoteUpdatedAfter.Value.ToString("o0");
         }
         if (request.RemoteUpdatedBefore != null)
         {
-            _query["remote_updated_before"] = request.RemoteUpdatedBefore;
+            _query["remote_updated_before"] = request.RemoteUpdatedBefore.Value.ToString("o0");
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins;
+            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status;
+            _query["status"] = request.Status.ToString();
         }
         if (request.Tags != null)
         {
@@ -165,11 +165,11 @@ public class TicketsClient
         var _query = new Dictionary<string, object>() { };
         if (request.IsDebugMode != null)
         {
-            _query["is_debug_mode"] = request.IsDebugMode;
+            _query["is_debug_mode"] = request.IsDebugMode.ToString();
         }
         if (request.RunAsync != null)
         {
-            _query["run_async"] = request.RunAsync;
+            _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -195,23 +195,23 @@ public class TicketsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand;
+            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.IncludeRemoteFields != null)
         {
-            _query["include_remote_fields"] = request.IncludeRemoteFields;
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields;
+            _query["remote_fields"] = request.RemoteFields.ToString();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins;
+            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -240,11 +240,11 @@ public class TicketsClient
         var _query = new Dictionary<string, object>() { };
         if (request.IsDebugMode != null)
         {
-            _query["is_debug_mode"] = request.IsDebugMode;
+            _query["is_debug_mode"] = request.IsDebugMode.ToString();
         }
         if (request.RunAsync != null)
         {
-            _query["run_async"] = request.RunAsync;
+            _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -277,19 +277,19 @@ public class TicketsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand;
+            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData;
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -361,15 +361,15 @@ public class TicketsClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData;
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData;
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest

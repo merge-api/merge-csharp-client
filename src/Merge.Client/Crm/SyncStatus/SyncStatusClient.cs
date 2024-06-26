@@ -27,7 +27,7 @@ public class SyncStatusClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize;
+            _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
