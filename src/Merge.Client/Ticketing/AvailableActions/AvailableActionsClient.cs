@@ -21,10 +21,10 @@ public class AvailableActionsClient
     public async Task<AvailableActions> RetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/available-actions"
+                Path = "ticketing/v1/available-actions"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

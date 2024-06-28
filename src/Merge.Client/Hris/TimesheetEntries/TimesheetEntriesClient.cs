@@ -63,7 +63,7 @@ public class TimesheetEntriesClient
         }
         if (request.OrderBy != null)
         {
-            _query["order_by"] = request.OrderBy.ToString();
+            _query["order_by"] = JsonSerializer.Serialize(request.OrderBy.Value);
         }
         if (request.PageSize != null)
         {
@@ -82,10 +82,10 @@ public class TimesheetEntriesClient
             _query["started_before"] = request.StartedBefore;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/timesheet-entries",
+                Path = "hris/v1/timesheet-entries",
                 Query = _query
             }
         );
@@ -112,10 +112,10 @@ public class TimesheetEntriesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/hris/v1/timesheet-entries",
+                Path = "hris/v1/timesheet-entries",
                 Query = _query
             }
         );
@@ -141,10 +141,10 @@ public class TimesheetEntriesClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/timesheet-entries/{id}",
+                Path = $"hris/v1/timesheet-entries/{id}",
                 Query = _query
             }
         );
@@ -162,10 +162,10 @@ public class TimesheetEntriesClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/timesheet-entries/meta/post"
+                Path = "hris/v1/timesheet-entries/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

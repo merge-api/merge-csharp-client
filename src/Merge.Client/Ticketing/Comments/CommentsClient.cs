@@ -35,7 +35,7 @@ public class CommentsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -70,10 +70,10 @@ public class CommentsClient
             _query["ticket_id"] = request.TicketId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/comments",
+                Path = "ticketing/v1/comments",
                 Query = _query
             }
         );
@@ -100,10 +100,10 @@ public class CommentsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ticketing/v1/comments",
+                Path = "ticketing/v1/comments",
                 Query = _query
             }
         );
@@ -123,17 +123,17 @@ public class CommentsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/comments/{id}",
+                Path = $"ticketing/v1/comments/{id}",
                 Query = _query
             }
         );
@@ -151,10 +151,10 @@ public class CommentsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/comments/meta/post"
+                Path = "ticketing/v1/comments/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

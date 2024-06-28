@@ -39,7 +39,7 @@ public class EmploymentsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -59,7 +59,7 @@ public class EmploymentsClient
         }
         if (request.OrderBy != null)
         {
-            _query["order_by"] = request.OrderBy.ToString();
+            _query["order_by"] = JsonSerializer.Serialize(request.OrderBy.Value);
         }
         if (request.PageSize != null)
         {
@@ -67,7 +67,7 @@ public class EmploymentsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.RemoteId != null)
         {
@@ -75,13 +75,13 @@ public class EmploymentsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/employments",
+                Path = "hris/v1/employments",
                 Query = _query
             }
         );
@@ -101,7 +101,7 @@ public class EmploymentsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -109,17 +109,17 @@ public class EmploymentsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/employments/{id}",
+                Path = $"hris/v1/employments/{id}",
                 Query = _query
             }
         );

@@ -39,7 +39,7 @@ public class JobsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -79,13 +79,13 @@ public class JobsClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.ToString();
+            _query["status"] = JsonSerializer.Serialize(request.Status.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/jobs",
+                Path = "ats/v1/jobs",
                 Query = _query
             }
         );
@@ -105,7 +105,7 @@ public class JobsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -120,10 +120,10 @@ public class JobsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/jobs/{id}",
+                Path = $"ats/v1/jobs/{id}",
                 Query = _query
             }
         );
@@ -150,7 +150,7 @@ public class JobsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -165,10 +165,10 @@ public class JobsClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/jobs/{jobId}/screening-questions",
+                Path = $"ats/v1/jobs/{jobId}/screening-questions",
                 Query = _query
             }
         );

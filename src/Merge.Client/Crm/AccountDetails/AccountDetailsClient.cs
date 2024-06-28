@@ -21,7 +21,11 @@ public class AccountDetailsClient
     public async Task<AccountDetails> RetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/crm/v1/account-details" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "crm/v1/account-details"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)

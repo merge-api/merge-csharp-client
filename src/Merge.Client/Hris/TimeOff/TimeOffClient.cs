@@ -51,7 +51,7 @@ public class TimeOffClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -75,7 +75,7 @@ public class TimeOffClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.RemoteId != null)
         {
@@ -83,11 +83,11 @@ public class TimeOffClient
         }
         if (request.RequestType != null)
         {
-            _query["request_type"] = request.RequestType.ToString();
+            _query["request_type"] = JsonSerializer.Serialize(request.RequestType.Value);
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         if (request.StartedAfter != null)
         {
@@ -99,13 +99,13 @@ public class TimeOffClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.ToString();
+            _query["status"] = JsonSerializer.Serialize(request.Status.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/time-off",
+                Path = "hris/v1/time-off",
                 Query = _query
             }
         );
@@ -132,10 +132,10 @@ public class TimeOffClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/hris/v1/time-off",
+                Path = "hris/v1/time-off",
                 Query = _query
             }
         );
@@ -155,7 +155,7 @@ public class TimeOffClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -163,17 +163,17 @@ public class TimeOffClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/time-off/{id}",
+                Path = $"hris/v1/time-off/{id}",
                 Query = _query
             }
         );
@@ -191,10 +191,10 @@ public class TimeOffClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/time-off/meta/post"
+                Path = "hris/v1/time-off/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

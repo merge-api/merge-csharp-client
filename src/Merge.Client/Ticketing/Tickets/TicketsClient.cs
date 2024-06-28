@@ -67,7 +67,7 @@ public class TicketsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -99,7 +99,7 @@ public class TicketsClient
         }
         if (request.Priority != null)
         {
-            _query["priority"] = request.Priority.ToString();
+            _query["priority"] = JsonSerializer.Serialize(request.Priority.Value);
         }
         if (request.RemoteCreatedAfter != null)
         {
@@ -111,7 +111,7 @@ public class TicketsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.RemoteId != null)
         {
@@ -127,11 +127,11 @@ public class TicketsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.ToString();
+            _query["status"] = JsonSerializer.Serialize(request.Status.Value);
         }
         if (request.Tags != null)
         {
@@ -142,10 +142,10 @@ public class TicketsClient
             _query["ticket_type"] = request.TicketType;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/tickets",
+                Path = "ticketing/v1/tickets",
                 Query = _query
             }
         );
@@ -172,10 +172,10 @@ public class TicketsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ticketing/v1/tickets",
+                Path = "ticketing/v1/tickets",
                 Query = _query
             }
         );
@@ -195,7 +195,7 @@ public class TicketsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -207,17 +207,17 @@ public class TicketsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/tickets/{id}",
+                Path = $"ticketing/v1/tickets/{id}",
                 Query = _query
             }
         );
@@ -247,10 +247,10 @@ public class TicketsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Patch,
-                Path = $"/ticketing/v1/tickets/{id}",
+                Path = $"ticketing/v1/tickets/{id}",
                 Query = _query
             }
         );
@@ -277,7 +277,7 @@ public class TicketsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -292,10 +292,10 @@ public class TicketsClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/tickets/{parentId}/collaborators",
+                Path = $"ticketing/v1/tickets/{parentId}/collaborators",
                 Query = _query
             }
         );
@@ -313,10 +313,10 @@ public class TicketsClient
     public async Task<MetaResponse> MetaPatchRetrieveAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/tickets/meta/patch/{id}"
+                Path = $"ticketing/v1/tickets/meta/patch/{id}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -333,10 +333,10 @@ public class TicketsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/tickets/meta/post"
+                Path = "ticketing/v1/tickets/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -372,10 +372,10 @@ public class TicketsClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/tickets/remote-field-classes",
+                Path = "ticketing/v1/tickets/remote-field-classes",
                 Query = _query
             }
         );

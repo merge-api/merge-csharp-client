@@ -63,7 +63,7 @@ public class TimeOffBalancesClient
         }
         if (request.PolicyType != null)
         {
-            _query["policy_type"] = request.PolicyType.ToString();
+            _query["policy_type"] = JsonSerializer.Serialize(request.PolicyType.Value);
         }
         if (request.RemoteFields != null)
         {
@@ -78,10 +78,10 @@ public class TimeOffBalancesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/time-off-balances",
+                Path = "hris/v1/time-off-balances",
                 Query = _query
             }
         );
@@ -119,10 +119,10 @@ public class TimeOffBalancesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/time-off-balances/{id}",
+                Path = $"hris/v1/time-off-balances/{id}",
                 Query = _query
             }
         );

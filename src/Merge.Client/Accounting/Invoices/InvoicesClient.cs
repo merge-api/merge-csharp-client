@@ -43,7 +43,7 @@ public class InvoicesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -87,13 +87,13 @@ public class InvoicesClient
         }
         if (request.Type != null)
         {
-            _query["type"] = request.Type.ToString();
+            _query["type"] = JsonSerializer.Serialize(request.Type.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/invoices",
+                Path = "accounting/v1/invoices",
                 Query = _query
             }
         );
@@ -120,10 +120,10 @@ public class InvoicesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/accounting/v1/invoices",
+                Path = "accounting/v1/invoices",
                 Query = _query
             }
         );
@@ -143,7 +143,7 @@ public class InvoicesClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -158,10 +158,10 @@ public class InvoicesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/invoices/{id}",
+                Path = $"accounting/v1/invoices/{id}",
                 Query = _query
             }
         );
@@ -191,10 +191,10 @@ public class InvoicesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Patch,
-                Path = $"/accounting/v1/invoices/{id}",
+                Path = $"accounting/v1/invoices/{id}",
                 Query = _query
             }
         );
@@ -212,10 +212,10 @@ public class InvoicesClient
     public async Task<MetaResponse> MetaPatchRetrieveAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/invoices/meta/patch/{id}"
+                Path = $"accounting/v1/invoices/meta/patch/{id}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -232,10 +232,10 @@ public class InvoicesClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/invoices/meta/post"
+                Path = "accounting/v1/invoices/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -68,10 +68,10 @@ public class JobInterviewStagesClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/job-interview-stages",
+                Path = "ats/v1/job-interview-stages",
                 Query = _query
             }
         );
@@ -101,10 +101,10 @@ public class JobInterviewStagesClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/job-interview-stages/{id}",
+                Path = $"ats/v1/job-interview-stages/{id}",
                 Query = _query
             }
         );

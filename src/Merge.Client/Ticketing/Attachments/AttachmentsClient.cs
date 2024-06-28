@@ -70,10 +70,10 @@ public class AttachmentsClient
             _query["ticket_id"] = request.TicketId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/attachments",
+                Path = "ticketing/v1/attachments",
                 Query = _query
             }
         );
@@ -102,10 +102,10 @@ public class AttachmentsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ticketing/v1/attachments",
+                Path = "ticketing/v1/attachments",
                 Query = _query
             }
         );
@@ -132,10 +132,10 @@ public class AttachmentsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/attachments/{id}",
+                Path = $"ticketing/v1/attachments/{id}",
                 Query = _query
             }
         );
@@ -158,10 +158,10 @@ public class AttachmentsClient
             _query["mime_type"] = request.MimeType;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/attachments/{id}/download",
+                Path = $"ticketing/v1/attachments/{id}/download",
                 Query = _query
             }
         );
@@ -173,10 +173,10 @@ public class AttachmentsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/attachments/meta/post"
+                Path = "ticketing/v1/attachments/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -39,7 +39,7 @@ public class JournalEntriesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -74,10 +74,10 @@ public class JournalEntriesClient
             _query["transaction_date_before"] = request.TransactionDateBefore.Value.ToString("o0");
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/journal-entries",
+                Path = "accounting/v1/journal-entries",
                 Query = _query
             }
         );
@@ -104,10 +104,10 @@ public class JournalEntriesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/accounting/v1/journal-entries",
+                Path = "accounting/v1/journal-entries",
                 Query = _query
             }
         );
@@ -127,17 +127,17 @@ public class JournalEntriesClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/journal-entries/{id}",
+                Path = $"accounting/v1/journal-entries/{id}",
                 Query = _query
             }
         );
@@ -155,10 +155,10 @@ public class JournalEntriesClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/journal-entries/meta/post"
+                Path = "accounting/v1/journal-entries/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

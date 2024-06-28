@@ -49,7 +49,7 @@ public class EmployeePayrollRunsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -88,10 +88,10 @@ public class EmployeePayrollRunsClient
             _query["started_before"] = request.StartedBefore.Value.ToString("o0");
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/employee-payroll-runs",
+                Path = "hris/v1/employee-payroll-runs",
                 Query = _query
             }
         );
@@ -114,17 +114,17 @@ public class EmployeePayrollRunsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/employee-payroll-runs/{id}",
+                Path = $"hris/v1/employee-payroll-runs/{id}",
                 Query = _query
             }
         );

@@ -63,7 +63,7 @@ public class PayrollRunsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.RemoteId != null)
         {
@@ -71,11 +71,11 @@ public class PayrollRunsClient
         }
         if (request.RunType != null)
         {
-            _query["run_type"] = request.RunType.ToString();
+            _query["run_type"] = JsonSerializer.Serialize(request.RunType.Value);
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         if (request.StartedAfter != null)
         {
@@ -86,10 +86,10 @@ public class PayrollRunsClient
             _query["started_before"] = request.StartedBefore.Value.ToString("o0");
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/payroll-runs",
+                Path = "hris/v1/payroll-runs",
                 Query = _query
             }
         );
@@ -113,17 +113,17 @@ public class PayrollRunsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/payroll-runs/{id}",
+                Path = $"hris/v1/payroll-runs/{id}",
                 Query = _query
             }
         );

@@ -21,10 +21,10 @@ public class ScopesClient
     public async Task<CommonModelScopeApi> DefaultScopesRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/default-scopes"
+                Path = "accounting/v1/default-scopes"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -41,10 +41,10 @@ public class ScopesClient
     public async Task<CommonModelScopeApi> LinkedAccountScopesRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/linked-account-scopes"
+                Path = "accounting/v1/linked-account-scopes"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -63,10 +63,10 @@ public class ScopesClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/accounting/v1/linked-account-scopes",
+                Path = "accounting/v1/linked-account-scopes",
                 Body = request
             }
         );

@@ -39,7 +39,7 @@ public class PurchaseOrdersClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -82,10 +82,10 @@ public class PurchaseOrdersClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/purchase-orders",
+                Path = "accounting/v1/purchase-orders",
                 Query = _query
             }
         );
@@ -112,10 +112,10 @@ public class PurchaseOrdersClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/accounting/v1/purchase-orders",
+                Path = "accounting/v1/purchase-orders",
                 Query = _query
             }
         );
@@ -135,7 +135,7 @@ public class PurchaseOrdersClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -150,10 +150,10 @@ public class PurchaseOrdersClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/purchase-orders/{id}",
+                Path = $"accounting/v1/purchase-orders/{id}",
                 Query = _query
             }
         );
@@ -171,10 +171,10 @@ public class PurchaseOrdersClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/purchase-orders/meta/post"
+                Path = "accounting/v1/purchase-orders/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -47,7 +47,7 @@ public class LeadsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -86,10 +86,10 @@ public class LeadsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/leads",
+                Path = "crm/v1/leads",
                 Query = _query
             }
         );
@@ -116,10 +116,10 @@ public class LeadsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/crm/v1/leads",
+                Path = "crm/v1/leads",
                 Query = _query
             }
         );
@@ -139,7 +139,7 @@ public class LeadsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -150,10 +150,10 @@ public class LeadsClient
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/leads/{id}",
+                Path = $"crm/v1/leads/{id}",
                 Query = _query
             }
         );
@@ -171,7 +171,11 @@ public class LeadsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/crm/v1/leads/meta/post" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "crm/v1/leads/meta/post"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -210,10 +214,10 @@ public class LeadsClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/leads/remote-field-classes",
+                Path = "crm/v1/leads/remote-field-classes",
                 Query = _query
             }
         );

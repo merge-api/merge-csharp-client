@@ -63,7 +63,7 @@ public class AccountsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.RemoteId != null)
         {
@@ -71,13 +71,13 @@ public class AccountsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/accounts",
+                Path = "accounting/v1/accounts",
                 Query = _query
             }
         );
@@ -104,10 +104,10 @@ public class AccountsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/accounting/v1/accounts",
+                Path = "accounting/v1/accounts",
                 Query = _query
             }
         );
@@ -135,17 +135,17 @@ public class AccountsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/accounts/{id}",
+                Path = $"accounting/v1/accounts/{id}",
                 Query = _query
             }
         );
@@ -163,10 +163,10 @@ public class AccountsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/accounts/meta/post"
+                Path = "accounting/v1/accounts/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

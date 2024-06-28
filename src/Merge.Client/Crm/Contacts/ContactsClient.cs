@@ -43,7 +43,7 @@ public class ContactsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -78,10 +78,10 @@ public class ContactsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/contacts",
+                Path = "crm/v1/contacts",
                 Query = _query
             }
         );
@@ -108,10 +108,10 @@ public class ContactsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/crm/v1/contacts",
+                Path = "crm/v1/contacts",
                 Query = _query
             }
         );
@@ -131,7 +131,7 @@ public class ContactsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -142,10 +142,10 @@ public class ContactsClient
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/contacts/{id}",
+                Path = $"crm/v1/contacts/{id}",
                 Query = _query
             }
         );
@@ -175,10 +175,10 @@ public class ContactsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Patch,
-                Path = $"/crm/v1/contacts/{id}",
+                Path = $"crm/v1/contacts/{id}",
                 Query = _query
             }
         );
@@ -196,10 +196,10 @@ public class ContactsClient
     public async void IgnoreCreateAsync(string modelId, IgnoreCommonModelRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/crm/v1/contacts/ignore/{modelId}",
+                Path = $"crm/v1/contacts/ignore/{modelId}",
                 Body = request
             }
         );
@@ -211,10 +211,10 @@ public class ContactsClient
     public async Task<MetaResponse> MetaPatchRetrieveAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/contacts/meta/patch/{id}"
+                Path = $"crm/v1/contacts/meta/patch/{id}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -231,10 +231,10 @@ public class ContactsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/contacts/meta/post"
+                Path = "crm/v1/contacts/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -274,10 +274,10 @@ public class ContactsClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/contacts/remote-field-classes",
+                Path = "crm/v1/contacts/remote-field-classes",
                 Query = _query
             }
         );

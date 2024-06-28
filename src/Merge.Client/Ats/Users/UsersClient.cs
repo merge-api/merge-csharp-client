@@ -70,10 +70,10 @@ public class UsersClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/users",
+                Path = "ats/v1/users",
                 Query = _query
             }
         );
@@ -104,10 +104,10 @@ public class UsersClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/users/{id}",
+                Path = $"ats/v1/users/{id}",
                 Query = _query
             }
         );

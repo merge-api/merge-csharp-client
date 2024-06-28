@@ -21,10 +21,10 @@ public class AsyncPassthroughClient
     public async Task<AsyncPassthroughReciept> CreateAsync(DataPassthroughRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ats/v1/async-passthrough",
+                Path = "ats/v1/async-passthrough",
                 Body = request
             }
         );
@@ -42,10 +42,10 @@ public class AsyncPassthroughClient
     public async Task<RemoteResponse> RetrieveAsync(string asyncPassthroughReceiptId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/async-passthrough/{asyncPassthroughReceiptId}"
+                Path = $"ats/v1/async-passthrough/{asyncPassthroughReceiptId}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

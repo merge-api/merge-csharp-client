@@ -43,7 +43,7 @@ public class EmployeesClient
         }
         if (request.EmploymentStatus != null)
         {
-            _query["employment_status"] = request.EmploymentStatus.ToString();
+            _query["employment_status"] = JsonSerializer.Serialize(request.EmploymentStatus.Value);
         }
         if (request.EmploymentType != null)
         {
@@ -51,7 +51,7 @@ public class EmployeesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.FirstName != null)
         {
@@ -111,7 +111,7 @@ public class EmployeesClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.RemoteId != null)
         {
@@ -119,7 +119,7 @@ public class EmployeesClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         if (request.StartedAfter != null)
         {
@@ -150,10 +150,10 @@ public class EmployeesClient
             _query["work_location_id"] = request.WorkLocationId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/employees",
+                Path = "hris/v1/employees",
                 Query = _query
             }
         );
@@ -180,10 +180,10 @@ public class EmployeesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/hris/v1/employees",
+                Path = "hris/v1/employees",
                 Query = _query
             }
         );
@@ -203,7 +203,7 @@ public class EmployeesClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -215,17 +215,17 @@ public class EmployeesClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/employees/{id}",
+                Path = $"hris/v1/employees/{id}",
                 Query = _query
             }
         );
@@ -243,10 +243,10 @@ public class EmployeesClient
     public async void IgnoreCreateAsync(string modelId, IgnoreCommonModelRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/hris/v1/employees/ignore/{modelId}",
+                Path = $"hris/v1/employees/ignore/{modelId}",
                 Body = request
             }
         );
@@ -258,10 +258,10 @@ public class EmployeesClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/employees/meta/post"
+                Path = "hris/v1/employees/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

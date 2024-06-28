@@ -21,10 +21,10 @@ public class WebhookReceiversClient
     public async Task<IEnumerable<WebhookReceiver>> ListAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/webhook-receivers"
+                Path = "ticketing/v1/webhook-receivers"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -41,10 +41,10 @@ public class WebhookReceiversClient
     public async Task<WebhookReceiver> CreateAsync(WebhookReceiverRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ticketing/v1/webhook-receivers",
+                Path = "ticketing/v1/webhook-receivers",
                 Body = request
             }
         );

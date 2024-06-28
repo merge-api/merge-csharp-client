@@ -66,10 +66,10 @@ public class BenefitsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/benefits",
+                Path = "hris/v1/benefits",
                 Query = _query
             }
         );
@@ -96,10 +96,10 @@ public class BenefitsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/benefits/{id}",
+                Path = $"hris/v1/benefits/{id}",
                 Query = _query
             }
         );

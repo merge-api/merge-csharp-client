@@ -53,7 +53,7 @@ public class PurchaseOrderLineItemRequest
     /// The purchase order line item's associated tracking categories.
     /// </summary>
     [JsonPropertyName("tracking_categories")]
-    public IEnumerable<string> TrackingCategories { get; init; }
+    public IEnumerable<string>? TrackingCategories { get; init; }
 
     /// <summary>
     /// The purchase order line item's tax amount.

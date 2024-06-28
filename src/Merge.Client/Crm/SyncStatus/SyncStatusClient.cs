@@ -30,10 +30,10 @@ public class SyncStatusClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/sync-status",
+                Path = "crm/v1/sync-status",
                 Query = _query
             }
         );

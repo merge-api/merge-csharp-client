@@ -43,7 +43,7 @@ public class NotesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -82,10 +82,10 @@ public class NotesClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/notes",
+                Path = "crm/v1/notes",
                 Query = _query
             }
         );
@@ -112,10 +112,10 @@ public class NotesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/crm/v1/notes",
+                Path = "crm/v1/notes",
                 Query = _query
             }
         );
@@ -135,7 +135,7 @@ public class NotesClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -146,10 +146,10 @@ public class NotesClient
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/notes/{id}",
+                Path = $"crm/v1/notes/{id}",
                 Query = _query
             }
         );
@@ -167,7 +167,11 @@ public class NotesClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/crm/v1/notes/meta/post" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "crm/v1/notes/meta/post"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -206,10 +210,10 @@ public class NotesClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/notes/remote-field-classes",
+                Path = "crm/v1/notes/remote-field-classes",
                 Query = _query
             }
         );

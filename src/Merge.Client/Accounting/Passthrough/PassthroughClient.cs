@@ -21,10 +21,10 @@ public class PassthroughClient
     public async Task<RemoteResponse> CreateAsync(DataPassthroughRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/accounting/v1/passthrough",
+                Path = "accounting/v1/passthrough",
                 Body = request
             }
         );

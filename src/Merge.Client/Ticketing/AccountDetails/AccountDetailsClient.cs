@@ -21,10 +21,10 @@ public class AccountDetailsClient
     public async Task<AccountDetails> RetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/account-details"
+                Path = "ticketing/v1/account-details"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

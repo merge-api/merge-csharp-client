@@ -58,10 +58,10 @@ public class GroupsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/filestorage/v1/groups",
+                Path = "filestorage/v1/groups",
                 Query = _query
             }
         );
@@ -84,10 +84,10 @@ public class GroupsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/filestorage/v1/groups/{id}",
+                Path = $"filestorage/v1/groups/{id}",
                 Query = _query
             }
         );

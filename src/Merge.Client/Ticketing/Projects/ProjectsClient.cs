@@ -58,10 +58,10 @@ public class ProjectsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/projects",
+                Path = "ticketing/v1/projects",
                 Query = _query
             }
         );
@@ -84,10 +84,10 @@ public class ProjectsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/projects/{id}",
+                Path = $"ticketing/v1/projects/{id}",
                 Query = _query
             }
         );
@@ -114,7 +114,7 @@ public class ProjectsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -129,10 +129,10 @@ public class ProjectsClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/projects/{parentId}/users",
+                Path = $"ticketing/v1/projects/{parentId}/users",
                 Query = _query
             }
         );

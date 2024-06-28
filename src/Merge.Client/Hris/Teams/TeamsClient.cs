@@ -66,10 +66,10 @@ public class TeamsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/teams",
+                Path = "hris/v1/teams",
                 Query = _query
             }
         );
@@ -96,10 +96,10 @@ public class TeamsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/teams/{id}",
+                Path = $"hris/v1/teams/{id}",
                 Query = _query
             }
         );

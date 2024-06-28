@@ -62,10 +62,10 @@ public class AttachmentsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/attachments",
+                Path = "accounting/v1/attachments",
                 Query = _query
             }
         );
@@ -94,10 +94,10 @@ public class AttachmentsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/accounting/v1/attachments",
+                Path = "accounting/v1/attachments",
                 Query = _query
             }
         );
@@ -123,10 +123,10 @@ public class AttachmentsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/attachments/{id}",
+                Path = $"accounting/v1/attachments/{id}",
                 Query = _query
             }
         );
@@ -144,10 +144,10 @@ public class AttachmentsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/attachments/meta/post"
+                Path = "accounting/v1/attachments/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

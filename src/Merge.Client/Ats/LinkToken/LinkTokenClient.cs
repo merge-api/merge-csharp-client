@@ -21,10 +21,10 @@ public class LinkTokenClient
     public async Task<LinkToken> CreateAsync(EndUserDetailsRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ats/v1/link-token",
+                Path = "ats/v1/link-token",
                 Body = request
             }
         );

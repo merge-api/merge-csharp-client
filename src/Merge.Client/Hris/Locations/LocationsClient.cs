@@ -43,7 +43,7 @@ public class LocationsClient
         }
         if (request.LocationType != null)
         {
-            _query["location_type"] = request.LocationType.ToString();
+            _query["location_type"] = JsonSerializer.Serialize(request.LocationType.Value);
         }
         if (request.ModifiedAfter != null)
         {
@@ -70,10 +70,10 @@ public class LocationsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/locations",
+                Path = "hris/v1/locations",
                 Query = _query
             }
         );
@@ -104,10 +104,10 @@ public class LocationsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/locations/{id}",
+                Path = $"hris/v1/locations/{id}",
                 Query = _query
             }
         );

@@ -78,10 +78,10 @@ public class GroupsClient
             _query["types"] = request.Types;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/groups",
+                Path = "hris/v1/groups",
                 Query = _query
             }
         );
@@ -112,10 +112,10 @@ public class GroupsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/groups/{id}",
+                Path = $"hris/v1/groups/{id}",
                 Query = _query
             }
         );

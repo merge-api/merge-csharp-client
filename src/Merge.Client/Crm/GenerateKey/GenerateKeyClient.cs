@@ -21,10 +21,10 @@ public class GenerateKeyClient
     public async Task<RemoteKey> CreateAsync(GenerateRemoteKeyRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/crm/v1/generate-key",
+                Path = "crm/v1/generate-key",
                 Body = request
             }
         );
