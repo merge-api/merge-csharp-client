@@ -21,10 +21,10 @@ public class FieldMappingClient
     public async Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/field-mappings"
+                Path = "ticketing/v1/field-mappings"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -43,10 +43,10 @@ public class FieldMappingClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ticketing/v1/field-mappings",
+                Path = "ticketing/v1/field-mappings",
                 Body = request
             }
         );
@@ -64,10 +64,10 @@ public class FieldMappingClient
     public async Task<FieldMappingInstanceResponse> FieldMappingsDestroyAsync(string fieldMappingId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Delete,
-                Path = $"/ticketing/v1/field-mappings/{fieldMappingId}"
+                Path = $"ticketing/v1/field-mappings/{fieldMappingId}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -87,10 +87,10 @@ public class FieldMappingClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Patch,
-                Path = $"/ticketing/v1/field-mappings/{fieldMappingId}",
+                Path = $"ticketing/v1/field-mappings/{fieldMappingId}",
                 Body = request
             }
         );
@@ -119,10 +119,10 @@ public class FieldMappingClient
             _query["include_example_values"] = request.IncludeExampleValues;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/remote-fields",
+                Path = "ticketing/v1/remote-fields",
                 Query = _query
             }
         );
@@ -140,10 +140,10 @@ public class FieldMappingClient
     public async Task<ExternalTargetFieldApiResponse> TargetFieldsRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/target-fields"
+                Path = "ticketing/v1/target-fields"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

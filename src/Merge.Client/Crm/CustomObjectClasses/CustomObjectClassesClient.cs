@@ -64,10 +64,10 @@ public class CustomObjectClassesClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/custom-object-classes",
+                Path = "crm/v1/custom-object-classes",
                 Query = _query
             }
         );
@@ -97,10 +97,10 @@ public class CustomObjectClassesClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/custom-object-classes/{id}",
+                Path = $"crm/v1/custom-object-classes/{id}",
                 Query = _query
             }
         );

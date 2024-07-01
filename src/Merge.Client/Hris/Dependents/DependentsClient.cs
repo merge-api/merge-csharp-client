@@ -62,10 +62,10 @@ public class DependentsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/dependents",
+                Path = "hris/v1/dependents",
                 Query = _query
             }
         );
@@ -92,10 +92,10 @@ public class DependentsClient
             _query["include_sensitive_fields"] = request.IncludeSensitiveFields.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/dependents/{id}",
+                Path = $"hris/v1/dependents/{id}",
                 Query = _query
             }
         );

@@ -46,10 +46,10 @@ public class AuditTrailClient
             _query["user_email"] = request.UserEmail;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/audit-trail",
+                Path = "ticketing/v1/audit-trail",
                 Query = _query
             }
         );

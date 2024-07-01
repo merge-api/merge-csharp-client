@@ -66,10 +66,10 @@ public class IncomeStatementsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/income-statements",
+                Path = "accounting/v1/income-statements",
                 Query = _query
             }
         );
@@ -99,10 +99,10 @@ public class IncomeStatementsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/income-statements/{id}",
+                Path = $"accounting/v1/income-statements/{id}",
                 Query = _query
             }
         );

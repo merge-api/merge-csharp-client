@@ -21,10 +21,10 @@ public class RegenerateKeyClient
     public async Task<RemoteKey> CreateAsync(RemoteKeyForRegenerationRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/hris/v1/regenerate-key",
+                Path = "hris/v1/regenerate-key",
                 Body = request
             }
         );

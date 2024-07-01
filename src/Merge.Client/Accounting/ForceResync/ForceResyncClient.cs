@@ -21,10 +21,10 @@ public class ForceResyncClient
     public async Task<IEnumerable<SyncStatus>> SyncStatusResyncCreateAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/accounting/v1/sync-status/resync"
+                Path = "accounting/v1/sync-status/resync"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -39,7 +39,7 @@ public class FilesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.FolderId != null)
         {
@@ -78,10 +78,10 @@ public class FilesClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/filestorage/v1/files",
+                Path = "filestorage/v1/files",
                 Query = _query
             }
         );
@@ -108,10 +108,10 @@ public class FilesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/filestorage/v1/files",
+                Path = "filestorage/v1/files",
                 Query = _query
             }
         );
@@ -131,17 +131,17 @@ public class FilesClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/filestorage/v1/files/{id}",
+                Path = $"filestorage/v1/files/{id}",
                 Query = _query
             }
         );
@@ -164,10 +164,10 @@ public class FilesClient
             _query["mime_type"] = request.MimeType;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/filestorage/v1/files/{id}/download",
+                Path = $"filestorage/v1/files/{id}/download",
                 Query = _query
             }
         );
@@ -179,10 +179,10 @@ public class FilesClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/filestorage/v1/files/meta/post"
+                Path = "filestorage/v1/files/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

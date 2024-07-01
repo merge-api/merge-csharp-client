@@ -19,10 +19,10 @@ public class DeleteAccountClient
     public async void DeleteAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/filestorage/v1/delete-account"
+                Path = "filestorage/v1/delete-account"
             }
         );
     }

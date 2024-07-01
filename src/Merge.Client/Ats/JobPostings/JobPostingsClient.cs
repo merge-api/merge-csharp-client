@@ -63,13 +63,13 @@ public class JobPostingsClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.ToString();
+            _query["status"] = JsonSerializer.Serialize(request.Status.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/job-postings",
+                Path = "ats/v1/job-postings",
                 Query = _query
             }
         );
@@ -96,10 +96,10 @@ public class JobPostingsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/job-postings/{id}",
+                Path = $"ats/v1/job-postings/{id}",
                 Query = _query
             }
         );

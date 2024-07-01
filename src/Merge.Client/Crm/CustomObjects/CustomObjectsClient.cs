@@ -65,10 +65,10 @@ public class CustomObjectsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/custom-object-classes/{customObjectClassId}/custom-objects",
+                Path = $"crm/v1/custom-object-classes/{customObjectClassId}/custom-objects",
                 Query = _query
             }
         );
@@ -98,10 +98,10 @@ public class CustomObjectsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/crm/v1/custom-object-classes/{customObjectClassId}/custom-objects",
+                Path = $"crm/v1/custom-object-classes/{customObjectClassId}/custom-objects",
                 Query = _query
             }
         );
@@ -132,10 +132,10 @@ public class CustomObjectsClient
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/custom-object-classes/{customObjectClassId}/custom-objects/{id}",
+                Path = $"crm/v1/custom-object-classes/{customObjectClassId}/custom-objects/{id}",
                 Query = _query
             }
         );
@@ -155,11 +155,11 @@ public class CustomObjectsClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
                 Path =
-                    $"/crm/v1/custom-object-classes/{customObjectClassId}/custom-objects/meta/post"
+                    $"crm/v1/custom-object-classes/{customObjectClassId}/custom-objects/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -47,7 +47,7 @@ public class ApplicationsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -86,10 +86,10 @@ public class ApplicationsClient
             _query["source"] = request.Source;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/applications",
+                Path = "ats/v1/applications",
                 Query = _query
             }
         );
@@ -116,10 +116,10 @@ public class ApplicationsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ats/v1/applications",
+                Path = "ats/v1/applications",
                 Query = _query
             }
         );
@@ -139,17 +139,17 @@ public class ApplicationsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/applications/{id}",
+                Path = $"ats/v1/applications/{id}",
                 Query = _query
             }
         );
@@ -179,10 +179,10 @@ public class ApplicationsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/ats/v1/applications/{id}/change-stage",
+                Path = $"ats/v1/applications/{id}/change-stage",
                 Query = _query
             }
         );
@@ -207,10 +207,10 @@ public class ApplicationsClient
             _query["application_remote_template_id"] = request.ApplicationRemoteTemplateId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/applications/meta/post",
+                Path = "ats/v1/applications/meta/post",
                 Query = _query
             }
         );

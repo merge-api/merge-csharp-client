@@ -39,7 +39,7 @@ public class ContactsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -82,10 +82,10 @@ public class ContactsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/contacts",
+                Path = "accounting/v1/contacts",
                 Query = _query
             }
         );
@@ -112,10 +112,10 @@ public class ContactsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/accounting/v1/contacts",
+                Path = "accounting/v1/contacts",
                 Query = _query
             }
         );
@@ -135,7 +135,7 @@ public class ContactsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -150,10 +150,10 @@ public class ContactsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/contacts/{id}",
+                Path = $"accounting/v1/contacts/{id}",
                 Query = _query
             }
         );
@@ -171,10 +171,10 @@ public class ContactsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/contacts/meta/post"
+                Path = "accounting/v1/contacts/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

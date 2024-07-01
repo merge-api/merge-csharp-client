@@ -74,10 +74,10 @@ public class AttachmentsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/attachments",
+                Path = "ats/v1/attachments",
                 Query = _query
             }
         );
@@ -104,10 +104,10 @@ public class AttachmentsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ats/v1/attachments",
+                Path = "ats/v1/attachments",
                 Query = _query
             }
         );
@@ -142,10 +142,10 @@ public class AttachmentsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/attachments/{id}",
+                Path = $"ats/v1/attachments/{id}",
                 Query = _query
             }
         );
@@ -163,10 +163,10 @@ public class AttachmentsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/attachments/meta/post"
+                Path = "ats/v1/attachments/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

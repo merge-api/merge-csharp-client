@@ -35,7 +35,7 @@ public class TasksClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -66,10 +66,10 @@ public class TasksClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/tasks",
+                Path = "crm/v1/tasks",
                 Query = _query
             }
         );
@@ -96,10 +96,10 @@ public class TasksClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/crm/v1/tasks",
+                Path = "crm/v1/tasks",
                 Query = _query
             }
         );
@@ -119,7 +119,7 @@ public class TasksClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -130,10 +130,10 @@ public class TasksClient
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/tasks/{id}",
+                Path = $"crm/v1/tasks/{id}",
                 Query = _query
             }
         );
@@ -163,10 +163,10 @@ public class TasksClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Patch,
-                Path = $"/crm/v1/tasks/{id}",
+                Path = $"crm/v1/tasks/{id}",
                 Query = _query
             }
         );
@@ -184,10 +184,10 @@ public class TasksClient
     public async Task<MetaResponse> MetaPatchRetrieveAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/tasks/meta/patch/{id}"
+                Path = $"crm/v1/tasks/meta/patch/{id}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -204,7 +204,11 @@ public class TasksClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/crm/v1/tasks/meta/post" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "crm/v1/tasks/meta/post"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -243,10 +247,10 @@ public class TasksClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/tasks/remote-field-classes",
+                Path = "crm/v1/tasks/remote-field-classes",
                 Query = _query
             }
         );

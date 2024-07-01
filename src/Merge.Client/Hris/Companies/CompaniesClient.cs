@@ -58,10 +58,10 @@ public class CompaniesClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/companies",
+                Path = "hris/v1/companies",
                 Query = _query
             }
         );
@@ -84,10 +84,10 @@ public class CompaniesClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/companies/{id}",
+                Path = $"hris/v1/companies/{id}",
                 Query = _query
             }
         );

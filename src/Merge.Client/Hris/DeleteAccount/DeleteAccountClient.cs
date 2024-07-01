@@ -19,7 +19,11 @@ public class DeleteAccountClient
     public async void DeleteAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/hris/v1/delete-account" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "hris/v1/delete-account"
+            }
         );
     }
 }

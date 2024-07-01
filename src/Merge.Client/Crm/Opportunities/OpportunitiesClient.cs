@@ -39,7 +39,7 @@ public class OpportunitiesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -87,13 +87,13 @@ public class OpportunitiesClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.ToString();
+            _query["status"] = JsonSerializer.Serialize(request.Status.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/opportunities",
+                Path = "crm/v1/opportunities",
                 Query = _query
             }
         );
@@ -120,10 +120,10 @@ public class OpportunitiesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/crm/v1/opportunities",
+                Path = "crm/v1/opportunities",
                 Query = _query
             }
         );
@@ -143,7 +143,7 @@ public class OpportunitiesClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -162,10 +162,10 @@ public class OpportunitiesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/opportunities/{id}",
+                Path = $"crm/v1/opportunities/{id}",
                 Query = _query
             }
         );
@@ -195,10 +195,10 @@ public class OpportunitiesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Patch,
-                Path = $"/crm/v1/opportunities/{id}",
+                Path = $"crm/v1/opportunities/{id}",
                 Query = _query
             }
         );
@@ -216,10 +216,10 @@ public class OpportunitiesClient
     public async Task<MetaResponse> MetaPatchRetrieveAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/opportunities/meta/patch/{id}"
+                Path = $"crm/v1/opportunities/meta/patch/{id}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -236,10 +236,10 @@ public class OpportunitiesClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/opportunities/meta/post"
+                Path = "crm/v1/opportunities/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -279,10 +279,10 @@ public class OpportunitiesClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/opportunities/remote-field-classes",
+                Path = "crm/v1/opportunities/remote-field-classes",
                 Query = _query
             }
         );

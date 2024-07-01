@@ -34,10 +34,10 @@ public class AddressesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/addresses/{id}",
+                Path = $"accounting/v1/addresses/{id}",
                 Query = _query
             }
         );

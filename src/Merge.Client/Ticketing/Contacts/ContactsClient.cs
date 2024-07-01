@@ -62,10 +62,10 @@ public class ContactsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/contacts",
+                Path = "ticketing/v1/contacts",
                 Query = _query
             }
         );
@@ -92,10 +92,10 @@ public class ContactsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ticketing/v1/contacts",
+                Path = "ticketing/v1/contacts",
                 Query = _query
             }
         );
@@ -122,10 +122,10 @@ public class ContactsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/contacts/{id}",
+                Path = $"ticketing/v1/contacts/{id}",
                 Query = _query
             }
         );
@@ -143,10 +143,10 @@ public class ContactsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/contacts/meta/post"
+                Path = "ticketing/v1/contacts/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

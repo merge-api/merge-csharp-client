@@ -66,10 +66,10 @@ public class BalanceSheetsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/balance-sheets",
+                Path = "accounting/v1/balance-sheets",
                 Query = _query
             }
         );
@@ -96,10 +96,10 @@ public class BalanceSheetsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/balance-sheets/{id}",
+                Path = $"accounting/v1/balance-sheets/{id}",
                 Query = _query
             }
         );

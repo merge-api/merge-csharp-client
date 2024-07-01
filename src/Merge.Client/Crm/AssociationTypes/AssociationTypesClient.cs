@@ -65,10 +65,10 @@ public class AssociationTypesClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/custom-object-classes/{customObjectClassId}/association-types",
+                Path = $"crm/v1/custom-object-classes/{customObjectClassId}/association-types",
                 Query = _query
             }
         );
@@ -98,10 +98,10 @@ public class AssociationTypesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/crm/v1/custom-object-classes/{customObjectClassId}/association-types",
+                Path = $"crm/v1/custom-object-classes/{customObjectClassId}/association-types",
                 Query = _query
             }
         );
@@ -132,11 +132,10 @@ public class AssociationTypesClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path =
-                    $"/crm/v1/custom-object-classes/{customObjectClassId}/association-types/{id}",
+                Path = $"crm/v1/custom-object-classes/{customObjectClassId}/association-types/{id}",
                 Query = _query
             }
         );
@@ -156,11 +155,11 @@ public class AssociationTypesClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
                 Path =
-                    $"/crm/v1/custom-object-classes/{customObjectClassId}/association-types/meta/post"
+                    $"crm/v1/custom-object-classes/{customObjectClassId}/association-types/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

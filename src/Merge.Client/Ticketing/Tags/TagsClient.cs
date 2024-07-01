@@ -58,10 +58,10 @@ public class TagsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/tags",
+                Path = "ticketing/v1/tags",
                 Query = _query
             }
         );
@@ -84,10 +84,10 @@ public class TagsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/tags/{id}",
+                Path = $"ticketing/v1/tags/{id}",
                 Query = _query
             }
         );

@@ -39,7 +39,7 @@ public class FoldersClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -74,10 +74,10 @@ public class FoldersClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/filestorage/v1/folders",
+                Path = "filestorage/v1/folders",
                 Query = _query
             }
         );
@@ -106,10 +106,10 @@ public class FoldersClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/filestorage/v1/folders",
+                Path = "filestorage/v1/folders",
                 Query = _query
             }
         );
@@ -129,17 +129,17 @@ public class FoldersClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/filestorage/v1/folders/{id}",
+                Path = $"filestorage/v1/folders/{id}",
                 Query = _query
             }
         );
@@ -157,10 +157,10 @@ public class FoldersClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/filestorage/v1/folders/meta/post"
+                Path = "filestorage/v1/folders/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

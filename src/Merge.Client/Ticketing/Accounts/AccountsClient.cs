@@ -58,10 +58,10 @@ public class AccountsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/accounts",
+                Path = "ticketing/v1/accounts",
                 Query = _query
             }
         );
@@ -84,10 +84,10 @@ public class AccountsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/accounts/{id}",
+                Path = $"ticketing/v1/accounts/{id}",
                 Query = _query
             }
         );

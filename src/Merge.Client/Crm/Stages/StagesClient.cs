@@ -62,10 +62,10 @@ public class StagesClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/stages",
+                Path = "crm/v1/stages",
                 Query = _query
             }
         );
@@ -92,10 +92,10 @@ public class StagesClient
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/stages/{id}",
+                Path = $"crm/v1/stages/{id}",
                 Query = _query
             }
         );
@@ -136,10 +136,10 @@ public class StagesClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/stages/remote-field-classes",
+                Path = "crm/v1/stages/remote-field-classes",
                 Query = _query
             }
         );

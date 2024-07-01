@@ -29,10 +29,10 @@ public class PhoneNumbersClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/phone-numbers/{id}",
+                Path = $"accounting/v1/phone-numbers/{id}",
                 Query = _query
             }
         );

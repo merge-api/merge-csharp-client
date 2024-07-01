@@ -77,13 +77,13 @@ public class IssuesClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.ToString();
+            _query["status"] = JsonSerializer.Serialize(request.Status.Value);
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/issues",
+                Path = "hris/v1/issues",
                 Query = _query
             }
         );
@@ -101,7 +101,7 @@ public class IssuesClient
     public async Task<Issue> RetrieveAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/hris/v1/issues/{id}" }
+            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"hris/v1/issues/{id}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)

@@ -38,10 +38,10 @@ public class AccountingPeriodsClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/accounting-periods",
+                Path = "accounting/v1/accounting-periods",
                 Query = _query
             }
         );
@@ -67,10 +67,10 @@ public class AccountingPeriodsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/accounting-periods/{id}",
+                Path = $"accounting/v1/accounting-periods/{id}",
                 Query = _query
             }
         );

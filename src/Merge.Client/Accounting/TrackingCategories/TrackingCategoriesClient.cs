@@ -76,10 +76,10 @@ public class TrackingCategoriesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/tracking-categories",
+                Path = "accounting/v1/tracking-categories",
                 Query = _query
             }
         );
@@ -117,10 +117,10 @@ public class TrackingCategoriesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/tracking-categories/{id}",
+                Path = $"accounting/v1/tracking-categories/{id}",
                 Query = _query
             }
         );

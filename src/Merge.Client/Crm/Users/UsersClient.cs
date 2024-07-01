@@ -62,10 +62,10 @@ public class UsersClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/users",
+                Path = "crm/v1/users",
                 Query = _query
             }
         );
@@ -92,10 +92,10 @@ public class UsersClient
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/users/{id}",
+                Path = $"crm/v1/users/{id}",
                 Query = _query
             }
         );
@@ -113,10 +113,10 @@ public class UsersClient
     public async void IgnoreCreateAsync(string modelId, IgnoreCommonModelRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/crm/v1/users/ignore/{modelId}",
+                Path = $"crm/v1/users/ignore/{modelId}",
                 Body = request
             }
         );
@@ -151,10 +151,10 @@ public class UsersClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/users/remote-field-classes",
+                Path = "crm/v1/users/remote-field-classes",
                 Query = _query
             }
         );

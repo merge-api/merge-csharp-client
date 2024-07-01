@@ -68,10 +68,10 @@ public class CashFlowStatementsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/cash-flow-statements",
+                Path = "accounting/v1/cash-flow-statements",
                 Query = _query
             }
         );
@@ -101,10 +101,10 @@ public class CashFlowStatementsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/cash-flow-statements/{id}",
+                Path = $"accounting/v1/cash-flow-statements/{id}",
                 Query = _query
             }
         );

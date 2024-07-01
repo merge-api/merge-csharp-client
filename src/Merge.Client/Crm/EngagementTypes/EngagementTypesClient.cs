@@ -62,10 +62,10 @@ public class EngagementTypesClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/engagement-types",
+                Path = "crm/v1/engagement-types",
                 Query = _query
             }
         );
@@ -95,10 +95,10 @@ public class EngagementTypesClient
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/engagement-types/{id}",
+                Path = $"crm/v1/engagement-types/{id}",
                 Query = _query
             }
         );
@@ -139,10 +139,10 @@ public class EngagementTypesClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/engagement-types/remote-field-classes",
+                Path = "crm/v1/engagement-types/remote-field-classes",
                 Query = _query
             }
         );

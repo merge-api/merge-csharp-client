@@ -70,11 +70,11 @@ public class AssociationsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
                 Path =
-                    $"/crm/v1/custom-object-classes/{customObjectClassId}/custom-objects/{objectId}/associations",
+                    $"crm/v1/custom-object-classes/{customObjectClassId}/custom-objects/{objectId}/associations",
                 Query = _query
             }
         );
@@ -108,11 +108,11 @@ public class AssociationsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Put,
                 Path =
-                    $"/crm/v1/custom-object-classes/{sourceClassId}/custom-objects/{sourceObjectId}/associations/{targetClassId}/{targetObjectId}/{associationTypeId}",
+                    $"crm/v1/custom-object-classes/{sourceClassId}/custom-objects/{sourceObjectId}/associations/{targetClassId}/{targetObjectId}/{associationTypeId}",
                 Query = _query
             }
         );

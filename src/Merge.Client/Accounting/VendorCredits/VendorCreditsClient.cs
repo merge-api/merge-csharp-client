@@ -39,7 +39,7 @@ public class VendorCreditsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -74,10 +74,10 @@ public class VendorCreditsClient
             _query["transaction_date_before"] = request.TransactionDateBefore.Value.ToString("o0");
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/accounting/v1/vendor-credits",
+                Path = "accounting/v1/vendor-credits",
                 Query = _query
             }
         );
@@ -97,17 +97,17 @@ public class VendorCreditsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/accounting/v1/vendor-credits/{id}",
+                Path = $"accounting/v1/vendor-credits/{id}",
                 Query = _query
             }
         );

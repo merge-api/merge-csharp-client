@@ -58,10 +58,10 @@ public class RejectReasonsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/reject-reasons",
+                Path = "ats/v1/reject-reasons",
                 Query = _query
             }
         );
@@ -84,10 +84,10 @@ public class RejectReasonsClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/reject-reasons/{id}",
+                Path = $"ats/v1/reject-reasons/{id}",
                 Query = _query
             }
         );

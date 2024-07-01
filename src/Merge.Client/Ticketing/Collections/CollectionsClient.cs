@@ -78,10 +78,10 @@ public class CollectionsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ticketing/v1/collections",
+                Path = "ticketing/v1/collections",
                 Query = _query
             }
         );
@@ -116,10 +116,10 @@ public class CollectionsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/collections/{id}",
+                Path = $"ticketing/v1/collections/{id}",
                 Query = _query
             }
         );
@@ -146,7 +146,7 @@ public class CollectionsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -161,10 +161,10 @@ public class CollectionsClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ticketing/v1/collections/{parentId}/users",
+                Path = $"ticketing/v1/collections/{parentId}/users",
                 Query = _query
             }
         );

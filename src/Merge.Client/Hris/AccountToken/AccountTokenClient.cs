@@ -21,10 +21,10 @@ public class AccountTokenClient
     public async Task<AccountToken> RetrieveAsync(string publicToken)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/account-token/{publicToken}"
+                Path = $"hris/v1/account-token/{publicToken}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

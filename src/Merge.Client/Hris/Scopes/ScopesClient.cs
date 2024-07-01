@@ -21,7 +21,11 @@ public class ScopesClient
     public async Task<CommonModelScopeApi> DefaultScopesRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/hris/v1/default-scopes" }
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "hris/v1/default-scopes"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)
@@ -37,10 +41,10 @@ public class ScopesClient
     public async Task<CommonModelScopeApi> LinkedAccountScopesRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/linked-account-scopes"
+                Path = "hris/v1/linked-account-scopes"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -59,10 +63,10 @@ public class ScopesClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/hris/v1/linked-account-scopes",
+                Path = "hris/v1/linked-account-scopes",
                 Body = request
             }
         );

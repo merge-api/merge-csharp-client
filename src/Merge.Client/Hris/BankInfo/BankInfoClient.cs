@@ -23,7 +23,7 @@ public class BankInfoClient
         var _query = new Dictionary<string, object>() { };
         if (request.AccountType != null)
         {
-            _query["account_type"] = request.AccountType.ToString();
+            _query["account_type"] = JsonSerializer.Serialize(request.AccountType.Value);
         }
         if (request.BankName != null)
         {
@@ -67,7 +67,7 @@ public class BankInfoClient
         }
         if (request.OrderBy != null)
         {
-            _query["order_by"] = request.OrderBy.ToString();
+            _query["order_by"] = JsonSerializer.Serialize(request.OrderBy.Value);
         }
         if (request.PageSize != null)
         {
@@ -86,10 +86,10 @@ public class BankInfoClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/hris/v1/bank-info",
+                Path = "hris/v1/bank-info",
                 Query = _query
             }
         );
@@ -124,10 +124,10 @@ public class BankInfoClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/hris/v1/bank-info/{id}",
+                Path = $"hris/v1/bank-info/{id}",
                 Query = _query
             }
         );

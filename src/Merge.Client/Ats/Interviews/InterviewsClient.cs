@@ -39,7 +39,7 @@ public class InterviewsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -86,10 +86,10 @@ public class InterviewsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/interviews",
+                Path = "ats/v1/interviews",
                 Query = _query
             }
         );
@@ -118,10 +118,10 @@ public class InterviewsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ats/v1/interviews",
+                Path = "ats/v1/interviews",
                 Query = _query
             }
         );
@@ -144,7 +144,7 @@ public class InterviewsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -159,10 +159,10 @@ public class InterviewsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/interviews/{id}",
+                Path = $"ats/v1/interviews/{id}",
                 Query = _query
             }
         );
@@ -180,10 +180,10 @@ public class InterviewsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/interviews/meta/post"
+                Path = "ats/v1/interviews/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

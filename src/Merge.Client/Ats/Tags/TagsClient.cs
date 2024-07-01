@@ -58,10 +58,10 @@ public class TagsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/tags",
+                Path = "ats/v1/tags",
                 Query = _query
             }
         );

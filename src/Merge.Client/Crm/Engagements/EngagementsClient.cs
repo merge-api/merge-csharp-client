@@ -35,7 +35,7 @@ public class EngagementsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeDeletedData != null)
         {
@@ -74,10 +74,10 @@ public class EngagementsClient
             _query["started_before"] = request.StartedBefore.Value.ToString("o0");
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/engagements",
+                Path = "crm/v1/engagements",
                 Query = _query
             }
         );
@@ -104,10 +104,10 @@ public class EngagementsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/crm/v1/engagements",
+                Path = "crm/v1/engagements",
                 Query = _query
             }
         );
@@ -127,7 +127,7 @@ public class EngagementsClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
@@ -138,10 +138,10 @@ public class EngagementsClient
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/engagements/{id}",
+                Path = $"crm/v1/engagements/{id}",
                 Query = _query
             }
         );
@@ -171,10 +171,10 @@ public class EngagementsClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Patch,
-                Path = $"/crm/v1/engagements/{id}",
+                Path = $"crm/v1/engagements/{id}",
                 Query = _query
             }
         );
@@ -192,10 +192,10 @@ public class EngagementsClient
     public async Task<MetaResponse> MetaPatchRetrieveAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/crm/v1/engagements/meta/patch/{id}"
+                Path = $"crm/v1/engagements/meta/patch/{id}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -212,10 +212,10 @@ public class EngagementsClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/engagements/meta/post"
+                Path = "crm/v1/engagements/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -255,10 +255,10 @@ public class EngagementsClient
             _query["page_size"] = request.PageSize.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/crm/v1/engagements/remote-field-classes",
+                Path = "crm/v1/engagements/remote-field-classes",
                 Query = _query
             }
         );

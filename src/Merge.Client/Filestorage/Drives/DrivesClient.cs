@@ -62,10 +62,10 @@ public class DrivesClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/filestorage/v1/drives",
+                Path = "filestorage/v1/drives",
                 Query = _query
             }
         );
@@ -88,10 +88,10 @@ public class DrivesClient
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/filestorage/v1/drives/{id}",
+                Path = $"filestorage/v1/drives/{id}",
                 Query = _query
             }
         );

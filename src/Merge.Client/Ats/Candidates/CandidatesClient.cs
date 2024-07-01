@@ -39,7 +39,7 @@ public class CandidatesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.FirstName != null)
         {
@@ -78,10 +78,10 @@ public class CandidatesClient
             _query["tags"] = request.Tags;
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/candidates",
+                Path = "ats/v1/candidates",
                 Query = _query
             }
         );
@@ -108,10 +108,10 @@ public class CandidatesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/ats/v1/candidates",
+                Path = "ats/v1/candidates",
                 Query = _query
             }
         );
@@ -131,17 +131,17 @@ public class CandidatesClient
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
         }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/candidates/{id}",
+                Path = $"ats/v1/candidates/{id}",
                 Query = _query
             }
         );
@@ -171,10 +171,10 @@ public class CandidatesClient
             _query["run_async"] = request.RunAsync.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Patch,
-                Path = $"/ats/v1/candidates/{id}",
+                Path = $"ats/v1/candidates/{id}",
                 Query = _query
             }
         );
@@ -192,10 +192,10 @@ public class CandidatesClient
     public async void IgnoreCreateAsync(string modelId, IgnoreCommonModelRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/ats/v1/candidates/ignore/{modelId}",
+                Path = $"ats/v1/candidates/ignore/{modelId}",
                 Body = request
             }
         );
@@ -207,10 +207,10 @@ public class CandidatesClient
     public async Task<MetaResponse> MetaPatchRetrieveAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = $"/ats/v1/candidates/meta/patch/{id}"
+                Path = $"ats/v1/candidates/meta/patch/{id}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -227,10 +227,10 @@ public class CandidatesClient
     public async Task<MetaResponse> MetaPostRetrieveAsync()
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/ats/v1/candidates/meta/post"
+                Path = "ats/v1/candidates/meta/post"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
