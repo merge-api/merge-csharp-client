@@ -80,7 +80,7 @@ public class CreditNoteLineItem
     /// The credit note line item's associated tracking categories.
     /// </summary>
     [JsonPropertyName("tracking_categories")]
-    public IEnumerable<string>? TrackingCategories { get; init; }
+    public IEnumerable<string> TrackingCategories { get; init; }
 
     /// <summary>
     /// The credit note line item's account.

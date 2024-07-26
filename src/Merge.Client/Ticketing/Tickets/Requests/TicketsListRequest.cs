@@ -165,4 +165,9 @@ public class TicketsListRequest
     /// If provided, will only return tickets of this type.
     /// </summary>
     public string? TicketType { get; init; }
+
+    /// <summary>
+    /// If provided, will only return tickets where the URL matches or contains the substring
+    /// </summary>
+    public string? TicketUrl { get; init; }
 }

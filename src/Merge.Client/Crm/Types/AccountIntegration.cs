@@ -14,6 +14,12 @@ public class AccountIntegration
     public string Name { get; init; }
 
     /// <summary>
+    /// Optional. This shortened name appears in places with limited space, usually in conjunction with the platform's logo (e.g., Merge Link menu).<br><br>Example: <i>Workforce Now (in lieu of ADP Workforce Now), SuccessFactors (in lieu of SAP SuccessFactors)</i>
+    /// </summary>
+    [JsonPropertyName("abbreviated_name")]
+    public string? AbbreviatedName { get; init; }
+
+    /// <summary>
     /// Category or categories this integration belongs to. Multiple categories should be comma separated, i.e. [ats, hris].
     /// </summary>
     [JsonPropertyName("categories")]

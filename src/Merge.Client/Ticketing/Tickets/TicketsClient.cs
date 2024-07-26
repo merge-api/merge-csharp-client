@@ -141,6 +141,10 @@ public class TicketsClient
         {
             _query["ticket_type"] = request.TicketType;
         }
+        if (request.TicketUrl != null)
+        {
+            _query["ticket_url"] = request.TicketUrl;
+        }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
@@ -366,6 +370,10 @@ public class TicketsClient
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IsCommonModelField != null)
+        {
+            _query["is_common_model_field"] = request.IsCommonModelField.ToString();
         }
         if (request.PageSize != null)
         {

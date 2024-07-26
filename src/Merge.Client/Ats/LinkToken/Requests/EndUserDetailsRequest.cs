@@ -50,6 +50,12 @@ public class EndUserDetailsRequest
     public bool? ShouldCreateMagicLinkUrl { get; init; }
 
     /// <summary>
+    /// Whether to generate a Magic Link URL on the Admin Needed screen during the linking flow. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/integrations-fast-say-hello-to-magic-link.
+    /// </summary>
+    [JsonPropertyName("hide_admin_magic_link")]
+    public bool? HideAdminMagicLink { get; init; }
+
+    /// <summary>
     /// An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.
     /// </summary>
     [JsonPropertyName("common_models")]

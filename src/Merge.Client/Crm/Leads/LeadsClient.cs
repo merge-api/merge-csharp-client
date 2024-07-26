@@ -209,6 +209,10 @@ public class LeadsClient
         {
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
+        if (request.IsCommonModelField != null)
+        {
+            _query["is_common_model_field"] = request.IsCommonModelField.ToString();
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.ToString();

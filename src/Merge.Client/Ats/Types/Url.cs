@@ -38,4 +38,10 @@ public class Url
     /// </summary>
     [JsonPropertyName("url_type")]
     public UrlTypeEnum? UrlType { get; init; }
+
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// </summary>
+    [JsonPropertyName("remote_was_deleted")]
+    public bool? RemoteWasDeleted { get; init; }
 }

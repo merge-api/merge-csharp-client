@@ -154,7 +154,7 @@ public class FilesClient
     }
 
     /// <summary>
-    /// Returns a `File` object with the given `id`.
+    /// Returns the `File` content with the given `id` as a stream of bytes.
     /// </summary>
     public async void DownloadRetrieveAsync(string id, FilesDownloadRetrieveRequest request)
     {

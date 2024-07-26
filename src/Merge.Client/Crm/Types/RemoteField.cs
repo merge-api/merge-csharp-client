@@ -14,5 +14,5 @@ public class RemoteField
     public OneOf<string, RemoteFieldClass> RemoteFieldClass { get; init; }
 
     [JsonPropertyName("value")]
-    public Dictionary<string, object>? Value { get; init; }
+    public object? Value { get; init; }
 }

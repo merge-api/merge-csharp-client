@@ -23,6 +23,11 @@ public class NotesRemoteFieldClassesListRequest
     public bool? IncludeRemoteFields { get; init; }
 
     /// <summary>
+    /// If provided, will only return remote field classes with this is_common_model_field value
+    /// </summary>
+    public bool? IsCommonModelField { get; init; }
+
+    /// <summary>
     /// Number of results to return per page.
     /// </summary>
     public int? PageSize { get; init; }

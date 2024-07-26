@@ -22,10 +22,10 @@ public class Association
     public DateTime? ModifiedAt { get; init; }
 
     [JsonPropertyName("source_object")]
-    public Dictionary<string, object>? SourceObject { get; init; }
+    public string? SourceObject { get; init; }
 
     [JsonPropertyName("target_object")]
-    public Dictionary<string, object>? TargetObject { get; init; }
+    public string? TargetObject { get; init; }
 
     /// <summary>
     /// The association type the association belongs to.

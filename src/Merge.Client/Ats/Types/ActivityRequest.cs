@@ -48,9 +48,6 @@ public class ActivityRequest
     [JsonPropertyName("visibility")]
     public VisibilityEnum? Visibility { get; init; }
 
-    /// <summary>
-    /// The activity’s candidate.
-    /// </summary>
     [JsonPropertyName("candidate")]
     public string? Candidate { get; init; }
 

@@ -34,4 +34,10 @@ public class EmailAddress
     /// </summary>
     [JsonPropertyName("email_address_type")]
     public EmailAddressTypeEnum? EmailAddressType { get; init; }
+
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// </summary>
+    [JsonPropertyName("remote_was_deleted")]
+    public bool? RemoteWasDeleted { get; init; }
 }

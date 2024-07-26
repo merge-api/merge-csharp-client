@@ -1,6 +1,6 @@
 namespace Merge.Client.Crm;
 
-public class ContactsRemoteFieldClassesListRequest
+public class CustomObjectClassesCustomObjectsRemoteFieldClassesListRequest
 {
     /// <summary>
     /// The pagination cursor value.
