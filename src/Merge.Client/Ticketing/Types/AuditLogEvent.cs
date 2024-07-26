@@ -78,6 +78,7 @@ public class AuditLogEvent
     /// - `ENABLED_MERGE_WEBHOOK` - ENABLED_MERGE_WEBHOOK
     /// - `DISABLED_MERGE_WEBHOOK` - DISABLED_MERGE_WEBHOOK
     /// - `MERGE_WEBHOOK_TARGET_CHANGED` - MERGE_WEBHOOK_TARGET_CHANGED
+    /// - `END_USER_CREDENTIALS_ACCESSED` - END_USER_CREDENTIALS_ACCESSED
     /// </summary>
     [JsonPropertyName("event_type")]
     public EventTypeEnum EventType { get; init; }

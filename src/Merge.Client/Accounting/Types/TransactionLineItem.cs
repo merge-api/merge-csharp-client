@@ -68,7 +68,7 @@ public class TransactionLineItem
     /// The line's associated tracking categories.
     /// </summary>
     [JsonPropertyName("tracking_categories")]
-    public IEnumerable<string>? TrackingCategories { get; init; }
+    public IEnumerable<string> TrackingCategories { get; init; }
 
     /// <summary>
     /// The line item's total.

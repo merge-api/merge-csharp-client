@@ -67,6 +67,11 @@ public class OpportunitiesListRequest
     public int? PageSize { get; init; }
 
     /// <summary>
+    /// If provided, will only return opportunities created in the third party platform after this datetime.
+    /// </summary>
+    public DateTime? RemoteCreatedAfter { get; init; }
+
+    /// <summary>
     /// Deprecated. Use show_enum_origins.
     /// </summary>
     public string? RemoteFields { get; init; }

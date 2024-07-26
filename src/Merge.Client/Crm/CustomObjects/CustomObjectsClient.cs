@@ -169,4 +169,52 @@ public class CustomObjectsClient
         }
         throw new Exception(responseBody);
     }
+
+    /// <summary>
+    /// Returns a list of `RemoteFieldClass` objects.
+    /// </summary>
+    public async Task<PaginatedRemoteFieldClassList> CustomObjectClassesCustomObjectsRemoteFieldClassesListAsync(
+        CustomObjectClassesCustomObjectsRemoteFieldClassesListRequest request
+    )
+    {
+        var _query = new Dictionary<string, object>() { };
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.IncludeDeletedData != null)
+        {
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+        }
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeRemoteFields != null)
+        {
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
+        if (request.IsCommonModelField != null)
+        {
+            _query["is_common_model_field"] = request.IsCommonModelField.ToString();
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.ToString();
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "crm/v1/custom-object-classes/custom-objects/remote-field-classes",
+                Query = _query
+            }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
+        }
+        throw new Exception(responseBody);
+    }
 }

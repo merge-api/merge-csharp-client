@@ -148,7 +148,7 @@ public class AttachmentsClient
     }
 
     /// <summary>
-    /// Returns an `Attachment` object with the given `id`.
+    /// Returns the `File` content with the given `id` as a stream of bytes.
     /// </summary>
     public async void DownloadRetrieveAsync(string id, AttachmentsDownloadRetrieveRequest request)
     {

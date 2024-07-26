@@ -19,7 +19,7 @@ public class RemoteFieldApi
     public RemoteEndpointInfo RemoteEndpointInfo { get; init; }
 
     [JsonPropertyName("example_values")]
-    public IEnumerable<object> ExampleValues { get; init; }
+    public IEnumerable<object>? ExampleValues { get; init; }
 
     [JsonPropertyName("advanced_metadata")]
     public AdvancedMetadata? AdvancedMetadata { get; init; }

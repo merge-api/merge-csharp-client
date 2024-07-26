@@ -25,6 +25,9 @@ public class Tag
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; init; }
 
+    [JsonPropertyName("id")]
+    public string? Id { get; init; }
+
     /// <summary>
     /// The tag's name.
     /// </summary>

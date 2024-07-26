@@ -16,7 +16,7 @@ public class IssuesClient
     }
 
     /// <summary>
-    /// Gets issues.
+    /// Gets all issues for Organization.
     /// </summary>
     public async Task<PaginatedIssueList> ListAsync(IssuesListRequest request)
     {
@@ -66,6 +66,10 @@ public class IssuesClient
             _query["last_incident_time_before"] = request.LastIncidentTimeBefore.Value.ToString(
                 "o0"
             );
+        }
+        if (request.LinkedAccountId != null)
+        {
+            _query["linked_account_id"] = request.LinkedAccountId;
         }
         if (request.PageSize != null)
         {

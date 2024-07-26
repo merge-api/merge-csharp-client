@@ -65,7 +65,7 @@ public class BankInfoListRequest
     public DateTime? ModifiedBefore { get; init; }
 
     /// <summary>
-    /// Overrides the default ordering for this endpoint.
+    /// Overrides the default ordering for this endpoint. Possible values include: remote_created_at, -remote_created_at.
     /// </summary>
     public BankInfoListRequestOrderBy? OrderBy { get; init; }
 

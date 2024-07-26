@@ -78,6 +78,17 @@ public class Application
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? CreditedTo { get; init; }
 
+    [JsonPropertyName("screening_question_answers")]
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, ScreeningQuestionAnswer>,
+            OneOfSerializer<OneOf<string, ScreeningQuestionAnswer>>
+        >)
+    )]
+    public IEnumerable<
+        OneOf<string, ScreeningQuestionAnswer>
+    >? ScreeningQuestionAnswers { get; init; }
+
     /// <summary>
     /// The application's current stage.
     /// </summary>

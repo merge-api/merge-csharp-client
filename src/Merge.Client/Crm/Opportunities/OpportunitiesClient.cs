@@ -69,6 +69,10 @@ public class OpportunitiesClient
         {
             _query["page_size"] = request.PageSize.ToString();
         }
+        if (request.RemoteCreatedAfter != null)
+        {
+            _query["remote_created_after"] = request.RemoteCreatedAfter.Value.ToString("o0");
+        }
         if (request.RemoteFields != null)
         {
             _query["remote_fields"] = request.RemoteFields.ToString();
@@ -273,6 +277,10 @@ public class OpportunitiesClient
         if (request.IncludeRemoteFields != null)
         {
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
+        if (request.IsCommonModelField != null)
+        {
+            _query["is_common_model_field"] = request.IsCommonModelField.ToString();
         }
         if (request.PageSize != null)
         {

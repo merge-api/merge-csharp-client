@@ -52,7 +52,7 @@ public class EmploymentsListRequest
     public DateTime? ModifiedBefore { get; init; }
 
     /// <summary>
-    /// Overrides the default ordering for this endpoint.
+    /// Overrides the default ordering for this endpoint. Possible values include: effective_date, -effective_date.
     /// </summary>
     public EmploymentsListRequestOrderBy? OrderBy { get; init; }
 
