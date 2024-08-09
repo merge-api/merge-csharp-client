@@ -28,7 +28,7 @@ of the SDK methods are awaitable!
 using Merge;
 using Merge.Ats;
 
-Merge merge = new Merge(
+var merge = new MergeClient(
   "YOUR_API_KEY", "YOUR_ACCOUNT_TOKEN"
 )
 ```
@@ -41,7 +41,7 @@ using more than one Merge API category right now, the SDK provides upgrade-flexi
 Each category is namespaced:
 
 ```csharp
-Merge merge = new Merge(
+var merge = new MergeClient(
   "YOUR_API_KEY", "YOUR_ACCOUNT_TOKEN"
 )
 
@@ -54,7 +54,7 @@ merge.HRIS. # APIs specific to the HRIS Category
 You can override the HttpClient by passing in `ClientOptions`. 
 
 ```csharp
-merge = new Merge("YOUR_API_KEY", "YOUR_ACCOUNT_ID", new ClientOptions{
+var merge = new MergeClient("YOUR_API_KEY", "YOUR_ACCOUNT_ID", new ClientOptions{
     HttpClient = ... // Override the Http Client
     BaseURL = ... // Override the Base URL
 })
@@ -85,7 +85,7 @@ Below are code snippets of how you can use the C# SDK.
 using Merge;
 using Merge.Ats;
 
-Merge merge = new Merge("YOUR_API_KEY", "YOUR_ACCOUNT_TOKEN")
+var merge = new MergeClient("YOUR_API_KEY", "YOUR_ACCOUNT_TOKEN")
 
 merge.Ats.LinkToken.Create(new EndUserDetailsRequest{
   EndUserEmailAddress = "john.smith@gmail.com",
@@ -100,7 +100,7 @@ merge.Ats.LinkToken.Create(new EndUserDetailsRequest{
 using Merge;
 using Merge.Hris;
 
-MergeClient merge = new Merge(
+var merge = new MergeClient(
   "YOUR_API_KEY", "YOUR_ACCOUNT_ID"
 )
 Employee employee = merge.Hris.Employees.RetrieveAsync("0958cbc6-6040-430a-848e-aafacbadf4ae",
@@ -116,7 +116,7 @@ retried twice with exponential backoff. You can override this behavior
 globally or per-request. 
 
 ```csharp
-var merge = new Merge("...", new ClientOptions{
+var merge = new MergeClient("...", new ClientOptions{
     MaxRetries = 1 // Only retry once
 });
 ```
@@ -126,7 +126,7 @@ The SDK defaults to a 60s timeout. You can override this behaviour
 globally or per-request. 
 
 ```csharp
-var merge = new Merge("...", new ClientOptions{
+var merge = new MergeClient("...", new ClientOptions{
     TimeoutInSeconds = 20 // Lower timeout
 });
 ```
