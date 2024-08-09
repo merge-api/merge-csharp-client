@@ -25,8 +25,8 @@ Instantiate the SDK using the `MergeClient` class. Note that all
 of the SDK methods are awaitable!
 
 ```csharp
-using Merge;
-using Merge.Ats;
+using Merge.Client;
+using Merge.Client.Ats;
 
 var merge = new MergeClient(
   "YOUR_API_KEY", "YOUR_ACCOUNT_TOKEN"
@@ -65,7 +65,7 @@ When the API returns a non-zero status code, (4xx or 5xx response),
 a subclass of MergeException will be thrown:
 
 ```csharp
-using Merge;
+using Merge.Client;
 
 try {
   merge.Ats.Candidates.Retrieve(...);    
@@ -82,8 +82,8 @@ Below are code snippets of how you can use the C# SDK.
 ### Create Link Token
 
 ```c#
-using Merge;
-using Merge.Ats;
+using Merge.Client;
+using Merge.Client.Ats;
 
 var merge = new MergeClient("YOUR_API_KEY", "YOUR_ACCOUNT_TOKEN")
 
@@ -97,8 +97,8 @@ merge.Ats.LinkToken.Create(new EndUserDetailsRequest{
 ### Get Employee
 
 ```c#
-using Merge;
-using Merge.Hris;
+using Merge.Client;
+using Merge.Client.Hris;
 
 var merge = new MergeClient(
   "YOUR_API_KEY", "YOUR_ACCOUNT_ID"
