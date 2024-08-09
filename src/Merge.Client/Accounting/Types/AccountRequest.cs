@@ -1,23 +1,22 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class AccountRequest
+public record AccountRequest
 {
     /// <summary>
     /// The account's name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// The account's description.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The account's broadest grouping.
@@ -29,13 +28,13 @@ public class AccountRequest
     /// - `REVENUE` - REVENUE
     /// </summary>
     [JsonPropertyName("classification")]
-    public ClassificationEnum? Classification { get; init; }
+    public ClassificationEnum? Classification { get; set; }
 
     /// <summary>
     /// The account's type is a narrower and more specific grouping within the account's classification.
     /// </summary>
     [JsonPropertyName("type")]
-    public string? Type { get; init; }
+    public string? Type { get; set; }
 
     /// <summary>
     /// The account's status.
@@ -45,13 +44,13 @@ public class AccountRequest
     /// - `INACTIVE` - INACTIVE
     /// </summary>
     [JsonPropertyName("status")]
-    public AccountStatusEnum? Status { get; init; }
+    public AccountStatusEnum? Status { get; set; }
 
     /// <summary>
     /// The account's current balance.
     /// </summary>
     [JsonPropertyName("current_balance")]
-    public double? CurrentBalance { get; init; }
+    public double? CurrentBalance { get; set; }
 
     /// <summary>
     /// The account's currency.
@@ -364,29 +363,29 @@ public class AccountRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The account's number.
     /// </summary>
     [JsonPropertyName("account_number")]
-    public string? AccountNumber { get; init; }
+    public string? AccountNumber { get; set; }
 
     /// <summary>
     /// ID of the parent account.
     /// </summary>
     [JsonPropertyName("parent_account")]
-    public string? ParentAccount { get; init; }
+    public string? ParentAccount { get; set; }
 
     /// <summary>
     /// The company the account belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    public string? Company { get; init; }
+    public string? Company { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

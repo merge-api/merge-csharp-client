@@ -1,6 +1,6 @@
 namespace Merge.Client.Core;
 
-public class Environments
+public class MergeEnvironment
 {
     public static string PRODUCTION = "https://api.merge.dev/api";
 

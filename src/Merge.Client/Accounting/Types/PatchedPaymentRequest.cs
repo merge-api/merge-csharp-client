@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,27 +6,27 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class PatchedPaymentRequest
+public record PatchedPaymentRequest
 {
     /// <summary>
     /// The payment's transaction date.
     /// </summary>
     [JsonPropertyName("transaction_date")]
-    public DateTime? TransactionDate { get; init; }
+    public DateTime? TransactionDate { get; set; }
 
     /// <summary>
     /// The supplier, or customer involved in the payment.
     /// </summary>
     [JsonPropertyName("contact")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
-    public OneOf<string, Contact>? Contact { get; init; }
+    public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The supplier’s or customer’s account in which the payment is made.
     /// </summary>
     [JsonPropertyName("account")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
-    public OneOf<string, Account>? Account { get; init; }
+    public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The payment's currency.
@@ -340,26 +339,26 @@ public class PatchedPaymentRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The payment's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     /// <summary>
     /// The company the payment belongs to.
     /// </summary>
     [JsonPropertyName("company")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
-    public OneOf<string, CompanyInfo>? Company { get; init; }
+    public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
     /// The total amount of money being paid to the supplier, or customer, after taxes.
     /// </summary>
     [JsonPropertyName("total_amount")]
-    public double? TotalAmount { get; init; }
+    public double? TotalAmount { get; set; }
 
     /// <summary>
     /// The type of the invoice.
@@ -368,7 +367,7 @@ public class PatchedPaymentRequest
     /// - `ACCOUNTS_RECEIVABLE` - ACCOUNTS_RECEIVABLE
     /// </summary>
     [JsonPropertyName("type")]
-    public PaymentTypeEnum? Type { get; init; }
+    public PaymentTypeEnum? Type { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     [JsonConverter(
@@ -377,14 +376,14 @@ public class PatchedPaymentRequest
             OneOfSerializer<OneOf<string, TrackingCategory>>
         >)
     )]
-    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
     /// The accounting period that the Payment was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
-    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; init; }
+    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
 
     /// <summary>
     /// A list of “Payment Applied to Lines” objects.
@@ -396,11 +395,11 @@ public class PatchedPaymentRequest
             OneOfSerializer<OneOf<string, PaymentLineItem>>
         >)
     )]
-    public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedToLines { get; init; }
+    public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedToLines { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

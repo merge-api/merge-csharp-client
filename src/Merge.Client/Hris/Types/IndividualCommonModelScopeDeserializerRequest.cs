@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Hris;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class IndividualCommonModelScopeDeserializerRequest
+public record IndividualCommonModelScopeDeserializerRequest
 {
     [JsonPropertyName("model_name")]
-    public string ModelName { get; init; }
+    public required string ModelName { get; set; }
 
     [JsonPropertyName("model_permissions")]
-    public Dictionary<string, ModelPermissionDeserializerRequest>? ModelPermissions { get; init; }
+    public Dictionary<string, ModelPermissionDeserializerRequest>? ModelPermissions { get; set; }
 
     [JsonPropertyName("field_permissions")]
-    public FieldPermissionDeserializerRequest? FieldPermissions { get; init; }
+    public FieldPermissionDeserializerRequest? FieldPermissions { get; set; }
 }

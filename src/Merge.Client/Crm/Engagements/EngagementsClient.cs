@@ -1,6 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Crm;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -18,16 +18,21 @@ public class EngagementsClient
     /// <summary>
     /// Returns a list of `Engagement` objects.
     /// </summary>
-    public async Task<PaginatedEngagementList> ListAsync(EngagementsListRequest request)
+    public async Task<PaginatedEngagementList> ListAsync(
+        EngagementsListRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
+            _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
+            _query["created_before"] = request.CreatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.Cursor != null)
         {
@@ -51,11 +56,15 @@ public class EngagementsClient
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.PageSize != null)
         {
@@ -67,32 +76,51 @@ public class EngagementsClient
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter.Value.ToString("o0");
+            _query["started_after"] = request.StartedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore.Value.ToString("o0");
+            _query["started_before"] = request.StartedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/engagements",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedEngagementList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedEngagementList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Creates an `Engagement` object with the given values.
     /// </summary>
-    public async Task<EngagementResponse> CreateAsync(EngagementEndpointRequest request)
+    public async Task<EngagementResponse> CreateAsync(
+        EngagementEndpointRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.IsDebugMode != null)
@@ -106,23 +134,41 @@ public class EngagementsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "crm/v1/engagements",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<EngagementResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<EngagementResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns an `Engagement` object with the given `id`.
     /// </summary>
-    public async Task<Engagement> RetrieveAsync(string id, EngagementsRetrieveRequest request)
+    public async Task<Engagement> RetrieveAsync(
+        string id,
+        EngagementsRetrieveRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
@@ -140,17 +186,31 @@ public class EngagementsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/engagements/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Engagement>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Engagement>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
@@ -158,7 +218,8 @@ public class EngagementsClient
     /// </summary>
     public async Task<EngagementResponse> PartialUpdateAsync(
         string id,
-        PatchedEngagementEndpointRequest request
+        PatchedEngagementEndpointRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -173,64 +234,110 @@ public class EngagementsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                Method = HttpMethod.Patch,
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethodExtensions.Patch,
                 Path = $"crm/v1/engagements/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<EngagementResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<EngagementResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns metadata for `Engagement` PATCHs.
     /// </summary>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(string id)
+    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+        string id,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"crm/v1/engagements/meta/patch/{id}"
+                Path = $"crm/v1/engagements/meta/patch/{id}",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns metadata for `Engagement` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync()
+    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "crm/v1/engagements/meta/post"
+                Path = "crm/v1/engagements/meta/post",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
-        EngagementsRemoteFieldClassesListRequest request
+        EngagementsRemoteFieldClassesListRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -261,16 +368,30 @@ public class EngagementsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/engagements/remote-field-classes",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

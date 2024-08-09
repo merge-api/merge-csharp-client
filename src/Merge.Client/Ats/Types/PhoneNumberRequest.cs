@@ -1,17 +1,16 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ats;
 
 #nullable enable
 
 namespace Merge.Client.Ats;
 
-public class PhoneNumberRequest
+public record PhoneNumberRequest
 {
     /// <summary>
     /// The phone number.
     /// </summary>
     [JsonPropertyName("value")]
-    public string? Value { get; init; }
+    public string? Value { get; set; }
 
     /// <summary>
     /// The type of phone number.
@@ -23,11 +22,11 @@ public class PhoneNumberRequest
     /// - `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("phone_number_type")]
-    public PhoneNumberTypeEnum? PhoneNumberType { get; init; }
+    public PhoneNumberTypeEnum? PhoneNumberType { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

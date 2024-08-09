@@ -1,6 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Crm;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -18,7 +18,10 @@ public class ContactsClient
     /// <summary>
     /// Returns a list of `Contact` objects.
     /// </summary>
-    public async Task<PaginatedContactList> ListAsync(ContactsListRequest request)
+    public async Task<PaginatedContactList> ListAsync(
+        ContactsListRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.AccountId != null)
@@ -27,11 +30,13 @@ public class ContactsClient
         }
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
+            _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
+            _query["created_before"] = request.CreatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.Cursor != null)
         {
@@ -59,11 +64,15 @@ public class ContactsClient
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.PageSize != null)
         {
@@ -80,23 +89,40 @@ public class ContactsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/contacts",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedContactList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedContactList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Creates a `Contact` object with the given values.
     /// </summary>
-    public async Task<CrmContactResponse> CreateAsync(CrmContactEndpointRequest request)
+    public async Task<CrmContactResponse> CreateAsync(
+        CrmContactEndpointRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.IsDebugMode != null)
@@ -110,23 +136,41 @@ public class ContactsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "crm/v1/contacts",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<CrmContactResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<CrmContactResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns a `Contact` object with the given `id`.
     /// </summary>
-    public async Task<Contact> RetrieveAsync(string id, ContactsRetrieveRequest request)
+    public async Task<Contact> RetrieveAsync(
+        string id,
+        ContactsRetrieveRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
@@ -144,17 +188,31 @@ public class ContactsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/contacts/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Contact>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Contact>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
@@ -162,7 +220,8 @@ public class ContactsClient
     /// </summary>
     public async Task<CrmContactResponse> PartialUpdateAsync(
         string id,
-        PatchedCrmContactEndpointRequest request
+        PatchedCrmContactEndpointRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -177,79 +236,141 @@ public class ContactsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                Method = HttpMethod.Patch,
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethodExtensions.Patch,
                 Path = $"crm/v1/contacts/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<CrmContactResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<CrmContactResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.
     /// </summary>
-    public async void IgnoreCreateAsync(string modelId, IgnoreCommonModelRequest request)
+    public async Task IgnoreCreateAsync(
+        string modelId,
+        IgnoreCommonModelRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"crm/v1/contacts/ignore/{modelId}",
-                Body = request
+                Body = request,
+                Options = options
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 
     /// <summary>
     /// Returns metadata for `CRMContact` PATCHs.
     /// </summary>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(string id)
+    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+        string id,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"crm/v1/contacts/meta/patch/{id}"
+                Path = $"crm/v1/contacts/meta/patch/{id}",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns metadata for `CRMContact` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync()
+    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "crm/v1/contacts/meta/post"
+                Path = "crm/v1/contacts/meta/post",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
-        ContactsRemoteFieldClassesListRequest request
+        ContactsRemoteFieldClassesListRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -280,16 +401,30 @@ public class ContactsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/contacts/remote-field-classes",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

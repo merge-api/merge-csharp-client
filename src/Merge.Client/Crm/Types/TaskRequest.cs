@@ -1,58 +1,57 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
-using Merge.Client.Crm;
 using OneOf;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class TaskRequest
+public record TaskRequest
 {
     /// <summary>
     /// The task's subject.
     /// </summary>
     [JsonPropertyName("subject")]
-    public string? Subject { get; init; }
+    public string? Subject { get; set; }
 
     /// <summary>
     /// The task's content.
     /// </summary>
     [JsonPropertyName("content")]
-    public string? Content { get; init; }
+    public string? Content { get; set; }
 
     /// <summary>
     /// The task's owner.
     /// </summary>
     [JsonPropertyName("owner")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
-    public OneOf<string, User>? Owner { get; init; }
+    public OneOf<string, User>? Owner { get; set; }
 
     /// <summary>
     /// The task's account.
     /// </summary>
     [JsonPropertyName("account")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
-    public OneOf<string, Account>? Account { get; init; }
+    public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The task's opportunity.
     /// </summary>
     [JsonPropertyName("opportunity")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Opportunity>>))]
-    public OneOf<string, Opportunity>? Opportunity { get; init; }
+    public OneOf<string, Opportunity>? Opportunity { get; set; }
 
     /// <summary>
     /// When the task is completed.
     /// </summary>
     [JsonPropertyName("completed_date")]
-    public DateTime? CompletedDate { get; init; }
+    public DateTime? CompletedDate { get; set; }
 
     /// <summary>
     /// When the task is due.
     /// </summary>
     [JsonPropertyName("due_date")]
-    public DateTime? DueDate { get; init; }
+    public DateTime? DueDate { get; set; }
 
     /// <summary>
     /// The task's status.
@@ -61,14 +60,14 @@ public class TaskRequest
     /// - `CLOSED` - CLOSED
     /// </summary>
     [JsonPropertyName("status")]
-    public TaskStatusEnum? Status { get; init; }
+    public TaskStatusEnum? Status { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 
     [JsonPropertyName("remote_fields")]
-    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; init; }
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
 }

@@ -1,51 +1,50 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
-using Merge.Client.Filestorage;
 using OneOf;
 
 #nullable enable
 
 namespace Merge.Client.Filestorage;
 
-public class FolderRequest
+public record FolderRequest
 {
     /// <summary>
     /// The folder's name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// The URL to access the folder.
     /// </summary>
     [JsonPropertyName("folder_url")]
-    public string? FolderUrl { get; init; }
+    public string? FolderUrl { get; set; }
 
     /// <summary>
     /// The folder's size, in bytes.
     /// </summary>
     [JsonPropertyName("size")]
-    public int? Size { get; init; }
+    public long? Size { get; set; }
 
     /// <summary>
     /// The folder's description.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The folder that the folder belongs to.
     /// </summary>
     [JsonPropertyName("parent_folder")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Folder>>))]
-    public OneOf<string, Folder>? ParentFolder { get; init; }
+    public OneOf<string, Folder>? ParentFolder { get; set; }
 
     /// <summary>
     /// The drive that the folder belongs to.
     /// </summary>
     [JsonPropertyName("drive")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Drive>>))]
-    public OneOf<string, Drive>? Drive { get; init; }
+    public OneOf<string, Drive>? Drive { get; set; }
 
     /// <summary>
     /// The Permission object is used to represent a user's or group's access to a File or Folder. Permissions are unexpanded by default. Use the query param `expand=permissions` to see more details under `GET /folders`.
@@ -60,11 +59,11 @@ public class FolderRequest
         string,
         PermissionRequest,
         IEnumerable<OneOf<string, PermissionRequest>>
-    >? Permissions { get; init; }
+    >? Permissions { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

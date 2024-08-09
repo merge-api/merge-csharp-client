@@ -1,56 +1,55 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
-using Merge.Client.Ticketing;
 using OneOf;
 
 #nullable enable
 
 namespace Merge.Client.Ticketing;
 
-public class CommentRequest
+public record CommentRequest
 {
     /// <summary>
     /// The author of the Comment, if the author is a User.
     /// </summary>
     [JsonPropertyName("user")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
-    public OneOf<string, User>? User { get; init; }
+    public OneOf<string, User>? User { get; set; }
 
     /// <summary>
     /// The author of the Comment, if the author is a Contact.
     /// </summary>
     [JsonPropertyName("contact")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
-    public OneOf<string, Contact>? Contact { get; init; }
+    public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The comment's text body.
     /// </summary>
     [JsonPropertyName("body")]
-    public string? Body { get; init; }
+    public string? Body { get; set; }
 
     /// <summary>
     /// The comment's text body formatted as html.
     /// </summary>
     [JsonPropertyName("html_body")]
-    public string? HtmlBody { get; init; }
+    public string? HtmlBody { get; set; }
 
     /// <summary>
     /// The ticket associated with the comment.
     /// </summary>
     [JsonPropertyName("ticket")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Ticket>>))]
-    public OneOf<string, Ticket>? Ticket { get; init; }
+    public OneOf<string, Ticket>? Ticket { get; set; }
 
     /// <summary>
     /// Whether or not the comment is internal.
     /// </summary>
     [JsonPropertyName("is_private")]
-    public bool? IsPrivate { get; init; }
+    public bool? IsPrivate { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

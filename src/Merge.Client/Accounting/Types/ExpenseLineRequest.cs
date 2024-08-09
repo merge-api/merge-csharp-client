@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,30 +6,30 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class ExpenseLineRequest
+public record ExpenseLineRequest
 {
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The line's item.
     /// </summary>
     [JsonPropertyName("item")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
-    public OneOf<string, Item>? Item { get; init; }
+    public OneOf<string, Item>? Item { get; set; }
 
     /// <summary>
     /// The line's net amount.
     /// </summary>
     [JsonPropertyName("net_amount")]
-    public double? NetAmount { get; init; }
+    public double? NetAmount { get; set; }
 
     [JsonPropertyName("tracking_category")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, TrackingCategory>>))]
-    public OneOf<string, TrackingCategory>? TrackingCategory { get; init; }
+    public OneOf<string, TrackingCategory>? TrackingCategory { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     [JsonConverter(
@@ -39,13 +38,13 @@ public class ExpenseLineRequest
             OneOfSerializer<OneOf<string, TrackingCategory>>
         >)
     )]
-    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
     /// The company the line belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    public string? Company { get; init; }
+    public string? Company { get; set; }
 
     /// <summary>
     /// The expense line item's currency.
@@ -358,37 +357,37 @@ public class ExpenseLineRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The expense's payment account.
     /// </summary>
     [JsonPropertyName("account")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
-    public OneOf<string, Account>? Account { get; init; }
+    public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The expense's contact.
     /// </summary>
     [JsonPropertyName("contact")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
-    public OneOf<string, Contact>? Contact { get; init; }
+    public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The description of the item that was purchased by the company.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The expense line item's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

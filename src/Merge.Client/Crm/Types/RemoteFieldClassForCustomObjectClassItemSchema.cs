@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Crm;
 
-public class RemoteFieldClassForCustomObjectClassItemSchema
+public record RemoteFieldClassForCustomObjectClassItemSchema
 {
     [JsonPropertyName("item_type")]
-    public string? ItemType { get; init; }
+    public string? ItemType { get; set; }
 
     [JsonPropertyName("item_format")]
-    public string? ItemFormat { get; init; }
+    public string? ItemFormat { get; set; }
 
     [JsonPropertyName("item_choices")]
-    public IEnumerable<string>? ItemChoices { get; init; }
+    public IEnumerable<string>? ItemChoices { get; set; }
 }

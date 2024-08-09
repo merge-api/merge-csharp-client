@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ats;
 
 #nullable enable
 
 namespace Merge.Client.Ats;
 
-public class DebugModeLog
+public record DebugModeLog
 {
     [JsonPropertyName("log_id")]
-    public string LogId { get; init; }
+    public required string LogId { get; set; }
 
     [JsonPropertyName("dashboard_view")]
-    public string DashboardView { get; init; }
+    public required string DashboardView { get; set; }
 
     [JsonPropertyName("log_summary")]
-    public DebugModelLogSummary LogSummary { get; init; }
+    public required DebugModelLogSummary LogSummary { get; set; }
 }

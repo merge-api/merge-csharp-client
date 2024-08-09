@@ -4,23 +4,23 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Ats;
 
-public class AdvancedMetadata
+public record AdvancedMetadata
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("display_name")]
-    public string? DisplayName { get; init; }
+    public string? DisplayName { get; set; }
 
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     [JsonPropertyName("is_required")]
-    public bool? IsRequired { get; init; }
+    public bool? IsRequired { get; set; }
 
     [JsonPropertyName("is_custom")]
-    public bool? IsCustom { get; init; }
+    public bool? IsCustom { get; set; }
 
     [JsonPropertyName("field_choices")]
-    public IEnumerable<object>? FieldChoices { get; init; }
+    public IEnumerable<object>? FieldChoices { get; set; }
 }

@@ -1,21 +1,20 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Filestorage;
 
 #nullable enable
 
 namespace Merge.Client.Filestorage;
 
-public class WarningValidationProblem
+public record WarningValidationProblem
 {
     [JsonPropertyName("source")]
-    public ValidationProblemSource? Source { get; init; }
+    public ValidationProblemSource? Source { get; set; }
 
     [JsonPropertyName("title")]
-    public string Title { get; init; }
+    public required string Title { get; set; }
 
     [JsonPropertyName("detail")]
-    public string Detail { get; init; }
+    public required string Detail { get; set; }
 
     [JsonPropertyName("problem_type")]
-    public string ProblemType { get; init; }
+    public required string ProblemType { get; set; }
 }

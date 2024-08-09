@@ -1,44 +1,43 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ticketing;
 
 #nullable enable
 
 namespace Merge.Client.Ticketing;
 
-public class Role
+public record Role
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The name of the Role.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// The set of actions that a User with this Role can perform. Possible enum values include: `VIEW`, `CREATE`, `EDIT`, `DELETE`, `CLOSE`, and `ASSIGN`.
     /// </summary>
     [JsonPropertyName("ticket_actions")]
-    public IEnumerable<TicketActionsEnum>? TicketActions { get; init; }
+    public IEnumerable<TicketActionsEnum>? TicketActions { get; set; }
 
     /// <summary>
     /// The level of Ticket access that a User with this Role can perform.
@@ -48,17 +47,17 @@ public class Role
     /// - `TEAM_ONLY` - TEAM_ONLY
     /// </summary>
     [JsonPropertyName("ticket_access")]
-    public TicketAccessEnum? TicketAccess { get; init; }
+    public TicketAccessEnum? TicketAccess { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

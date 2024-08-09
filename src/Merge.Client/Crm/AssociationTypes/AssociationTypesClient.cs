@@ -1,6 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Crm;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -20,17 +20,20 @@ public class AssociationTypesClient
     /// </summary>
     public async Task<PaginatedAssociationTypeList> CustomObjectClassesAssociationTypesListAsync(
         string customObjectClassId,
-        CustomObjectClassesAssociationTypesListRequest request
+        CustomObjectClassesAssociationTypesListRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
+            _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
+            _query["created_before"] = request.CreatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.Cursor != null)
         {
@@ -50,11 +53,15 @@ public class AssociationTypesClient
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.PageSize != null)
         {
@@ -67,17 +74,31 @@ public class AssociationTypesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/custom-object-classes/{customObjectClassId}/association-types",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedAssociationTypeList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedAssociationTypeList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
@@ -85,7 +106,8 @@ public class AssociationTypesClient
     /// </summary>
     public async Task<CrmAssociationTypeResponse> CustomObjectClassesAssociationTypesCreateAsync(
         string customObjectClassId,
-        CrmAssociationTypeEndpointRequest request
+        CrmAssociationTypeEndpointRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -100,17 +122,31 @@ public class AssociationTypesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"crm/v1/custom-object-classes/{customObjectClassId}/association-types",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<CrmAssociationTypeResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<CrmAssociationTypeResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
@@ -119,7 +155,8 @@ public class AssociationTypesClient
     public async Task<AssociationType> CustomObjectClassesAssociationTypesRetrieveAsync(
         string customObjectClassId,
         string id,
-        CustomObjectClassesAssociationTypesRetrieveRequest request
+        CustomObjectClassesAssociationTypesRetrieveRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -134,39 +171,68 @@ public class AssociationTypesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/custom-object-classes/{customObjectClassId}/association-types/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<AssociationType>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<AssociationType>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns metadata for `CRMAssociationType` POSTs.
     /// </summary>
     public async Task<MetaResponse> CustomObjectClassesAssociationTypesMetaPostRetrieveAsync(
-        string customObjectClassId
+        string customObjectClassId,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path =
-                    $"crm/v1/custom-object-classes/{customObjectClassId}/association-types/meta/post"
+                    $"crm/v1/custom-object-classes/{customObjectClassId}/association-types/meta/post",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

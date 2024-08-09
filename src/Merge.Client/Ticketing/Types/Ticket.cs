@@ -1,59 +1,58 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
-using Merge.Client.Ticketing;
 using OneOf;
 
 #nullable enable
 
 namespace Merge.Client.Ticketing;
 
-public class Ticket
+public record Ticket
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The ticket's name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     [JsonPropertyName("assignees")]
     [JsonConverter(
         typeof(CollectionItemSerializer<OneOf<string, User>, OneOfSerializer<OneOf<string, User>>>)
     )]
-    public IEnumerable<OneOf<string, User>>? Assignees { get; init; }
+    public IEnumerable<OneOf<string, User>>? Assignees { get; set; }
 
     /// <summary>
     /// The user who created this ticket.
     /// </summary>
     [JsonPropertyName("creator")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
-    public OneOf<string, User>? Creator { get; init; }
+    public OneOf<string, User>? Creator { get; set; }
 
     /// <summary>
     /// The ticket's due date.
     /// </summary>
     [JsonPropertyName("due_date")]
-    public DateTime? DueDate { get; init; }
+    public DateTime? DueDate { get; set; }
 
     /// <summary>
     /// The current status of the ticket.
@@ -64,13 +63,13 @@ public class Ticket
     /// - `ON_HOLD` - ON_HOLD
     /// </summary>
     [JsonPropertyName("status")]
-    public TicketStatusEnum? Status { get; init; }
+    public TicketStatusEnum? Status { get; set; }
 
     /// <summary>
     /// The ticket’s description. HTML version of description is mapped if supported by the third-party platform.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     [JsonPropertyName("collections")]
     [JsonConverter(
@@ -79,34 +78,34 @@ public class Ticket
             OneOfSerializer<OneOf<string, Collection>>
         >)
     )]
-    public IEnumerable<OneOf<string, Collection>>? Collections { get; init; }
+    public IEnumerable<OneOf<string, Collection>>? Collections { get; set; }
 
     /// <summary>
     /// The sub category of the ticket within the 3rd party system. Examples include incident, task, subtask or to-do.
     /// </summary>
     [JsonPropertyName("ticket_type")]
-    public string? TicketType { get; init; }
+    public string? TicketType { get; set; }
 
     /// <summary>
     /// The account associated with the ticket.
     /// </summary>
     [JsonPropertyName("account")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
-    public OneOf<string, Account>? Account { get; init; }
+    public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The contact associated with the ticket.
     /// </summary>
     [JsonPropertyName("contact")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
-    public OneOf<string, Contact>? Contact { get; init; }
+    public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The ticket's parent ticket.
     /// </summary>
     [JsonPropertyName("parent_ticket")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Ticket>>))]
-    public OneOf<string, Ticket>? ParentTicket { get; init; }
+    public OneOf<string, Ticket>? ParentTicket { get; set; }
 
     [JsonPropertyName("attachments")]
     [JsonConverter(
@@ -115,37 +114,37 @@ public class Ticket
             OneOfSerializer<OneOf<string, Attachment>>
         >)
     )]
-    public IEnumerable<OneOf<string, Attachment>>? Attachments { get; init; }
+    public IEnumerable<OneOf<string, Attachment>>? Attachments { get; set; }
 
     [JsonPropertyName("tags")]
-    public IEnumerable<string>? Tags { get; init; }
+    public IEnumerable<string>? Tags { get; set; }
 
     /// <summary>
     /// When the third party's ticket was created.
     /// </summary>
     [JsonPropertyName("remote_created_at")]
-    public DateTime? RemoteCreatedAt { get; init; }
+    public DateTime? RemoteCreatedAt { get; set; }
 
     /// <summary>
     /// When the third party's ticket was updated.
     /// </summary>
     [JsonPropertyName("remote_updated_at")]
-    public DateTime? RemoteUpdatedAt { get; init; }
+    public DateTime? RemoteUpdatedAt { get; set; }
 
     /// <summary>
     /// When the ticket was completed.
     /// </summary>
     [JsonPropertyName("completed_at")]
-    public DateTime? CompletedAt { get; init; }
+    public DateTime? CompletedAt { get; set; }
 
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     /// <summary>
     /// The 3rd party url of the Ticket.
     /// </summary>
     [JsonPropertyName("ticket_url")]
-    public string? TicketUrl { get; init; }
+    public string? TicketUrl { get; set; }
 
     /// <summary>
     /// The priority or urgency of the Ticket.
@@ -156,14 +155,14 @@ public class Ticket
     /// - `LOW` - LOW
     /// </summary>
     [JsonPropertyName("priority")]
-    public PriorityEnum? Priority { get; init; }
+    public PriorityEnum? Priority { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 
     [JsonPropertyName("remote_fields")]
-    public IEnumerable<RemoteField>? RemoteFields { get; init; }
+    public IEnumerable<RemoteField>? RemoteFields { get; set; }
 }

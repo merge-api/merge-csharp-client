@@ -1,77 +1,76 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
-using Merge.Client.Hris;
 using OneOf;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class Employee
+public record Employee
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The employee's number that appears in the third-party integration's UI.
     /// </summary>
     [JsonPropertyName("employee_number")]
-    public string? EmployeeNumber { get; init; }
+    public string? EmployeeNumber { get; set; }
 
     /// <summary>
     /// The ID of the employee's company.
     /// </summary>
     [JsonPropertyName("company")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Company>>))]
-    public OneOf<string, Company>? Company { get; init; }
+    public OneOf<string, Company>? Company { get; set; }
 
     /// <summary>
     /// The employee's first name.
     /// </summary>
     [JsonPropertyName("first_name")]
-    public string? FirstName { get; init; }
+    public string? FirstName { get; set; }
 
     /// <summary>
     /// The employee's last name.
     /// </summary>
     [JsonPropertyName("last_name")]
-    public string? LastName { get; init; }
+    public string? LastName { get; set; }
 
     /// <summary>
     /// The employee's preferred first name.
     /// </summary>
     [JsonPropertyName("preferred_name")]
-    public string? PreferredName { get; init; }
+    public string? PreferredName { get; set; }
 
     /// <summary>
     /// The employee's full name, to use for display purposes. If a preferred first name is available, the full name will include the preferred first name.
     /// </summary>
     [JsonPropertyName("display_full_name")]
-    public string? DisplayFullName { get; init; }
+    public string? DisplayFullName { get; set; }
 
     /// <summary>
     /// The employee's username that appears in the remote UI.
     /// </summary>
     [JsonPropertyName("username")]
-    public string? Username { get; init; }
+    public string? Username { get; set; }
 
     [JsonPropertyName("groups")]
     [JsonConverter(
@@ -80,25 +79,25 @@ public class Employee
             OneOfSerializer<OneOf<string, Group>>
         >)
     )]
-    public IEnumerable<OneOf<string, Group>>? Groups { get; init; }
+    public IEnumerable<OneOf<string, Group>>? Groups { get; set; }
 
     /// <summary>
     /// The employee's work email.
     /// </summary>
     [JsonPropertyName("work_email")]
-    public string? WorkEmail { get; init; }
+    public string? WorkEmail { get; set; }
 
     /// <summary>
     /// The employee's personal email.
     /// </summary>
     [JsonPropertyName("personal_email")]
-    public string? PersonalEmail { get; init; }
+    public string? PersonalEmail { get; set; }
 
     /// <summary>
     /// The employee's mobile phone number.
     /// </summary>
     [JsonPropertyName("mobile_phone_number")]
-    public string? MobilePhoneNumber { get; init; }
+    public string? MobilePhoneNumber { get; set; }
 
     /// <summary>
     /// Array of `Employment` IDs for this Employee.
@@ -110,48 +109,48 @@ public class Employee
             OneOfSerializer<OneOf<string, Employment>>
         >)
     )]
-    public IEnumerable<OneOf<string, Employment>>? Employments { get; init; }
+    public IEnumerable<OneOf<string, Employment>>? Employments { get; set; }
 
     /// <summary>
     /// The employee's home address.
     /// </summary>
     [JsonPropertyName("home_location")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Location>>))]
-    public OneOf<string, Location>? HomeLocation { get; init; }
+    public OneOf<string, Location>? HomeLocation { get; set; }
 
     /// <summary>
     /// The employee's work address.
     /// </summary>
     [JsonPropertyName("work_location")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Location>>))]
-    public OneOf<string, Location>? WorkLocation { get; init; }
+    public OneOf<string, Location>? WorkLocation { get; set; }
 
     /// <summary>
     /// The employee ID of the employee's manager.
     /// </summary>
     [JsonPropertyName("manager")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
-    public OneOf<string, Employee>? Manager { get; init; }
+    public OneOf<string, Employee>? Manager { get; set; }
 
     /// <summary>
     /// The employee's team.
     /// </summary>
     [JsonPropertyName("team")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Team>>))]
-    public OneOf<string, Team>? Team { get; init; }
+    public OneOf<string, Team>? Team { get; set; }
 
     /// <summary>
     /// The employee's pay group
     /// </summary>
     [JsonPropertyName("pay_group")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, PayGroup>>))]
-    public OneOf<string, PayGroup>? PayGroup { get; init; }
+    public OneOf<string, PayGroup>? PayGroup { get; set; }
 
     /// <summary>
     /// The employee's social security number.
     /// </summary>
     [JsonPropertyName("ssn")]
-    public string? Ssn { get; init; }
+    public string? Ssn { get; set; }
 
     /// <summary>
     /// The employee's gender.
@@ -163,7 +162,7 @@ public class Employee
     /// - `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
     /// </summary>
     [JsonPropertyName("gender")]
-    public GenderEnum? Gender { get; init; }
+    public GenderEnum? Gender { get; set; }
 
     /// <summary>
     /// The employee's ethnicity.
@@ -178,7 +177,7 @@ public class Employee
     /// - `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
     /// </summary>
     [JsonPropertyName("ethnicity")]
-    public EthnicityEnum? Ethnicity { get; init; }
+    public EthnicityEnum? Ethnicity { get; set; }
 
     /// <summary>
     /// The employee's filing status as related to marital status.
@@ -190,31 +189,31 @@ public class Employee
     /// - `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD
     /// </summary>
     [JsonPropertyName("marital_status")]
-    public MaritalStatusEnum? MaritalStatus { get; init; }
+    public MaritalStatusEnum? MaritalStatus { get; set; }
 
     /// <summary>
     /// The employee's date of birth.
     /// </summary>
     [JsonPropertyName("date_of_birth")]
-    public DateTime? DateOfBirth { get; init; }
+    public DateTime? DateOfBirth { get; set; }
 
     /// <summary>
     /// The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.
     /// </summary>
     [JsonPropertyName("hire_date")]
-    public DateTime? HireDate { get; init; }
+    public DateTime? HireDate { get; set; }
 
     /// <summary>
     /// The date that the employee started working. If an employee was rehired, the most recent start date will be returned.
     /// </summary>
     [JsonPropertyName("start_date")]
-    public DateTime? StartDate { get; init; }
+    public DateTime? StartDate { get; set; }
 
     /// <summary>
     /// When the third party's employee was created.
     /// </summary>
     [JsonPropertyName("remote_created_at")]
-    public DateTime? RemoteCreatedAt { get; init; }
+    public DateTime? RemoteCreatedAt { get; set; }
 
     /// <summary>
     /// The employment status of the employee.
@@ -224,32 +223,32 @@ public class Employee
     /// - `INACTIVE` - INACTIVE
     /// </summary>
     [JsonPropertyName("employment_status")]
-    public EmploymentStatusEnum? EmploymentStatus { get; init; }
+    public EmploymentStatusEnum? EmploymentStatus { get; set; }
 
     /// <summary>
     /// The employee's termination date.
     /// </summary>
     [JsonPropertyName("termination_date")]
-    public DateTime? TerminationDate { get; init; }
+    public DateTime? TerminationDate { get; set; }
 
     /// <summary>
     /// The URL of the employee's avatar image.
     /// </summary>
     [JsonPropertyName("avatar")]
-    public string? Avatar { get; init; }
+    public string? Avatar { get; set; }
 
     /// <summary>
     /// Custom fields configured for a given model.
     /// </summary>
     [JsonPropertyName("custom_fields")]
-    public Dictionary<string, object>? CustomFields { get; init; }
+    public Dictionary<string, object?>? CustomFields { get; set; }
 
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

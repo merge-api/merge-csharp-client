@@ -1,5 +1,4 @@
-using Merge.Client;
-using Merge.Client.Accounting;
+using Merge.Client.Core;
 
 #nullable enable
 

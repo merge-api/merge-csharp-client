@@ -1,53 +1,52 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
-using Merge.Client.Hris;
 using OneOf;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class Employment
+public record Employment
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The employee holding this position.
     /// </summary>
     [JsonPropertyName("employee")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
-    public OneOf<string, Employee>? Employee { get; init; }
+    public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>
     /// The position's title.
     /// </summary>
     [JsonPropertyName("job_title")]
-    public string? JobTitle { get; init; }
+    public string? JobTitle { get; set; }
 
     /// <summary>
     /// The position's pay rate in dollars.
     /// </summary>
     [JsonPropertyName("pay_rate")]
-    public double? PayRate { get; init; }
+    public double? PayRate { get; set; }
 
     /// <summary>
     /// The time period this pay rate encompasses.
@@ -63,7 +62,7 @@ public class Employment
     /// - `YEAR` - YEAR
     /// </summary>
     [JsonPropertyName("pay_period")]
-    public PayPeriodEnum? PayPeriod { get; init; }
+    public PayPeriodEnum? PayPeriod { get; set; }
 
     /// <summary>
     /// The position's pay frequency.
@@ -79,7 +78,7 @@ public class Employment
     /// - `SEMIMONTHLY` - SEMIMONTHLY
     /// </summary>
     [JsonPropertyName("pay_frequency")]
-    public PayFrequencyEnum? PayFrequency { get; init; }
+    public PayFrequencyEnum? PayFrequency { get; set; }
 
     /// <summary>
     /// The position's currency code.
@@ -392,14 +391,14 @@ public class Employment
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("pay_currency")]
-    public PayCurrencyEnum? PayCurrency { get; init; }
+    public PayCurrencyEnum? PayCurrency { get; set; }
 
     /// <summary>
     /// The employment's pay group
     /// </summary>
     [JsonPropertyName("pay_group")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, PayGroup>>))]
-    public OneOf<string, PayGroup>? PayGroup { get; init; }
+    public OneOf<string, PayGroup>? PayGroup { get; set; }
 
     /// <summary>
     /// The position's FLSA status.
@@ -410,13 +409,13 @@ public class Employment
     /// - `OWNER` - OWNER
     /// </summary>
     [JsonPropertyName("flsa_status")]
-    public FlsaStatusEnum? FlsaStatus { get; init; }
+    public FlsaStatusEnum? FlsaStatus { get; set; }
 
     /// <summary>
     /// The position's effective date.
     /// </summary>
     [JsonPropertyName("effective_date")]
-    public DateTime? EffectiveDate { get; init; }
+    public DateTime? EffectiveDate { get; set; }
 
     /// <summary>
     /// The position's type of employment.
@@ -428,17 +427,17 @@ public class Employment
     /// - `FREELANCE` - FREELANCE
     /// </summary>
     [JsonPropertyName("employment_type")]
-    public EmploymentTypeEnum? EmploymentType { get; init; }
+    public EmploymentTypeEnum? EmploymentType { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,46 +6,46 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class JournalEntry
+public record JournalEntry
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The journal entry's transaction date.
     /// </summary>
     [JsonPropertyName("transaction_date")]
-    public DateTime? TransactionDate { get; init; }
+    public DateTime? TransactionDate { get; set; }
 
     /// <summary>
     /// When the third party's journal entry was created.
     /// </summary>
     [JsonPropertyName("remote_created_at")]
-    public DateTime? RemoteCreatedAt { get; init; }
+    public DateTime? RemoteCreatedAt { get; set; }
 
     /// <summary>
     /// When the third party's journal entry was updated.
     /// </summary>
     [JsonPropertyName("remote_updated_at")]
-    public DateTime? RemoteUpdatedAt { get; init; }
+    public DateTime? RemoteUpdatedAt { get; set; }
 
     /// <summary>
     /// Array of `Payment` object IDs.
@@ -58,7 +57,7 @@ public class JournalEntry
             OneOfSerializer<OneOf<string, Payment>>
         >)
     )]
-    public IEnumerable<OneOf<string, Payment>>? Payments { get; init; }
+    public IEnumerable<OneOf<string, Payment>>? Payments { get; set; }
 
     /// <summary>
     /// A list of the Payment Applied to Lines common models related to a given Invoice, Credit Note, or Journal Entry.
@@ -70,13 +69,13 @@ public class JournalEntry
             OneOfSerializer<OneOf<string, PaymentLineItem>>
         >)
     )]
-    public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedPayments { get; init; }
+    public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedPayments { get; set; }
 
     /// <summary>
     /// The journal entry's private note.
     /// </summary>
     [JsonPropertyName("memo")]
-    public string? Memo { get; init; }
+    public string? Memo { get; set; }
 
     /// <summary>
     /// The journal's currency.
@@ -389,29 +388,29 @@ public class JournalEntry
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The journal entry's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     /// <summary>
     /// The company the journal entry belongs to.
     /// </summary>
     [JsonPropertyName("company")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
-    public OneOf<string, CompanyInfo>? Company { get; init; }
+    public OneOf<string, CompanyInfo>? Company { get; set; }
 
     [JsonPropertyName("lines")]
-    public IEnumerable<JournalLine>? Lines { get; init; }
+    public IEnumerable<JournalLine>? Lines { get; set; }
 
     /// <summary>
     /// Reference number for identifying journal entries.
     /// </summary>
     [JsonPropertyName("journal_number")]
-    public string? JournalNumber { get; init; }
+    public string? JournalNumber { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     [JsonConverter(
@@ -420,10 +419,10 @@ public class JournalEntry
             OneOfSerializer<OneOf<string, TrackingCategory>>
         >)
     )]
-    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     /// <summary>
     /// The journal's posting status.
@@ -432,18 +431,18 @@ public class JournalEntry
     /// - `POSTED` - POSTED
     /// </summary>
     [JsonPropertyName("posting_status")]
-    public PostingStatusEnum? PostingStatus { get; init; }
+    public PostingStatusEnum? PostingStatus { get; set; }
 
     /// <summary>
     /// The accounting period that the JournalEntry was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
-    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; init; }
+    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,48 +6,48 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class Payment
+public record Payment
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The payment's transaction date.
     /// </summary>
     [JsonPropertyName("transaction_date")]
-    public DateTime? TransactionDate { get; init; }
+    public DateTime? TransactionDate { get; set; }
 
     /// <summary>
     /// The supplier, or customer involved in the payment.
     /// </summary>
     [JsonPropertyName("contact")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
-    public OneOf<string, Contact>? Contact { get; init; }
+    public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The supplier’s or customer’s account in which the payment is made.
     /// </summary>
     [JsonPropertyName("account")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
-    public OneOf<string, Account>? Account { get; init; }
+    public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The payment's currency.
@@ -361,26 +360,26 @@ public class Payment
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The payment's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     /// <summary>
     /// The company the payment belongs to.
     /// </summary>
     [JsonPropertyName("company")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
-    public OneOf<string, CompanyInfo>? Company { get; init; }
+    public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
     /// The total amount of money being paid to the supplier, or customer, after taxes.
     /// </summary>
     [JsonPropertyName("total_amount")]
-    public double? TotalAmount { get; init; }
+    public double? TotalAmount { get; set; }
 
     /// <summary>
     /// The type of the invoice.
@@ -389,7 +388,7 @@ public class Payment
     /// - `ACCOUNTS_RECEIVABLE` - ACCOUNTS_RECEIVABLE
     /// </summary>
     [JsonPropertyName("type")]
-    public PaymentTypeEnum? Type { get; init; }
+    public PaymentTypeEnum? Type { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     [JsonConverter(
@@ -398,26 +397,26 @@ public class Payment
             OneOfSerializer<OneOf<string, TrackingCategory>>
         >)
     )]
-    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
     /// When the third party's payment entry was updated.
     /// </summary>
     [JsonPropertyName("remote_updated_at")]
-    public DateTime? RemoteUpdatedAt { get; init; }
+    public DateTime? RemoteUpdatedAt { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     /// <summary>
     /// The accounting period that the Payment was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
-    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; init; }
+    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
 
     /// <summary>
     /// A list of “Payment Applied to Lines” objects.
@@ -429,11 +428,11 @@ public class Payment
             OneOfSerializer<OneOf<string, PaymentLineItem>>
         >)
     )]
-    public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedToLines { get; init; }
+    public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedToLines { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

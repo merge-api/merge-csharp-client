@@ -1,6 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Filestorage;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -18,20 +18,37 @@ public class AccountTokenClient
     /// <summary>
     /// Returns the account token for the end user with the provided public token.
     /// </summary>
-    public async Task<AccountToken> RetrieveAsync(string publicToken)
+    public async Task<AccountToken> RetrieveAsync(
+        string publicToken,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"filestorage/v1/account-token/{publicToken}"
+                Path = $"filestorage/v1/account-token/{publicToken}",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<AccountToken>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<AccountToken>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

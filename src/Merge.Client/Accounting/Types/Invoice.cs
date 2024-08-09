@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,28 +6,28 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class Invoice
+public record Invoice
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// Whether the invoice is an accounts receivable or accounts payable. If `type` is `ACCOUNTS_PAYABLE`, the invoice is a bill. If `type` is `ACCOUNTS_RECEIVABLE`, it is an invoice.
@@ -37,51 +36,51 @@ public class Invoice
     /// - `ACCOUNTS_PAYABLE` - ACCOUNTS_PAYABLE
     /// </summary>
     [JsonPropertyName("type")]
-    public InvoiceTypeEnum? Type { get; init; }
+    public InvoiceTypeEnum? Type { get; set; }
 
     /// <summary>
     /// The invoice's contact.
     /// </summary>
     [JsonPropertyName("contact")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
-    public OneOf<string, Contact>? Contact { get; init; }
+    public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The invoice's number.
     /// </summary>
     [JsonPropertyName("number")]
-    public string? Number { get; init; }
+    public string? Number { get; set; }
 
     /// <summary>
     /// The invoice's issue date.
     /// </summary>
     [JsonPropertyName("issue_date")]
-    public DateTime? IssueDate { get; init; }
+    public DateTime? IssueDate { get; set; }
 
     /// <summary>
     /// The invoice's due date.
     /// </summary>
     [JsonPropertyName("due_date")]
-    public DateTime? DueDate { get; init; }
+    public DateTime? DueDate { get; set; }
 
     /// <summary>
     /// The invoice's paid date.
     /// </summary>
     [JsonPropertyName("paid_on_date")]
-    public DateTime? PaidOnDate { get; init; }
+    public DateTime? PaidOnDate { get; set; }
 
     /// <summary>
     /// The invoice's private note.
     /// </summary>
     [JsonPropertyName("memo")]
-    public string? Memo { get; init; }
+    public string? Memo { get; set; }
 
     /// <summary>
     /// The company the invoice belongs to.
     /// </summary>
     [JsonPropertyName("company")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
-    public OneOf<string, CompanyInfo>? Company { get; init; }
+    public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
     /// The invoice's currency.
@@ -394,25 +393,25 @@ public class Invoice
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The invoice's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     /// <summary>
     /// The total discounts applied to the total cost.
     /// </summary>
     [JsonPropertyName("total_discount")]
-    public double? TotalDiscount { get; init; }
+    public double? TotalDiscount { get; set; }
 
     /// <summary>
     /// The total amount being paid before taxes.
     /// </summary>
     [JsonPropertyName("sub_total")]
-    public double? SubTotal { get; init; }
+    public double? SubTotal { get; set; }
 
     /// <summary>
     /// The status of the invoice.
@@ -425,31 +424,31 @@ public class Invoice
     /// - `VOID` - VOID
     /// </summary>
     [JsonPropertyName("status")]
-    public InvoiceStatusEnum? Status { get; init; }
+    public InvoiceStatusEnum? Status { get; set; }
 
     /// <summary>
     /// The total amount being paid in taxes.
     /// </summary>
     [JsonPropertyName("total_tax_amount")]
-    public double? TotalTaxAmount { get; init; }
+    public double? TotalTaxAmount { get; set; }
 
     /// <summary>
     /// The invoice's total amount.
     /// </summary>
     [JsonPropertyName("total_amount")]
-    public double? TotalAmount { get; init; }
+    public double? TotalAmount { get; set; }
 
     /// <summary>
     /// The invoice's remaining balance.
     /// </summary>
     [JsonPropertyName("balance")]
-    public double? Balance { get; init; }
+    public double? Balance { get; set; }
 
     /// <summary>
     /// When the third party's invoice entry was updated.
     /// </summary>
     [JsonPropertyName("remote_updated_at")]
-    public DateTime? RemoteUpdatedAt { get; init; }
+    public DateTime? RemoteUpdatedAt { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     [JsonConverter(
@@ -458,7 +457,7 @@ public class Invoice
             OneOfSerializer<OneOf<string, TrackingCategory>>
         >)
     )]
-    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
     /// Array of `Payment` object IDs.
@@ -470,7 +469,7 @@ public class Invoice
             OneOfSerializer<OneOf<string, Payment>>
         >)
     )]
-    public IEnumerable<OneOf<string, Payment>>? Payments { get; init; }
+    public IEnumerable<OneOf<string, Payment>>? Payments { get; set; }
 
     /// <summary>
     /// A list of the Payment Applied to Lines common models related to a given Invoice, Credit Note, or Journal Entry.
@@ -482,20 +481,20 @@ public class Invoice
             OneOfSerializer<OneOf<string, PaymentLineItem>>
         >)
     )]
-    public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedPayments { get; init; }
+    public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedPayments { get; set; }
 
     [JsonPropertyName("line_items")]
-    public IEnumerable<InvoiceLineItem>? LineItems { get; init; }
+    public IEnumerable<InvoiceLineItem>? LineItems { get; set; }
 
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     /// <summary>
     /// The accounting period that the Invoice was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
-    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; init; }
+    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
 
     [JsonPropertyName("purchase_orders")]
     [JsonConverter(
@@ -504,11 +503,11 @@ public class Invoice
             OneOfSerializer<OneOf<string, PurchaseOrder>>
         >)
     )]
-    public IEnumerable<OneOf<string, PurchaseOrder>>? PurchaseOrders { get; init; }
+    public IEnumerable<OneOf<string, PurchaseOrder>>? PurchaseOrders { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

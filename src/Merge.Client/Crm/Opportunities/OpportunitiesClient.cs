@@ -1,6 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Crm;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -18,7 +18,10 @@ public class OpportunitiesClient
     /// <summary>
     /// Returns a list of `Opportunity` objects.
     /// </summary>
-    public async Task<PaginatedOpportunityList> ListAsync(OpportunitiesListRequest request)
+    public async Task<PaginatedOpportunityList> ListAsync(
+        OpportunitiesListRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.AccountId != null)
@@ -27,11 +30,13 @@ public class OpportunitiesClient
         }
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
+            _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
+            _query["created_before"] = request.CreatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.Cursor != null)
         {
@@ -55,11 +60,15 @@ public class OpportunitiesClient
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.OwnerId != null)
         {
@@ -71,7 +80,9 @@ public class OpportunitiesClient
         }
         if (request.RemoteCreatedAfter != null)
         {
-            _query["remote_created_after"] = request.RemoteCreatedAfter.Value.ToString("o0");
+            _query["remote_created_after"] = request.RemoteCreatedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.RemoteFields != null)
         {
@@ -96,23 +107,40 @@ public class OpportunitiesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/opportunities",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedOpportunityList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedOpportunityList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Creates an `Opportunity` object with the given values.
     /// </summary>
-    public async Task<OpportunityResponse> CreateAsync(OpportunityEndpointRequest request)
+    public async Task<OpportunityResponse> CreateAsync(
+        OpportunityEndpointRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.IsDebugMode != null)
@@ -126,23 +154,41 @@ public class OpportunitiesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "crm/v1/opportunities",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<OpportunityResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<OpportunityResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns an `Opportunity` object with the given `id`.
     /// </summary>
-    public async Task<Opportunity> RetrieveAsync(string id, OpportunitiesRetrieveRequest request)
+    public async Task<Opportunity> RetrieveAsync(
+        string id,
+        OpportunitiesRetrieveRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
@@ -168,17 +214,31 @@ public class OpportunitiesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/opportunities/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Opportunity>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Opportunity>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
@@ -186,7 +246,8 @@ public class OpportunitiesClient
     /// </summary>
     public async Task<OpportunityResponse> PartialUpdateAsync(
         string id,
-        PatchedOpportunityEndpointRequest request
+        PatchedOpportunityEndpointRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -201,64 +262,110 @@ public class OpportunitiesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                Method = HttpMethod.Patch,
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethodExtensions.Patch,
                 Path = $"crm/v1/opportunities/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<OpportunityResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<OpportunityResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns metadata for `Opportunity` PATCHs.
     /// </summary>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(string id)
+    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+        string id,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"crm/v1/opportunities/meta/patch/{id}"
+                Path = $"crm/v1/opportunities/meta/patch/{id}",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns metadata for `Opportunity` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync()
+    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "crm/v1/opportunities/meta/post"
+                Path = "crm/v1/opportunities/meta/post",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
-        OpportunitiesRemoteFieldClassesListRequest request
+        OpportunitiesRemoteFieldClassesListRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -289,16 +396,30 @@ public class OpportunitiesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/opportunities/remote-field-classes",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

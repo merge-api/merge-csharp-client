@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Ats;
 
-public class RemoteEndpointInfo
+public record RemoteEndpointInfo
 {
     [JsonPropertyName("method")]
-    public string Method { get; init; }
+    public required string Method { get; set; }
 
     [JsonPropertyName("url_path")]
-    public string UrlPath { get; init; }
+    public required string UrlPath { get; set; }
 
     [JsonPropertyName("field_traversal_path")]
-    public IEnumerable<object> FieldTraversalPath { get; init; }
+    public IEnumerable<object> FieldTraversalPath { get; set; } = new List<object>();
 }

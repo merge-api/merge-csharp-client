@@ -1,24 +1,23 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Filestorage;
 
 #nullable enable
 
 namespace Merge.Client.Filestorage;
 
-public class ExternalTargetFieldApiResponse
+public record ExternalTargetFieldApiResponse
 {
     [JsonPropertyName("File")]
-    public IEnumerable<ExternalTargetFieldApi>? File { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? File { get; set; }
 
     [JsonPropertyName("Folder")]
-    public IEnumerable<ExternalTargetFieldApi>? Folder { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Folder { get; set; }
 
     [JsonPropertyName("Drive")]
-    public IEnumerable<ExternalTargetFieldApi>? Drive { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Drive { get; set; }
 
     [JsonPropertyName("Group")]
-    public IEnumerable<ExternalTargetFieldApi>? Group { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Group { get; set; }
 
     [JsonPropertyName("User")]
-    public IEnumerable<ExternalTargetFieldApi>? User { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? User { get; set; }
 }

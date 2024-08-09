@@ -1,6 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Crm;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -18,7 +18,10 @@ public class IssuesClient
     /// <summary>
     /// Gets all issues for Organization.
     /// </summary>
-    public async Task<PaginatedIssueList> ListAsync(IssuesListRequest request)
+    public async Task<PaginatedIssueList> ListAsync(
+        IssuesListRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.AccountToken != null)
@@ -40,13 +43,13 @@ public class IssuesClient
         if (request.FirstIncidentTimeAfter != null)
         {
             _query["first_incident_time_after"] = request.FirstIncidentTimeAfter.Value.ToString(
-                "o0"
+                Constants.DateTimeFormat
             );
         }
         if (request.FirstIncidentTimeBefore != null)
         {
             _query["first_incident_time_before"] = request.FirstIncidentTimeBefore.Value.ToString(
-                "o0"
+                Constants.DateTimeFormat
             );
         }
         if (request.IncludeMuted != null)
@@ -59,12 +62,14 @@ public class IssuesClient
         }
         if (request.LastIncidentTimeAfter != null)
         {
-            _query["last_incident_time_after"] = request.LastIncidentTimeAfter.Value.ToString("o0");
+            _query["last_incident_time_after"] = request.LastIncidentTimeAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.LastIncidentTimeBefore != null)
         {
             _query["last_incident_time_before"] = request.LastIncidentTimeBefore.Value.ToString(
-                "o0"
+                Constants.DateTimeFormat
             );
         }
         if (request.LinkedAccountId != null)
@@ -86,32 +91,64 @@ public class IssuesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/issues",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedIssueList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedIssueList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Get a specific issue.
     /// </summary>
-    public async Task<Issue> RetrieveAsync(string id)
+    public async Task<Issue> RetrieveAsync(string id, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"crm/v1/issues/{id}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = $"crm/v1/issues/{id}",
+                Options = options
+            }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Issue>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Issue>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

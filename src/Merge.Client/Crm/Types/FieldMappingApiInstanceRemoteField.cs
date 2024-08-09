@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class FieldMappingApiInstanceRemoteField
+public record FieldMappingApiInstanceRemoteField
 {
     [JsonPropertyName("remote_key_name")]
-    public string RemoteKeyName { get; init; }
+    public required string RemoteKeyName { get; set; }
 
     [JsonPropertyName("schema")]
-    public Dictionary<string, object> Schema { get; init; }
+    public Dictionary<string, object?> Schema { get; set; } = new Dictionary<string, object?>();
 
     [JsonPropertyName("remote_endpoint_info")]
-    public FieldMappingApiInstanceRemoteFieldRemoteEndpointInfo RemoteEndpointInfo { get; init; }
+    public required FieldMappingApiInstanceRemoteFieldRemoteEndpointInfo RemoteEndpointInfo { get; set; }
 }

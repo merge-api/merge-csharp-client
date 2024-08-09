@@ -1,6 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Accounting;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -18,41 +18,75 @@ public class AsyncPassthroughClient
     /// <summary>
     /// Asynchronously pull data from an endpoint not currently supported by Merge.
     /// </summary>
-    public async Task<AsyncPassthroughReciept> CreateAsync(DataPassthroughRequest request)
+    public async Task<AsyncPassthroughReciept> CreateAsync(
+        DataPassthroughRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "accounting/v1/async-passthrough",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<AsyncPassthroughReciept>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<AsyncPassthroughReciept>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Retrieves data from earlier async-passthrough POST request
     /// </summary>
-    public async Task<RemoteResponse> RetrieveAsync(string asyncPassthroughReceiptId)
+    public async Task<RemoteResponse> RetrieveAsync(
+        string asyncPassthroughReceiptId,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"accounting/v1/async-passthrough/{asyncPassthroughReceiptId}"
+                Path = $"accounting/v1/async-passthrough/{asyncPassthroughReceiptId}",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<RemoteResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<RemoteResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

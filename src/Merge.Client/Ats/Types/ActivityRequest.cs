@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ats;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,14 +6,14 @@ using OneOf;
 
 namespace Merge.Client.Ats;
 
-public class ActivityRequest
+public record ActivityRequest
 {
     /// <summary>
     /// The user that performed the action.
     /// </summary>
     [JsonPropertyName("user")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
-    public OneOf<string, RemoteUser>? User { get; init; }
+    public OneOf<string, RemoteUser>? User { get; set; }
 
     /// <summary>
     /// The activity's type.
@@ -24,19 +23,19 @@ public class ActivityRequest
     /// - `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("activity_type")]
-    public ActivityTypeEnum? ActivityType { get; init; }
+    public ActivityTypeEnum? ActivityType { get; set; }
 
     /// <summary>
     /// The activity's subject.
     /// </summary>
     [JsonPropertyName("subject")]
-    public string? Subject { get; init; }
+    public string? Subject { get; set; }
 
     /// <summary>
     /// The activity's body.
     /// </summary>
     [JsonPropertyName("body")]
-    public string? Body { get; init; }
+    public string? Body { get; set; }
 
     /// <summary>
     /// The activity's visibility.
@@ -46,14 +45,14 @@ public class ActivityRequest
     /// - `PRIVATE` - PRIVATE
     /// </summary>
     [JsonPropertyName("visibility")]
-    public VisibilityEnum? Visibility { get; init; }
+    public VisibilityEnum? Visibility { get; set; }
 
     [JsonPropertyName("candidate")]
-    public string? Candidate { get; init; }
+    public string? Candidate { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

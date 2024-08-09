@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Accounting;
 
-public class RemoteData
+public record RemoteData
 {
     [JsonPropertyName("path")]
-    public string Path { get; init; }
+    public required string Path { get; set; }
 
     [JsonPropertyName("data")]
-    public object? Data { get; init; }
+    public object? Data { get; set; }
 }

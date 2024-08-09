@@ -1,6 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Filestorage;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -18,21 +18,38 @@ public class LinkTokenClient
     /// <summary>
     /// Creates a link token to be used when linking a new end user.
     /// </summary>
-    public async Task<LinkToken> CreateAsync(EndUserDetailsRequest request)
+    public async Task<LinkToken> CreateAsync(
+        EndUserDetailsRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "filestorage/v1/link-token",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<LinkToken>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<LinkToken>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

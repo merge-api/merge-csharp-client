@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class PaginatedAssociationTypeList
+public record PaginatedAssociationTypeList
 {
     [JsonPropertyName("next")]
-    public string? Next { get; init; }
+    public string? Next { get; set; }
 
     [JsonPropertyName("previous")]
-    public string? Previous { get; init; }
+    public string? Previous { get; set; }
 
     [JsonPropertyName("results")]
-    public IEnumerable<AssociationType>? Results { get; init; }
+    public IEnumerable<AssociationType>? Results { get; set; }
 }

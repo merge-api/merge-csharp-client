@@ -1,44 +1,43 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Hris;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class Group
+public record Group
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The parent group for this group.
     /// </summary>
     [JsonPropertyName("parent_group")]
-    public string? ParentGroup { get; init; }
+    public string? ParentGroup { get; set; }
 
     /// <summary>
     /// The group name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// The Group type returned directly from the third-party.
@@ -50,23 +49,23 @@ public class Group
     /// - `GROUP` - GROUP
     /// </summary>
     [JsonPropertyName("type")]
-    public GroupTypeEnum? Type { get; init; }
+    public GroupTypeEnum? Type { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     /// <summary>
     /// Indicates whether the Group refers to a team in the third party platform. Note that this is an opinionated view based on how Merge observes most organizations representing teams in each third party platform. If your customer uses a platform different from most, there is a chance this will not be correct.
     /// </summary>
     [JsonPropertyName("is_commonly_used_as_team")]
-    public bool? IsCommonlyUsedAsTeam { get; init; }
+    public bool? IsCommonlyUsedAsTeam { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

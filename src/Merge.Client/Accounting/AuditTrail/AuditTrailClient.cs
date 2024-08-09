@@ -1,6 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Accounting;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -18,7 +18,10 @@ public class AuditTrailClient
     /// <summary>
     /// Gets a list of audit trail events.
     /// </summary>
-    public async Task<PaginatedAuditLogEventList> ListAsync(AuditTrailListRequest request)
+    public async Task<PaginatedAuditLogEventList> ListAsync(
+        AuditTrailListRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.Cursor != null)
@@ -48,16 +51,30 @@ public class AuditTrailClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/audit-trail",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedAuditLogEventList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedAuditLogEventList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

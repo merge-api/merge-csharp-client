@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Crm;
 
-public class LinkedAccountStatus
+public record LinkedAccountStatus
 {
     [JsonPropertyName("linked_account_status")]
-    public string LinkedAccountStatus_ { get; init; }
+    public required string LinkedAccountStatus_ { get; set; }
 
     [JsonPropertyName("can_make_request")]
-    public bool CanMakeRequest { get; init; }
+    public required bool CanMakeRequest { get; set; }
 }

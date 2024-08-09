@@ -1,42 +1,41 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ticketing;
 
 #nullable enable
 
 namespace Merge.Client.Ticketing;
 
-public class ExternalTargetFieldApiResponse
+public record ExternalTargetFieldApiResponse
 {
     [JsonPropertyName("Ticket")]
-    public IEnumerable<ExternalTargetFieldApi>? Ticket { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Ticket { get; set; }
 
     [JsonPropertyName("Comment")]
-    public IEnumerable<ExternalTargetFieldApi>? Comment { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Comment { get; set; }
 
     [JsonPropertyName("Project")]
-    public IEnumerable<ExternalTargetFieldApi>? Project { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Project { get; set; }
 
     [JsonPropertyName("Collection")]
-    public IEnumerable<ExternalTargetFieldApi>? Collection { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Collection { get; set; }
 
     [JsonPropertyName("User")]
-    public IEnumerable<ExternalTargetFieldApi>? User { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? User { get; set; }
 
     [JsonPropertyName("Role")]
-    public IEnumerable<ExternalTargetFieldApi>? Role { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Role { get; set; }
 
     [JsonPropertyName("Account")]
-    public IEnumerable<ExternalTargetFieldApi>? Account { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Account { get; set; }
 
     [JsonPropertyName("Team")]
-    public IEnumerable<ExternalTargetFieldApi>? Team { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Team { get; set; }
 
     [JsonPropertyName("Attachment")]
-    public IEnumerable<ExternalTargetFieldApi>? Attachment { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Attachment { get; set; }
 
     [JsonPropertyName("Tag")]
-    public IEnumerable<ExternalTargetFieldApi>? Tag { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Tag { get; set; }
 
     [JsonPropertyName("Contact")]
-    public IEnumerable<ExternalTargetFieldApi>? Contact { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Contact { get; set; }
 }

@@ -1,15 +1,14 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Hris;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class AccountToken
+public record AccountToken
 {
     [JsonPropertyName("account_token")]
-    public string AccountToken_ { get; init; }
+    public required string AccountToken_ { get; set; }
 
     [JsonPropertyName("integration")]
-    public AccountIntegration Integration { get; init; }
+    public required AccountIntegration Integration { get; set; }
 }

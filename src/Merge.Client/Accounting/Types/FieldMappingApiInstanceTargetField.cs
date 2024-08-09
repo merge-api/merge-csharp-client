@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Accounting;
 
-public class FieldMappingApiInstanceTargetField
+public record FieldMappingApiInstanceTargetField
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("description")]
-    public string Description { get; init; }
+    public required string Description { get; set; }
 
     [JsonPropertyName("is_organization_wide")]
-    public bool IsOrganizationWide { get; init; }
+    public required bool IsOrganizationWide { get; set; }
 }

@@ -1,6 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Ticketing;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -18,20 +18,34 @@ public class AccountDetailsClient
     /// <summary>
     /// Get details for a linked account.
     /// </summary>
-    public async Task<AccountDetails> RetrieveAsync()
+    public async Task<AccountDetails> RetrieveAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "ticketing/v1/account-details"
+                Path = "ticketing/v1/account-details",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<AccountDetails>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<AccountDetails>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

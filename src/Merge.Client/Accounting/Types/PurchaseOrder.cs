@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,28 +6,28 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class PurchaseOrder
+public record PurchaseOrder
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The purchase order's status.
@@ -40,64 +39,64 @@ public class PurchaseOrder
     /// - `DELETED` - DELETED
     /// </summary>
     [JsonPropertyName("status")]
-    public PurchaseOrderStatusEnum? Status { get; init; }
+    public PurchaseOrderStatusEnum? Status { get; set; }
 
     /// <summary>
     /// The purchase order's issue date.
     /// </summary>
     [JsonPropertyName("issue_date")]
-    public DateTime? IssueDate { get; init; }
+    public DateTime? IssueDate { get; set; }
 
     /// <summary>
     /// The human-readable number of the purchase order.
     /// </summary>
     [JsonPropertyName("purchase_order_number")]
-    public string? PurchaseOrderNumber { get; init; }
+    public string? PurchaseOrderNumber { get; set; }
 
     /// <summary>
     /// The purchase order's delivery date.
     /// </summary>
     [JsonPropertyName("delivery_date")]
-    public DateTime? DeliveryDate { get; init; }
+    public DateTime? DeliveryDate { get; set; }
 
     /// <summary>
     /// The purchase order's delivery address.
     /// </summary>
     [JsonPropertyName("delivery_address")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Address>>))]
-    public OneOf<string, Address>? DeliveryAddress { get; init; }
+    public OneOf<string, Address>? DeliveryAddress { get; set; }
 
     /// <summary>
     /// The contact making the purchase order.
     /// </summary>
     [JsonPropertyName("customer")]
-    public string? Customer { get; init; }
+    public string? Customer { get; set; }
 
     /// <summary>
     /// The party fulfilling the purchase order.
     /// </summary>
     [JsonPropertyName("vendor")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
-    public OneOf<string, Contact>? Vendor { get; init; }
+    public OneOf<string, Contact>? Vendor { get; set; }
 
     /// <summary>
     /// A memo attached to the purchase order.
     /// </summary>
     [JsonPropertyName("memo")]
-    public string? Memo { get; init; }
+    public string? Memo { get; set; }
 
     /// <summary>
     /// The company the purchase order belongs to.
     /// </summary>
     [JsonPropertyName("company")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
-    public OneOf<string, CompanyInfo>? Company { get; init; }
+    public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
     /// The purchase order's total amount.
     /// </summary>
     [JsonPropertyName("total_amount")]
-    public double? TotalAmount { get; init; }
+    public double? TotalAmount { get; set; }
 
     /// <summary>
     /// The purchase order's currency.
@@ -410,16 +409,16 @@ public class PurchaseOrder
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The purchase order's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     [JsonPropertyName("line_items")]
-    public IEnumerable<PurchaseOrderLineItem>? LineItems { get; init; }
+    public IEnumerable<PurchaseOrderLineItem>? LineItems { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     [JsonConverter(
@@ -428,36 +427,36 @@ public class PurchaseOrder
             OneOfSerializer<OneOf<string, TrackingCategory>>
         >)
     )]
-    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
     /// When the third party's purchase order note was created.
     /// </summary>
     [JsonPropertyName("remote_created_at")]
-    public DateTime? RemoteCreatedAt { get; init; }
+    public DateTime? RemoteCreatedAt { get; set; }
 
     /// <summary>
     /// When the third party's purchase order note was updated.
     /// </summary>
     [JsonPropertyName("remote_updated_at")]
-    public DateTime? RemoteUpdatedAt { get; init; }
+    public DateTime? RemoteUpdatedAt { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     /// <summary>
     /// The accounting period that the PurchaseOrder was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
-    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; init; }
+    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

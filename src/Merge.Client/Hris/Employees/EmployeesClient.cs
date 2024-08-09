@@ -1,6 +1,6 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Hris;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -18,7 +18,10 @@ public class EmployeesClient
     /// <summary>
     /// Returns a list of `Employee` objects.
     /// </summary>
-    public async Task<PaginatedEmployeeList> ListAsync(EmployeesListRequest request)
+    public async Task<PaginatedEmployeeList> ListAsync(
+        EmployeesListRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.CompanyId != null)
@@ -27,11 +30,13 @@ public class EmployeesClient
         }
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
+            _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
+            _query["created_before"] = request.CreatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.Cursor != null)
         {
@@ -91,11 +96,15 @@ public class EmployeesClient
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.PageSize != null)
         {
@@ -123,11 +132,13 @@ public class EmployeesClient
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter.Value.ToString("o0");
+            _query["started_after"] = request.StartedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore.Value.ToString("o0");
+            _query["started_before"] = request.StartedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.TeamId != null)
         {
@@ -135,11 +146,15 @@ public class EmployeesClient
         }
         if (request.TerminatedAfter != null)
         {
-            _query["terminated_after"] = request.TerminatedAfter.Value.ToString("o0");
+            _query["terminated_after"] = request.TerminatedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.TerminatedBefore != null)
         {
-            _query["terminated_before"] = request.TerminatedBefore.Value.ToString("o0");
+            _query["terminated_before"] = request.TerminatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.WorkEmail != null)
         {
@@ -152,23 +167,40 @@ public class EmployeesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "hris/v1/employees",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedEmployeeList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedEmployeeList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Creates an `Employee` object with the given values.
     /// </summary>
-    public async Task<EmployeeResponse> CreateAsync(EmployeeEndpointRequest request)
+    public async Task<EmployeeResponse> CreateAsync(
+        EmployeeEndpointRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.IsDebugMode != null)
@@ -182,23 +214,41 @@ public class EmployeesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "hris/v1/employees",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<EmployeeResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<EmployeeResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Returns an `Employee` object with the given `id`.
     /// </summary>
-    public async Task<Employee> RetrieveAsync(string id, EmployeesRetrieveRequest request)
+    public async Task<Employee> RetrieveAsync(
+        string id,
+        EmployeesRetrieveRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
@@ -224,51 +274,95 @@ public class EmployeesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"hris/v1/employees/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Employee>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Employee>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.
     /// </summary>
-    public async void IgnoreCreateAsync(string modelId, IgnoreCommonModelRequest request)
+    public async Task IgnoreCreateAsync(
+        string modelId,
+        IgnoreCommonModelRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"hris/v1/employees/ignore/{modelId}",
-                Body = request
+                Body = request,
+                Options = options
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 
     /// <summary>
     /// Returns metadata for `Employee` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync()
+    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "hris/v1/employees/meta/post"
+                Path = "hris/v1/employees/meta/post",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

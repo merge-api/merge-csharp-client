@@ -1,60 +1,56 @@
-using Merge.Client.Ats;
-
-#nullable enable
-
 namespace Merge.Client.Ats;
 
-public class JobPostingsListRequest
+public record JobPostingsListRequest
 {
     /// <summary>
     /// If provided, will only return objects created after this datetime.
     /// </summary>
-    public DateTime? CreatedAfter { get; init; }
+    public DateTime? CreatedAfter { get; set; }
 
     /// <summary>
     /// If provided, will only return objects created before this datetime.
     /// </summary>
-    public DateTime? CreatedBefore { get; init; }
+    public DateTime? CreatedBefore { get; set; }
 
     /// <summary>
     /// The pagination cursor value.
     /// </summary>
-    public string? Cursor { get; init; }
+    public string? Cursor { get; set; }
 
     /// <summary>
     /// Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     /// </summary>
-    public string? Expand { get; init; }
+    public string? Expand { get; set; }
 
     /// <summary>
     /// Whether to include data that was marked as deleted by third party webhooks.
     /// </summary>
-    public bool? IncludeDeletedData { get; init; }
+    public bool? IncludeDeletedData { get; set; }
 
     /// <summary>
     /// Whether to include the original data Merge fetched from the third-party to produce these models.
     /// </summary>
-    public bool? IncludeRemoteData { get; init; }
+    public bool? IncludeRemoteData { get; set; }
 
     /// <summary>
     /// If provided, only objects synced by Merge after this date time will be returned.
     /// </summary>
-    public DateTime? ModifiedAfter { get; init; }
+    public DateTime? ModifiedAfter { get; set; }
 
     /// <summary>
     /// If provided, only objects synced by Merge before this date time will be returned.
     /// </summary>
-    public DateTime? ModifiedBefore { get; init; }
+    public DateTime? ModifiedBefore { get; set; }
 
     /// <summary>
     /// Number of results to return per page.
     /// </summary>
-    public int? PageSize { get; init; }
+    public int? PageSize { get; set; }
 
     /// <summary>
     /// The API provider's ID for the given object.
     /// </summary>
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// If provided, will only return Job Postings with this status. Options: ('PUBLISHED', 'CLOSED', 'DRAFT', 'INTERNAL', 'PENDING')
@@ -65,5 +61,5 @@ public class JobPostingsListRequest
     /// - `INTERNAL` - INTERNAL
     /// - `PENDING` - PENDING
     /// </summary>
-    public JobPostingsListRequestStatus? Status { get; init; }
+    public JobPostingsListRequestStatus? Status { get; set; }
 }

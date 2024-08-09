@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,42 +6,42 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class JournalLine
+public record JournalLine
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     [JsonPropertyName("account")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
-    public OneOf<string, Account>? Account { get; init; }
+    public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The value of the line item including taxes and other fees.
     /// </summary>
     [JsonPropertyName("net_amount")]
-    public double? NetAmount { get; init; }
+    public double? NetAmount { get; set; }
 
     [JsonPropertyName("tracking_category")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, TrackingCategory>>))]
-    public OneOf<string, TrackingCategory>? TrackingCategory { get; init; }
+    public OneOf<string, TrackingCategory>? TrackingCategory { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     [JsonConverter(
@@ -51,7 +50,7 @@ public class JournalLine
             OneOfSerializer<OneOf<string, TrackingCategory>>
         >)
     )]
-    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
     /// The journal line item's currency.
@@ -364,32 +363,32 @@ public class JournalLine
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The company the journal entry belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    public string? Company { get; init; }
+    public string? Company { get; set; }
 
     [JsonPropertyName("contact")]
-    public string? Contact { get; init; }
+    public string? Contact { get; set; }
 
     /// <summary>
     /// The line's description.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The journal line item's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 }

@@ -1,23 +1,22 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class Address
+public record Address
 {
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The address type.
@@ -26,34 +25,34 @@ public class Address
     /// - `SHIPPING` - SHIPPING
     /// </summary>
     [JsonPropertyName("type")]
-    public AddressTypeEnum? Type { get; init; }
+    public AddressTypeEnum? Type { get; set; }
 
     /// <summary>
     /// Line 1 of the address's street.
     /// </summary>
     [JsonPropertyName("street_1")]
-    public string? Street1 { get; init; }
+    public string? Street1 { get; set; }
 
     /// <summary>
     /// Line 2 of the address's street.
     /// </summary>
     [JsonPropertyName("street_2")]
-    public string? Street2 { get; init; }
+    public string? Street2 { get; set; }
 
     /// <summary>
     /// The address's city.
     /// </summary>
     [JsonPropertyName("city")]
-    public string? City { get; init; }
+    public string? City { get; set; }
 
     [JsonPropertyName("state")]
-    public object? State { get; init; }
+    public object? State { get; set; }
 
     /// <summary>
     /// The address's state or region.
     /// </summary>
     [JsonPropertyName("country_subdivision")]
-    public string? CountrySubdivision { get; init; }
+    public string? CountrySubdivision { get; set; }
 
     /// <summary>
     /// The address's country.
@@ -309,11 +308,11 @@ public class Address
     /// - `ZW` - Zimbabwe
     /// </summary>
     [JsonPropertyName("country")]
-    public CountryEnum? Country { get; init; }
+    public CountryEnum? Country { get; set; }
 
     /// <summary>
     /// The address's zip code.
     /// </summary>
     [JsonPropertyName("zip_code")]
-    public string? ZipCode { get; init; }
+    public string? ZipCode { get; set; }
 }
