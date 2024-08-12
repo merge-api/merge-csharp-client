@@ -1,66 +1,65 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class FieldMappingApiInstanceResponse
+public record FieldMappingApiInstanceResponse
 {
     [JsonPropertyName("Account")]
-    public IEnumerable<FieldMappingApiInstance>? Account { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Account { get; set; }
 
     [JsonPropertyName("AccountingAttachment")]
-    public IEnumerable<FieldMappingApiInstance>? AccountingAttachment { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? AccountingAttachment { get; set; }
 
     [JsonPropertyName("BalanceSheet")]
-    public IEnumerable<FieldMappingApiInstance>? BalanceSheet { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? BalanceSheet { get; set; }
 
     [JsonPropertyName("CashFlowStatement")]
-    public IEnumerable<FieldMappingApiInstance>? CashFlowStatement { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? CashFlowStatement { get; set; }
 
     [JsonPropertyName("CompanyInfo")]
-    public IEnumerable<FieldMappingApiInstance>? CompanyInfo { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? CompanyInfo { get; set; }
 
     [JsonPropertyName("Contact")]
-    public IEnumerable<FieldMappingApiInstance>? Contact { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Contact { get; set; }
 
     [JsonPropertyName("IncomeStatement")]
-    public IEnumerable<FieldMappingApiInstance>? IncomeStatement { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? IncomeStatement { get; set; }
 
     [JsonPropertyName("CreditNote")]
-    public IEnumerable<FieldMappingApiInstance>? CreditNote { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? CreditNote { get; set; }
 
     [JsonPropertyName("Item")]
-    public IEnumerable<FieldMappingApiInstance>? Item { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Item { get; set; }
 
     [JsonPropertyName("PurchaseOrder")]
-    public IEnumerable<FieldMappingApiInstance>? PurchaseOrder { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? PurchaseOrder { get; set; }
 
     [JsonPropertyName("TrackingCategory")]
-    public IEnumerable<FieldMappingApiInstance>? TrackingCategory { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? TrackingCategory { get; set; }
 
     [JsonPropertyName("JournalEntry")]
-    public IEnumerable<FieldMappingApiInstance>? JournalEntry { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? JournalEntry { get; set; }
 
     [JsonPropertyName("TaxRate")]
-    public IEnumerable<FieldMappingApiInstance>? TaxRate { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? TaxRate { get; set; }
 
     [JsonPropertyName("Invoice")]
-    public IEnumerable<FieldMappingApiInstance>? Invoice { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Invoice { get; set; }
 
     [JsonPropertyName("Payment")]
-    public IEnumerable<FieldMappingApiInstance>? Payment { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Payment { get; set; }
 
     [JsonPropertyName("Expense")]
-    public IEnumerable<FieldMappingApiInstance>? Expense { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Expense { get; set; }
 
     [JsonPropertyName("VendorCredit")]
-    public IEnumerable<FieldMappingApiInstance>? VendorCredit { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? VendorCredit { get; set; }
 
     [JsonPropertyName("Transaction")]
-    public IEnumerable<FieldMappingApiInstance>? Transaction { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Transaction { get; set; }
 
     [JsonPropertyName("GeneralLedgerTransaction")]
-    public IEnumerable<FieldMappingApiInstance>? GeneralLedgerTransaction { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? GeneralLedgerTransaction { get; set; }
 }

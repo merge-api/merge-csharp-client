@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Hris;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class ScopesClient
+public partial class ScopesClient
 {
     private RawClient _client;
 
-    public ScopesClient(RawClient client)
+    internal ScopesClient(RawClient client)
     {
         _client = client;
     }
@@ -18,63 +18,110 @@ public class ScopesClient
     /// <summary>
     /// Get the default permissions for Merge Common Models and fields across all Linked Accounts of a given category. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes).
     /// </summary>
-    public async Task<CommonModelScopeApi> DefaultScopesRetrieveAsync()
+    public async Task<CommonModelScopeApi> DefaultScopesRetrieveAsync(
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "hris/v1/default-scopes"
+                Path = "hris/v1/default-scopes",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<CommonModelScopeApi>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<CommonModelScopeApi>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Get all available permissions for Merge Common Models and fields for a single Linked Account. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes).
     /// </summary>
-    public async Task<CommonModelScopeApi> LinkedAccountScopesRetrieveAsync()
+    public async Task<CommonModelScopeApi> LinkedAccountScopesRetrieveAsync(
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "hris/v1/linked-account-scopes"
+                Path = "hris/v1/linked-account-scopes",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<CommonModelScopeApi>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<CommonModelScopeApi>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Update permissions for any Common Model or field for a single Linked Account. Any Scopes not set in this POST request will inherit the default Scopes. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes)
     /// </summary>
     public async Task<CommonModelScopeApi> LinkedAccountScopesCreateAsync(
-        LinkedAccountCommonModelScopeDeserializerRequest request
+        LinkedAccountCommonModelScopeDeserializerRequest request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "hris/v1/linked-account-scopes",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<CommonModelScopeApi>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<CommonModelScopeApi>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

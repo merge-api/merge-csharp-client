@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class PaginatedLeadList
+public record PaginatedLeadList
 {
     [JsonPropertyName("next")]
-    public string? Next { get; init; }
+    public string? Next { get; set; }
 
     [JsonPropertyName("previous")]
-    public string? Previous { get; init; }
+    public string? Previous { get; set; }
 
     [JsonPropertyName("results")]
-    public IEnumerable<Lead>? Results { get; init; }
+    public IEnumerable<Lead>? Results { get; set; }
 }

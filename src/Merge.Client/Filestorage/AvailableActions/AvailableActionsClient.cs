@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Filestorage;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Filestorage;
 
-public class AvailableActionsClient
+public partial class AvailableActionsClient
 {
     private RawClient _client;
 
-    public AvailableActionsClient(RawClient client)
+    internal AvailableActionsClient(RawClient client)
     {
         _client = client;
     }
@@ -18,20 +18,34 @@ public class AvailableActionsClient
     /// <summary>
     /// Returns a list of models and actions available for an account.
     /// </summary>
-    public async Task<AvailableActions> RetrieveAsync()
+    public async Task<AvailableActions> RetrieveAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "filestorage/v1/available-actions"
+                Path = "filestorage/v1/available-actions",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<AvailableActions>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<AvailableActions>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

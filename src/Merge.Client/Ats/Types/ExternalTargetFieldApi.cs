@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Ats;
 
-public class ExternalTargetFieldApi
+public record ExternalTargetFieldApi
 {
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     [JsonPropertyName("is_mapped")]
-    public string? IsMapped { get; init; }
+    public string? IsMapped { get; set; }
 }

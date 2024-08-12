@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,65 +6,65 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class PurchaseOrderLineItemRequest
+public record PurchaseOrderLineItemRequest
 {
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// A description of the good being purchased.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The line item's unit price.
     /// </summary>
     [JsonPropertyName("unit_price")]
-    public double? UnitPrice { get; init; }
+    public double? UnitPrice { get; set; }
 
     /// <summary>
     /// The line item's quantity.
     /// </summary>
     [JsonPropertyName("quantity")]
-    public double? Quantity { get; init; }
+    public double? Quantity { get; set; }
 
     [JsonPropertyName("item")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
-    public OneOf<string, Item>? Item { get; init; }
+    public OneOf<string, Item>? Item { get; set; }
 
     /// <summary>
     /// The purchase order line item's account.
     /// </summary>
     [JsonPropertyName("account")]
-    public string? Account { get; init; }
+    public string? Account { get; set; }
 
     /// <summary>
     /// The purchase order line item's associated tracking category.
     /// </summary>
     [JsonPropertyName("tracking_category")]
-    public string? TrackingCategory { get; init; }
+    public string? TrackingCategory { get; set; }
 
     /// <summary>
     /// The purchase order line item's associated tracking categories.
     /// </summary>
     [JsonPropertyName("tracking_categories")]
-    public IEnumerable<string> TrackingCategories { get; init; }
+    public IEnumerable<string> TrackingCategories { get; set; } = new List<string>();
 
     /// <summary>
     /// The purchase order line item's tax amount.
     /// </summary>
     [JsonPropertyName("tax_amount")]
-    public string? TaxAmount { get; init; }
+    public string? TaxAmount { get; set; }
 
     /// <summary>
     /// The purchase order line item's total amount.
     /// </summary>
     [JsonPropertyName("total_line_amount")]
-    public string? TotalLineAmount { get; init; }
+    public string? TotalLineAmount { get; set; }
 
     /// <summary>
     /// The purchase order line item's currency.
@@ -378,23 +377,23 @@ public class PurchaseOrderLineItemRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The purchase order line item's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     /// <summary>
     /// The company the purchase order line item belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    public string? Company { get; init; }
+    public string? Company { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

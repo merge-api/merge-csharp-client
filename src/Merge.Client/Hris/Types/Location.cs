@@ -1,74 +1,73 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Hris;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class Location
+public record Location
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The location's name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// The location's phone number.
     /// </summary>
     [JsonPropertyName("phone_number")]
-    public string? PhoneNumber { get; init; }
+    public string? PhoneNumber { get; set; }
 
     /// <summary>
     /// Line 1 of the location's street address.
     /// </summary>
     [JsonPropertyName("street_1")]
-    public string? Street1 { get; init; }
+    public string? Street1 { get; set; }
 
     /// <summary>
     /// Line 2 of the location's street address.
     /// </summary>
     [JsonPropertyName("street_2")]
-    public string? Street2 { get; init; }
+    public string? Street2 { get; set; }
 
     /// <summary>
     /// The location's city.
     /// </summary>
     [JsonPropertyName("city")]
-    public string? City { get; init; }
+    public string? City { get; set; }
 
     /// <summary>
     /// The location's state. Represents a region if outside of the US.
     /// </summary>
     [JsonPropertyName("state")]
-    public string? State { get; init; }
+    public string? State { get; set; }
 
     /// <summary>
     /// The location's zip code or postal code.
     /// </summary>
     [JsonPropertyName("zip_code")]
-    public string? ZipCode { get; init; }
+    public string? ZipCode { get; set; }
 
     /// <summary>
     /// The location's country.
@@ -324,7 +323,7 @@ public class Location
     /// - `ZW` - Zimbabwe
     /// </summary>
     [JsonPropertyName("country")]
-    public CountryEnum? Country { get; init; }
+    public CountryEnum? Country { get; set; }
 
     /// <summary>
     /// The location's type. Can be either WORK or HOME
@@ -333,17 +332,17 @@ public class Location
     /// - `WORK` - WORK
     /// </summary>
     [JsonPropertyName("location_type")]
-    public LocationTypeEnum? LocationType { get; init; }
+    public LocationTypeEnum? LocationType { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

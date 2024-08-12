@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class ItemSchema
+public record ItemSchema
 {
     [JsonPropertyName("item_type")]
-    public ItemTypeEnum? ItemType { get; init; }
+    public ItemTypeEnum? ItemType { get; set; }
 
     [JsonPropertyName("item_format")]
-    public ItemFormatEnum? ItemFormat { get; init; }
+    public ItemFormatEnum? ItemFormat { get; set; }
 
     [JsonPropertyName("item_choices")]
-    public IEnumerable<string>? ItemChoices { get; init; }
+    public IEnumerable<string>? ItemChoices { get; set; }
 }

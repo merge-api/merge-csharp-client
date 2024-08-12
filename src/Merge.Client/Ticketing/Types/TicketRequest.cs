@@ -1,38 +1,37 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
-using Merge.Client.Ticketing;
 using OneOf;
 
 #nullable enable
 
 namespace Merge.Client.Ticketing;
 
-public class TicketRequest
+public record TicketRequest
 {
     /// <summary>
     /// The ticket's name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     [JsonPropertyName("assignees")]
     [JsonConverter(
         typeof(CollectionItemSerializer<OneOf<string, User>, OneOfSerializer<OneOf<string, User>>>)
     )]
-    public IEnumerable<OneOf<string, User>>? Assignees { get; init; }
+    public IEnumerable<OneOf<string, User>>? Assignees { get; set; }
 
     /// <summary>
     /// The user who created this ticket.
     /// </summary>
     [JsonPropertyName("creator")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
-    public OneOf<string, User>? Creator { get; init; }
+    public OneOf<string, User>? Creator { get; set; }
 
     /// <summary>
     /// The ticket's due date.
     /// </summary>
     [JsonPropertyName("due_date")]
-    public DateTime? DueDate { get; init; }
+    public DateTime? DueDate { get; set; }
 
     /// <summary>
     /// The current status of the ticket.
@@ -43,13 +42,13 @@ public class TicketRequest
     /// - `ON_HOLD` - ON_HOLD
     /// </summary>
     [JsonPropertyName("status")]
-    public TicketStatusEnum? Status { get; init; }
+    public TicketStatusEnum? Status { get; set; }
 
     /// <summary>
     /// The ticket’s description. HTML version of description is mapped if supported by the third-party platform.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     [JsonPropertyName("collections")]
     [JsonConverter(
@@ -58,34 +57,34 @@ public class TicketRequest
             OneOfSerializer<OneOf<string, Collection>>
         >)
     )]
-    public IEnumerable<OneOf<string, Collection>>? Collections { get; init; }
+    public IEnumerable<OneOf<string, Collection>>? Collections { get; set; }
 
     /// <summary>
     /// The sub category of the ticket within the 3rd party system. Examples include incident, task, subtask or to-do.
     /// </summary>
     [JsonPropertyName("ticket_type")]
-    public string? TicketType { get; init; }
+    public string? TicketType { get; set; }
 
     /// <summary>
     /// The account associated with the ticket.
     /// </summary>
     [JsonPropertyName("account")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
-    public OneOf<string, Account>? Account { get; init; }
+    public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The contact associated with the ticket.
     /// </summary>
     [JsonPropertyName("contact")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
-    public OneOf<string, Contact>? Contact { get; init; }
+    public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The ticket's parent ticket.
     /// </summary>
     [JsonPropertyName("parent_ticket")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Ticket>>))]
-    public OneOf<string, Ticket>? ParentTicket { get; init; }
+    public OneOf<string, Ticket>? ParentTicket { get; set; }
 
     [JsonPropertyName("attachments")]
     [JsonConverter(
@@ -94,22 +93,22 @@ public class TicketRequest
             OneOfSerializer<OneOf<string, Attachment>>
         >)
     )]
-    public IEnumerable<OneOf<string, Attachment>>? Attachments { get; init; }
+    public IEnumerable<OneOf<string, Attachment>>? Attachments { get; set; }
 
     [JsonPropertyName("tags")]
-    public IEnumerable<string>? Tags { get; init; }
+    public IEnumerable<string>? Tags { get; set; }
 
     /// <summary>
     /// When the ticket was completed.
     /// </summary>
     [JsonPropertyName("completed_at")]
-    public DateTime? CompletedAt { get; init; }
+    public DateTime? CompletedAt { get; set; }
 
     /// <summary>
     /// The 3rd party url of the Ticket.
     /// </summary>
     [JsonPropertyName("ticket_url")]
-    public string? TicketUrl { get; init; }
+    public string? TicketUrl { get; set; }
 
     /// <summary>
     /// The priority or urgency of the Ticket.
@@ -120,14 +119,14 @@ public class TicketRequest
     /// - `LOW` - LOW
     /// </summary>
     [JsonPropertyName("priority")]
-    public PriorityEnum? Priority { get; init; }
+    public PriorityEnum? Priority { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 
     [JsonPropertyName("remote_fields")]
-    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; init; }
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
 }

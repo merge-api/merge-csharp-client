@@ -1,14 +1,13 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class Issue
+public record Issue
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// Status of the issue. Options: ('ONGOING', 'RESOLVED')
@@ -17,23 +16,23 @@ public class Issue
     /// - `RESOLVED` - RESOLVED
     /// </summary>
     [JsonPropertyName("status")]
-    public IssueStatusEnum? Status { get; init; }
+    public IssueStatusEnum? Status { get; set; }
 
     [JsonPropertyName("error_description")]
-    public string ErrorDescription { get; init; }
+    public required string ErrorDescription { get; set; }
 
     [JsonPropertyName("end_user")]
-    public Dictionary<string, object>? EndUser { get; init; }
+    public Dictionary<string, object?>? EndUser { get; set; }
 
     [JsonPropertyName("first_incident_time")]
-    public DateTime? FirstIncidentTime { get; init; }
+    public DateTime? FirstIncidentTime { get; set; }
 
     [JsonPropertyName("last_incident_time")]
-    public DateTime? LastIncidentTime { get; init; }
+    public DateTime? LastIncidentTime { get; set; }
 
     [JsonPropertyName("is_muted")]
-    public bool? IsMuted { get; init; }
+    public bool? IsMuted { get; set; }
 
     [JsonPropertyName("error_details")]
-    public IEnumerable<string>? ErrorDetails { get; init; }
+    public IEnumerable<string>? ErrorDetails { get; set; }
 }

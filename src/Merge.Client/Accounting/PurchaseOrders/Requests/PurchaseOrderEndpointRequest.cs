@@ -1,20 +1,16 @@
-using Merge.Client.Accounting;
-
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
-public class PurchaseOrderEndpointRequest
+public record PurchaseOrderEndpointRequest
 {
     /// <summary>
     /// Whether to include debug fields (such as log file links) in the response.
     /// </summary>
-    public bool? IsDebugMode { get; init; }
+    public bool? IsDebugMode { get; set; }
 
     /// <summary>
     /// Whether or not third-party updates should be run asynchronously.
     /// </summary>
-    public bool? RunAsync { get; init; }
+    public bool? RunAsync { get; set; }
 
-    public PurchaseOrderRequest Model { get; init; }
+    public required PurchaseOrderRequest Model { get; set; }
 }

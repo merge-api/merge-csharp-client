@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,37 +6,37 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class InvoiceLineItemRequest
+public record InvoiceLineItemRequest
 {
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The line item's description.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The line item's unit price.
     /// </summary>
     [JsonPropertyName("unit_price")]
-    public double? UnitPrice { get; init; }
+    public double? UnitPrice { get; set; }
 
     /// <summary>
     /// The line item's quantity.
     /// </summary>
     [JsonPropertyName("quantity")]
-    public double? Quantity { get; init; }
+    public double? Quantity { get; set; }
 
     /// <summary>
     /// The line item's total amount.
     /// </summary>
     [JsonPropertyName("total_amount")]
-    public double? TotalAmount { get; init; }
+    public double? TotalAmount { get; set; }
 
     /// <summary>
     /// The line item's currency.
@@ -350,25 +349,25 @@ public class InvoiceLineItemRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The line item's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     [JsonPropertyName("item")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
-    public OneOf<string, Item>? Item { get; init; }
+    public OneOf<string, Item>? Item { get; set; }
 
     [JsonPropertyName("account")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
-    public OneOf<string, Account>? Account { get; init; }
+    public OneOf<string, Account>? Account { get; set; }
 
     [JsonPropertyName("tracking_category")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, TrackingCategory>>))]
-    public OneOf<string, TrackingCategory>? TrackingCategory { get; init; }
+    public OneOf<string, TrackingCategory>? TrackingCategory { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     [JsonConverter(
@@ -377,17 +376,17 @@ public class InvoiceLineItemRequest
             OneOfSerializer<OneOf<string, TrackingCategory>>
         >)
     )]
-    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
     /// The company the line item belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    public string? Company { get; init; }
+    public string? Company { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

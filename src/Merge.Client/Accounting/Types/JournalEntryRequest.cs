@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,13 +6,13 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class JournalEntryRequest
+public record JournalEntryRequest
 {
     /// <summary>
     /// The journal entry's transaction date.
     /// </summary>
     [JsonPropertyName("transaction_date")]
-    public DateTime? TransactionDate { get; init; }
+    public DateTime? TransactionDate { get; set; }
 
     /// <summary>
     /// Array of `Payment` object IDs.
@@ -25,13 +24,13 @@ public class JournalEntryRequest
             OneOfSerializer<OneOf<string, Payment>>
         >)
     )]
-    public IEnumerable<OneOf<string, Payment>>? Payments { get; init; }
+    public IEnumerable<OneOf<string, Payment>>? Payments { get; set; }
 
     /// <summary>
     /// The journal entry's private note.
     /// </summary>
     [JsonPropertyName("memo")]
-    public string? Memo { get; init; }
+    public string? Memo { get; set; }
 
     /// <summary>
     /// The journal's currency.
@@ -344,20 +343,20 @@ public class JournalEntryRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The journal entry's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     /// <summary>
     /// The company the journal entry belongs to.
     /// </summary>
     [JsonPropertyName("company")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
-    public OneOf<string, CompanyInfo>? Company { get; init; }
+    public OneOf<string, CompanyInfo>? Company { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     [JsonConverter(
@@ -366,16 +365,16 @@ public class JournalEntryRequest
             OneOfSerializer<OneOf<string, TrackingCategory>>
         >)
     )]
-    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     [JsonPropertyName("lines")]
-    public IEnumerable<JournalLineRequest>? Lines { get; init; }
+    public IEnumerable<JournalLineRequest>? Lines { get; set; }
 
     /// <summary>
     /// Reference number for identifying journal entries.
     /// </summary>
     [JsonPropertyName("journal_number")]
-    public string? JournalNumber { get; init; }
+    public string? JournalNumber { get; set; }
 
     /// <summary>
     /// The journal's posting status.
@@ -384,11 +383,11 @@ public class JournalEntryRequest
     /// - `POSTED` - POSTED
     /// </summary>
     [JsonPropertyName("posting_status")]
-    public PostingStatusEnum? PostingStatus { get; init; }
+    public PostingStatusEnum? PostingStatus { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

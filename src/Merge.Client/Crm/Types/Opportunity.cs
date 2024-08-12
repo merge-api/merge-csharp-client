@@ -1,73 +1,72 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
-using Merge.Client.Crm;
 using OneOf;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class Opportunity
+public record Opportunity
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The opportunity's name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// The opportunity's description.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The opportunity's amount.
     /// </summary>
     [JsonPropertyName("amount")]
-    public int? Amount { get; init; }
+    public int? Amount { get; set; }
 
     /// <summary>
     /// The opportunity's owner.
     /// </summary>
     [JsonPropertyName("owner")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
-    public OneOf<string, User>? Owner { get; init; }
+    public OneOf<string, User>? Owner { get; set; }
 
     /// <summary>
     /// The account of the opportunity.
     /// </summary>
     [JsonPropertyName("account")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
-    public OneOf<string, Account>? Account { get; init; }
+    public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The stage of the opportunity.
     /// </summary>
     [JsonPropertyName("stage")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Stage>>))]
-    public OneOf<string, Stage>? Stage { get; init; }
+    public OneOf<string, Stage>? Stage { get; set; }
 
     /// <summary>
     /// The opportunity's status.
@@ -77,35 +76,35 @@ public class Opportunity
     /// - `LOST` - LOST
     /// </summary>
     [JsonPropertyName("status")]
-    public OpportunityStatusEnum? Status { get; init; }
+    public OpportunityStatusEnum? Status { get; set; }
 
     /// <summary>
     /// When the opportunity's last activity occurred.
     /// </summary>
     [JsonPropertyName("last_activity_at")]
-    public DateTime? LastActivityAt { get; init; }
+    public DateTime? LastActivityAt { get; set; }
 
     /// <summary>
     /// When the opportunity was closed.
     /// </summary>
     [JsonPropertyName("close_date")]
-    public DateTime? CloseDate { get; init; }
+    public DateTime? CloseDate { get; set; }
 
     /// <summary>
     /// When the third party's opportunity was created.
     /// </summary>
     [JsonPropertyName("remote_created_at")]
-    public DateTime? RemoteCreatedAt { get; init; }
+    public DateTime? RemoteCreatedAt { get; set; }
 
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 
     [JsonPropertyName("remote_fields")]
-    public IEnumerable<RemoteField>? RemoteFields { get; init; }
+    public IEnumerable<RemoteField>? RemoteFields { get; set; }
 }

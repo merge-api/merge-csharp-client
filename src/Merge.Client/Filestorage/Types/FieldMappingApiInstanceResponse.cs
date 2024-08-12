@@ -1,24 +1,23 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Filestorage;
 
 #nullable enable
 
 namespace Merge.Client.Filestorage;
 
-public class FieldMappingApiInstanceResponse
+public record FieldMappingApiInstanceResponse
 {
     [JsonPropertyName("File")]
-    public IEnumerable<FieldMappingApiInstance>? File { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? File { get; set; }
 
     [JsonPropertyName("Folder")]
-    public IEnumerable<FieldMappingApiInstance>? Folder { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Folder { get; set; }
 
     [JsonPropertyName("Drive")]
-    public IEnumerable<FieldMappingApiInstance>? Drive { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Drive { get; set; }
 
     [JsonPropertyName("Group")]
-    public IEnumerable<FieldMappingApiInstance>? Group { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Group { get; set; }
 
     [JsonPropertyName("User")]
-    public IEnumerable<FieldMappingApiInstance>? User { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? User { get; set; }
 }

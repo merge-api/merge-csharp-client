@@ -1,62 +1,61 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ats;
 
 #nullable enable
 
 namespace Merge.Client.Ats;
 
-public class RemoteUser
+public record RemoteUser
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The user's first name.
     /// </summary>
     [JsonPropertyName("first_name")]
-    public string? FirstName { get; init; }
+    public string? FirstName { get; set; }
 
     /// <summary>
     /// The user's last name.
     /// </summary>
     [JsonPropertyName("last_name")]
-    public string? LastName { get; init; }
+    public string? LastName { get; set; }
 
     /// <summary>
     /// The user's email.
     /// </summary>
     [JsonPropertyName("email")]
-    public string? Email { get; init; }
+    public string? Email { get; set; }
 
     /// <summary>
     /// Whether the user's account had been disabled.
     /// </summary>
     [JsonPropertyName("disabled")]
-    public bool? Disabled { get; init; }
+    public bool? Disabled { get; set; }
 
     /// <summary>
     /// When the third party's user was created.
     /// </summary>
     [JsonPropertyName("remote_created_at")]
-    public DateTime? RemoteCreatedAt { get; init; }
+    public DateTime? RemoteCreatedAt { get; set; }
 
     /// <summary>
     /// The user's role.
@@ -68,17 +67,17 @@ public class RemoteUser
     /// - `INTERVIEWER` - INTERVIEWER
     /// </summary>
     [JsonPropertyName("access_role")]
-    public AccessRoleEnum? AccessRole { get; init; }
+    public AccessRoleEnum? AccessRole { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

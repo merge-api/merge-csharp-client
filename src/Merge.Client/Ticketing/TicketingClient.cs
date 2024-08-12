@@ -1,15 +1,14 @@
-using Merge.Client;
-using Merge.Client.Ticketing;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Ticketing;
 
-public class TicketingClient
+public partial class TicketingClient
 {
     private RawClient _client;
 
-    public TicketingClient(RawClient client)
+    internal TicketingClient(RawClient client)
     {
         _client = client;
         AccountDetails = new AccountDetailsClient(_client);

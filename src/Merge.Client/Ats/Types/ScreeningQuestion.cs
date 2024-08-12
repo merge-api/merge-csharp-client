@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ats;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,47 +6,47 @@ using OneOf;
 
 namespace Merge.Client.Ats;
 
-public class ScreeningQuestion
+public record ScreeningQuestion
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The job associated with the screening question.
     /// </summary>
     [JsonPropertyName("job")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Job>>))]
-    public OneOf<string, Job>? Job { get; init; }
+    public OneOf<string, Job>? Job { get; set; }
 
     /// <summary>
     /// The description of the screening question
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The title of the screening question
     /// </summary>
     [JsonPropertyName("title")]
-    public string? Title { get; init; }
+    public string? Title { get; set; }
 
     /// <summary>
     /// The data type for the screening question.
@@ -62,20 +61,20 @@ public class ScreeningQuestion
     /// - `BOOLEAN` - BOOLEAN
     /// </summary>
     [JsonPropertyName("type")]
-    public ScreeningQuestionTypeEnum? Type { get; init; }
+    public ScreeningQuestionTypeEnum? Type { get; set; }
 
     /// <summary>
     /// Whether or not the screening question is required.
     /// </summary>
     [JsonPropertyName("required")]
-    public bool? Required { get; init; }
+    public bool? Required { get; set; }
 
     [JsonPropertyName("options")]
-    public IEnumerable<object>? Options { get; init; }
+    public IEnumerable<object>? Options { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 }

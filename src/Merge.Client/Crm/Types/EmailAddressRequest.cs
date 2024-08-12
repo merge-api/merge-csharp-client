@@ -4,23 +4,23 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Crm;
 
-public class EmailAddressRequest
+public record EmailAddressRequest
 {
     /// <summary>
     /// The email address.
     /// </summary>
     [JsonPropertyName("email_address")]
-    public string? EmailAddress { get; init; }
+    public string? EmailAddress { get; set; }
 
     /// <summary>
     /// The email address's type.
     /// </summary>
     [JsonPropertyName("email_address_type")]
-    public string? EmailAddressType { get; init; }
+    public string? EmailAddressType { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Accounting;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class JournalEntriesClient
+public partial class JournalEntriesClient
 {
     private RawClient _client;
 
-    public JournalEntriesClient(RawClient client)
+    internal JournalEntriesClient(RawClient client)
     {
         _client = client;
     }
@@ -18,7 +18,10 @@ public class JournalEntriesClient
     /// <summary>
     /// Returns a list of `JournalEntry` objects.
     /// </summary>
-    public async Task<PaginatedJournalEntryList> ListAsync(JournalEntriesListRequest request)
+    public async Task<PaginatedJournalEntryList> ListAsync(
+        JournalEntriesListRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.CompanyId != null)
@@ -27,11 +30,13 @@ public class JournalEntriesClient
         }
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
+            _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
+            _query["created_before"] = request.CreatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.Cursor != null)
         {
@@ -51,11 +56,15 @@ public class JournalEntriesClient
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.PageSize != null)
         {
@@ -67,32 +76,53 @@ public class JournalEntriesClient
         }
         if (request.TransactionDateAfter != null)
         {
-            _query["transaction_date_after"] = request.TransactionDateAfter.Value.ToString("o0");
+            _query["transaction_date_after"] = request.TransactionDateAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.TransactionDateBefore != null)
         {
-            _query["transaction_date_before"] = request.TransactionDateBefore.Value.ToString("o0");
+            _query["transaction_date_before"] = request.TransactionDateBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/journal-entries",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedJournalEntryList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedJournalEntryList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Creates a `JournalEntry` object with the given values.
     /// </summary>
-    public async Task<JournalEntryResponse> CreateAsync(JournalEntryEndpointRequest request)
+    public async Task<JournalEntryResponse> CreateAsync(
+        JournalEntryEndpointRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.IsDebugMode != null)
@@ -106,23 +136,41 @@ public class JournalEntriesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "accounting/v1/journal-entries",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<JournalEntryResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<JournalEntryResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns a `JournalEntry` object with the given `id`.
     /// </summary>
-    public async Task<JournalEntry> RetrieveAsync(string id, JournalEntriesRetrieveRequest request)
+    public async Task<JournalEntry> RetrieveAsync(
+        string id,
+        JournalEntriesRetrieveRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
@@ -136,36 +184,64 @@ public class JournalEntriesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/journal-entries/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<JournalEntry>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<JournalEntry>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns metadata for `JournalEntry` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync()
+    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "accounting/v1/journal-entries/meta/post"
+                Path = "accounting/v1/journal-entries/meta/post",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

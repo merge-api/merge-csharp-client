@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Accounting;
 
-public class ValidationProblemSource
+public record ValidationProblemSource
 {
     [JsonPropertyName("pointer")]
-    public string Pointer { get; init; }
+    public required string Pointer { get; set; }
 }

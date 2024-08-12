@@ -1,18 +1,18 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ticketing;
 
 #nullable enable
 
 namespace Merge.Client.Ticketing;
 
-public class CommonModelScopesBodyRequest
+public record CommonModelScopesBodyRequest
 {
     [JsonPropertyName("model_id")]
-    public string ModelId { get; init; }
+    public required string ModelId { get; set; }
 
     [JsonPropertyName("enabled_actions")]
-    public IEnumerable<EnabledActionsEnum> EnabledActions { get; init; }
+    public IEnumerable<EnabledActionsEnum> EnabledActions { get; set; } =
+        new List<EnabledActionsEnum>();
 
     [JsonPropertyName("disabled_fields")]
-    public IEnumerable<string> DisabledFields { get; init; }
+    public IEnumerable<string> DisabledFields { get; set; } = new List<string>();
 }

@@ -1,44 +1,43 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class Account
+public record Account
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The account's name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// The account's description.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The account's broadest grouping.
@@ -50,13 +49,13 @@ public class Account
     /// - `REVENUE` - REVENUE
     /// </summary>
     [JsonPropertyName("classification")]
-    public ClassificationEnum? Classification { get; init; }
+    public ClassificationEnum? Classification { get; set; }
 
     /// <summary>
     /// The account's type is a narrower and more specific grouping within the account's classification.
     /// </summary>
     [JsonPropertyName("type")]
-    public string? Type { get; init; }
+    public string? Type { get; set; }
 
     /// <summary>
     /// The account's status.
@@ -66,13 +65,13 @@ public class Account
     /// - `INACTIVE` - INACTIVE
     /// </summary>
     [JsonPropertyName("status")]
-    public AccountStatusEnum? Status { get; init; }
+    public AccountStatusEnum? Status { get; set; }
 
     /// <summary>
     /// The account's current balance.
     /// </summary>
     [JsonPropertyName("current_balance")]
-    public double? CurrentBalance { get; init; }
+    public double? CurrentBalance { get; set; }
 
     /// <summary>
     /// The account's currency.
@@ -385,35 +384,35 @@ public class Account
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The account's number.
     /// </summary>
     [JsonPropertyName("account_number")]
-    public string? AccountNumber { get; init; }
+    public string? AccountNumber { get; set; }
 
     /// <summary>
     /// ID of the parent account.
     /// </summary>
     [JsonPropertyName("parent_account")]
-    public string? ParentAccount { get; init; }
+    public string? ParentAccount { get; set; }
 
     /// <summary>
     /// The company the account belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    public string? Company { get; init; }
+    public string? Company { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

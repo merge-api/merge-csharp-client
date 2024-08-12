@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Hris;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class GenerateKeyClient
+public partial class GenerateKeyClient
 {
     private RawClient _client;
 
-    public GenerateKeyClient(RawClient client)
+    internal GenerateKeyClient(RawClient client)
     {
         _client = client;
     }
@@ -18,21 +18,38 @@ public class GenerateKeyClient
     /// <summary>
     /// Create a remote key.
     /// </summary>
-    public async Task<RemoteKey> CreateAsync(GenerateRemoteKeyRequest request)
+    public async Task<RemoteKey> CreateAsync(
+        GenerateRemoteKeyRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "hris/v1/generate-key",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<RemoteKey>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<RemoteKey>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

@@ -1,41 +1,40 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class AddressRequest
+public record AddressRequest
 {
     /// <summary>
     /// Line 1 of the address's street.
     /// </summary>
     [JsonPropertyName("street_1")]
-    public string? Street1 { get; init; }
+    public string? Street1 { get; set; }
 
     /// <summary>
     /// Line 2 of the address's street.
     /// </summary>
     [JsonPropertyName("street_2")]
-    public string? Street2 { get; init; }
+    public string? Street2 { get; set; }
 
     /// <summary>
     /// The address's city.
     /// </summary>
     [JsonPropertyName("city")]
-    public string? City { get; init; }
+    public string? City { get; set; }
 
     /// <summary>
     /// The address's state.
     /// </summary>
     [JsonPropertyName("state")]
-    public string? State { get; init; }
+    public string? State { get; set; }
 
     /// <summary>
     /// The address's postal code.
     /// </summary>
     [JsonPropertyName("postal_code")]
-    public string? PostalCode { get; init; }
+    public string? PostalCode { get; set; }
 
     /// <summary>
     /// The address's country.
@@ -291,7 +290,7 @@ public class AddressRequest
     /// - `ZW` - Zimbabwe
     /// </summary>
     [JsonPropertyName("country")]
-    public CountryEnum? Country { get; init; }
+    public CountryEnum? Country { get; set; }
 
     /// <summary>
     /// The address type.
@@ -300,11 +299,11 @@ public class AddressRequest
     /// - `SHIPPING` - SHIPPING
     /// </summary>
     [JsonPropertyName("address_type")]
-    public AddressTypeEnum? AddressType { get; init; }
+    public AddressTypeEnum? AddressType { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

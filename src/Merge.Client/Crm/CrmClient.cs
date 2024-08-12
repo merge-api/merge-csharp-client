@@ -1,15 +1,14 @@
-using Merge.Client;
-using Merge.Client.Crm;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class CrmClient
+public partial class CrmClient
 {
     private RawClient _client;
 
-    public CrmClient(RawClient client)
+    internal CrmClient(RawClient client)
     {
         _client = client;
         AccountDetails = new AccountDetailsClient(_client);

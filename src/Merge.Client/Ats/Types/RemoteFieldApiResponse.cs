@@ -1,57 +1,56 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ats;
 
 #nullable enable
 
 namespace Merge.Client.Ats;
 
-public class RemoteFieldApiResponse
+public record RemoteFieldApiResponse
 {
     [JsonPropertyName("Activity")]
-    public IEnumerable<RemoteFieldApi>? Activity { get; init; }
+    public IEnumerable<RemoteFieldApi>? Activity { get; set; }
 
     [JsonPropertyName("Application")]
-    public IEnumerable<RemoteFieldApi>? Application { get; init; }
+    public IEnumerable<RemoteFieldApi>? Application { get; set; }
 
     [JsonPropertyName("Attachment")]
-    public IEnumerable<RemoteFieldApi>? Attachment { get; init; }
+    public IEnumerable<RemoteFieldApi>? Attachment { get; set; }
 
     [JsonPropertyName("Candidate")]
-    public IEnumerable<RemoteFieldApi>? Candidate { get; init; }
+    public IEnumerable<RemoteFieldApi>? Candidate { get; set; }
 
     [JsonPropertyName("Department")]
-    public IEnumerable<RemoteFieldApi>? Department { get; init; }
+    public IEnumerable<RemoteFieldApi>? Department { get; set; }
 
     [JsonPropertyName("EEOC")]
-    public IEnumerable<RemoteFieldApi>? Eeoc { get; init; }
+    public IEnumerable<RemoteFieldApi>? Eeoc { get; set; }
 
     [JsonPropertyName("ScheduledInterview")]
-    public IEnumerable<RemoteFieldApi>? ScheduledInterview { get; init; }
+    public IEnumerable<RemoteFieldApi>? ScheduledInterview { get; set; }
 
     [JsonPropertyName("Job")]
-    public IEnumerable<RemoteFieldApi>? Job { get; init; }
+    public IEnumerable<RemoteFieldApi>? Job { get; set; }
 
     [JsonPropertyName("JobPosting")]
-    public IEnumerable<RemoteFieldApi>? JobPosting { get; init; }
+    public IEnumerable<RemoteFieldApi>? JobPosting { get; set; }
 
     [JsonPropertyName("JobInterviewStage")]
-    public IEnumerable<RemoteFieldApi>? JobInterviewStage { get; init; }
+    public IEnumerable<RemoteFieldApi>? JobInterviewStage { get; set; }
 
     [JsonPropertyName("Offer")]
-    public IEnumerable<RemoteFieldApi>? Offer { get; init; }
+    public IEnumerable<RemoteFieldApi>? Offer { get; set; }
 
     [JsonPropertyName("Office")]
-    public IEnumerable<RemoteFieldApi>? Office { get; init; }
+    public IEnumerable<RemoteFieldApi>? Office { get; set; }
 
     [JsonPropertyName("RejectReason")]
-    public IEnumerable<RemoteFieldApi>? RejectReason { get; init; }
+    public IEnumerable<RemoteFieldApi>? RejectReason { get; set; }
 
     [JsonPropertyName("Scorecard")]
-    public IEnumerable<RemoteFieldApi>? Scorecard { get; init; }
+    public IEnumerable<RemoteFieldApi>? Scorecard { get; set; }
 
     [JsonPropertyName("Tag")]
-    public IEnumerable<RemoteFieldApi>? Tag { get; init; }
+    public IEnumerable<RemoteFieldApi>? Tag { get; set; }
 
     [JsonPropertyName("RemoteUser")]
-    public IEnumerable<RemoteFieldApi>? RemoteUser { get; init; }
+    public IEnumerable<RemoteFieldApi>? RemoteUser { get; set; }
 }

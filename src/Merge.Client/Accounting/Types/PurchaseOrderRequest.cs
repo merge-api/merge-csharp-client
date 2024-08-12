@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,7 +6,7 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class PurchaseOrderRequest
+public record PurchaseOrderRequest
 {
     /// <summary>
     /// The purchase order's status.
@@ -19,58 +18,58 @@ public class PurchaseOrderRequest
     /// - `DELETED` - DELETED
     /// </summary>
     [JsonPropertyName("status")]
-    public PurchaseOrderStatusEnum? Status { get; init; }
+    public PurchaseOrderStatusEnum? Status { get; set; }
 
     /// <summary>
     /// The purchase order's issue date.
     /// </summary>
     [JsonPropertyName("issue_date")]
-    public DateTime? IssueDate { get; init; }
+    public DateTime? IssueDate { get; set; }
 
     /// <summary>
     /// The purchase order's delivery date.
     /// </summary>
     [JsonPropertyName("delivery_date")]
-    public DateTime? DeliveryDate { get; init; }
+    public DateTime? DeliveryDate { get; set; }
 
     /// <summary>
     /// The purchase order's delivery address.
     /// </summary>
     [JsonPropertyName("delivery_address")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Address>>))]
-    public OneOf<string, Address>? DeliveryAddress { get; init; }
+    public OneOf<string, Address>? DeliveryAddress { get; set; }
 
     /// <summary>
     /// The contact making the purchase order.
     /// </summary>
     [JsonPropertyName("customer")]
-    public string? Customer { get; init; }
+    public string? Customer { get; set; }
 
     /// <summary>
     /// The party fulfilling the purchase order.
     /// </summary>
     [JsonPropertyName("vendor")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
-    public OneOf<string, Contact>? Vendor { get; init; }
+    public OneOf<string, Contact>? Vendor { get; set; }
 
     /// <summary>
     /// A memo attached to the purchase order.
     /// </summary>
     [JsonPropertyName("memo")]
-    public string? Memo { get; init; }
+    public string? Memo { get; set; }
 
     /// <summary>
     /// The company the purchase order belongs to.
     /// </summary>
     [JsonPropertyName("company")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
-    public OneOf<string, CompanyInfo>? Company { get; init; }
+    public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
     /// The purchase order's total amount.
     /// </summary>
     [JsonPropertyName("total_amount")]
-    public double? TotalAmount { get; init; }
+    public double? TotalAmount { get; set; }
 
     /// <summary>
     /// The purchase order's currency.
@@ -383,13 +382,13 @@ public class PurchaseOrderRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The purchase order's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     [JsonConverter(
@@ -398,14 +397,14 @@ public class PurchaseOrderRequest
             OneOfSerializer<OneOf<string, TrackingCategory>>
         >)
     )]
-    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     [JsonPropertyName("line_items")]
-    public IEnumerable<PurchaseOrderLineItemRequest>? LineItems { get; init; }
+    public IEnumerable<PurchaseOrderLineItemRequest>? LineItems { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

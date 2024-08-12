@@ -1,17 +1,16 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ats;
 
 #nullable enable
 
 namespace Merge.Client.Ats;
 
-public class EmailAddressRequest
+public record EmailAddressRequest
 {
     /// <summary>
     /// The email address.
     /// </summary>
     [JsonPropertyName("value")]
-    public string? Value { get; init; }
+    public string? Value { get; set; }
 
     /// <summary>
     /// The type of email address.
@@ -21,11 +20,11 @@ public class EmailAddressRequest
     /// - `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("email_address_type")]
-    public EmailAddressTypeEnum? EmailAddressType { get; init; }
+    public EmailAddressTypeEnum? EmailAddressType { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

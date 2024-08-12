@@ -1,15 +1,14 @@
-using Merge.Client;
-using Merge.Client.Ats;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Ats;
 
-public class AtsClient
+public partial class AtsClient
 {
     private RawClient _client;
 
-    public AtsClient(RawClient client)
+    internal AtsClient(RawClient client)
     {
         _client = client;
         AccountDetails = new AccountDetailsClient(_client);

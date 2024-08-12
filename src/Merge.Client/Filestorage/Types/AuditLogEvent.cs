@@ -1,26 +1,25 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Filestorage;
 
 #nullable enable
 
 namespace Merge.Client.Filestorage;
 
-public class AuditLogEvent
+public record AuditLogEvent
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The User's full name at the time of this Event occurring.
     /// </summary>
     [JsonPropertyName("user_name")]
-    public string? UserName { get; init; }
+    public string? UserName { get; set; }
 
     /// <summary>
     /// The User's email at the time of this Event occurring.
     /// </summary>
     [JsonPropertyName("user_email")]
-    public string? UserEmail { get; init; }
+    public string? UserEmail { get; set; }
 
     /// <summary>
     /// Designates the role of the user (or SYSTEM/API if action not taken by a user) at the time of this Event occurring.
@@ -33,10 +32,10 @@ public class AuditLogEvent
     /// - `MERGE_TEAM` - MERGE_TEAM
     /// </summary>
     [JsonPropertyName("role")]
-    public RoleEnum Role { get; init; }
+    public required RoleEnum Role { get; set; }
 
     [JsonPropertyName("ip_address")]
-    public string IpAddress { get; init; }
+    public required string IpAddress { get; set; }
 
     /// <summary>
     /// Designates the type of event that occurred.
@@ -81,11 +80,11 @@ public class AuditLogEvent
     /// - `END_USER_CREDENTIALS_ACCESSED` - END_USER_CREDENTIALS_ACCESSED
     /// </summary>
     [JsonPropertyName("event_type")]
-    public EventTypeEnum EventType { get; init; }
+    public required EventTypeEnum EventType { get; set; }
 
     [JsonPropertyName("event_description")]
-    public string EventDescription { get; init; }
+    public required string EventDescription { get; set; }
 
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 }

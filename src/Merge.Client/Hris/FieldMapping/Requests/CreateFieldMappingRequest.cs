@@ -4,41 +4,41 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Hris;
 
-public class CreateFieldMappingRequest
+public record CreateFieldMappingRequest
 {
     /// <summary>
     /// The name of the target field you want this remote field to map to.
     /// </summary>
     [JsonPropertyName("target_field_name")]
-    public string TargetFieldName { get; init; }
+    public required string TargetFieldName { get; set; }
 
     /// <summary>
     /// The description of the target field you want this remote field to map to.
     /// </summary>
     [JsonPropertyName("target_field_description")]
-    public string TargetFieldDescription { get; init; }
+    public required string TargetFieldDescription { get; set; }
 
     /// <summary>
     /// The field traversal path of the remote field listed when you hit the GET /remote-fields endpoint.
     /// </summary>
     [JsonPropertyName("remote_field_traversal_path")]
-    public IEnumerable<object> RemoteFieldTraversalPath { get; init; }
+    public IEnumerable<object> RemoteFieldTraversalPath { get; set; } = new List<object>();
 
     /// <summary>
     /// The method of the remote endpoint where the remote field is coming from.
     /// </summary>
     [JsonPropertyName("remote_method")]
-    public string RemoteMethod { get; init; }
+    public required string RemoteMethod { get; set; }
 
     /// <summary>
     /// The path of the remote endpoint where the remote field is coming from.
     /// </summary>
     [JsonPropertyName("remote_url_path")]
-    public string RemoteUrlPath { get; init; }
+    public required string RemoteUrlPath { get; set; }
 
     /// <summary>
     /// The name of the Common Model that the remote field corresponds to in a given category.
     /// </summary>
     [JsonPropertyName("common_model_name")]
-    public string CommonModelName { get; init; }
+    public required string CommonModelName { get; set; }
 }

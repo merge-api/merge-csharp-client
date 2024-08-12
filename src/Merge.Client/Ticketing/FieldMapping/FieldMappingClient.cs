@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Ticketing;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Ticketing;
 
-public class FieldMappingClient
+public partial class FieldMappingClient
 {
     private RawClient _client;
 
-    public FieldMappingClient(RawClient client)
+    internal FieldMappingClient(RawClient client)
     {
         _client = client;
     }
@@ -18,64 +18,112 @@ public class FieldMappingClient
     /// <summary>
     /// Get all Field Mappings for this Linked Account. Field Mappings are mappings between third-party Remote Fields and user defined Merge fields. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
     /// </summary>
-    public async Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync()
+    public async Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync(
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "ticketing/v1/field-mappings"
+                Path = "ticketing/v1/field-mappings",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<FieldMappingApiInstanceResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<FieldMappingApiInstanceResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Create new Field Mappings that will be available after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
     /// </summary>
     public async Task<FieldMappingInstanceResponse> FieldMappingsCreateAsync(
-        CreateFieldMappingRequest request
+        CreateFieldMappingRequest request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "ticketing/v1/field-mappings",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<FieldMappingInstanceResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<FieldMappingInstanceResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Deletes Field Mappings for a Linked Account. All data related to this Field Mapping will be deleted and these changes will be reflected after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
     /// </summary>
-    public async Task<FieldMappingInstanceResponse> FieldMappingsDestroyAsync(string fieldMappingId)
+    public async Task<FieldMappingInstanceResponse> FieldMappingsDestroyAsync(
+        string fieldMappingId,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
-                Path = $"ticketing/v1/field-mappings/{fieldMappingId}"
+                Path = $"ticketing/v1/field-mappings/{fieldMappingId}",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<FieldMappingInstanceResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<FieldMappingInstanceResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
@@ -83,30 +131,46 @@ public class FieldMappingClient
     /// </summary>
     public async Task<FieldMappingInstanceResponse> FieldMappingsPartialUpdateAsync(
         string fieldMappingId,
-        PatchedEditFieldMappingRequest request
+        PatchedEditFieldMappingRequest request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                Method = HttpMethod.Patch,
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethodExtensions.Patch,
                 Path = $"ticketing/v1/field-mappings/{fieldMappingId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<FieldMappingInstanceResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<FieldMappingInstanceResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Get all remote fields for a Linked Account. Remote fields are third-party fields that are accessible after initial sync if remote_data is enabled. You can use remote fields to override existing Merge fields or map a new Merge field. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
     /// </summary>
     public async Task<RemoteFieldApiResponse> RemoteFieldsRetrieveAsync(
-        RemoteFieldsRetrieveRequest request
+        RemoteFieldsRetrieveRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -121,36 +185,66 @@ public class FieldMappingClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/remote-fields",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<RemoteFieldApiResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<RemoteFieldApiResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Get all organization-wide Target Fields, this will not include any Linked Account specific Target Fields. Organization-wide Target Fields are additional fields appended to the Merge Common Model for all Linked Accounts in a category. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/target-fields/).
     /// </summary>
-    public async Task<ExternalTargetFieldApiResponse> TargetFieldsRetrieveAsync()
+    public async Task<ExternalTargetFieldApiResponse> TargetFieldsRetrieveAsync(
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "ticketing/v1/target-fields"
+                Path = "ticketing/v1/target-fields",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ExternalTargetFieldApiResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<ExternalTargetFieldApiResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

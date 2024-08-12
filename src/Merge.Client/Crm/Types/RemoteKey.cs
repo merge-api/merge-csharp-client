@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Crm;
 
-public class RemoteKey
+public record RemoteKey
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("key")]
-    public string Key { get; init; }
+    public required string Key { get; set; }
 }

@@ -1,15 +1,14 @@
-using Merge.Client;
-using Merge.Client.Hris;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class HrisClient
+public partial class HrisClient
 {
     private RawClient _client;
 
-    public HrisClient(RawClient client)
+    internal HrisClient(RawClient client)
     {
         _client = client;
         AccountDetails = new AccountDetailsClient(_client);

@@ -4,23 +4,23 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Accounting;
 
-public class AccountingPhoneNumberRequest
+public record AccountingPhoneNumberRequest
 {
     /// <summary>
     /// The phone number.
     /// </summary>
     [JsonPropertyName("number")]
-    public string? Number { get; init; }
+    public string? Number { get; set; }
 
     /// <summary>
     /// The phone number's type.
     /// </summary>
     [JsonPropertyName("type")]
-    public string? Type { get; init; }
+    public string? Type { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

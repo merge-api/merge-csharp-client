@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Filestorage;
 
 #nullable enable
 
 namespace Merge.Client.Filestorage;
 
-public class PaginatedGroupList
+public record PaginatedGroupList
 {
     [JsonPropertyName("next")]
-    public string? Next { get; init; }
+    public string? Next { get; set; }
 
     [JsonPropertyName("previous")]
-    public string? Previous { get; init; }
+    public string? Previous { get; set; }
 
     [JsonPropertyName("results")]
-    public IEnumerable<Group>? Results { get; init; }
+    public IEnumerable<Group>? Results { get; set; }
 }

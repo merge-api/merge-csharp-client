@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Ats;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Ats;
 
-public class PassthroughClient
+public partial class PassthroughClient
 {
     private RawClient _client;
 
-    public PassthroughClient(RawClient client)
+    internal PassthroughClient(RawClient client)
     {
         _client = client;
     }
@@ -18,21 +18,38 @@ public class PassthroughClient
     /// <summary>
     /// Pull data from an endpoint not currently supported by Merge.
     /// </summary>
-    public async Task<RemoteResponse> CreateAsync(DataPassthroughRequest request)
+    public async Task<RemoteResponse> CreateAsync(
+        DataPassthroughRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "ats/v1/passthrough",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<RemoteResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<RemoteResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

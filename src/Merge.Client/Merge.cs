@@ -1,6 +1,7 @@
-using Merge.Client;
+using System;
 using Merge.Client.Accounting;
 using Merge.Client.Ats;
+using Merge.Client.Core;
 using Merge.Client.Crm;
 using Merge.Client.Filestorage;
 using Merge.Client.Hris;
@@ -15,9 +16,9 @@ public partial class Merge
     private RawClient _client;
 
     public Merge(
-        string apiKey = null,
+        string? apiKey = null,
         string? accountToken = null,
-        ClientOptions clientOptions = null
+        ClientOptions? clientOptions = null
     )
     {
         _client = new RawClient(
@@ -27,37 +28,28 @@ public partial class Merge
                 { "X-Account-Token", accountToken },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Merge.Client" },
-                { "X-Fern-SDK-Version", "0.1.0" },
+                { "X-Fern-SDK-Version", "0.2.0" },
             },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Ats = new AtsClient(_client);
         Crm = new CrmClient(_client);
         Filestorage = new FilestorageClient(_client);
-        Ticketing = new TicketingClient(_client);
         Hris = new HrisClient(_client);
+        Ticketing = new TicketingClient(_client);
         Accounting = new AccountingClient(_client);
     }
 
-    public AtsClient Ats { get; }
+    public AtsClient Ats { get; init; }
 
-    public CrmClient Crm { get; }
+    public CrmClient Crm { get; init; }
 
-    public FilestorageClient Filestorage { get; }
+    public FilestorageClient Filestorage { get; init; }
 
-    public TicketingClient Ticketing { get; }
+    public HrisClient Hris { get; init; }
 
-    public HrisClient Hris { get; }
+    public TicketingClient Ticketing { get; init; }
 
-    public AccountingClient Accounting { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = System.Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public AccountingClient Accounting { get; init; }
 }

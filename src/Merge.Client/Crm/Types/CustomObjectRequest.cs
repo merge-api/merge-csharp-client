@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Crm;
 
-public class CustomObjectRequest
+public record CustomObjectRequest
 {
     [JsonPropertyName("fields")]
-    public Dictionary<string, object> Fields { get; init; }
+    public Dictionary<string, object?> Fields { get; set; } = new Dictionary<string, object?>();
 }
