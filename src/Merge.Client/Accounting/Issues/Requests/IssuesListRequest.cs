@@ -1,61 +1,57 @@
-using Merge.Client.Accounting;
-
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
-public class IssuesListRequest
+public record IssuesListRequest
 {
-    public string? AccountToken { get; init; }
+    public string? AccountToken { get; set; }
 
     /// <summary>
     /// The pagination cursor value.
     /// </summary>
-    public string? Cursor { get; init; }
+    public string? Cursor { get; set; }
 
     /// <summary>
     /// If included, will only include issues whose most recent action occurred before this time
     /// </summary>
-    public string? EndDate { get; init; }
+    public string? EndDate { get; set; }
 
-    public string? EndUserOrganizationName { get; init; }
+    public string? EndUserOrganizationName { get; set; }
 
     /// <summary>
     /// If provided, will only return issues whose first incident time was after this datetime.
     /// </summary>
-    public DateTime? FirstIncidentTimeAfter { get; init; }
+    public DateTime? FirstIncidentTimeAfter { get; set; }
 
     /// <summary>
     /// If provided, will only return issues whose first incident time was before this datetime.
     /// </summary>
-    public DateTime? FirstIncidentTimeBefore { get; init; }
+    public DateTime? FirstIncidentTimeBefore { get; set; }
 
     /// <summary>
     /// If true, will include muted issues
     /// </summary>
-    public string? IncludeMuted { get; init; }
+    public string? IncludeMuted { get; set; }
 
-    public string? IntegrationName { get; init; }
+    public string? IntegrationName { get; set; }
 
     /// <summary>
     /// If provided, will only return issues whose last incident time was after this datetime.
     /// </summary>
-    public DateTime? LastIncidentTimeAfter { get; init; }
+    public DateTime? LastIncidentTimeAfter { get; set; }
 
     /// <summary>
     /// If provided, will only return issues whose last incident time was before this datetime.
     /// </summary>
-    public DateTime? LastIncidentTimeBefore { get; init; }
+    public DateTime? LastIncidentTimeBefore { get; set; }
 
     /// <summary>
     /// Number of results to return per page.
     /// </summary>
-    public int? PageSize { get; init; }
+    public int? PageSize { get; set; }
 
     /// <summary>
     /// If included, will only include issues whose most recent action occurred after this time
     /// </summary>
-    public string? StartDate { get; init; }
+    public string? StartDate { get; set; }
 
     /// <summary>
     /// Status of the issue. Options: ('ONGOING', 'RESOLVED')
@@ -63,5 +59,5 @@ public class IssuesListRequest
     /// - `ONGOING` - ONGOING
     /// - `RESOLVED` - RESOLVED
     /// </summary>
-    public IssuesListRequestStatus? Status { get; init; }
+    public IssuesListRequestStatus? Status { get; set; }
 }

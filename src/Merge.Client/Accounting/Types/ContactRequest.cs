@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,37 +6,37 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class ContactRequest
+public record ContactRequest
 {
     /// <summary>
     /// The contact's name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// Whether the contact is a supplier.
     /// </summary>
     [JsonPropertyName("is_supplier")]
-    public bool? IsSupplier { get; init; }
+    public bool? IsSupplier { get; set; }
 
     /// <summary>
     /// Whether the contact is a customer.
     /// </summary>
     [JsonPropertyName("is_customer")]
-    public bool? IsCustomer { get; init; }
+    public bool? IsCustomer { get; set; }
 
     /// <summary>
     /// The contact's email address.
     /// </summary>
     [JsonPropertyName("email_address")]
-    public string? EmailAddress { get; init; }
+    public string? EmailAddress { get; set; }
 
     /// <summary>
     /// The contact's tax number.
     /// </summary>
     [JsonPropertyName("tax_number")]
-    public string? TaxNumber { get; init; }
+    public string? TaxNumber { get; set; }
 
     /// <summary>
     /// The contact's status
@@ -46,19 +45,19 @@ public class ContactRequest
     /// - `ARCHIVED` - ARCHIVED
     /// </summary>
     [JsonPropertyName("status")]
-    public Status7D1Enum? Status { get; init; }
+    public Status7D1Enum? Status { get; set; }
 
     /// <summary>
     /// The currency the contact's transactions are in.
     /// </summary>
     [JsonPropertyName("currency")]
-    public string? Currency { get; init; }
+    public string? Currency { get; set; }
 
     /// <summary>
     /// The company the contact belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    public string? Company { get; init; }
+    public string? Company { get; set; }
 
     /// <summary>
     /// `Address` object IDs for the given `Contacts` object.
@@ -70,17 +69,17 @@ public class ContactRequest
             OneOfSerializer<OneOf<string, Address>>
         >)
     )]
-    public IEnumerable<OneOf<string, Address>>? Addresses { get; init; }
+    public IEnumerable<OneOf<string, Address>>? Addresses { get; set; }
 
     /// <summary>
     /// `AccountingPhoneNumber` object for the given `Contacts` object.
     /// </summary>
     [JsonPropertyName("phone_numbers")]
-    public IEnumerable<AccountingPhoneNumberRequest>? PhoneNumbers { get; init; }
+    public IEnumerable<AccountingPhoneNumberRequest>? PhoneNumbers { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

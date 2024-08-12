@@ -1,30 +1,29 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class RemoteResponse
+public record RemoteResponse
 {
     [JsonPropertyName("method")]
-    public string Method { get; init; }
+    public required string Method { get; set; }
 
     [JsonPropertyName("path")]
-    public string Path { get; init; }
+    public required string Path { get; set; }
 
     [JsonPropertyName("status")]
-    public int Status { get; init; }
+    public required int Status { get; set; }
 
     [JsonPropertyName("response")]
-    public object Response { get; init; }
+    public required object Response { get; set; }
 
     [JsonPropertyName("response_headers")]
-    public Dictionary<string, object>? ResponseHeaders { get; init; }
+    public Dictionary<string, object?>? ResponseHeaders { get; set; }
 
     [JsonPropertyName("response_type")]
-    public ResponseTypeEnum? ResponseType { get; init; }
+    public ResponseTypeEnum? ResponseType { get; set; }
 
     [JsonPropertyName("headers")]
-    public Dictionary<string, object>? Headers { get; init; }
+    public Dictionary<string, object?>? Headers { get; set; }
 }

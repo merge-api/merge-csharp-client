@@ -1,45 +1,44 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class AccountingPeriod
+public record AccountingPeriod
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// Beginning date of the period
     /// </summary>
     [JsonPropertyName("start_date")]
-    public DateTime? StartDate { get; init; }
+    public DateTime? StartDate { get; set; }
 
     /// <summary>
     /// End date of the period
     /// </summary>
     [JsonPropertyName("end_date")]
-    public DateTime? EndDate { get; init; }
+    public DateTime? EndDate { get; set; }
 
     [JsonPropertyName("status")]
-    public AccountingPeriodStatusEnum? Status { get; init; }
+    public AccountingPeriodStatusEnum? Status { get; set; }
 
     /// <summary>
     /// Name of the accounting period.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 }

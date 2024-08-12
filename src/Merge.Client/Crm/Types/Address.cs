@@ -1,53 +1,52 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class Address
+public record Address
 {
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// Line 1 of the address's street.
     /// </summary>
     [JsonPropertyName("street_1")]
-    public string? Street1 { get; init; }
+    public string? Street1 { get; set; }
 
     /// <summary>
     /// Line 2 of the address's street.
     /// </summary>
     [JsonPropertyName("street_2")]
-    public string? Street2 { get; init; }
+    public string? Street2 { get; set; }
 
     /// <summary>
     /// The address's city.
     /// </summary>
     [JsonPropertyName("city")]
-    public string? City { get; init; }
+    public string? City { get; set; }
 
     /// <summary>
     /// The address's state.
     /// </summary>
     [JsonPropertyName("state")]
-    public string? State { get; init; }
+    public string? State { get; set; }
 
     /// <summary>
     /// The address's postal code.
     /// </summary>
     [JsonPropertyName("postal_code")]
-    public string? PostalCode { get; init; }
+    public string? PostalCode { get; set; }
 
     /// <summary>
     /// The address's country.
@@ -303,7 +302,7 @@ public class Address
     /// - `ZW` - Zimbabwe
     /// </summary>
     [JsonPropertyName("country")]
-    public CountryEnum? Country { get; init; }
+    public CountryEnum? Country { get; set; }
 
     /// <summary>
     /// The address type.
@@ -312,5 +311,5 @@ public class Address
     /// - `SHIPPING` - SHIPPING
     /// </summary>
     [JsonPropertyName("address_type")]
-    public AddressTypeEnum? AddressType { get; init; }
+    public AddressTypeEnum? AddressType { get; set; }
 }

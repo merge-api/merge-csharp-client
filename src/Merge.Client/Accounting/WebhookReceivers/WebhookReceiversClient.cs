@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Accounting;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class WebhookReceiversClient
+public partial class WebhookReceiversClient
 {
     private RawClient _client;
 
-    public WebhookReceiversClient(RawClient client)
+    internal WebhookReceiversClient(RawClient client)
     {
         _client = client;
     }
@@ -18,41 +18,72 @@ public class WebhookReceiversClient
     /// <summary>
     /// Returns a list of `WebhookReceiver` objects.
     /// </summary>
-    public async Task<IEnumerable<WebhookReceiver>> ListAsync()
+    public async Task<IEnumerable<WebhookReceiver>> ListAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "accounting/v1/webhook-receivers"
+                Path = "accounting/v1/webhook-receivers",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<WebhookReceiver>>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<WebhookReceiver>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Creates a `WebhookReceiver` object with the given values.
     /// </summary>
-    public async Task<WebhookReceiver> CreateAsync(WebhookReceiverRequest request)
+    public async Task<WebhookReceiver> CreateAsync(
+        WebhookReceiverRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "accounting/v1/webhook-receivers",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<WebhookReceiver>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<WebhookReceiver>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

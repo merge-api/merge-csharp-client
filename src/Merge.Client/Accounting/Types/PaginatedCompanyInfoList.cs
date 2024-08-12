@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class PaginatedCompanyInfoList
+public record PaginatedCompanyInfoList
 {
     [JsonPropertyName("next")]
-    public string? Next { get; init; }
+    public string? Next { get; set; }
 
     [JsonPropertyName("previous")]
-    public string? Previous { get; init; }
+    public string? Previous { get; set; }
 
     [JsonPropertyName("results")]
-    public IEnumerable<CompanyInfo>? Results { get; init; }
+    public IEnumerable<CompanyInfo>? Results { get; set; }
 }

@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Filestorage;
 
-public class FieldMappingApiInstanceRemoteFieldRemoteEndpointInfo
+public record FieldMappingApiInstanceRemoteFieldRemoteEndpointInfo
 {
     [JsonPropertyName("method")]
-    public string? Method { get; init; }
+    public string? Method { get; set; }
 
     [JsonPropertyName("url_path")]
-    public string? UrlPath { get; init; }
+    public string? UrlPath { get; set; }
 
     [JsonPropertyName("field_traversal_path")]
-    public IEnumerable<string>? FieldTraversalPath { get; init; }
+    public IEnumerable<string>? FieldTraversalPath { get; set; }
 }

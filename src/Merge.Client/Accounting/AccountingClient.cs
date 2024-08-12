@@ -1,15 +1,14 @@
-using Merge.Client;
-using Merge.Client.Accounting;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class AccountingClient
+public partial class AccountingClient
 {
     private RawClient _client;
 
-    public AccountingClient(RawClient client)
+    internal AccountingClient(RawClient client)
     {
         _client = client;
         AccountDetails = new AccountDetailsClient(_client);

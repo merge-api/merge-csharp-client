@@ -4,23 +4,23 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Ats;
 
-public class PatchedEditFieldMappingRequest
+public record PatchedEditFieldMappingRequest
 {
     /// <summary>
     /// The field traversal path of the remote field listed when you hit the GET /remote-fields endpoint.
     /// </summary>
     [JsonPropertyName("remote_field_traversal_path")]
-    public IEnumerable<object>? RemoteFieldTraversalPath { get; init; }
+    public IEnumerable<object>? RemoteFieldTraversalPath { get; set; }
 
     /// <summary>
     /// The method of the remote endpoint where the remote field is coming from.
     /// </summary>
     [JsonPropertyName("remote_method")]
-    public string? RemoteMethod { get; init; }
+    public string? RemoteMethod { get; set; }
 
     /// <summary>
     /// The path of the remote endpoint where the remote field is coming from.
     /// </summary>
     [JsonPropertyName("remote_url_path")]
-    public string? RemoteUrlPath { get; init; }
+    public string? RemoteUrlPath { get; set; }
 }

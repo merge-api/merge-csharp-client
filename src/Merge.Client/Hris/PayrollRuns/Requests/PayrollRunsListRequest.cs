@@ -1,70 +1,66 @@
-using Merge.Client.Hris;
-
-#nullable enable
-
 namespace Merge.Client.Hris;
 
-public class PayrollRunsListRequest
+public record PayrollRunsListRequest
 {
     /// <summary>
     /// If provided, will only return objects created after this datetime.
     /// </summary>
-    public DateTime? CreatedAfter { get; init; }
+    public DateTime? CreatedAfter { get; set; }
 
     /// <summary>
     /// If provided, will only return objects created before this datetime.
     /// </summary>
-    public DateTime? CreatedBefore { get; init; }
+    public DateTime? CreatedBefore { get; set; }
 
     /// <summary>
     /// The pagination cursor value.
     /// </summary>
-    public string? Cursor { get; init; }
+    public string? Cursor { get; set; }
 
     /// <summary>
     /// If provided, will only return payroll runs ended after this datetime.
     /// </summary>
-    public DateTime? EndedAfter { get; init; }
+    public DateTime? EndedAfter { get; set; }
 
     /// <summary>
     /// If provided, will only return payroll runs ended before this datetime.
     /// </summary>
-    public DateTime? EndedBefore { get; init; }
+    public DateTime? EndedBefore { get; set; }
 
     /// <summary>
     /// Whether to include data that was marked as deleted by third party webhooks.
     /// </summary>
-    public bool? IncludeDeletedData { get; init; }
+    public bool? IncludeDeletedData { get; set; }
 
     /// <summary>
     /// Whether to include the original data Merge fetched from the third-party to produce these models.
     /// </summary>
-    public bool? IncludeRemoteData { get; init; }
+    public bool? IncludeRemoteData { get; set; }
 
     /// <summary>
     /// If provided, only objects synced by Merge after this date time will be returned.
     /// </summary>
-    public DateTime? ModifiedAfter { get; init; }
+    public DateTime? ModifiedAfter { get; set; }
 
     /// <summary>
     /// If provided, only objects synced by Merge before this date time will be returned.
     /// </summary>
-    public DateTime? ModifiedBefore { get; init; }
+    public DateTime? ModifiedBefore { get; set; }
 
     /// <summary>
     /// Number of results to return per page.
     /// </summary>
-    public int? PageSize { get; init; }
+    public int? PageSize { get; set; }
 
     /// <summary>
     /// Deprecated. Use show_enum_origins.
     /// </summary>
-    public PayrollRunsListRequestRemoteFields? RemoteFields { get; init; }
+    public PayrollRunsListRequestRemoteFields? RemoteFields { get; set; }
 
     /// <summary>
     /// The API provider's ID for the given object.
     /// </summary>
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// If provided, will only return PayrollRun's with this status. Options: ('REGULAR', 'OFF_CYCLE', 'CORRECTION', 'TERMINATION', 'SIGN_ON_BONUS')
@@ -75,20 +71,20 @@ public class PayrollRunsListRequest
     /// - `TERMINATION` - TERMINATION
     /// - `SIGN_ON_BONUS` - SIGN_ON_BONUS
     /// </summary>
-    public PayrollRunsListRequestRunType? RunType { get; init; }
+    public PayrollRunsListRequestRunType? RunType { get; set; }
 
     /// <summary>
     /// A comma separated list of enum field names for which you'd like the original values to be returned, instead of Merge's normalized enum values. [Learn more](https://help.merge.dev/en/articles/8950958-show_enum_origins-query-parameter)
     /// </summary>
-    public PayrollRunsListRequestShowEnumOrigins? ShowEnumOrigins { get; init; }
+    public PayrollRunsListRequestShowEnumOrigins? ShowEnumOrigins { get; set; }
 
     /// <summary>
     /// If provided, will only return payroll runs started after this datetime.
     /// </summary>
-    public DateTime? StartedAfter { get; init; }
+    public DateTime? StartedAfter { get; set; }
 
     /// <summary>
     /// If provided, will only return payroll runs started before this datetime.
     /// </summary>
-    public DateTime? StartedBefore { get; init; }
+    public DateTime? StartedBefore { get; set; }
 }

@@ -1,11 +1,9 @@
+using Merge.Client.Core;
+
 namespace Merge.Client;
 
-public class MergeClient : Merge
-{
-    public MergeClient(
-        string apiKey,
-        string accountToken = null,
-        ClientOptions clientOptions = null
-    )
-        : base(apiKey, accountToken, clientOptions) { }
-}
+public class MergeClient(
+    string apiKey,
+    string? accountToken = null,
+    ClientOptions? clientOptions = null)
+    : Merge(apiKey, accountToken, clientOptions);

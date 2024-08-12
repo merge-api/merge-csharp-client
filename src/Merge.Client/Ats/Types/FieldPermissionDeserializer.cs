@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Ats;
 
-public class FieldPermissionDeserializer
+public record FieldPermissionDeserializer
 {
     [JsonPropertyName("enabled")]
-    public IEnumerable<object>? Enabled { get; init; }
+    public IEnumerable<object>? Enabled { get; set; }
 
     [JsonPropertyName("disabled")]
-    public IEnumerable<object>? Disabled { get; init; }
+    public IEnumerable<object>? Disabled { get; set; }
 }

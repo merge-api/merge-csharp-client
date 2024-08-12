@@ -1,21 +1,22 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Filestorage;
 
 #nullable enable
 
 namespace Merge.Client.Filestorage;
 
-public class FileStorageFolderResponse
+public record FileStorageFolderResponse
 {
     [JsonPropertyName("model")]
-    public Folder Model { get; init; }
+    public required Folder Model { get; set; }
 
     [JsonPropertyName("warnings")]
-    public IEnumerable<WarningValidationProblem> Warnings { get; init; }
+    public IEnumerable<WarningValidationProblem> Warnings { get; set; } =
+        new List<WarningValidationProblem>();
 
     [JsonPropertyName("errors")]
-    public IEnumerable<ErrorValidationProblem> Errors { get; init; }
+    public IEnumerable<ErrorValidationProblem> Errors { get; set; } =
+        new List<ErrorValidationProblem>();
 
     [JsonPropertyName("logs")]
-    public IEnumerable<DebugModeLog>? Logs { get; init; }
+    public IEnumerable<DebugModeLog>? Logs { get; set; }
 }

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,24 +6,24 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class RemoteFieldApi
+public record RemoteFieldApi
 {
     [JsonPropertyName("schema")]
-    public Dictionary<string, object> Schema { get; init; }
+    public Dictionary<string, object?> Schema { get; set; } = new Dictionary<string, object?>();
 
     [JsonPropertyName("remote_key_name")]
-    public string RemoteKeyName { get; init; }
+    public required string RemoteKeyName { get; set; }
 
     [JsonPropertyName("remote_endpoint_info")]
-    public RemoteEndpointInfo RemoteEndpointInfo { get; init; }
+    public required RemoteEndpointInfo RemoteEndpointInfo { get; set; }
 
     [JsonPropertyName("example_values")]
-    public IEnumerable<object> ExampleValues { get; init; }
+    public IEnumerable<object> ExampleValues { get; set; } = new List<object>();
 
     [JsonPropertyName("advanced_metadata")]
-    public AdvancedMetadata? AdvancedMetadata { get; init; }
+    public AdvancedMetadata? AdvancedMetadata { get; set; }
 
     [JsonPropertyName("coverage")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<int, double>>))]
-    public OneOf<int, double>? Coverage { get; init; }
+    public OneOf<int, double>? Coverage { get; set; }
 }

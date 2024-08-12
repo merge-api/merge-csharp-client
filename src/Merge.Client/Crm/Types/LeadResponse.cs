@@ -1,21 +1,22 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class LeadResponse
+public record LeadResponse
 {
     [JsonPropertyName("model")]
-    public Lead Model { get; init; }
+    public required Lead Model { get; set; }
 
     [JsonPropertyName("warnings")]
-    public IEnumerable<WarningValidationProblem> Warnings { get; init; }
+    public IEnumerable<WarningValidationProblem> Warnings { get; set; } =
+        new List<WarningValidationProblem>();
 
     [JsonPropertyName("errors")]
-    public IEnumerable<ErrorValidationProblem> Errors { get; init; }
+    public IEnumerable<ErrorValidationProblem> Errors { get; set; } =
+        new List<ErrorValidationProblem>();
 
     [JsonPropertyName("logs")]
-    public IEnumerable<DebugModeLog>? Logs { get; init; }
+    public IEnumerable<DebugModeLog>? Logs { get; set; }
 }

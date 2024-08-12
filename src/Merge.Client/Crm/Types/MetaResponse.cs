@@ -1,24 +1,24 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class MetaResponse
+public record MetaResponse
 {
     [JsonPropertyName("request_schema")]
-    public Dictionary<string, object> RequestSchema { get; init; }
+    public Dictionary<string, object?> RequestSchema { get; set; } =
+        new Dictionary<string, object?>();
 
     [JsonPropertyName("remote_field_classes")]
-    public Dictionary<string, object>? RemoteFieldClasses { get; init; }
+    public Dictionary<string, object?>? RemoteFieldClasses { get; set; }
 
     [JsonPropertyName("status")]
-    public LinkedAccountStatus? Status { get; init; }
+    public LinkedAccountStatus? Status { get; set; }
 
     [JsonPropertyName("has_conditional_params")]
-    public bool HasConditionalParams { get; init; }
+    public required bool HasConditionalParams { get; set; }
 
     [JsonPropertyName("has_required_linked_account_params")]
-    public bool HasRequiredLinkedAccountParams { get; init; }
+    public required bool HasRequiredLinkedAccountParams { get; set; }
 }

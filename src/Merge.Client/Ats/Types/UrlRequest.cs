@@ -1,17 +1,16 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ats;
 
 #nullable enable
 
 namespace Merge.Client.Ats;
 
-public class UrlRequest
+public record UrlRequest
 {
     /// <summary>
     /// The site's url.
     /// </summary>
     [JsonPropertyName("value")]
-    public string? Value { get; init; }
+    public string? Value { get; set; }
 
     /// <summary>
     /// The type of site.
@@ -25,11 +24,11 @@ public class UrlRequest
     /// - `JOB_POSTING` - JOB_POSTING
     /// </summary>
     [JsonPropertyName("url_type")]
-    public UrlTypeEnum? UrlType { get; init; }
+    public UrlTypeEnum? UrlType { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

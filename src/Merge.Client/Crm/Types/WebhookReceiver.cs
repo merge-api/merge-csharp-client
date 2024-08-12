@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Crm;
 
-public class WebhookReceiver
+public record WebhookReceiver
 {
     [JsonPropertyName("event")]
-    public string Event { get; init; }
+    public required string Event { get; set; }
 
     [JsonPropertyName("is_active")]
-    public bool IsActive { get; init; }
+    public required bool IsActive { get; set; }
 
     [JsonPropertyName("key")]
-    public string? Key { get; init; }
+    public string? Key { get; set; }
 }

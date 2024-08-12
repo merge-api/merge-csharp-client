@@ -1,57 +1,56 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ats;
 
 #nullable enable
 
 namespace Merge.Client.Ats;
 
-public class FieldMappingApiInstanceResponse
+public record FieldMappingApiInstanceResponse
 {
     [JsonPropertyName("Activity")]
-    public IEnumerable<FieldMappingApiInstance>? Activity { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Activity { get; set; }
 
     [JsonPropertyName("Application")]
-    public IEnumerable<FieldMappingApiInstance>? Application { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Application { get; set; }
 
     [JsonPropertyName("Attachment")]
-    public IEnumerable<FieldMappingApiInstance>? Attachment { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Attachment { get; set; }
 
     [JsonPropertyName("Candidate")]
-    public IEnumerable<FieldMappingApiInstance>? Candidate { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Candidate { get; set; }
 
     [JsonPropertyName("Department")]
-    public IEnumerable<FieldMappingApiInstance>? Department { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Department { get; set; }
 
     [JsonPropertyName("EEOC")]
-    public IEnumerable<FieldMappingApiInstance>? Eeoc { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Eeoc { get; set; }
 
     [JsonPropertyName("ScheduledInterview")]
-    public IEnumerable<FieldMappingApiInstance>? ScheduledInterview { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? ScheduledInterview { get; set; }
 
     [JsonPropertyName("Job")]
-    public IEnumerable<FieldMappingApiInstance>? Job { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Job { get; set; }
 
     [JsonPropertyName("JobPosting")]
-    public IEnumerable<FieldMappingApiInstance>? JobPosting { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? JobPosting { get; set; }
 
     [JsonPropertyName("JobInterviewStage")]
-    public IEnumerable<FieldMappingApiInstance>? JobInterviewStage { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? JobInterviewStage { get; set; }
 
     [JsonPropertyName("Offer")]
-    public IEnumerable<FieldMappingApiInstance>? Offer { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Offer { get; set; }
 
     [JsonPropertyName("Office")]
-    public IEnumerable<FieldMappingApiInstance>? Office { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Office { get; set; }
 
     [JsonPropertyName("RejectReason")]
-    public IEnumerable<FieldMappingApiInstance>? RejectReason { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? RejectReason { get; set; }
 
     [JsonPropertyName("Scorecard")]
-    public IEnumerable<FieldMappingApiInstance>? Scorecard { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Scorecard { get; set; }
 
     [JsonPropertyName("Tag")]
-    public IEnumerable<FieldMappingApiInstance>? Tag { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? Tag { get; set; }
 
     [JsonPropertyName("RemoteUser")]
-    public IEnumerable<FieldMappingApiInstance>? RemoteUser { get; init; }
+    public IEnumerable<FieldMappingApiInstance>? RemoteUser { get; set; }
 }

@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Ticketing;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Ticketing;
 
-public class TicketsClient
+public partial class TicketsClient
 {
     private RawClient _client;
 
-    public TicketsClient(RawClient client)
+    internal TicketsClient(RawClient client)
     {
         _client = client;
     }
@@ -18,7 +18,10 @@ public class TicketsClient
     /// <summary>
     /// Returns a list of `Ticket` objects.
     /// </summary>
-    public async Task<PaginatedTicketList> ListAsync(TicketsListRequest request)
+    public async Task<PaginatedTicketList> ListAsync(
+        TicketsListRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.AccountId != null)
@@ -35,11 +38,15 @@ public class TicketsClient
         }
         if (request.CompletedAfter != null)
         {
-            _query["completed_after"] = request.CompletedAfter.Value.ToString("o0");
+            _query["completed_after"] = request.CompletedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.CompletedBefore != null)
         {
-            _query["completed_before"] = request.CompletedBefore.Value.ToString("o0");
+            _query["completed_before"] = request.CompletedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.ContactId != null)
         {
@@ -47,11 +54,13 @@ public class TicketsClient
         }
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
+            _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
+            _query["created_before"] = request.CreatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.Cursor != null)
         {
@@ -59,11 +68,11 @@ public class TicketsClient
         }
         if (request.DueAfter != null)
         {
-            _query["due_after"] = request.DueAfter.Value.ToString("o0");
+            _query["due_after"] = request.DueAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.DueBefore != null)
         {
-            _query["due_before"] = request.DueBefore.Value.ToString("o0");
+            _query["due_before"] = request.DueBefore.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.Expand != null)
         {
@@ -83,11 +92,15 @@ public class TicketsClient
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.PageSize != null)
         {
@@ -103,11 +116,15 @@ public class TicketsClient
         }
         if (request.RemoteCreatedAfter != null)
         {
-            _query["remote_created_after"] = request.RemoteCreatedAfter.Value.ToString("o0");
+            _query["remote_created_after"] = request.RemoteCreatedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.RemoteCreatedBefore != null)
         {
-            _query["remote_created_before"] = request.RemoteCreatedBefore.Value.ToString("o0");
+            _query["remote_created_before"] = request.RemoteCreatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.RemoteFields != null)
         {
@@ -119,11 +136,15 @@ public class TicketsClient
         }
         if (request.RemoteUpdatedAfter != null)
         {
-            _query["remote_updated_after"] = request.RemoteUpdatedAfter.Value.ToString("o0");
+            _query["remote_updated_after"] = request.RemoteUpdatedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.RemoteUpdatedBefore != null)
         {
-            _query["remote_updated_before"] = request.RemoteUpdatedBefore.Value.ToString("o0");
+            _query["remote_updated_before"] = request.RemoteUpdatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.ShowEnumOrigins != null)
         {
@@ -148,23 +169,40 @@ public class TicketsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/tickets",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedTicketList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedTicketList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Creates a `Ticket` object with the given values.
     /// </summary>
-    public async Task<TicketResponse> CreateAsync(TicketEndpointRequest request)
+    public async Task<TicketResponse> CreateAsync(
+        TicketEndpointRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.IsDebugMode != null)
@@ -178,23 +216,41 @@ public class TicketsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "ticketing/v1/tickets",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<TicketResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<TicketResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns a `Ticket` object with the given `id`.
     /// </summary>
-    public async Task<Ticket> RetrieveAsync(string id, TicketsRetrieveRequest request)
+    public async Task<Ticket> RetrieveAsync(
+        string id,
+        TicketsRetrieveRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
@@ -220,17 +276,31 @@ public class TicketsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"ticketing/v1/tickets/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Ticket>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Ticket>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
@@ -238,7 +308,8 @@ public class TicketsClient
     /// </summary>
     public async Task<TicketResponse> PartialUpdateAsync(
         string id,
-        PatchedTicketEndpointRequest request
+        PatchedTicketEndpointRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -253,17 +324,31 @@ public class TicketsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
-                Method = HttpMethod.Patch,
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethodExtensions.Patch,
                 Path = $"ticketing/v1/tickets/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<TicketResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<TicketResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
@@ -271,7 +356,8 @@ public class TicketsClient
     /// </summary>
     public async Task<PaginatedUserList> CollaboratorsListAsync(
         string parentId,
-        TicketsCollaboratorsListRequest request
+        TicketsCollaboratorsListRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -298,64 +384,110 @@ public class TicketsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"ticketing/v1/tickets/{parentId}/collaborators",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedUserList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedUserList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns metadata for `Ticket` PATCHs.
     /// </summary>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(string id)
+    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+        string id,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"ticketing/v1/tickets/meta/patch/{id}"
+                Path = $"ticketing/v1/tickets/meta/patch/{id}",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns metadata for `Ticket` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync()
+    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "ticketing/v1/tickets/meta/post"
+                Path = "ticketing/v1/tickets/meta/post",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
-        TicketsRemoteFieldClassesListRequest request
+        TicketsRemoteFieldClassesListRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -382,16 +514,30 @@ public class TicketsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/tickets/remote-field-classes",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedRemoteFieldClassList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

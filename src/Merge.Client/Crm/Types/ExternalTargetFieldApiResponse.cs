@@ -1,36 +1,35 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class ExternalTargetFieldApiResponse
+public record ExternalTargetFieldApiResponse
 {
     [JsonPropertyName("Account")]
-    public IEnumerable<ExternalTargetFieldApi>? Account { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Account { get; set; }
 
     [JsonPropertyName("Contact")]
-    public IEnumerable<ExternalTargetFieldApi>? Contact { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Contact { get; set; }
 
     [JsonPropertyName("Lead")]
-    public IEnumerable<ExternalTargetFieldApi>? Lead { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Lead { get; set; }
 
     [JsonPropertyName("Note")]
-    public IEnumerable<ExternalTargetFieldApi>? Note { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Note { get; set; }
 
     [JsonPropertyName("Opportunity")]
-    public IEnumerable<ExternalTargetFieldApi>? Opportunity { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Opportunity { get; set; }
 
     [JsonPropertyName("Stage")]
-    public IEnumerable<ExternalTargetFieldApi>? Stage { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Stage { get; set; }
 
     [JsonPropertyName("User")]
-    public IEnumerable<ExternalTargetFieldApi>? User { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? User { get; set; }
 
     [JsonPropertyName("Task")]
-    public IEnumerable<ExternalTargetFieldApi>? Task { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Task { get; set; }
 
     [JsonPropertyName("Engagement")]
-    public IEnumerable<ExternalTargetFieldApi>? Engagement { get; init; }
+    public IEnumerable<ExternalTargetFieldApi>? Engagement { get; set; }
 }

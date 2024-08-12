@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ats;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,28 +6,28 @@ using OneOf;
 
 namespace Merge.Client.Ats;
 
-public class ScheduledInterviewRequest
+public record ScheduledInterviewRequest
 {
     /// <summary>
     /// The application being interviewed.
     /// </summary>
     [JsonPropertyName("application")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Application>>))]
-    public OneOf<string, Application>? Application { get; init; }
+    public OneOf<string, Application>? Application { get; set; }
 
     /// <summary>
     /// The stage of the interview.
     /// </summary>
     [JsonPropertyName("job_interview_stage")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, JobInterviewStage>>))]
-    public OneOf<string, JobInterviewStage>? JobInterviewStage { get; init; }
+    public OneOf<string, JobInterviewStage>? JobInterviewStage { get; set; }
 
     /// <summary>
     /// The user organizing the interview.
     /// </summary>
     [JsonPropertyName("organizer")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
-    public OneOf<string, RemoteUser>? Organizer { get; init; }
+    public OneOf<string, RemoteUser>? Organizer { get; set; }
 
     /// <summary>
     /// Array of `RemoteUser` IDs.
@@ -40,25 +39,25 @@ public class ScheduledInterviewRequest
             OneOfSerializer<OneOf<string, RemoteUser>>
         >)
     )]
-    public IEnumerable<OneOf<string, RemoteUser>>? Interviewers { get; init; }
+    public IEnumerable<OneOf<string, RemoteUser>>? Interviewers { get; set; }
 
     /// <summary>
     /// The interview's location.
     /// </summary>
     [JsonPropertyName("location")]
-    public string? Location { get; init; }
+    public string? Location { get; set; }
 
     /// <summary>
     /// When the interview was started.
     /// </summary>
     [JsonPropertyName("start_at")]
-    public DateTime? StartAt { get; init; }
+    public DateTime? StartAt { get; set; }
 
     /// <summary>
     /// When the interview was ended.
     /// </summary>
     [JsonPropertyName("end_at")]
-    public DateTime? EndAt { get; init; }
+    public DateTime? EndAt { get; set; }
 
     /// <summary>
     /// The interview's status.
@@ -68,11 +67,11 @@ public class ScheduledInterviewRequest
     /// - `COMPLETE` - COMPLETE
     /// </summary>
     [JsonPropertyName("status")]
-    public ScheduledInterviewStatusEnum? Status { get; init; }
+    public ScheduledInterviewStatusEnum? Status { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 }

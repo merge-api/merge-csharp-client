@@ -1,53 +1,52 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class PatchedTaskRequest
+public record PatchedTaskRequest
 {
     /// <summary>
     /// The task's subject.
     /// </summary>
     [JsonPropertyName("subject")]
-    public string? Subject { get; init; }
+    public string? Subject { get; set; }
 
     /// <summary>
     /// The task's content.
     /// </summary>
     [JsonPropertyName("content")]
-    public string? Content { get; init; }
+    public string? Content { get; set; }
 
     /// <summary>
     /// The task's owner.
     /// </summary>
     [JsonPropertyName("owner")]
-    public string? Owner { get; init; }
+    public string? Owner { get; set; }
 
     /// <summary>
     /// The task's account.
     /// </summary>
     [JsonPropertyName("account")]
-    public string? Account { get; init; }
+    public string? Account { get; set; }
 
     /// <summary>
     /// The task's opportunity.
     /// </summary>
     [JsonPropertyName("opportunity")]
-    public string? Opportunity { get; init; }
+    public string? Opportunity { get; set; }
 
     /// <summary>
     /// When the task is completed.
     /// </summary>
     [JsonPropertyName("completed_date")]
-    public DateTime? CompletedDate { get; init; }
+    public DateTime? CompletedDate { get; set; }
 
     /// <summary>
     /// When the task is due.
     /// </summary>
     [JsonPropertyName("due_date")]
-    public DateTime? DueDate { get; init; }
+    public DateTime? DueDate { get; set; }
 
     /// <summary>
     /// The task's status.
@@ -56,14 +55,14 @@ public class PatchedTaskRequest
     /// - `CLOSED` - CLOSED
     /// </summary>
     [JsonPropertyName("status")]
-    public TaskStatusEnum? Status { get; init; }
+    public TaskStatusEnum? Status { get; set; }
 
     [JsonPropertyName("integration_params")]
-    public Dictionary<string, object>? IntegrationParams { get; init; }
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
-    public Dictionary<string, object>? LinkedAccountParams { get; init; }
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 
     [JsonPropertyName("remote_fields")]
-    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; init; }
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
 }

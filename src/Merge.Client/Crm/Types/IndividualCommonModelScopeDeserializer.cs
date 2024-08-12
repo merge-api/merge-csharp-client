@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class IndividualCommonModelScopeDeserializer
+public record IndividualCommonModelScopeDeserializer
 {
     [JsonPropertyName("model_name")]
-    public string ModelName { get; init; }
+    public required string ModelName { get; set; }
 
     [JsonPropertyName("model_permissions")]
-    public Dictionary<string, ModelPermissionDeserializer>? ModelPermissions { get; init; }
+    public Dictionary<string, ModelPermissionDeserializer>? ModelPermissions { get; set; }
 
     [JsonPropertyName("field_permissions")]
-    public FieldPermissionDeserializer? FieldPermissions { get; init; }
+    public FieldPermissionDeserializer? FieldPermissions { get; set; }
 }

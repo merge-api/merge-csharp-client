@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Accounting;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class AddressesClient
+public partial class AddressesClient
 {
     private RawClient _client;
 
-    public AddressesClient(RawClient client)
+    internal AddressesClient(RawClient client)
     {
         _client = client;
     }
@@ -18,7 +18,11 @@ public class AddressesClient
     /// <summary>
     /// Returns an `Address` object with the given `id`.
     /// </summary>
-    public async Task<Address> RetrieveAsync(string id, AddressesRetrieveRequest request)
+    public async Task<Address> RetrieveAsync(
+        string id,
+        AddressesRetrieveRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.IncludeRemoteData != null)
@@ -36,16 +40,30 @@ public class AddressesClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/addresses/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Address>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Address>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

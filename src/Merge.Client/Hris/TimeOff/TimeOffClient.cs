@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Hris;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class TimeOffClient
+public partial class TimeOffClient
 {
     private RawClient _client;
 
-    public TimeOffClient(RawClient client)
+    internal TimeOffClient(RawClient client)
     {
         _client = client;
     }
@@ -18,7 +18,10 @@ public class TimeOffClient
     /// <summary>
     /// Returns a list of `TimeOff` objects.
     /// </summary>
-    public async Task<PaginatedTimeOffList> ListAsync(TimeOffListRequest request)
+    public async Task<PaginatedTimeOffList> ListAsync(
+        TimeOffListRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.ApproverId != null)
@@ -27,11 +30,13 @@ public class TimeOffClient
         }
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
+            _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
+            _query["created_before"] = request.CreatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.Cursor != null)
         {
@@ -43,11 +48,11 @@ public class TimeOffClient
         }
         if (request.EndedAfter != null)
         {
-            _query["ended_after"] = request.EndedAfter.Value.ToString("o0");
+            _query["ended_after"] = request.EndedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.EndedBefore != null)
         {
-            _query["ended_before"] = request.EndedBefore.Value.ToString("o0");
+            _query["ended_before"] = request.EndedBefore.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.Expand != null)
         {
@@ -63,11 +68,15 @@ public class TimeOffClient
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.PageSize != null)
         {
@@ -91,11 +100,13 @@ public class TimeOffClient
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter.Value.ToString("o0");
+            _query["started_after"] = request.StartedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore.Value.ToString("o0");
+            _query["started_before"] = request.StartedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.Status != null)
         {
@@ -104,23 +115,40 @@ public class TimeOffClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "hris/v1/time-off",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedTimeOffList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedTimeOffList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Creates a `TimeOff` object with the given values.
     /// </summary>
-    public async Task<TimeOffResponse> CreateAsync(TimeOffEndpointRequest request)
+    public async Task<TimeOffResponse> CreateAsync(
+        TimeOffEndpointRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.IsDebugMode != null)
@@ -134,23 +162,41 @@ public class TimeOffClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "hris/v1/time-off",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<TimeOffResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<TimeOffResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns a `TimeOff` object with the given `id`.
     /// </summary>
-    public async Task<TimeOff> RetrieveAsync(string id, TimeOffRetrieveRequest request)
+    public async Task<TimeOff> RetrieveAsync(
+        string id,
+        TimeOffRetrieveRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.Expand != null)
@@ -172,36 +218,64 @@ public class TimeOffClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"hris/v1/time-off/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<TimeOff>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<TimeOff>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns metadata for `TimeOff` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync()
+    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "hris/v1/time-off/meta/post"
+                Path = "hris/v1/time-off/meta/post",
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MetaResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

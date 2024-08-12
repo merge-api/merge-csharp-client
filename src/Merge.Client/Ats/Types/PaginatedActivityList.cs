@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Ats;
 
 #nullable enable
 
 namespace Merge.Client.Ats;
 
-public class PaginatedActivityList
+public record PaginatedActivityList
 {
     [JsonPropertyName("next")]
-    public string? Next { get; init; }
+    public string? Next { get; set; }
 
     [JsonPropertyName("previous")]
-    public string? Previous { get; init; }
+    public string? Previous { get; set; }
 
     [JsonPropertyName("results")]
-    public IEnumerable<Activity>? Results { get; init; }
+    public IEnumerable<Activity>? Results { get; set; }
 }

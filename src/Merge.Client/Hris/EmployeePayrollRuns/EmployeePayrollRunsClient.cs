@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Hris;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class EmployeePayrollRunsClient
+public partial class EmployeePayrollRunsClient
 {
     private RawClient _client;
 
-    public EmployeePayrollRunsClient(RawClient client)
+    internal EmployeePayrollRunsClient(RawClient client)
     {
         _client = client;
     }
@@ -19,17 +19,20 @@ public class EmployeePayrollRunsClient
     /// Returns a list of `EmployeePayrollRun` objects.
     /// </summary>
     public async Task<PaginatedEmployeePayrollRunList> ListAsync(
-        EmployeePayrollRunsListRequest request
+        EmployeePayrollRunsListRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.CreatedAfter != null)
         {
-            _query["created_after"] = request.CreatedAfter.Value.ToString("o0");
+            _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.CreatedBefore != null)
         {
-            _query["created_before"] = request.CreatedBefore.Value.ToString("o0");
+            _query["created_before"] = request.CreatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.Cursor != null)
         {
@@ -41,11 +44,11 @@ public class EmployeePayrollRunsClient
         }
         if (request.EndedAfter != null)
         {
-            _query["ended_after"] = request.EndedAfter.Value.ToString("o0");
+            _query["ended_after"] = request.EndedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.EndedBefore != null)
         {
-            _query["ended_before"] = request.EndedBefore.Value.ToString("o0");
+            _query["ended_before"] = request.EndedBefore.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.Expand != null)
         {
@@ -61,11 +64,15 @@ public class EmployeePayrollRunsClient
         }
         if (request.ModifiedAfter != null)
         {
-            _query["modified_after"] = request.ModifiedAfter.Value.ToString("o0");
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.ModifiedBefore != null)
         {
-            _query["modified_before"] = request.ModifiedBefore.Value.ToString("o0");
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         if (request.PageSize != null)
         {
@@ -81,26 +88,42 @@ public class EmployeePayrollRunsClient
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter.Value.ToString("o0");
+            _query["started_after"] = request.StartedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore.Value.ToString("o0");
+            _query["started_before"] = request.StartedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "hris/v1/employee-payroll-runs",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedEmployeePayrollRunList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedEmployeePayrollRunList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
@@ -108,7 +131,8 @@ public class EmployeePayrollRunsClient
     /// </summary>
     public async Task<EmployeePayrollRun> RetrieveAsync(
         string id,
-        EmployeePayrollRunsRetrieveRequest request
+        EmployeePayrollRunsRetrieveRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -123,16 +147,30 @@ public class EmployeePayrollRunsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"hris/v1/employee-payroll-runs/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<EmployeePayrollRun>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<EmployeePayrollRun>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

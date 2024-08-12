@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Accounting;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class PhoneNumbersClient
+public partial class PhoneNumbersClient
 {
     private RawClient _client;
 
-    public PhoneNumbersClient(RawClient client)
+    internal PhoneNumbersClient(RawClient client)
     {
         _client = client;
     }
@@ -20,7 +20,8 @@ public class PhoneNumbersClient
     /// </summary>
     public async Task<AccountingPhoneNumber> RetrieveAsync(
         string id,
-        PhoneNumbersRetrieveRequest request
+        PhoneNumbersRetrieveRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -31,16 +32,30 @@ public class PhoneNumbersClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/phone-numbers/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<AccountingPhoneNumber>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<AccountingPhoneNumber>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

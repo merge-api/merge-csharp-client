@@ -1,15 +1,14 @@
-using Merge.Client;
-using Merge.Client.Filestorage;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Filestorage;
 
-public class FilestorageClient
+public partial class FilestorageClient
 {
     private RawClient _client;
 
-    public FilestorageClient(RawClient client)
+    internal FilestorageClient(RawClient client)
     {
         _client = client;
         AccountDetails = new AccountDetailsClient(_client);

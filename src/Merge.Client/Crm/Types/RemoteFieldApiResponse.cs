@@ -1,36 +1,35 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class RemoteFieldApiResponse
+public record RemoteFieldApiResponse
 {
     [JsonPropertyName("Account")]
-    public IEnumerable<RemoteFieldApi>? Account { get; init; }
+    public IEnumerable<RemoteFieldApi>? Account { get; set; }
 
     [JsonPropertyName("Contact")]
-    public IEnumerable<RemoteFieldApi>? Contact { get; init; }
+    public IEnumerable<RemoteFieldApi>? Contact { get; set; }
 
     [JsonPropertyName("Lead")]
-    public IEnumerable<RemoteFieldApi>? Lead { get; init; }
+    public IEnumerable<RemoteFieldApi>? Lead { get; set; }
 
     [JsonPropertyName("Note")]
-    public IEnumerable<RemoteFieldApi>? Note { get; init; }
+    public IEnumerable<RemoteFieldApi>? Note { get; set; }
 
     [JsonPropertyName("Opportunity")]
-    public IEnumerable<RemoteFieldApi>? Opportunity { get; init; }
+    public IEnumerable<RemoteFieldApi>? Opportunity { get; set; }
 
     [JsonPropertyName("Stage")]
-    public IEnumerable<RemoteFieldApi>? Stage { get; init; }
+    public IEnumerable<RemoteFieldApi>? Stage { get; set; }
 
     [JsonPropertyName("User")]
-    public IEnumerable<RemoteFieldApi>? User { get; init; }
+    public IEnumerable<RemoteFieldApi>? User { get; set; }
 
     [JsonPropertyName("Task")]
-    public IEnumerable<RemoteFieldApi>? Task { get; init; }
+    public IEnumerable<RemoteFieldApi>? Task { get; set; }
 
     [JsonPropertyName("Engagement")]
-    public IEnumerable<RemoteFieldApi>? Engagement { get; init; }
+    public IEnumerable<RemoteFieldApi>? Engagement { get; set; }
 }

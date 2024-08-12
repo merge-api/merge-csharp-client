@@ -1,21 +1,20 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class FieldMappingApiInstance
+public record FieldMappingApiInstance
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     [JsonPropertyName("is_integration_wide")]
-    public bool? IsIntegrationWide { get; init; }
+    public bool? IsIntegrationWide { get; set; }
 
     [JsonPropertyName("target_field")]
-    public FieldMappingApiInstanceTargetField? TargetField { get; init; }
+    public FieldMappingApiInstanceTargetField? TargetField { get; set; }
 
     [JsonPropertyName("remote_field")]
-    public FieldMappingApiInstanceRemoteField? RemoteField { get; init; }
+    public FieldMappingApiInstanceRemoteField? RemoteField { get; set; }
 }

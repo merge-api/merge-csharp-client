@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,34 +6,34 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class IncomeStatement
+public record IncomeStatement
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The income statement's name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// The income statement's currency.
@@ -347,66 +346,66 @@ public class IncomeStatement
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The company the income statement belongs to.
     /// </summary>
     [JsonPropertyName("company")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
-    public OneOf<string, CompanyInfo>? Company { get; init; }
+    public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
     /// The income statement's start period.
     /// </summary>
     [JsonPropertyName("start_period")]
-    public DateTime? StartPeriod { get; init; }
+    public DateTime? StartPeriod { get; set; }
 
     /// <summary>
     /// The income statement's end period.
     /// </summary>
     [JsonPropertyName("end_period")]
-    public DateTime? EndPeriod { get; init; }
+    public DateTime? EndPeriod { get; set; }
 
     [JsonPropertyName("income")]
-    public IEnumerable<ReportItem>? Income { get; init; }
+    public IEnumerable<ReportItem>? Income { get; set; }
 
     [JsonPropertyName("cost_of_sales")]
-    public IEnumerable<ReportItem>? CostOfSales { get; init; }
+    public IEnumerable<ReportItem>? CostOfSales { get; set; }
 
     /// <summary>
     /// The revenue minus the cost of sale.
     /// </summary>
     [JsonPropertyName("gross_profit")]
-    public double? GrossProfit { get; init; }
+    public double? GrossProfit { get; set; }
 
     [JsonPropertyName("operating_expenses")]
-    public IEnumerable<ReportItem>? OperatingExpenses { get; init; }
+    public IEnumerable<ReportItem>? OperatingExpenses { get; set; }
 
     /// <summary>
     /// The revenue minus the operating expenses.
     /// </summary>
     [JsonPropertyName("net_operating_income")]
-    public double? NetOperatingIncome { get; init; }
+    public double? NetOperatingIncome { get; set; }
 
     [JsonPropertyName("non_operating_expenses")]
-    public IEnumerable<ReportItem>? NonOperatingExpenses { get; init; }
+    public IEnumerable<ReportItem>? NonOperatingExpenses { get; set; }
 
     /// <summary>
     /// The gross profit minus the total expenses.
     /// </summary>
     [JsonPropertyName("net_income")]
-    public double? NetIncome { get; init; }
+    public double? NetIncome { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

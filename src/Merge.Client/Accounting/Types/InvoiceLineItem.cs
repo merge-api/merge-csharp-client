@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 using Merge.Client.Core;
 using OneOf;
 
@@ -7,52 +6,52 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
-public class InvoiceLineItem
+public record InvoiceLineItem
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The line item's description.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The line item's unit price.
     /// </summary>
     [JsonPropertyName("unit_price")]
-    public double? UnitPrice { get; init; }
+    public double? UnitPrice { get; set; }
 
     /// <summary>
     /// The line item's quantity.
     /// </summary>
     [JsonPropertyName("quantity")]
-    public double? Quantity { get; init; }
+    public double? Quantity { get; set; }
 
     /// <summary>
     /// The line item's total amount.
     /// </summary>
     [JsonPropertyName("total_amount")]
-    public double? TotalAmount { get; init; }
+    public double? TotalAmount { get; set; }
 
     /// <summary>
     /// The line item's currency.
@@ -365,25 +364,25 @@ public class InvoiceLineItem
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The line item's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
-    public string? ExchangeRate { get; init; }
+    public string? ExchangeRate { get; set; }
 
     [JsonPropertyName("item")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
-    public OneOf<string, Item>? Item { get; init; }
+    public OneOf<string, Item>? Item { get; set; }
 
     [JsonPropertyName("account")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
-    public OneOf<string, Account>? Account { get; init; }
+    public OneOf<string, Account>? Account { get; set; }
 
     [JsonPropertyName("tracking_category")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, TrackingCategory>>))]
-    public OneOf<string, TrackingCategory>? TrackingCategory { get; init; }
+    public OneOf<string, TrackingCategory>? TrackingCategory { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     [JsonConverter(
@@ -392,20 +391,20 @@ public class InvoiceLineItem
             OneOfSerializer<OneOf<string, TrackingCategory>>
         >)
     )]
-    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; init; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
     /// The company the line item belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    public string? Company { get; init; }
+    public string? Company { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 }

@@ -1,33 +1,32 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Hris;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class AccountDetailsAndActionsIntegration
+public record AccountDetailsAndActionsIntegration
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("categories")]
-    public IEnumerable<CategoriesEnum> Categories { get; init; }
+    public IEnumerable<CategoriesEnum> Categories { get; set; } = new List<CategoriesEnum>();
 
     [JsonPropertyName("image")]
-    public string? Image { get; init; }
+    public string? Image { get; set; }
 
     [JsonPropertyName("square_image")]
-    public string? SquareImage { get; init; }
+    public string? SquareImage { get; set; }
 
     [JsonPropertyName("color")]
-    public string Color { get; init; }
+    public required string Color { get; set; }
 
     [JsonPropertyName("slug")]
-    public string Slug { get; init; }
+    public required string Slug { get; set; }
 
     [JsonPropertyName("passthrough_available")]
-    public bool PassthroughAvailable { get; init; }
+    public required bool PassthroughAvailable { get; set; }
 
     [JsonPropertyName("available_model_operations")]
-    public IEnumerable<ModelOperation>? AvailableModelOperations { get; init; }
+    public IEnumerable<ModelOperation>? AvailableModelOperations { get; set; }
 }

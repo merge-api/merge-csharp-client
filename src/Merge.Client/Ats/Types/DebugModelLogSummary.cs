@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 
 namespace Merge.Client.Ats;
 
-public class DebugModelLogSummary
+public record DebugModelLogSummary
 {
     [JsonPropertyName("url")]
-    public string Url { get; init; }
+    public required string Url { get; set; }
 
     [JsonPropertyName("method")]
-    public string Method { get; init; }
+    public required string Method { get; set; }
 
     [JsonPropertyName("status_code")]
-    public int StatusCode { get; init; }
+    public required int StatusCode { get; set; }
 }

@@ -1,18 +1,17 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Hris;
 
 #nullable enable
 
 namespace Merge.Client.Hris;
 
-public class AvailableActions
+public record AvailableActions
 {
     [JsonPropertyName("integration")]
-    public AccountIntegration Integration { get; init; }
+    public required AccountIntegration Integration { get; set; }
 
     [JsonPropertyName("passthrough_available")]
-    public bool PassthroughAvailable { get; init; }
+    public required bool PassthroughAvailable { get; set; }
 
     [JsonPropertyName("available_model_operations")]
-    public IEnumerable<ModelOperation>? AvailableModelOperations { get; init; }
+    public IEnumerable<ModelOperation>? AvailableModelOperations { get; set; }
 }

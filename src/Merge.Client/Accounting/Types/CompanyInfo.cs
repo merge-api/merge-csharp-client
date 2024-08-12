@@ -1,62 +1,61 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Accounting;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class CompanyInfo
+public record CompanyInfo
 {
     [JsonPropertyName("id")]
-    public string? Id { get; init; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// The third-party API ID of the matching object.
     /// </summary>
     [JsonPropertyName("remote_id")]
-    public string? RemoteId { get; init; }
+    public string? RemoteId { get; set; }
 
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
-    public DateTime? CreatedAt { get; init; }
+    public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
     [JsonPropertyName("modified_at")]
-    public DateTime? ModifiedAt { get; init; }
+    public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
     /// The company's name.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// The company's legal name.
     /// </summary>
     [JsonPropertyName("legal_name")]
-    public string? LegalName { get; init; }
+    public string? LegalName { get; set; }
 
     /// <summary>
     /// The company's tax number.
     /// </summary>
     [JsonPropertyName("tax_number")]
-    public string? TaxNumber { get; init; }
+    public string? TaxNumber { get; set; }
 
     /// <summary>
     /// The company's fiscal year end month.
     /// </summary>
     [JsonPropertyName("fiscal_year_end_month")]
-    public int? FiscalYearEndMonth { get; init; }
+    public int? FiscalYearEndMonth { get; set; }
 
     /// <summary>
     /// The company's fiscal year end day.
     /// </summary>
     [JsonPropertyName("fiscal_year_end_day")]
-    public int? FiscalYearEndDay { get; init; }
+    public int? FiscalYearEndDay { get; set; }
 
     /// <summary>
     /// The currency set in the company's accounting platform.
@@ -369,35 +368,35 @@ public class CompanyInfo
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; init; }
+    public CurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// When the third party's company was created.
     /// </summary>
     [JsonPropertyName("remote_created_at")]
-    public DateTime? RemoteCreatedAt { get; init; }
+    public DateTime? RemoteCreatedAt { get; set; }
 
     /// <summary>
     /// The company's urls.
     /// </summary>
     [JsonPropertyName("urls")]
-    public IEnumerable<string>? Urls { get; init; }
+    public IEnumerable<string>? Urls { get; set; }
 
     [JsonPropertyName("addresses")]
-    public IEnumerable<Address>? Addresses { get; init; }
+    public IEnumerable<Address>? Addresses { get; set; }
 
     [JsonPropertyName("phone_numbers")]
-    public IEnumerable<AccountingPhoneNumber>? PhoneNumbers { get; init; }
+    public IEnumerable<AccountingPhoneNumber>? PhoneNumbers { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform.
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; init; }
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
-    public Dictionary<string, object>? FieldMappings { get; init; }
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<RemoteData>? RemoteData { get; init; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 }

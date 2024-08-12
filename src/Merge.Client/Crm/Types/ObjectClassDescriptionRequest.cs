@@ -1,15 +1,14 @@
 using System.Text.Json.Serialization;
-using Merge.Client.Crm;
 
 #nullable enable
 
 namespace Merge.Client.Crm;
 
-public class ObjectClassDescriptionRequest
+public record ObjectClassDescriptionRequest
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("origin_type")]
-    public OriginTypeEnum OriginType { get; init; }
+    public required OriginTypeEnum OriginType { get; set; }
 }

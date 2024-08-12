@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Accounting;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Accounting;
 
-public class AccountingPeriodsClient
+public partial class AccountingPeriodsClient
 {
     private RawClient _client;
 
-    public AccountingPeriodsClient(RawClient client)
+    internal AccountingPeriodsClient(RawClient client)
     {
         _client = client;
     }
@@ -18,7 +18,10 @@ public class AccountingPeriodsClient
     /// <summary>
     /// Returns a list of `AccountingPeriod` objects.
     /// </summary>
-    public async Task<PaginatedAccountingPeriodList> ListAsync(AccountingPeriodsListRequest request)
+    public async Task<PaginatedAccountingPeriodList> ListAsync(
+        AccountingPeriodsListRequest request,
+        RequestOptions? options = null
+    )
     {
         var _query = new Dictionary<string, object>() { };
         if (request.Cursor != null)
@@ -40,17 +43,31 @@ public class AccountingPeriodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/accounting-periods",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedAccountingPeriodList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedAccountingPeriodList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
@@ -58,7 +75,8 @@ public class AccountingPeriodsClient
     /// </summary>
     public async Task<AccountingPeriod> RetrieveAsync(
         string id,
-        AccountingPeriodsRetrieveRequest request
+        AccountingPeriodsRetrieveRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -69,16 +87,30 @@ public class AccountingPeriodsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/accounting-periods/{id}",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<AccountingPeriod>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<AccountingPeriod>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

@@ -1,16 +1,16 @@
+using System.Net.Http;
 using System.Text.Json;
-using Merge.Client;
-using Merge.Client.Filestorage;
+using Merge.Client.Core;
 
 #nullable enable
 
 namespace Merge.Client.Filestorage;
 
-public class LinkedAccountsClient
+public partial class LinkedAccountsClient
 {
     private RawClient _client;
 
-    public LinkedAccountsClient(RawClient client)
+    internal LinkedAccountsClient(RawClient client)
     {
         _client = client;
     }
@@ -19,7 +19,8 @@ public class LinkedAccountsClient
     /// List linked accounts for your organization.
     /// </summary>
     public async Task<PaginatedAccountDetailsAndActionsList> ListAsync(
-        LinkedAccountsListRequest request
+        LinkedAccountsListRequest request,
+        RequestOptions? options = null
     )
     {
         var _query = new Dictionary<string, object>() { };
@@ -78,16 +79,30 @@ public class LinkedAccountsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "filestorage/v1/linked-accounts",
-                Query = _query
+                Query = _query,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<PaginatedAccountDetailsAndActionsList>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedAccountDetailsAndActionsList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }
