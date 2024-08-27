@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class LeadsClient
     /// <summary>
     /// Returns a list of `Lead` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Leads.ListAsync(new LeadsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedLeadList> ListAsync(
         LeadsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.ConvertedAccountId != null)
         {
             _query["converted_account_id"] = request.ConvertedAccountId;
@@ -52,7 +59,7 @@ public partial class LeadsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -101,8 +108,9 @@ public partial class LeadsClient
                 Method = HttpMethod.Get,
                 Path = "crm/v1/leads",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -127,12 +135,18 @@ public partial class LeadsClient
     /// <summary>
     /// Creates a `Lead` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Leads.CreateAsync(new LeadEndpointRequest { Model = new LeadRequest() });
+    /// </code>
+    /// </example>
     public async Task<LeadResponse> CreateAsync(
         LeadEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -141,15 +155,18 @@ public partial class LeadsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "crm/v1/leads",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -174,16 +191,22 @@ public partial class LeadsClient
     /// <summary>
     /// Returns a `Lead` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Leads.RetrieveAsync("id", new LeadsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Lead> RetrieveAsync(
         string id,
         LeadsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -200,8 +223,9 @@ public partial class LeadsClient
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/leads/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -226,7 +250,15 @@ public partial class LeadsClient
     /// <summary>
     /// Returns metadata for `Lead` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Crm.Leads.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -234,8 +266,9 @@ public partial class LeadsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/leads/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -260,12 +293,18 @@ public partial class LeadsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Leads.RemoteFieldClassesListAsync(new LeadsRemoteFieldClassesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
         LeadsRemoteFieldClassesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -297,8 +336,9 @@ public partial class LeadsClient
                 Method = HttpMethod.Get,
                 Path = "crm/v1/leads/remote-field-classes",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

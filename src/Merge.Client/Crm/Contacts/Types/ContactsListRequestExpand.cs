@@ -16,5 +16,5 @@ public enum ContactsListRequestExpand
     AccountOwner,
 
     [EnumMember(Value = "owner")]
-    Owner
+    Owner,
 }

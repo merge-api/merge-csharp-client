@@ -52,5 +52,5 @@ public enum NotesRetrieveRequestExpand
     OwnerContactOpportunity,
 
     [EnumMember(Value = "owner,opportunity")]
-    OwnerOpportunity
+    OwnerOpportunity,
 }

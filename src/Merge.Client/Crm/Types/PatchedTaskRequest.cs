@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -65,4 +66,9 @@ public record PatchedTaskRequest
 
     [JsonPropertyName("remote_fields")]
     public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

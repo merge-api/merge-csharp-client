@@ -59,4 +59,9 @@ public record Permission
     /// </summary>
     [JsonPropertyName("roles")]
     public IEnumerable<RolesEnum>? Roles { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

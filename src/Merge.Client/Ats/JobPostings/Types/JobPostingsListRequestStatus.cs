@@ -22,5 +22,5 @@ public enum JobPostingsListRequestStatus
     Pending,
 
     [EnumMember(Value = "PUBLISHED")]
-    Published
+    Published,
 }

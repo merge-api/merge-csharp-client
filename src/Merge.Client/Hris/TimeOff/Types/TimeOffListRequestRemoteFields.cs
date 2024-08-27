@@ -28,5 +28,5 @@ public enum TimeOffListRequestRemoteFields
     StatusUnits,
 
     [EnumMember(Value = "units")]
-    Units
+    Units,
 }

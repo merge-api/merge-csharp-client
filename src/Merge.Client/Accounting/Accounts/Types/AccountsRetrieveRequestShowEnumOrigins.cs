@@ -16,5 +16,5 @@ public enum AccountsRetrieveRequestShowEnumOrigins
     ClassificationStatus,
 
     [EnumMember(Value = "status")]
-    Status
+    Status,
 }

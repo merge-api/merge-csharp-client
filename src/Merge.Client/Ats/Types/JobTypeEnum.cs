@@ -16,5 +16,5 @@ public enum JobTypeEnum
     Requisition,
 
     [EnumMember(Value = "PROFILE")]
-    Profile
+    Profile,
 }

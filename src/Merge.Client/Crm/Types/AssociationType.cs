@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -47,4 +48,9 @@ public record AssociationType
 
     [JsonPropertyName("is_required")]
     public bool? IsRequired { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

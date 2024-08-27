@@ -25,5 +25,5 @@ public enum ItemFormatEnum
     Bool,
 
     [EnumMember(Value = "list")]
-    List
+    List,
 }

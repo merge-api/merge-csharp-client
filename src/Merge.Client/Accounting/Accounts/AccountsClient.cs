@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class AccountsClient
     /// <summary>
     /// Returns a list of `Account` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Accounts.ListAsync(new AccountsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedAccountList> ListAsync(
         AccountsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -72,7 +79,7 @@ public partial class AccountsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -80,7 +87,7 @@ public partial class AccountsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -89,8 +96,9 @@ public partial class AccountsClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/accounts",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -115,12 +123,20 @@ public partial class AccountsClient
     /// <summary>
     /// Creates an `Account` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Accounts.CreateAsync(
+    ///     new AccountEndpointRequest { Model = new AccountRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<AccountResponse> CreateAsync(
         AccountEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -129,15 +145,18 @@ public partial class AccountsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "accounting/v1/accounts",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -162,13 +181,19 @@ public partial class AccountsClient
     /// <summary>
     /// Returns an `Account` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Accounts.RetrieveAsync("id", new AccountsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Account> RetrieveAsync(
         string id,
         AccountsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -179,11 +204,11 @@ public partial class AccountsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -192,8 +217,9 @@ public partial class AccountsClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/accounts/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -218,7 +244,15 @@ public partial class AccountsClient
     /// <summary>
     /// Returns metadata for `Account` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Accounts.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -226,8 +260,9 @@ public partial class AccountsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/accounts/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

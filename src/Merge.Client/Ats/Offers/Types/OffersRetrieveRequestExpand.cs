@@ -16,5 +16,5 @@ public enum OffersRetrieveRequestExpand
     ApplicationCreator,
 
     [EnumMember(Value = "creator")]
-    Creator
+    Creator,
 }

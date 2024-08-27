@@ -25,5 +25,5 @@ public enum ItemTypeEnum
     Bool,
 
     [EnumMember(Value = "list")]
-    List
+    List,
 }

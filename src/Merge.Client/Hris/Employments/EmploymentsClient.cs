@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class EmploymentsClient
     /// <summary>
     /// Returns a list of `Employment` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.Employments.ListAsync(new EmploymentsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedEmploymentList> ListAsync(
         EmploymentsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -44,7 +51,7 @@ public partial class EmploymentsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -68,7 +75,7 @@ public partial class EmploymentsClient
         }
         if (request.OrderBy != null)
         {
-            _query["order_by"] = JsonSerializer.Serialize(request.OrderBy.Value);
+            _query["order_by"] = request.OrderBy.Value.Stringify();
         }
         if (request.PageSize != null)
         {
@@ -76,7 +83,7 @@ public partial class EmploymentsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -84,7 +91,7 @@ public partial class EmploymentsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -93,8 +100,9 @@ public partial class EmploymentsClient
                 Method = HttpMethod.Get,
                 Path = "hris/v1/employments",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -119,16 +127,22 @@ public partial class EmploymentsClient
     /// <summary>
     /// Returns an `Employment` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.Employments.RetrieveAsync("id", new EmploymentsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Employment> RetrieveAsync(
         string id,
         EmploymentsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -136,11 +150,11 @@ public partial class EmploymentsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -149,8 +163,9 @@ public partial class EmploymentsClient
                 Method = HttpMethod.Get,
                 Path = $"hris/v1/employments/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

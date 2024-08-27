@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -21,4 +22,9 @@ public record MetaResponse
 
     [JsonPropertyName("has_required_linked_account_params")]
     public required bool HasRequiredLinkedAccountParams { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -35,4 +36,9 @@ public record Issue
 
     [JsonPropertyName("error_details")]
     public IEnumerable<string>? ErrorDetails { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

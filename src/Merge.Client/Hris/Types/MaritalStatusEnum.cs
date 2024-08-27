@@ -22,5 +22,5 @@ public enum MaritalStatusEnum
     HeadOfHousehold,
 
     [EnumMember(Value = "QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD")]
-    QualifyingWidowOrWidowerWithDependentChild
+    QualifyingWidowOrWidowerWithDependentChild,
 }

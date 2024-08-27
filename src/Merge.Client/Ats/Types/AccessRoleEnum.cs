@@ -22,5 +22,5 @@ public enum AccessRoleEnum
     LimitedTeamMember,
 
     [EnumMember(Value = "INTERVIEWER")]
-    Interviewer
+    Interviewer,
 }

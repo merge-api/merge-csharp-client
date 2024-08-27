@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class TrackingCategoriesClient
     /// <summary>
     /// Returns a list of `TrackingCategory` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.TrackingCategories.ListAsync(new TrackingCategoriesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedTrackingCategoryList> ListAsync(
         TrackingCategoriesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -89,8 +96,9 @@ public partial class TrackingCategoriesClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/tracking-categories",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -115,13 +123,22 @@ public partial class TrackingCategoriesClient
     /// <summary>
     /// Returns a `TrackingCategory` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.TrackingCategories.RetrieveAsync(
+    ///     "id",
+    ///     new TrackingCategoriesRetrieveRequest()
+    /// );
+    /// </code>
+    /// </example>
     public async Task<TrackingCategory> RetrieveAsync(
         string id,
         TrackingCategoriesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -145,8 +162,9 @@ public partial class TrackingCategoriesClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/tracking-categories/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

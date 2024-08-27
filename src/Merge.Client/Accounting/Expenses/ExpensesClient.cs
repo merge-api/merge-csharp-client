@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class ExpensesClient
     /// <summary>
     /// Returns a list of `Expense` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Expenses.ListAsync(new ExpensesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedExpenseList> ListAsync(
         ExpensesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -44,7 +51,7 @@ public partial class ExpensesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -93,8 +100,9 @@ public partial class ExpensesClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/expenses",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -119,12 +127,20 @@ public partial class ExpensesClient
     /// <summary>
     /// Creates an `Expense` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Expenses.CreateAsync(
+    ///     new ExpenseEndpointRequest { Model = new ExpenseRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ExpenseResponse> CreateAsync(
         ExpenseEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -133,15 +149,18 @@ public partial class ExpensesClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "accounting/v1/expenses",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -166,16 +185,22 @@ public partial class ExpensesClient
     /// <summary>
     /// Returns an `Expense` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Expenses.RetrieveAsync("id", new ExpensesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Expense> RetrieveAsync(
         string id,
         ExpensesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -188,8 +213,9 @@ public partial class ExpensesClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/expenses/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -214,7 +240,15 @@ public partial class ExpensesClient
     /// <summary>
     /// Returns metadata for `Expense` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Expenses.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -222,8 +256,9 @@ public partial class ExpensesClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/expenses/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

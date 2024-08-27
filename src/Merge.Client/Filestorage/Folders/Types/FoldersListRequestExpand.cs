@@ -28,5 +28,5 @@ public enum FoldersListRequestExpand
     PermissionsParentFolder,
 
     [EnumMember(Value = "permissions,parent_folder,drive")]
-    PermissionsParentFolderDrive
+    PermissionsParentFolderDrive,
 }

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class VendorCreditsClient
     /// <summary>
     /// Returns a list of `VendorCredit` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.VendorCredits.ListAsync(new VendorCreditsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedVendorCreditList> ListAsync(
         VendorCreditsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -44,7 +51,7 @@ public partial class VendorCreditsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -93,8 +100,9 @@ public partial class VendorCreditsClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/vendor-credits",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -119,16 +127,22 @@ public partial class VendorCreditsClient
     /// <summary>
     /// Returns a `VendorCredit` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.VendorCredits.RetrieveAsync("id", new VendorCreditsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<VendorCredit> RetrieveAsync(
         string id,
         VendorCreditsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -141,8 +155,9 @@ public partial class VendorCreditsClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/vendor-credits/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -28,5 +28,5 @@ public enum ItemsListRequestExpand
     SalesAccount,
 
     [EnumMember(Value = "sales_account,company")]
-    SalesAccountCompany
+    SalesAccountCompany,
 }

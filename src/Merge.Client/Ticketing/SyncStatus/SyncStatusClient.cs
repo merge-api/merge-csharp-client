@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class SyncStatusClient
     /// <summary>
     /// Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`. Learn more about sync status in our [Help Center](https://help.merge.dev/en/articles/8184193-merge-sync-statuses).
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.SyncStatus.ListAsync(new SyncStatusListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedSyncStatusList> ListAsync(
         SyncStatusListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -39,8 +46,9 @@ public partial class SyncStatusClient
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/sync-status",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

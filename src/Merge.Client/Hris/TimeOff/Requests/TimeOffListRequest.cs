@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Hris;
 
 public record TimeOffListRequest
@@ -114,4 +118,9 @@ public record TimeOffListRequest
     /// - `DELETED` - DELETED
     /// </summary>
     public TimeOffListRequestStatus? Status { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

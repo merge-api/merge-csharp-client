@@ -19,5 +19,5 @@ public enum AttachmentTypeEnum
     OfferLetter,
 
     [EnumMember(Value = "OTHER")]
-    Other
+    Other,
 }

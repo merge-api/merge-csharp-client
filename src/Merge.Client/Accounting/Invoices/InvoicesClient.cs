@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class InvoicesClient
     /// <summary>
     /// Returns a list of `Invoice` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Invoices.ListAsync(new InvoicesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedInvoiceList> ListAsync(
         InvoicesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -48,7 +55,7 @@ public partial class InvoicesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -100,7 +107,7 @@ public partial class InvoicesClient
         }
         if (request.Type != null)
         {
-            _query["type"] = JsonSerializer.Serialize(request.Type.Value);
+            _query["type"] = request.Type.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -109,8 +116,9 @@ public partial class InvoicesClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/invoices",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -135,12 +143,20 @@ public partial class InvoicesClient
     /// <summary>
     /// Creates an `Invoice` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Invoices.CreateAsync(
+    ///     new InvoiceEndpointRequest { Model = new InvoiceRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<InvoiceResponse> CreateAsync(
         InvoiceEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -149,15 +165,18 @@ public partial class InvoicesClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "accounting/v1/invoices",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -182,16 +201,22 @@ public partial class InvoicesClient
     /// <summary>
     /// Returns an `Invoice` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Invoices.RetrieveAsync("id", new InvoicesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Invoice> RetrieveAsync(
         string id,
         InvoicesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -212,8 +237,9 @@ public partial class InvoicesClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/invoices/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -238,13 +264,22 @@ public partial class InvoicesClient
     /// <summary>
     /// Updates an `Invoice` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Invoices.PartialUpdateAsync(
+    ///     "id",
+    ///     new PatchedInvoiceEndpointRequest { Model = new InvoiceRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<InvoiceResponse> PartialUpdateAsync(
         string id,
         PatchedInvoiceEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -253,15 +288,18 @@ public partial class InvoicesClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethodExtensions.Patch,
                 Path = $"accounting/v1/invoices/{id}",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -286,9 +324,15 @@ public partial class InvoicesClient
     /// <summary>
     /// Returns metadata for `Invoice` PATCHs.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Invoices.MetaPatchRetrieveAsync("id");
+    /// </code>
+    /// </example>
     public async Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -297,8 +341,9 @@ public partial class InvoicesClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/invoices/meta/patch/{id}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -323,7 +368,15 @@ public partial class InvoicesClient
     /// <summary>
     /// Returns metadata for `Invoice` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Invoices.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -331,8 +384,9 @@ public partial class InvoicesClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/invoices/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

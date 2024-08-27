@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -64,4 +65,9 @@ public record Attachment
 
     [JsonPropertyName("remote_data")]
     public IEnumerable<RemoteData>? RemoteData { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

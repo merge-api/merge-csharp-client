@@ -22,5 +22,5 @@ public enum GenderEnum
     Other,
 
     [EnumMember(Value = "PREFER_NOT_TO_DISCLOSE")]
-    PreferNotToDisclose
+    PreferNotToDisclose,
 }

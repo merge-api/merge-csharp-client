@@ -13,5 +13,5 @@ public enum UnitsEnum
     Hours,
 
     [EnumMember(Value = "DAYS")]
-    Days
+    Days,
 }

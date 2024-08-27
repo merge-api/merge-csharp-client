@@ -948,5 +948,5 @@ public enum ApplicationsListRequestExpand
     ScreeningQuestionAnswersQuestionJobRejectReason,
 
     [EnumMember(Value = "screening_question_answers.question,reject_reason")]
-    ScreeningQuestionAnswersQuestionRejectReason
+    ScreeningQuestionAnswersQuestionRejectReason,
 }

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class FilesClient
     /// <summary>
     /// Returns a list of `File` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Files.ListAsync(new FilesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedFileList> ListAsync(
         FilesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -44,7 +51,7 @@ public partial class FilesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.FolderId != null)
         {
@@ -93,8 +100,9 @@ public partial class FilesClient
                 Method = HttpMethod.Get,
                 Path = "filestorage/v1/files",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -119,12 +127,20 @@ public partial class FilesClient
     /// <summary>
     /// Creates a `File` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Files.CreateAsync(
+    ///     new FileStorageFileEndpointRequest { Model = new FileRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<FileStorageFileResponse> CreateAsync(
         FileStorageFileEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -133,15 +149,18 @@ public partial class FilesClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "filestorage/v1/files",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -166,16 +185,22 @@ public partial class FilesClient
     /// <summary>
     /// Returns a `File` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Files.RetrieveAsync("id", new FilesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<File> RetrieveAsync(
         string id,
         FilesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -188,8 +213,9 @@ public partial class FilesClient
                 Method = HttpMethod.Get,
                 Path = $"filestorage/v1/files/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -214,13 +240,22 @@ public partial class FilesClient
     /// <summary>
     /// Returns the `File` content with the given `id` as a stream of bytes.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Files.DownloadRetrieveAsync(
+    ///     "string",
+    ///     new FilesDownloadRetrieveRequest { MimeType = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async System.Threading.Tasks.Task DownloadRetrieveAsync(
         string id,
         FilesDownloadRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.MimeType != null)
         {
             _query["mime_type"] = request.MimeType;
@@ -232,8 +267,9 @@ public partial class FilesClient
                 Method = HttpMethod.Get,
                 Path = $"filestorage/v1/files/{id}/download",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         throw new MergeApiException(
@@ -246,7 +282,15 @@ public partial class FilesClient
     /// <summary>
     /// Returns metadata for `FileStorageFile` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Files.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -254,8 +298,9 @@ public partial class FilesClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "filestorage/v1/files/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

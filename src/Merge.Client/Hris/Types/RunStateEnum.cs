@@ -22,5 +22,5 @@ public enum RunStateEnum
     Failed,
 
     [EnumMember(Value = "CLOSED")]
-    Closed
+    Closed,
 }

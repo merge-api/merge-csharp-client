@@ -13,5 +13,5 @@ public enum CollectionTypeEnum
     List,
 
     [EnumMember(Value = "PROJECT")]
-    Project
+    Project,
 }

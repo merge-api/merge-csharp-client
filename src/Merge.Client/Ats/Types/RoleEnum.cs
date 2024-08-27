@@ -25,5 +25,5 @@ public enum RoleEnum
     System,
 
     [EnumMember(Value = "MERGE_TEAM")]
-    MergeTeam
+    MergeTeam,
 }

@@ -32,4 +32,9 @@ public record Association
     [JsonPropertyName("association_type")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<string, AssociationType>>))]
     public OneOf<string, AssociationType>? AssociationType { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class CustomObjectClassesClient
     /// <summary>
     /// Returns a list of `CustomObjectClass` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.CustomObjectClasses.ListAsync(new CustomObjectClassesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedCustomObjectClassList> ListAsync(
         CustomObjectClassesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -77,8 +84,9 @@ public partial class CustomObjectClassesClient
                 Method = HttpMethod.Get,
                 Path = "crm/v1/custom-object-classes",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -103,13 +111,19 @@ public partial class CustomObjectClassesClient
     /// <summary>
     /// Returns a `CustomObjectClass` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.CustomObjectClasses.RetrieveAsync("id", new CustomObjectClassesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<CustomObjectClass> RetrieveAsync(
         string id,
         CustomObjectClassesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -125,8 +139,9 @@ public partial class CustomObjectClassesClient
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/custom-object-classes/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

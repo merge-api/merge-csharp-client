@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class CommentsClient
     /// <summary>
     /// Returns a list of `Comment` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Comments.ListAsync(new CommentsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedCommentList> ListAsync(
         CommentsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -40,7 +47,7 @@ public partial class CommentsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -87,8 +94,9 @@ public partial class CommentsClient
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/comments",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -113,12 +121,20 @@ public partial class CommentsClient
     /// <summary>
     /// Creates a `Comment` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Comments.CreateAsync(
+    ///     new CommentEndpointRequest { Model = new CommentRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<CommentResponse> CreateAsync(
         CommentEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -127,15 +143,18 @@ public partial class CommentsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "ticketing/v1/comments",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -160,16 +179,22 @@ public partial class CommentsClient
     /// <summary>
     /// Returns a `Comment` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Comments.RetrieveAsync("id", new CommentsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Comment> RetrieveAsync(
         string id,
         CommentsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -182,8 +207,9 @@ public partial class CommentsClient
                 Method = HttpMethod.Get,
                 Path = $"ticketing/v1/comments/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -208,7 +234,15 @@ public partial class CommentsClient
     /// <summary>
     /// Returns metadata for `Comment` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Comments.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -216,8 +250,9 @@ public partial class CommentsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/comments/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

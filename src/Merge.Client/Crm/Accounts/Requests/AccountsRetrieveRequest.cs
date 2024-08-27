@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public record AccountsRetrieveRequest
@@ -16,4 +20,9 @@ public record AccountsRetrieveRequest
     /// Whether to include all remote fields, including fields that Merge did not map to common models, in a normalized format.
     /// </summary>
     public bool? IncludeRemoteFields { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

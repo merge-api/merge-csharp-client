@@ -13,5 +13,5 @@ public enum BankInfoListRequestOrderBy
     RemoteCreatedAtDescending,
 
     [EnumMember(Value = "remote_created_at")]
-    RemoteCreatedAtAscending
+    RemoteCreatedAtAscending,
 }

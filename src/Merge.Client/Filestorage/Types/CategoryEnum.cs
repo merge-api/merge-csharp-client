@@ -28,5 +28,5 @@ public enum CategoryEnum
     Mktg,
 
     [EnumMember(Value = "filestorage")]
-    Filestorage
+    Filestorage,
 }

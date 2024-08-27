@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Hris;
 
 public record EmployeePayrollRunsListRequest
@@ -81,4 +85,9 @@ public record EmployeePayrollRunsListRequest
     /// If provided, will only return employee payroll runs started before this datetime.
     /// </summary>
     public DateTime? StartedBefore { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

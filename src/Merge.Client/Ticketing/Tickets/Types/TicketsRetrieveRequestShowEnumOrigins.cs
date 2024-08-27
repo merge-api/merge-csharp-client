@@ -28,5 +28,5 @@ public enum TicketsRetrieveRequestShowEnumOrigins
     StatusTicketType,
 
     [EnumMember(Value = "ticket_type")]
-    TicketType
+    TicketType,
 }

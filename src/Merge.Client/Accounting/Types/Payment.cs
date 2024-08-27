@@ -435,4 +435,9 @@ public record Payment
 
     [JsonPropertyName("remote_data")]
     public IEnumerable<RemoteData>? RemoteData { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

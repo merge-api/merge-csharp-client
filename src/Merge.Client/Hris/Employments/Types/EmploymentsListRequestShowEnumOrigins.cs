@@ -52,5 +52,5 @@ public enum EmploymentsListRequestShowEnumOrigins
     PayFrequencyPayPeriod,
 
     [EnumMember(Value = "pay_period")]
-    PayPeriod
+    PayPeriod,
 }

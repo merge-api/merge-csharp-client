@@ -19,5 +19,5 @@ public enum FlsaStatusEnum
     Nonexempt,
 
     [EnumMember(Value = "OWNER")]
-    Owner
+    Owner,
 }

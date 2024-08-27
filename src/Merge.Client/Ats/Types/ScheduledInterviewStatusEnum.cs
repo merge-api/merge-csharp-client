@@ -16,5 +16,5 @@ public enum ScheduledInterviewStatusEnum
     AwaitingFeedback,
 
     [EnumMember(Value = "COMPLETE")]
-    Complete
+    Complete,
 }

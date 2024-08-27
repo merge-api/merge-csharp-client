@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -80,4 +81,9 @@ public record EndUserDetailsRequest
     /// </summary>
     [JsonPropertyName("integration_specific_config")]
     public Dictionary<string, object?>? IntegrationSpecificConfig { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

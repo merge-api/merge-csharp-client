@@ -52,5 +52,5 @@ public enum EngagementsRetrieveRequestExpand
     OwnerAccountEngagementType,
 
     [EnumMember(Value = "owner,engagement_type")]
-    OwnerEngagementType
+    OwnerEngagementType,
 }

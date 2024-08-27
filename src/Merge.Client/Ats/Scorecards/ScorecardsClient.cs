@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class ScorecardsClient
     /// <summary>
     /// Returns a list of `Scorecard` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Scorecards.ListAsync(new ScorecardsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedScorecardList> ListAsync(
         ScorecardsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.ApplicationId != null)
         {
             _query["application_id"] = request.ApplicationId;
@@ -44,7 +51,7 @@ public partial class ScorecardsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -97,8 +104,9 @@ public partial class ScorecardsClient
                 Method = HttpMethod.Get,
                 Path = "ats/v1/scorecards",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -123,16 +131,22 @@ public partial class ScorecardsClient
     /// <summary>
     /// Returns a `Scorecard` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Scorecards.RetrieveAsync("id", new ScorecardsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Scorecard> RetrieveAsync(
         string id,
         ScorecardsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -153,8 +167,9 @@ public partial class ScorecardsClient
                 Method = HttpMethod.Get,
                 Path = $"ats/v1/scorecards/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

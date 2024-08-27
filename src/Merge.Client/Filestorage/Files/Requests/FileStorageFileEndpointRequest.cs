@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Filestorage;
 
 public record FileStorageFileEndpointRequest
@@ -13,4 +17,9 @@ public record FileStorageFileEndpointRequest
     public bool? RunAsync { get; set; }
 
     public required FileRequest Model { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

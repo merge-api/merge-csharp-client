@@ -16,5 +16,5 @@ public enum DisabilityStatusEnum
     NoIDontHaveADisability,
 
     [EnumMember(Value = "I_DONT_WISH_TO_ANSWER")]
-    IDontWishToAnswer
+    IDontWishToAnswer,
 }

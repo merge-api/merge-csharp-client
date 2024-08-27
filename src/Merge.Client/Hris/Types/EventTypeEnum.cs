@@ -121,5 +121,5 @@ public enum EventTypeEnum
     MergeWebhookTargetChanged,
 
     [EnumMember(Value = "END_USER_CREDENTIALS_ACCESSED")]
-    EndUserCredentialsAccessed
+    EndUserCredentialsAccessed,
 }

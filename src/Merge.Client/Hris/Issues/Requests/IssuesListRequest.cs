@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Hris;
 
 public record IssuesListRequest
@@ -65,4 +69,9 @@ public record IssuesListRequest
     /// - `RESOLVED` - RESOLVED
     /// </summary>
     public IssuesListRequestStatus? Status { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

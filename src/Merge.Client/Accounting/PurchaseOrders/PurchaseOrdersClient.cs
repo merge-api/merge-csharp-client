@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class PurchaseOrdersClient
     /// <summary>
     /// Returns a list of `PurchaseOrder` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.PurchaseOrders.ListAsync(new PurchaseOrdersListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedPurchaseOrderList> ListAsync(
         PurchaseOrdersListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -44,7 +51,7 @@ public partial class PurchaseOrdersClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -101,8 +108,9 @@ public partial class PurchaseOrdersClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/purchase-orders",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -127,12 +135,20 @@ public partial class PurchaseOrdersClient
     /// <summary>
     /// Creates a `PurchaseOrder` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.PurchaseOrders.CreateAsync(
+    ///     new PurchaseOrderEndpointRequest { Model = new PurchaseOrderRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<PurchaseOrderResponse> CreateAsync(
         PurchaseOrderEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -141,15 +157,18 @@ public partial class PurchaseOrdersClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "accounting/v1/purchase-orders",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -174,16 +193,22 @@ public partial class PurchaseOrdersClient
     /// <summary>
     /// Returns a `PurchaseOrder` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.PurchaseOrders.RetrieveAsync("id", new PurchaseOrdersRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<PurchaseOrder> RetrieveAsync(
         string id,
         PurchaseOrdersRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -204,8 +229,9 @@ public partial class PurchaseOrdersClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/purchase-orders/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -230,7 +256,15 @@ public partial class PurchaseOrdersClient
     /// <summary>
     /// Returns metadata for `PurchaseOrder` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Accounting.PurchaseOrders.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -238,8 +272,9 @@ public partial class PurchaseOrdersClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/purchase-orders/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

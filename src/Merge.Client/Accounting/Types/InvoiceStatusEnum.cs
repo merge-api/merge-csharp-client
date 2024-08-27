@@ -25,5 +25,5 @@ public enum InvoiceStatusEnum
     Open,
 
     [EnumMember(Value = "VOID")]
-    Void
+    Void,
 }

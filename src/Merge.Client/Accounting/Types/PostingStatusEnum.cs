@@ -13,5 +13,5 @@ public enum PostingStatusEnum
     Unposted,
 
     [EnumMember(Value = "POSTED")]
-    Posted
+    Posted,
 }

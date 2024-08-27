@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Ats;
 
 public record JobsListRequest
@@ -82,4 +86,9 @@ public record JobsListRequest
     /// - `PENDING` - PENDING
     /// </summary>
     public JobsListRequestStatus? Status { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

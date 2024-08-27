@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public record CustomObjectClassesListRequest
@@ -51,4 +55,9 @@ public record CustomObjectClassesListRequest
     /// The API provider's ID for the given object.
     /// </summary>
     public string? RemoteId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

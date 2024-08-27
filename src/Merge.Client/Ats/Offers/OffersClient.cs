@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class OffersClient
     /// <summary>
     /// Returns a list of `Offer` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Offers.ListAsync(new OffersListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedOfferList> ListAsync(
         OffersListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.ApplicationId != null)
         {
             _query["application_id"] = request.ApplicationId;
@@ -48,7 +55,7 @@ public partial class OffersClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -93,8 +100,9 @@ public partial class OffersClient
                 Method = HttpMethod.Get,
                 Path = "ats/v1/offers",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -119,16 +127,22 @@ public partial class OffersClient
     /// <summary>
     /// Returns an `Offer` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Offers.RetrieveAsync("id", new OffersRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Offer> RetrieveAsync(
         string id,
         OffersRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -149,8 +163,9 @@ public partial class OffersClient
                 Method = HttpMethod.Get,
                 Path = $"ats/v1/offers/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

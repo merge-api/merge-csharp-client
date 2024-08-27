@@ -16,5 +16,5 @@ public enum RequestFormatEnum
     Xml,
 
     [EnumMember(Value = "MULTIPART")]
-    Multipart
+    Multipart,
 }

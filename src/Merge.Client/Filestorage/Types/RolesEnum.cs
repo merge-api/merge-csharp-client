@@ -16,5 +16,5 @@ public enum RolesEnum
     Write,
 
     [EnumMember(Value = "OWNER")]
-    Owner
+    Owner,
 }

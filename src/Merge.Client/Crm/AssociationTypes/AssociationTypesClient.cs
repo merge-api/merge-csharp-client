@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,13 +19,22 @@ public partial class AssociationTypesClient
     /// <summary>
     /// Returns a list of `AssociationType` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.AssociationTypes.CustomObjectClassesAssociationTypesListAsync(
+    ///     "custom_object_class_id",
+    ///     new CustomObjectClassesAssociationTypesListRequest()
+    /// );
+    /// </code>
+    /// </example>
     public async Task<PaginatedAssociationTypeList> CustomObjectClassesAssociationTypesListAsync(
         string customObjectClassId,
         CustomObjectClassesAssociationTypesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -78,8 +88,9 @@ public partial class AssociationTypesClient
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/custom-object-classes/{customObjectClassId}/association-types",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -104,13 +115,41 @@ public partial class AssociationTypesClient
     /// <summary>
     /// Creates an `AssociationType` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.AssociationTypes.CustomObjectClassesAssociationTypesCreateAsync(
+    ///     "custom_object_class_id",
+    ///     new CrmAssociationTypeEndpointRequest
+    ///     {
+    ///         Model = new AssociationTypeRequestRequest
+    ///         {
+    ///             SourceObjectClass = new ObjectClassDescriptionRequest
+    ///             {
+    ///                 Id = "id",
+    ///                 OriginType = OriginTypeEnum.CustomObject,
+    ///             },
+    ///             TargetObjectClasses = new List<ObjectClassDescriptionRequest>()
+    ///             {
+    ///                 new ObjectClassDescriptionRequest
+    ///                 {
+    ///                     Id = "id",
+    ///                     OriginType = OriginTypeEnum.CustomObject,
+    ///                 },
+    ///             },
+    ///             RemoteKeyName = "remote_key_name",
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<CrmAssociationTypeResponse> CustomObjectClassesAssociationTypesCreateAsync(
         string customObjectClassId,
         CrmAssociationTypeEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -119,15 +158,18 @@ public partial class AssociationTypesClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"crm/v1/custom-object-classes/{customObjectClassId}/association-types",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -152,14 +194,24 @@ public partial class AssociationTypesClient
     /// <summary>
     /// Returns an `AssociationType` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.AssociationTypes.CustomObjectClassesAssociationTypesRetrieveAsync(
+    ///     "custom_object_class_id",
+    ///     "id",
+    ///     new CustomObjectClassesAssociationTypesRetrieveRequest()
+    /// );
+    /// </code>
+    /// </example>
     public async Task<AssociationType> CustomObjectClassesAssociationTypesRetrieveAsync(
         string customObjectClassId,
         string id,
         CustomObjectClassesAssociationTypesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -175,8 +227,9 @@ public partial class AssociationTypesClient
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/custom-object-classes/{customObjectClassId}/association-types/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -201,9 +254,17 @@ public partial class AssociationTypesClient
     /// <summary>
     /// Returns metadata for `CRMAssociationType` POSTs.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.AssociationTypes.CustomObjectClassesAssociationTypesMetaPostRetrieveAsync(
+    ///     "custom_object_class_id"
+    /// );
+    /// </code>
+    /// </example>
     public async Task<MetaResponse> CustomObjectClassesAssociationTypesMetaPostRetrieveAsync(
         string customObjectClassId,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -213,8 +274,9 @@ public partial class AssociationTypesClient
                 Method = HttpMethod.Get,
                 Path =
                     $"crm/v1/custom-object-classes/{customObjectClassId}/association-types/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

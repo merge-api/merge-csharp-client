@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class TagsClient
     /// <summary>
     /// Returns a list of `Tag` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Tags.ListAsync(new TagsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedTagList> ListAsync(
         TagsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -73,8 +80,9 @@ public partial class TagsClient
                 Method = HttpMethod.Get,
                 Path = "ats/v1/tags",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

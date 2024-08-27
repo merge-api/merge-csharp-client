@@ -19,5 +19,5 @@ public enum PriorityEnum
     Normal,
 
     [EnumMember(Value = "LOW")]
-    Low
+    Low,
 }

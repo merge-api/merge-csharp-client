@@ -52,5 +52,5 @@ public enum InterviewsListRequestExpand
     OrganizerApplicationJobInterviewStage,
 
     [EnumMember(Value = "organizer,job_interview_stage")]
-    OrganizerJobInterviewStage
+    OrganizerJobInterviewStage,
 }

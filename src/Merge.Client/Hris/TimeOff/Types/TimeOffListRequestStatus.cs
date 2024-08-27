@@ -22,5 +22,5 @@ public enum TimeOffListRequestStatus
     Deleted,
 
     [EnumMember(Value = "REQUESTED")]
-    Requested
+    Requested,
 }

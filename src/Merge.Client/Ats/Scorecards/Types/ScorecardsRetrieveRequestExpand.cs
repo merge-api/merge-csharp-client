@@ -28,5 +28,5 @@ public enum ScorecardsRetrieveRequestExpand
     InterviewInterviewer,
 
     [EnumMember(Value = "interviewer")]
-    Interviewer
+    Interviewer,
 }

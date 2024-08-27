@@ -52,5 +52,5 @@ public enum EmployeesRetrieveRequestShowEnumOrigins
     GenderMaritalStatus,
 
     [EnumMember(Value = "marital_status")]
-    MaritalStatus
+    MaritalStatus,
 }

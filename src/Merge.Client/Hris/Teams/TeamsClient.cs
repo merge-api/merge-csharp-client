@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class TeamsClient
     /// <summary>
     /// Returns a list of `Team` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.Teams.ListAsync(new TeamsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedTeamList> ListAsync(
         TeamsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -81,8 +88,9 @@ public partial class TeamsClient
                 Method = HttpMethod.Get,
                 Path = "hris/v1/teams",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -107,13 +115,19 @@ public partial class TeamsClient
     /// <summary>
     /// Returns a `Team` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.Teams.RetrieveAsync("id", new TeamsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Team> RetrieveAsync(
         string id,
         TeamsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -129,8 +143,9 @@ public partial class TeamsClient
                 Method = HttpMethod.Get,
                 Path = $"hris/v1/teams/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -14,4 +14,9 @@ public record RemoteFieldRequest
 
     [JsonPropertyName("value")]
     public string? Value { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

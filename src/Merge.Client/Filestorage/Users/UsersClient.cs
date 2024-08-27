@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class UsersClient
     /// <summary>
     /// Returns a list of `User` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Users.ListAsync(new UsersListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedUserList> ListAsync(
         UsersListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -77,8 +84,9 @@ public partial class UsersClient
                 Method = HttpMethod.Get,
                 Path = "filestorage/v1/users",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -103,13 +111,19 @@ public partial class UsersClient
     /// <summary>
     /// Returns a `User` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Users.RetrieveAsync("id", new UsersRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<User> RetrieveAsync(
         string id,
         UsersRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
@@ -121,8 +135,9 @@ public partial class UsersClient
                 Method = HttpMethod.Get,
                 Path = $"filestorage/v1/users/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

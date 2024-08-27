@@ -16,5 +16,5 @@ public enum EmailAddressTypeEnum
     Work,
 
     [EnumMember(Value = "OTHER")]
-    Other
+    Other,
 }

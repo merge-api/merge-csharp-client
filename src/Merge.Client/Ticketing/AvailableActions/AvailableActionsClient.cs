@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,7 +19,15 @@ public partial class AvailableActionsClient
     /// <summary>
     /// Returns a list of models and actions available for an account.
     /// </summary>
-    public async Task<AvailableActions> RetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.AvailableActions.RetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<AvailableActions> RetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -26,8 +35,9 @@ public partial class AvailableActionsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/available-actions",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

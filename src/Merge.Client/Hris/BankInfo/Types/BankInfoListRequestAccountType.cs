@@ -13,5 +13,5 @@ public enum BankInfoListRequestAccountType
     Checking,
 
     [EnumMember(Value = "SAVINGS")]
-    Savings
+    Savings,
 }

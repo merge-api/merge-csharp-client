@@ -16,5 +16,5 @@ public enum OpportunitiesListRequestStatus
     Open,
 
     [EnumMember(Value = "WON")]
-    Won
+    Won,
 }

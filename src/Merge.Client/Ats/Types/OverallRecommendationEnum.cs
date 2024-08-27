@@ -22,5 +22,5 @@ public enum OverallRecommendationEnum
     StrongYes,
 
     [EnumMember(Value = "NO_DECISION")]
-    NoDecision
+    NoDecision,
 }

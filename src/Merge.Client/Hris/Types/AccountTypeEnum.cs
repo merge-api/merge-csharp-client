@@ -13,5 +13,5 @@ public enum AccountTypeEnum
     Savings,
 
     [EnumMember(Value = "CHECKING")]
-    Checking
+    Checking,
 }

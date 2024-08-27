@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,15 +19,21 @@ public partial class LinkedAccountsClient
     /// <summary>
     /// List linked accounts for your organization.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.LinkedAccounts.ListAsync(new LinkedAccountsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedAccountDetailsAndActionsList> ListAsync(
         LinkedAccountsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Category != null)
         {
-            _query["category"] = JsonSerializer.Serialize(request.Category.Value);
+            _query["category"] = request.Category.Value.Stringify();
         }
         if (request.Cursor != null)
         {
@@ -83,8 +90,9 @@ public partial class LinkedAccountsClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/linked-accounts",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

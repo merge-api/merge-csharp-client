@@ -16,5 +16,5 @@ public enum UsersRetrieveRequestExpand
     Teams,
 
     [EnumMember(Value = "teams,roles")]
-    TeamsRoles
+    TeamsRoles,
 }

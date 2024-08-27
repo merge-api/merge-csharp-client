@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -32,4 +33,9 @@ public record FieldMappingApiInstanceResponse
 
     [JsonPropertyName("Engagement")]
     public IEnumerable<FieldMappingApiInstance>? Engagement { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

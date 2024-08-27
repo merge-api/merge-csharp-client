@@ -62,4 +62,9 @@ public record AccountRequest
 
     [JsonPropertyName("remote_fields")]
     public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

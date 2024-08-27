@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -17,4 +18,9 @@ public record FieldMappingApiInstance
 
     [JsonPropertyName("remote_field")]
     public FieldMappingApiInstanceRemoteField? RemoteField { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

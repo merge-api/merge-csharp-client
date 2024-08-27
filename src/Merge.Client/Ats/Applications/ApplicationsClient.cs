@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class ApplicationsClient
     /// <summary>
     /// Returns a list of `Application` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Applications.ListAsync(new ApplicationsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedApplicationList> ListAsync(
         ApplicationsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CandidateId != null)
         {
             _query["candidate_id"] = request.CandidateId;
@@ -52,7 +59,7 @@ public partial class ApplicationsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -101,8 +108,9 @@ public partial class ApplicationsClient
                 Method = HttpMethod.Get,
                 Path = "ats/v1/applications",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -127,12 +135,24 @@ public partial class ApplicationsClient
     /// <summary>
     /// Creates an `Application` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Applications.CreateAsync(
+    ///     new ApplicationEndpointRequest
+    ///     {
+    ///         Model = new ApplicationRequest(),
+    ///         RemoteUserId = "remote_user_id",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ApplicationResponse> CreateAsync(
         ApplicationEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -141,15 +161,22 @@ public partial class ApplicationsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>()
+        {
+            { "model", request.Model },
+            { "remote_user_id", request.RemoteUserId },
+        };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "ats/v1/applications",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -174,16 +201,22 @@ public partial class ApplicationsClient
     /// <summary>
     /// Returns an `Application` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Applications.RetrieveAsync("id", new ApplicationsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Application> RetrieveAsync(
         string id,
         ApplicationsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -196,8 +229,9 @@ public partial class ApplicationsClient
                 Method = HttpMethod.Get,
                 Path = $"ats/v1/applications/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -222,13 +256,19 @@ public partial class ApplicationsClient
     /// <summary>
     /// Updates the `current_stage` field of an `Application` object
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Applications.ChangeStageCreateAsync("id", new UpdateApplicationStageRequest());
+    /// </code>
+    /// </example>
     public async Task<ApplicationResponse> ChangeStageCreateAsync(
         string id,
         UpdateApplicationStageRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -237,15 +277,22 @@ public partial class ApplicationsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>()
+        {
+            { "job_interview_stage", request.JobInterviewStage },
+            { "remote_user_id", request.RemoteUserId },
+        };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"ats/v1/applications/{id}/change-stage",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -270,12 +317,18 @@ public partial class ApplicationsClient
     /// <summary>
     /// Returns metadata for `Application` POSTs.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Applications.MetaPostRetrieveAsync(new ApplicationsMetaPostRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<MetaResponse> MetaPostRetrieveAsync(
         ApplicationsMetaPostRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.ApplicationRemoteTemplateId != null)
         {
             _query["application_remote_template_id"] = request.ApplicationRemoteTemplateId;
@@ -287,8 +340,9 @@ public partial class ApplicationsClient
                 Method = HttpMethod.Get,
                 Path = "ats/v1/applications/meta/post",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -52,5 +52,5 @@ public enum EeocsListRequestRemoteFields
     RaceVeteranStatus,
 
     [EnumMember(Value = "veteran_status")]
-    VeteranStatus
+    VeteranStatus,
 }

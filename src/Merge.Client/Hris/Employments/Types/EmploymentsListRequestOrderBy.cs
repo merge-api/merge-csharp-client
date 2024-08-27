@@ -13,5 +13,5 @@ public enum EmploymentsListRequestOrderBy
     EffectiveDateDescending,
 
     [EnumMember(Value = "effective_date")]
-    EffectiveDateAscending
+    EffectiveDateAscending,
 }

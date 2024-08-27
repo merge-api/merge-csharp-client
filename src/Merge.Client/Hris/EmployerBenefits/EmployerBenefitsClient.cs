@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class EmployerBenefitsClient
     /// <summary>
     /// Returns a list of `EmployerBenefit` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.EmployerBenefits.ListAsync(new EmployerBenefitsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedEmployerBenefitList> ListAsync(
         EmployerBenefitsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -73,8 +80,9 @@ public partial class EmployerBenefitsClient
                 Method = HttpMethod.Get,
                 Path = "hris/v1/employer-benefits",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -99,13 +107,19 @@ public partial class EmployerBenefitsClient
     /// <summary>
     /// Returns an `EmployerBenefit` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.EmployerBenefits.RetrieveAsync("id", new EmployerBenefitsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<EmployerBenefit> RetrieveAsync(
         string id,
         EmployerBenefitsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
@@ -117,8 +131,9 @@ public partial class EmployerBenefitsClient
                 Method = HttpMethod.Get,
                 Path = $"hris/v1/employer-benefits/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

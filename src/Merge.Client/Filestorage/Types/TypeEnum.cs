@@ -19,5 +19,5 @@ public enum TypeEnum
     Company,
 
     [EnumMember(Value = "ANYONE")]
-    Anyone
+    Anyone,
 }

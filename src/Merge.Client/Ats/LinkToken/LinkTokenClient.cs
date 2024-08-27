@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,9 +19,23 @@ public partial class LinkTokenClient
     /// <summary>
     /// Creates a link token to be used when linking a new end user.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.LinkToken.CreateAsync(
+    ///     new EndUserDetailsRequest
+    ///     {
+    ///         EndUserEmailAddress = "example@gmail.com",
+    ///         EndUserOrganizationName = "Test Organization",
+    ///         EndUserOriginId = "12345",
+    ///         Categories = new List<CategoriesEnum>() { CategoriesEnum.Hris, CategoriesEnum.Ats },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<LinkToken> CreateAsync(
         EndUserDetailsRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -30,8 +45,9 @@ public partial class LinkTokenClient
                 Method = HttpMethod.Post,
                 Path = "ats/v1/link-token",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Ats;
 
 public record ApplicationsListRequest
@@ -81,4 +85,9 @@ public record ApplicationsListRequest
     /// If provided, will only return applications with this source.
     /// </summary>
     public string? Source { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

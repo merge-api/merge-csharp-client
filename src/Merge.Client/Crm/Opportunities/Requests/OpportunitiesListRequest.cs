@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public record OpportunitiesListRequest
@@ -95,4 +99,9 @@ public record OpportunitiesListRequest
     /// - `LOST` - LOST
     /// </summary>
     public OpportunitiesListRequestStatus? Status { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class InterviewsClient
     /// <summary>
     /// Returns a list of `ScheduledInterview` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Interviews.ListAsync(new InterviewsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedScheduledInterviewList> ListAsync(
         InterviewsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.ApplicationId != null)
         {
             _query["application_id"] = request.ApplicationId;
@@ -44,7 +51,7 @@ public partial class InterviewsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -101,8 +108,9 @@ public partial class InterviewsClient
                 Method = HttpMethod.Get,
                 Path = "ats/v1/interviews",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -127,12 +135,24 @@ public partial class InterviewsClient
     /// <summary>
     /// Creates a `ScheduledInterview` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Interviews.CreateAsync(
+    ///     new ScheduledInterviewEndpointRequest
+    ///     {
+    ///         Model = new ScheduledInterviewRequest(),
+    ///         RemoteUserId = "remote_user_id",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ScheduledInterviewResponse> CreateAsync(
         ScheduledInterviewEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -141,15 +161,22 @@ public partial class InterviewsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>()
+        {
+            { "model", request.Model },
+            { "remote_user_id", request.RemoteUserId },
+        };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "ats/v1/interviews",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -174,16 +201,22 @@ public partial class InterviewsClient
     /// <summary>
     /// Returns a `ScheduledInterview` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Interviews.RetrieveAsync("id", new InterviewsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<ScheduledInterview> RetrieveAsync(
         string id,
         InterviewsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -204,8 +237,9 @@ public partial class InterviewsClient
                 Method = HttpMethod.Get,
                 Path = $"ats/v1/interviews/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -230,7 +264,15 @@ public partial class InterviewsClient
     /// <summary>
     /// Returns metadata for `ScheduledInterview` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Ats.Interviews.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -238,8 +280,9 @@ public partial class InterviewsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "ats/v1/interviews/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

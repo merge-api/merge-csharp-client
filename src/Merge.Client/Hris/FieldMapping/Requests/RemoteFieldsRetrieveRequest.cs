@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Hris;
 
 public record RemoteFieldsRetrieveRequest
@@ -11,4 +15,9 @@ public record RemoteFieldsRetrieveRequest
     /// If true, will include example values, where available, for remote fields in the 3rd party platform. These examples come from active data from your customers.
     /// </summary>
     public string? IncludeExampleValues { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

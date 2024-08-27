@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Ats;
 
 public record LinkedAccountsListRequest
@@ -71,4 +75,9 @@ public record LinkedAccountsListRequest
     /// Filter by status. Options: `COMPLETE`, `INCOMPLETE`, `RELINK_NEEDED`
     /// </summary>
     public string? Status { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

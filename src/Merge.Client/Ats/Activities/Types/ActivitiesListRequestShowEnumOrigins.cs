@@ -16,5 +16,5 @@ public enum ActivitiesListRequestShowEnumOrigins
     ActivityTypeVisibility,
 
     [EnumMember(Value = "visibility")]
-    Visibility
+    Visibility,
 }

@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public record CustomObjectClassesCustomObjectsAssociationsUpdateRequest
@@ -11,4 +15,9 @@ public record CustomObjectClassesCustomObjectsAssociationsUpdateRequest
     /// Whether or not third-party updates should be run asynchronously.
     /// </summary>
     public bool? RunAsync { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

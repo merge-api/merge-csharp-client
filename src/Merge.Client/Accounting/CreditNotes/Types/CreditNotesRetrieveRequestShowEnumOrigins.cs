@@ -16,5 +16,5 @@ public enum CreditNotesRetrieveRequestShowEnumOrigins
     StatusType,
 
     [EnumMember(Value = "type")]
-    Type
+    Type,
 }

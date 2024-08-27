@@ -13,5 +13,5 @@ public enum DirectionEnum
     Inbound,
 
     [EnumMember(Value = "OUTBOUND")]
-    Outbound
+    Outbound,
 }

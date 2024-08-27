@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public record PatchedCrmContactEndpointRequest
@@ -13,4 +17,9 @@ public record PatchedCrmContactEndpointRequest
     public bool? RunAsync { get; set; }
 
     public required PatchedContactRequest Model { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

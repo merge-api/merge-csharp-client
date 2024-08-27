@@ -16,5 +16,5 @@ public enum EmployeePayrollRunsListRequestExpand
     EmployeePayrollRun,
 
     [EnumMember(Value = "payroll_run")]
-    PayrollRun
+    PayrollRun,
 }

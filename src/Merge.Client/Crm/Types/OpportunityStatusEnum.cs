@@ -16,5 +16,5 @@ public enum OpportunityStatusEnum
     Won,
 
     [EnumMember(Value = "LOST")]
-    Lost
+    Lost,
 }

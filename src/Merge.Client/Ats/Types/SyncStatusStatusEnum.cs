@@ -25,5 +25,5 @@ public enum SyncStatusStatusEnum
     Paused,
 
     [EnumMember(Value = "PARTIALLY_SYNCED")]
-    PartiallySynced
+    PartiallySynced,
 }

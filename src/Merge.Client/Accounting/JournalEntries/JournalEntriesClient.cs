@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class JournalEntriesClient
     /// <summary>
     /// Returns a list of `JournalEntry` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.JournalEntries.ListAsync(new JournalEntriesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedJournalEntryList> ListAsync(
         JournalEntriesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -44,7 +51,7 @@ public partial class JournalEntriesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -93,8 +100,9 @@ public partial class JournalEntriesClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/journal-entries",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -119,12 +127,20 @@ public partial class JournalEntriesClient
     /// <summary>
     /// Creates a `JournalEntry` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.JournalEntries.CreateAsync(
+    ///     new JournalEntryEndpointRequest { Model = new JournalEntryRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<JournalEntryResponse> CreateAsync(
         JournalEntryEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -133,15 +149,18 @@ public partial class JournalEntriesClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "accounting/v1/journal-entries",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -166,16 +185,22 @@ public partial class JournalEntriesClient
     /// <summary>
     /// Returns a `JournalEntry` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.JournalEntries.RetrieveAsync("id", new JournalEntriesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<JournalEntry> RetrieveAsync(
         string id,
         JournalEntriesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -188,8 +213,9 @@ public partial class JournalEntriesClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/journal-entries/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -214,7 +240,15 @@ public partial class JournalEntriesClient
     /// <summary>
     /// Returns metadata for `JournalEntry` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Accounting.JournalEntries.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -222,8 +256,9 @@ public partial class JournalEntriesClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/journal-entries/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

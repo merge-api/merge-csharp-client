@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Accounting;
 
 public record CashFlowStatementsListRequest
@@ -56,4 +60,9 @@ public record CashFlowStatementsListRequest
     /// The API provider's ID for the given object.
     /// </summary>
     public string? RemoteId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

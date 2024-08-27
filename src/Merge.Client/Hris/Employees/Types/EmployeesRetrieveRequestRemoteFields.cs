@@ -52,5 +52,5 @@ public enum EmployeesRetrieveRequestRemoteFields
     GenderMaritalStatus,
 
     [EnumMember(Value = "marital_status")]
-    MaritalStatus
+    MaritalStatus,
 }

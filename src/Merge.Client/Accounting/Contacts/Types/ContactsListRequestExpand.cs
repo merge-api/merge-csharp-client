@@ -28,5 +28,5 @@ public enum ContactsListRequestExpand
     PhoneNumbers,
 
     [EnumMember(Value = "phone_numbers,company")]
-    PhoneNumbersCompany
+    PhoneNumbersCompany,
 }

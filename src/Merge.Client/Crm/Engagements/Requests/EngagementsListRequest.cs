@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public record EngagementsListRequest
@@ -66,4 +70,9 @@ public record EngagementsListRequest
     /// If provided, will only return engagements started before this datetime.
     /// </summary>
     public DateTime? StartedBefore { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Hris;
 
 public record TimesheetEntriesListRequest
@@ -76,4 +80,9 @@ public record TimesheetEntriesListRequest
     /// If provided, will only return timesheet entries started before this datetime.
     /// </summary>
     public string? StartedBefore { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

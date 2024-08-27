@@ -16,5 +16,5 @@ public enum AccountsListRequestRemoteFields
     ClassificationStatus,
 
     [EnumMember(Value = "status")]
-    Status
+    Status,
 }

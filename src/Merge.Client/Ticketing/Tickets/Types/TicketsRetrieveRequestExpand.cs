@@ -388,5 +388,5 @@ public enum TicketsRetrieveRequestExpand
     CreatorParentTicket,
 
     [EnumMember(Value = "parent_ticket")]
-    ParentTicket
+    ParentTicket,
 }

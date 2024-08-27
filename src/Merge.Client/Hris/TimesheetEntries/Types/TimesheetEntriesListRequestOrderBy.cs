@@ -13,5 +13,5 @@ public enum TimesheetEntriesListRequestOrderBy
     StartTimeDescending,
 
     [EnumMember(Value = "start_time")]
-    StartTimeAscending
+    StartTimeAscending,
 }

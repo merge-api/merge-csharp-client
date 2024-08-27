@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Hris;
 
 public record EmploymentsRetrieveRequest
@@ -21,4 +25,9 @@ public record EmploymentsRetrieveRequest
     /// A comma separated list of enum field names for which you'd like the original values to be returned, instead of Merge's normalized enum values. [Learn more](https://help.merge.dev/en/articles/8950958-show_enum_origins-query-parameter)
     /// </summary>
     public EmploymentsRetrieveRequestShowEnumOrigins? ShowEnumOrigins { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -100,5 +100,5 @@ public enum TransactionsRetrieveRequestExpand
     TrackingCategoriesContactAccountAccountingPeriod,
 
     [EnumMember(Value = "tracking_categories,contact,accounting_period")]
-    TrackingCategoriesContactAccountingPeriod
+    TrackingCategoriesContactAccountingPeriod,
 }

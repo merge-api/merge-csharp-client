@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Hris;
 
 public record GroupsListRequest
@@ -71,4 +75,9 @@ public record GroupsListRequest
     /// If provided, will only return groups of these types. Multiple values can be separated by commas.
     /// </summary>
     public string? Types { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

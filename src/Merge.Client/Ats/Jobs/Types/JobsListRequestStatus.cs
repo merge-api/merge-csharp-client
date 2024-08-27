@@ -22,5 +22,5 @@ public enum JobsListRequestStatus
     Open,
 
     [EnumMember(Value = "PENDING")]
-    Pending
+    Pending,
 }

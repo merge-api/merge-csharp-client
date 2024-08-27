@@ -16,5 +16,5 @@ public enum OriginTypeEnum
     CommonModel,
 
     [EnumMember(Value = "REMOTE_ONLY_MODEL")]
-    RemoteOnlyModel
+    RemoteOnlyModel,
 }

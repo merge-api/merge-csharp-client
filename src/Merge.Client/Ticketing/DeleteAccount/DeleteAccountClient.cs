@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -17,7 +18,15 @@ public partial class DeleteAccountClient
     /// <summary>
     /// Delete a linked account.
     /// </summary>
-    public async System.Threading.Tasks.Task DeleteAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.DeleteAccount.DeleteAsync();
+    /// </code>
+    /// </example>
+    public async System.Threading.Tasks.Task DeleteAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -25,8 +34,9 @@ public partial class DeleteAccountClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "ticketing/v1/delete-account",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

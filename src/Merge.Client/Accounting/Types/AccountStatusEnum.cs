@@ -16,5 +16,5 @@ public enum AccountStatusEnum
     Pending,
 
     [EnumMember(Value = "INACTIVE")]
-    Inactive
+    Inactive,
 }

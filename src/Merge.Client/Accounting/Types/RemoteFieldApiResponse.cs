@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -62,4 +63,9 @@ public record RemoteFieldApiResponse
 
     [JsonPropertyName("GeneralLedgerTransaction")]
     public IEnumerable<RemoteFieldApi>? GeneralLedgerTransaction { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

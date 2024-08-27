@@ -925,5 +925,5 @@ public enum CurrencyEnum
     Zwr,
 
     [EnumMember(Value = "ZWL")]
-    Zwl
+    Zwl,
 }

@@ -13,5 +13,5 @@ public enum IssueStatusEnum
     Ongoing,
 
     [EnumMember(Value = "RESOLVED")]
-    Resolved
+    Resolved,
 }

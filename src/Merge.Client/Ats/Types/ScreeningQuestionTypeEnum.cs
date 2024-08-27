@@ -31,5 +31,5 @@ public enum ScreeningQuestionTypeEnum
     Numeric,
 
     [EnumMember(Value = "BOOLEAN")]
-    Boolean
+    Boolean,
 }

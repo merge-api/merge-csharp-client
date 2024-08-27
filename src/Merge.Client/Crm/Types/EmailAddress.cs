@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -29,4 +30,9 @@ public record EmailAddress
     /// </summary>
     [JsonPropertyName("email_address_type")]
     public string? EmailAddressType { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

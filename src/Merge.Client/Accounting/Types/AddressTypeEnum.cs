@@ -13,5 +13,5 @@ public enum AddressTypeEnum
     Billing,
 
     [EnumMember(Value = "SHIPPING")]
-    Shipping
+    Shipping,
 }

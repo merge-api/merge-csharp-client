@@ -1,4 +1,3 @@
-using System;
 using Merge.Client.Accounting;
 using Merge.Client.Ats;
 using Merge.Client.Core;
@@ -21,31 +20,39 @@ public partial class Merge
         ClientOptions? clientOptions = null
     )
     {
-        _client = new RawClient(
+        var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {apiKey}" },
                 { "X-Account-Token", accountToken },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Merge.Client" },
-                { "X-Fern-SDK-Version", "0.2.0" },
-            },
-            new Dictionary<string, Func<string>>() { },
-            clientOptions ?? new ClientOptions()
+                { "X-Fern-SDK-Version", "0.2.1" },
+                { "User-Agent", "Merge.Client/0.2.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
+        Filestorage = new FilestorageClient(_client);
         Ats = new AtsClient(_client);
         Crm = new CrmClient(_client);
-        Filestorage = new FilestorageClient(_client);
         Hris = new HrisClient(_client);
         Ticketing = new TicketingClient(_client);
         Accounting = new AccountingClient(_client);
     }
 
+    public FilestorageClient Filestorage { get; init; }
+
     public AtsClient Ats { get; init; }
 
     public CrmClient Crm { get; init; }
-
-    public FilestorageClient Filestorage { get; init; }
 
     public HrisClient Hris { get; init; }
 

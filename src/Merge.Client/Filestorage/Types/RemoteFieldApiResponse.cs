@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -20,4 +21,9 @@ public record RemoteFieldApiResponse
 
     [JsonPropertyName("User")]
     public IEnumerable<RemoteFieldApi>? User { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

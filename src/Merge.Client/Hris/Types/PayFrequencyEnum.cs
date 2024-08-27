@@ -34,5 +34,5 @@ public enum PayFrequencyEnum
     ProRata,
 
     [EnumMember(Value = "SEMIMONTHLY")]
-    Semimonthly
+    Semimonthly,
 }

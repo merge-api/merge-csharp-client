@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Ats;
 
 public record CandidatesListRequest
@@ -71,4 +75,9 @@ public record CandidatesListRequest
     /// If provided, will only return candidates with these tags; multiple tags can be separated by commas.
     /// </summary>
     public string? Tags { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

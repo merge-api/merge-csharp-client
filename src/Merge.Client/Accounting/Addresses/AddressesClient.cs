@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,13 +19,19 @@ public partial class AddressesClient
     /// <summary>
     /// Returns an `Address` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Addresses.RetrieveAsync("id", new AddressesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Address> RetrieveAsync(
         string id,
         AddressesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
@@ -44,8 +51,9 @@ public partial class AddressesClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/addresses/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

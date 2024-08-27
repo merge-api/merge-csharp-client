@@ -31,5 +31,5 @@ public enum EthnicityEnum
     White,
 
     [EnumMember(Value = "PREFER_NOT_TO_DISCLOSE")]
-    PreferNotToDisclose
+    PreferNotToDisclose,
 }

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class FoldersClient
     /// <summary>
     /// Returns a list of `Folder` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Folders.ListAsync(new FoldersListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedFolderList> ListAsync(
         FoldersListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -44,7 +51,7 @@ public partial class FoldersClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -89,8 +96,9 @@ public partial class FoldersClient
                 Method = HttpMethod.Get,
                 Path = "filestorage/v1/folders",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -115,12 +123,20 @@ public partial class FoldersClient
     /// <summary>
     /// Creates a `Folder` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Folders.CreateAsync(
+    ///     new FileStorageFolderEndpointRequest { Model = new FolderRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<FileStorageFolderResponse> CreateAsync(
         FileStorageFolderEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -129,15 +145,18 @@ public partial class FoldersClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "filestorage/v1/folders",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -162,16 +181,22 @@ public partial class FoldersClient
     /// <summary>
     /// Returns a `Folder` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Folders.RetrieveAsync("id", new FoldersRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Folder> RetrieveAsync(
         string id,
         FoldersRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -184,8 +209,9 @@ public partial class FoldersClient
                 Method = HttpMethod.Get,
                 Path = $"filestorage/v1/folders/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -210,7 +236,15 @@ public partial class FoldersClient
     /// <summary>
     /// Returns metadata for `FileStorageFolder` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Folders.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -218,8 +252,9 @@ public partial class FoldersClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "filestorage/v1/folders/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

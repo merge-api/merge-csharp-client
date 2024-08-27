@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Accounting;
 
 public record InvoicesListRequest
@@ -89,4 +93,9 @@ public record InvoicesListRequest
     /// - `ACCOUNTS_PAYABLE` - ACCOUNTS_PAYABLE
     /// </summary>
     public InvoicesListRequestType? Type { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

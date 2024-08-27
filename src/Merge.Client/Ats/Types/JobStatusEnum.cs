@@ -22,5 +22,5 @@ public enum JobStatusEnum
     Archived,
 
     [EnumMember(Value = "PENDING")]
-    Pending
+    Pending,
 }

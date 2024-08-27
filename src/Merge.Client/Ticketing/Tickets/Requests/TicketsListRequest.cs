@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Ticketing;
 
 public record TicketsListRequest
@@ -166,4 +170,9 @@ public record TicketsListRequest
     /// If provided, will only return tickets where the URL matches or contains the substring
     /// </summary>
     public string? TicketUrl { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

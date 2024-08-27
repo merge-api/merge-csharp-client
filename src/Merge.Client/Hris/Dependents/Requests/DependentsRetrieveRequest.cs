@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Hris;
 
 public record DependentsRetrieveRequest
@@ -11,4 +15,9 @@ public record DependentsRetrieveRequest
     /// Whether to include sensitive fields (such as social security numbers) in the response.
     /// </summary>
     public bool? IncludeSensitiveFields { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

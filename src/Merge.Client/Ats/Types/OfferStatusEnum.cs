@@ -34,5 +34,5 @@ public enum OfferStatusEnum
     Signed,
 
     [EnumMember(Value = "DEPRECATED")]
-    Deprecated
+    Deprecated,
 }

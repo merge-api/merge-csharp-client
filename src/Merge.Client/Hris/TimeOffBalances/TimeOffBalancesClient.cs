@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class TimeOffBalancesClient
     /// <summary>
     /// Returns a list of `TimeOffBalance` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.TimeOffBalances.ListAsync(new TimeOffBalancesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedTimeOffBalanceList> ListAsync(
         TimeOffBalancesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -72,7 +79,7 @@ public partial class TimeOffBalancesClient
         }
         if (request.PolicyType != null)
         {
-            _query["policy_type"] = JsonSerializer.Serialize(request.PolicyType.Value);
+            _query["policy_type"] = request.PolicyType.Value.Stringify();
         }
         if (request.RemoteFields != null)
         {
@@ -93,8 +100,9 @@ public partial class TimeOffBalancesClient
                 Method = HttpMethod.Get,
                 Path = "hris/v1/time-off-balances",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -119,13 +127,19 @@ public partial class TimeOffBalancesClient
     /// <summary>
     /// Returns a `TimeOffBalance` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.TimeOffBalances.RetrieveAsync("id", new TimeOffBalancesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<TimeOffBalance> RetrieveAsync(
         string id,
         TimeOffBalancesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -149,8 +163,9 @@ public partial class TimeOffBalancesClient
                 Method = HttpMethod.Get,
                 Path = $"hris/v1/time-off-balances/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

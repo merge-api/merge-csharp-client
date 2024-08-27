@@ -16,5 +16,5 @@ public enum TicketsCollaboratorsListRequestExpand
     Teams,
 
     [EnumMember(Value = "teams,roles")]
-    TeamsRoles
+    TeamsRoles,
 }

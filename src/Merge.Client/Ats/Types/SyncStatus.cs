@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -26,4 +27,9 @@ public record SyncStatus
 
     [JsonPropertyName("selective_sync_configurations_usage")]
     public SelectiveSyncConfigurationsUsageEnum? SelectiveSyncConfigurationsUsage { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

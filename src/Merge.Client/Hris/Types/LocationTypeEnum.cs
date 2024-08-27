@@ -13,5 +13,5 @@ public enum LocationTypeEnum
     Home,
 
     [EnumMember(Value = "WORK")]
-    Work
+    Work,
 }

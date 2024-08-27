@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -12,4 +13,9 @@ public record LinkedAccountCommonModelScopeDeserializerRequest
     [JsonPropertyName("common_models")]
     public IEnumerable<IndividualCommonModelScopeDeserializerRequest> CommonModels { get; set; } =
         new List<IndividualCommonModelScopeDeserializerRequest>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

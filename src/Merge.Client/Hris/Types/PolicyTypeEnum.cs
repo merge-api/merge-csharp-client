@@ -25,5 +25,5 @@ public enum PolicyTypeEnum
     Volunteer,
 
     [EnumMember(Value = "BEREAVEMENT")]
-    Bereavement
+    Bereavement,
 }
