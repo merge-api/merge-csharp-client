@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class AuditTrailClient
     /// <summary>
     /// Gets a list of audit trail events.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.AuditTrail.ListAsync(new AuditTrailListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedAuditLogEventList> ListAsync(
         AuditTrailListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -55,8 +62,9 @@ public partial class AuditTrailClient
                 Method = HttpMethod.Get,
                 Path = "filestorage/v1/audit-trail",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

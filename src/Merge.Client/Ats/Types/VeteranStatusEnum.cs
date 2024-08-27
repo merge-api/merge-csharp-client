@@ -16,5 +16,5 @@ public enum VeteranStatusEnum
     IIdentifyAsOneOrMoreOfTheClassificationsOfAProtectedVeteran,
 
     [EnumMember(Value = "I_DONT_WISH_TO_ANSWER")]
-    IDontWishToAnswer
+    IDontWishToAnswer,
 }

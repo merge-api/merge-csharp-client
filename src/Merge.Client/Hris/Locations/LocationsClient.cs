@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class LocationsClient
     /// <summary>
     /// Returns a list of `Location` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.Locations.ListAsync(new LocationsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedLocationList> ListAsync(
         LocationsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -48,7 +55,7 @@ public partial class LocationsClient
         }
         if (request.LocationType != null)
         {
-            _query["location_type"] = JsonSerializer.Serialize(request.LocationType.Value);
+            _query["location_type"] = request.LocationType.Value.Stringify();
         }
         if (request.ModifiedAfter != null)
         {
@@ -85,8 +92,9 @@ public partial class LocationsClient
                 Method = HttpMethod.Get,
                 Path = "hris/v1/locations",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -111,13 +119,19 @@ public partial class LocationsClient
     /// <summary>
     /// Returns a `Location` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.Locations.RetrieveAsync("id", new LocationsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Location> RetrieveAsync(
         string id,
         LocationsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
@@ -137,8 +151,9 @@ public partial class LocationsClient
                 Method = HttpMethod.Get,
                 Path = $"hris/v1/locations/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

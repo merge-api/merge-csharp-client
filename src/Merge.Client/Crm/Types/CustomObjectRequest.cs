@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -8,4 +9,9 @@ public record CustomObjectRequest
 {
     [JsonPropertyName("fields")]
     public Dictionary<string, object?> Fields { get; set; } = new Dictionary<string, object?>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

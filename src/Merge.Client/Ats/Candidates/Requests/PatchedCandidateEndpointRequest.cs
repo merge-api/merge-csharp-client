@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Ats;
 
 public record PatchedCandidateEndpointRequest
@@ -15,4 +19,9 @@ public record PatchedCandidateEndpointRequest
     public required PatchedCandidateRequest Model { get; set; }
 
     public required string RemoteUserId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

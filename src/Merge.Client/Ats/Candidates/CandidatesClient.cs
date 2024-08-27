@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class CandidatesClient
     /// <summary>
     /// Returns a list of `Candidate` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Candidates.ListAsync(new CandidatesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedCandidateList> ListAsync(
         CandidatesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -44,7 +51,7 @@ public partial class CandidatesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.FirstName != null)
         {
@@ -93,8 +100,9 @@ public partial class CandidatesClient
                 Method = HttpMethod.Get,
                 Path = "ats/v1/candidates",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -119,12 +127,20 @@ public partial class CandidatesClient
     /// <summary>
     /// Creates a `Candidate` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Candidates.CreateAsync(
+    ///     new CandidateEndpointRequest { Model = new CandidateRequest(), RemoteUserId = "remote_user_id" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<CandidateResponse> CreateAsync(
         CandidateEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -133,15 +149,22 @@ public partial class CandidatesClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>()
+        {
+            { "model", request.Model },
+            { "remote_user_id", request.RemoteUserId },
+        };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "ats/v1/candidates",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -166,16 +189,22 @@ public partial class CandidatesClient
     /// <summary>
     /// Returns a `Candidate` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Candidates.RetrieveAsync("id", new CandidatesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Candidate> RetrieveAsync(
         string id,
         CandidatesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -188,8 +217,9 @@ public partial class CandidatesClient
                 Method = HttpMethod.Get,
                 Path = $"ats/v1/candidates/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -214,13 +244,26 @@ public partial class CandidatesClient
     /// <summary>
     /// Updates a `Candidate` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Candidates.PartialUpdateAsync(
+    ///     "id",
+    ///     new PatchedCandidateEndpointRequest
+    ///     {
+    ///         Model = new PatchedCandidateRequest(),
+    ///         RemoteUserId = "remote_user_id",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<CandidateResponse> PartialUpdateAsync(
         string id,
         PatchedCandidateEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -229,15 +272,22 @@ public partial class CandidatesClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>()
+        {
+            { "model", request.Model },
+            { "remote_user_id", request.RemoteUserId },
+        };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethodExtensions.Patch,
                 Path = $"ats/v1/candidates/{id}",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -262,10 +312,19 @@ public partial class CandidatesClient
     /// <summary>
     /// Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Candidates.IgnoreCreateAsync(
+    ///     "model_id",
+    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    /// );
+    /// </code>
+    /// </example>
     public async System.Threading.Tasks.Task IgnoreCreateAsync(
         string modelId,
         IgnoreCommonModelRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -275,8 +334,9 @@ public partial class CandidatesClient
                 Method = HttpMethod.Post,
                 Path = $"ats/v1/candidates/ignore/{modelId}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -293,9 +353,15 @@ public partial class CandidatesClient
     /// <summary>
     /// Returns metadata for `Candidate` PATCHs.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Candidates.MetaPatchRetrieveAsync("id");
+    /// </code>
+    /// </example>
     public async Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -304,8 +370,9 @@ public partial class CandidatesClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"ats/v1/candidates/meta/patch/{id}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -330,7 +397,15 @@ public partial class CandidatesClient
     /// <summary>
     /// Returns metadata for `Candidate` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Ats.Candidates.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -338,8 +413,9 @@ public partial class CandidatesClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "ats/v1/candidates/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

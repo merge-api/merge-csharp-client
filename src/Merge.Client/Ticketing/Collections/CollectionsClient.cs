@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class CollectionsClient
     /// <summary>
     /// Returns a list of `Collection` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Collections.ListAsync(new CollectionsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedCollectionList> ListAsync(
         CollectionsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CollectionType != null)
         {
             _query["collection_type"] = request.CollectionType;
@@ -93,8 +100,9 @@ public partial class CollectionsClient
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/collections",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -119,13 +127,19 @@ public partial class CollectionsClient
     /// <summary>
     /// Returns a `Collection` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Collections.RetrieveAsync("id", new CollectionsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Collection> RetrieveAsync(
         string id,
         CollectionsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -149,8 +163,9 @@ public partial class CollectionsClient
                 Method = HttpMethod.Get,
                 Path = $"ticketing/v1/collections/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -175,20 +190,26 @@ public partial class CollectionsClient
     /// <summary>
     /// Returns a list of `User` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Collections.UsersListAsync("parent_id", new CollectionsUsersListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedUserList> UsersListAsync(
         string parentId,
         CollectionsUsersListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -209,8 +230,9 @@ public partial class CollectionsClient
                 Method = HttpMethod.Get,
                 Path = $"ticketing/v1/collections/{parentId}/users",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

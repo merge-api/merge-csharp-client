@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class PayrollRunsClient
     /// <summary>
     /// Returns a list of `PayrollRun` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.PayrollRuns.ListAsync(new PayrollRunsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedPayrollRunList> ListAsync(
         PayrollRunsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -72,7 +79,7 @@ public partial class PayrollRunsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -80,11 +87,11 @@ public partial class PayrollRunsClient
         }
         if (request.RunType != null)
         {
-            _query["run_type"] = JsonSerializer.Serialize(request.RunType.Value);
+            _query["run_type"] = request.RunType.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         if (request.StartedAfter != null)
         {
@@ -103,8 +110,9 @@ public partial class PayrollRunsClient
                 Method = HttpMethod.Get,
                 Path = "hris/v1/payroll-runs",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -129,24 +137,30 @@ public partial class PayrollRunsClient
     /// <summary>
     /// Returns a `PayrollRun` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.PayrollRuns.RetrieveAsync("id", new PayrollRunsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<PayrollRun> RetrieveAsync(
         string id,
         PayrollRunsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -155,8 +169,9 @@ public partial class PayrollRunsClient
                 Method = HttpMethod.Get,
                 Path = $"hris/v1/payroll-runs/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

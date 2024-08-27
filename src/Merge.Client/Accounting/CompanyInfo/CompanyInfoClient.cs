@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class CompanyInfoClient
     /// <summary>
     /// Returns a list of `CompanyInfo` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.CompanyInfo.ListAsync(new CompanyInfoListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedCompanyInfoList> ListAsync(
         CompanyInfoListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -40,7 +47,7 @@ public partial class CompanyInfoClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -77,8 +84,9 @@ public partial class CompanyInfoClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/company-info",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -103,16 +111,22 @@ public partial class CompanyInfoClient
     /// <summary>
     /// Returns a `CompanyInfo` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.CompanyInfo.RetrieveAsync("id", new CompanyInfoRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<CompanyInfo> RetrieveAsync(
         string id,
         CompanyInfoRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -125,8 +139,9 @@ public partial class CompanyInfoClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/company-info/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

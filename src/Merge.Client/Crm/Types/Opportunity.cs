@@ -107,4 +107,9 @@ public record Opportunity
 
     [JsonPropertyName("remote_fields")]
     public IEnumerable<RemoteField>? RemoteFields { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

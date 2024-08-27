@@ -22,5 +22,5 @@ public enum TimeOffStatusEnum
     Cancelled,
 
     [EnumMember(Value = "DELETED")]
-    Deleted
+    Deleted,
 }

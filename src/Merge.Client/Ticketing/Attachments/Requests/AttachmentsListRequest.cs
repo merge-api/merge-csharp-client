@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Ticketing;
 
 public record AttachmentsListRequest
@@ -61,4 +65,9 @@ public record AttachmentsListRequest
     /// If provided, will only return comments for this ticket.
     /// </summary>
     public string? TicketId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

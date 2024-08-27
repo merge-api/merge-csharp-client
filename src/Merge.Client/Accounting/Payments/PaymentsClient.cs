@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class PaymentsClient
     /// <summary>
     /// Returns a list of `Payment` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Payments.ListAsync(new PaymentsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedPaymentList> ListAsync(
         PaymentsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.AccountId != null)
         {
             _query["account_id"] = request.AccountId;
@@ -52,7 +59,7 @@ public partial class PaymentsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -101,8 +108,9 @@ public partial class PaymentsClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/payments",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -127,12 +135,20 @@ public partial class PaymentsClient
     /// <summary>
     /// Creates a `Payment` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Payments.CreateAsync(
+    ///     new PaymentEndpointRequest { Model = new PaymentRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<PaymentResponse> CreateAsync(
         PaymentEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -141,15 +157,18 @@ public partial class PaymentsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "accounting/v1/payments",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -174,16 +193,22 @@ public partial class PaymentsClient
     /// <summary>
     /// Returns a `Payment` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Payments.RetrieveAsync("id", new PaymentsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Payment> RetrieveAsync(
         string id,
         PaymentsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -196,8 +221,9 @@ public partial class PaymentsClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/payments/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -222,13 +248,22 @@ public partial class PaymentsClient
     /// <summary>
     /// Updates a `Payment` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Payments.PartialUpdateAsync(
+    ///     "id",
+    ///     new PatchedPaymentEndpointRequest { Model = new PatchedPaymentRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<PaymentResponse> PartialUpdateAsync(
         string id,
         PatchedPaymentEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -237,15 +272,18 @@ public partial class PaymentsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethodExtensions.Patch,
                 Path = $"accounting/v1/payments/{id}",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -270,9 +308,15 @@ public partial class PaymentsClient
     /// <summary>
     /// Returns metadata for `Payment` PATCHs.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Payments.MetaPatchRetrieveAsync("id");
+    /// </code>
+    /// </example>
     public async Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -281,8 +325,9 @@ public partial class PaymentsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/payments/meta/patch/{id}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -307,7 +352,15 @@ public partial class PaymentsClient
     /// <summary>
     /// Returns metadata for `Payment` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Payments.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -315,8 +368,9 @@ public partial class PaymentsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/payments/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

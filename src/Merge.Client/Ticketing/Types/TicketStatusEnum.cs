@@ -19,5 +19,5 @@ public enum TicketStatusEnum
     InProgress,
 
     [EnumMember(Value = "ON_HOLD")]
-    OnHold
+    OnHold,
 }

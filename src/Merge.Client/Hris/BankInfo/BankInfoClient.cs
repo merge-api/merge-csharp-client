@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,15 +19,21 @@ public partial class BankInfoClient
     /// <summary>
     /// Returns a list of `BankInfo` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.BankInfo.ListAsync(new BankInfoListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedBankInfoList> ListAsync(
         BankInfoListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.AccountType != null)
         {
-            _query["account_type"] = JsonSerializer.Serialize(request.AccountType.Value);
+            _query["account_type"] = request.AccountType.Value.Stringify();
         }
         if (request.BankName != null)
         {
@@ -76,7 +83,7 @@ public partial class BankInfoClient
         }
         if (request.OrderBy != null)
         {
-            _query["order_by"] = JsonSerializer.Serialize(request.OrderBy.Value);
+            _query["order_by"] = request.OrderBy.Value.Stringify();
         }
         if (request.PageSize != null)
         {
@@ -101,8 +108,9 @@ public partial class BankInfoClient
                 Method = HttpMethod.Get,
                 Path = "hris/v1/bank-info",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -127,13 +135,19 @@ public partial class BankInfoClient
     /// <summary>
     /// Returns a `BankInfo` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.BankInfo.RetrieveAsync("id", new BankInfoRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<BankInfo> RetrieveAsync(
         string id,
         BankInfoRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -157,8 +171,9 @@ public partial class BankInfoClient
                 Method = HttpMethod.Get,
                 Path = $"hris/v1/bank-info/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

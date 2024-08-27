@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -17,4 +18,9 @@ public record ModelOperation
 
     [JsonPropertyName("supported_fields")]
     public IEnumerable<string> SupportedFields { get; set; } = new List<string>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record FieldMappingApiInstanceTargetField
 
     [JsonPropertyName("is_organization_wide")]
     public required bool IsOrganizationWide { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

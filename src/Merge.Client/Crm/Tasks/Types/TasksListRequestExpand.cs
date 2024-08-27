@@ -28,5 +28,5 @@ public enum TasksListRequestExpand
     OwnerAccountOpportunity,
 
     [EnumMember(Value = "owner,opportunity")]
-    OwnerOpportunity
+    OwnerOpportunity,
 }

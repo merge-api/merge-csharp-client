@@ -22,5 +22,5 @@ public enum EmploymentTypeEnum
     Contractor,
 
     [EnumMember(Value = "FREELANCE")]
-    Freelance
+    Freelance,
 }

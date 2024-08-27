@@ -16,5 +16,5 @@ public enum TicketAccessEnum
     AssignedOnly,
 
     [EnumMember(Value = "TEAM_ONLY")]
-    TeamOnly
+    TeamOnly,
 }

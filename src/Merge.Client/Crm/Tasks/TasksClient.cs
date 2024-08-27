@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class TasksClient
     /// <summary>
     /// Returns a list of `Task` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Tasks.ListAsync(new TasksListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedTaskList> ListAsync(
         TasksListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -40,7 +47,7 @@ public partial class TasksClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -81,8 +88,9 @@ public partial class TasksClient
                 Method = HttpMethod.Get,
                 Path = "crm/v1/tasks",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -107,12 +115,18 @@ public partial class TasksClient
     /// <summary>
     /// Creates a `Task` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Tasks.CreateAsync(new TaskEndpointRequest { Model = new TaskRequest() });
+    /// </code>
+    /// </example>
     public async Task<TaskResponse> CreateAsync(
         TaskEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -121,15 +135,18 @@ public partial class TasksClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "crm/v1/tasks",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -154,16 +171,22 @@ public partial class TasksClient
     /// <summary>
     /// Returns a `Task` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Tasks.RetrieveAsync("id", new TasksRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Task> RetrieveAsync(
         string id,
         TasksRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -180,8 +203,9 @@ public partial class TasksClient
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/tasks/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -206,13 +230,22 @@ public partial class TasksClient
     /// <summary>
     /// Updates a `Task` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Tasks.PartialUpdateAsync(
+    ///     "id",
+    ///     new PatchedTaskEndpointRequest { Model = new PatchedTaskRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<TaskResponse> PartialUpdateAsync(
         string id,
         PatchedTaskEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -221,15 +254,18 @@ public partial class TasksClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethodExtensions.Patch,
                 Path = $"crm/v1/tasks/{id}",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -254,9 +290,15 @@ public partial class TasksClient
     /// <summary>
     /// Returns metadata for `Task` PATCHs.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Tasks.MetaPatchRetrieveAsync("id");
+    /// </code>
+    /// </example>
     public async Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -265,8 +307,9 @@ public partial class TasksClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/tasks/meta/patch/{id}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -291,7 +334,15 @@ public partial class TasksClient
     /// <summary>
     /// Returns metadata for `Task` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Crm.Tasks.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -299,8 +350,9 @@ public partial class TasksClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/tasks/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -325,12 +377,18 @@ public partial class TasksClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Tasks.RemoteFieldClassesListAsync(new TasksRemoteFieldClassesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
         TasksRemoteFieldClassesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -362,8 +420,9 @@ public partial class TasksClient
                 Method = HttpMethod.Get,
                 Path = "crm/v1/tasks/remote-field-classes",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -28,5 +28,5 @@ public enum CommentsListRequestExpand
     UserContactTicket,
 
     [EnumMember(Value = "user,ticket")]
-    UserTicket
+    UserTicket,
 }

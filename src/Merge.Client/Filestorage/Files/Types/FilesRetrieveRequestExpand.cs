@@ -28,5 +28,5 @@ public enum FilesRetrieveRequestExpand
     PermissionsFolder,
 
     [EnumMember(Value = "permissions,folder,drive")]
-    PermissionsFolderDrive
+    PermissionsFolderDrive,
 }

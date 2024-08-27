@@ -16,5 +16,5 @@ public enum ActivityTypeEnum
     Email,
 
     [EnumMember(Value = "OTHER")]
-    Other
+    Other,
 }

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class ProjectsClient
     /// <summary>
     /// Returns a list of `Project` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Projects.ListAsync(new ProjectsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedProjectList> ListAsync(
         ProjectsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -73,8 +80,9 @@ public partial class ProjectsClient
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/projects",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -99,13 +107,19 @@ public partial class ProjectsClient
     /// <summary>
     /// Returns a `Project` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Projects.RetrieveAsync("id", new ProjectsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Project> RetrieveAsync(
         string id,
         ProjectsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
@@ -117,8 +131,9 @@ public partial class ProjectsClient
                 Method = HttpMethod.Get,
                 Path = $"ticketing/v1/projects/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -143,20 +158,26 @@ public partial class ProjectsClient
     /// <summary>
     /// Returns a list of `User` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Projects.UsersListAsync("parent_id", new ProjectsUsersListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedUserList> UsersListAsync(
         string parentId,
         ProjectsUsersListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -177,8 +198,9 @@ public partial class ProjectsClient
                 Method = HttpMethod.Get,
                 Path = $"ticketing/v1/projects/{parentId}/users",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

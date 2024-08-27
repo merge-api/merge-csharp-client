@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class CashFlowStatementsClient
     /// <summary>
     /// Returns a list of `CashFlowStatement` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.CashFlowStatements.ListAsync(new CashFlowStatementsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedCashFlowStatementList> ListAsync(
         CashFlowStatementsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -81,8 +88,9 @@ public partial class CashFlowStatementsClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/cash-flow-statements",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -107,13 +115,22 @@ public partial class CashFlowStatementsClient
     /// <summary>
     /// Returns a `CashFlowStatement` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.CashFlowStatements.RetrieveAsync(
+    ///     "id",
+    ///     new CashFlowStatementsRetrieveRequest()
+    /// );
+    /// </code>
+    /// </example>
     public async Task<CashFlowStatement> RetrieveAsync(
         string id,
         CashFlowStatementsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -129,8 +146,9 @@ public partial class CashFlowStatementsClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/cash-flow-statements/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

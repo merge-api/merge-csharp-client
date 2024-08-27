@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record RemoteEndpointInfo
 
     [JsonPropertyName("field_traversal_path")]
     public IEnumerable<object> FieldTraversalPath { get; set; } = new List<object>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

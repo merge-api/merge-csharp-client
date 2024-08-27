@@ -86,4 +86,9 @@ public record Note
 
     [JsonPropertyName("remote_fields")]
     public IEnumerable<RemoteField>? RemoteFields { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

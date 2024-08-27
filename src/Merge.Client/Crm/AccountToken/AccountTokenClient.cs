@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,9 +19,15 @@ public partial class AccountTokenClient
     /// <summary>
     /// Returns the account token for the end user with the provided public token.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.AccountToken.RetrieveAsync("public_token");
+    /// </code>
+    /// </example>
     public async Task<AccountToken> RetrieveAsync(
         string publicToken,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -29,8 +36,9 @@ public partial class AccountTokenClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/account-token/{publicToken}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

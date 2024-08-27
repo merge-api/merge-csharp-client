@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public record EngagementEndpointRequest
@@ -13,4 +17,9 @@ public record EngagementEndpointRequest
     public bool? RunAsync { get; set; }
 
     public required EngagementRequest Model { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

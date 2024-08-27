@@ -16,5 +16,5 @@ public enum EmploymentsRetrieveRequestExpand
     EmployeePayGroup,
 
     [EnumMember(Value = "pay_group")]
-    PayGroup
+    PayGroup,
 }

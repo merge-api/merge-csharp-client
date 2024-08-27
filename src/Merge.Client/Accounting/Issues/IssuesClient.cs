@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class IssuesClient
     /// <summary>
     /// Gets issues.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Issues.ListAsync(new IssuesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedIssueList> ListAsync(
         IssuesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.AccountToken != null)
         {
             _query["account_token"] = request.AccountToken;
@@ -82,7 +89,7 @@ public partial class IssuesClient
         }
         if (request.Status != null)
         {
-            _query["status"] = JsonSerializer.Serialize(request.Status.Value);
+            _query["status"] = request.Status.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -91,8 +98,9 @@ public partial class IssuesClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/issues",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -117,7 +125,16 @@ public partial class IssuesClient
     /// <summary>
     /// Get a specific issue.
     /// </summary>
-    public async Task<Issue> RetrieveAsync(string id, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Issues.RetrieveAsync("id");
+    /// </code>
+    /// </example>
+    public async Task<Issue> RetrieveAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -125,8 +142,9 @@ public partial class IssuesClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/issues/{id}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

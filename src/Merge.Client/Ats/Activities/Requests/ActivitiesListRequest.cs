@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Ats;
 
 public record ActivitiesListRequest
@@ -66,4 +70,9 @@ public record ActivitiesListRequest
     /// If provided, will only return activities done by this user.
     /// </summary>
     public string? UserId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

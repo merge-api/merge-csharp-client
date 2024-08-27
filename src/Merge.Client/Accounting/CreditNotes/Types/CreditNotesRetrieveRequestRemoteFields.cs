@@ -16,5 +16,5 @@ public enum CreditNotesRetrieveRequestRemoteFields
     StatusType,
 
     [EnumMember(Value = "type")]
-    Type
+    Type,
 }

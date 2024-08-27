@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Crm;
 
 public record TaskEndpointRequest
@@ -13,4 +17,9 @@ public record TaskEndpointRequest
     public bool? RunAsync { get; set; }
 
     public required TaskRequest Model { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

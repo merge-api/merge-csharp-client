@@ -22,5 +22,5 @@ public enum PayrollRunsListRequestRunType
     SignOnBonus,
 
     [EnumMember(Value = "TERMINATION")]
-    Termination
+    Termination,
 }

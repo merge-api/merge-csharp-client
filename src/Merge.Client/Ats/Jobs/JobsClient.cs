@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class JobsClient
     /// <summary>
     /// Returns a list of `Job` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Jobs.ListAsync(new JobsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedJobList> ListAsync(
         JobsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Code != null)
         {
             _query["code"] = request.Code;
@@ -44,7 +51,7 @@ public partial class JobsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -88,7 +95,7 @@ public partial class JobsClient
         }
         if (request.Status != null)
         {
-            _query["status"] = JsonSerializer.Serialize(request.Status.Value);
+            _query["status"] = request.Status.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -97,8 +104,9 @@ public partial class JobsClient
                 Method = HttpMethod.Get,
                 Path = "ats/v1/jobs",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -123,16 +131,22 @@ public partial class JobsClient
     /// <summary>
     /// Returns a `Job` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Jobs.RetrieveAsync("id", new JobsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Job> RetrieveAsync(
         string id,
         JobsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -153,8 +167,9 @@ public partial class JobsClient
                 Method = HttpMethod.Get,
                 Path = $"ats/v1/jobs/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -179,20 +194,29 @@ public partial class JobsClient
     /// <summary>
     /// Returns a list of `ScreeningQuestion` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Jobs.ScreeningQuestionsListAsync(
+    ///     "job_id",
+    ///     new JobsScreeningQuestionsListRequest()
+    /// );
+    /// </code>
+    /// </example>
     public async Task<PaginatedScreeningQuestionList> ScreeningQuestionsListAsync(
         string jobId,
         JobsScreeningQuestionsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -213,8 +237,9 @@ public partial class JobsClient
                 Method = HttpMethod.Get,
                 Path = $"ats/v1/jobs/{jobId}/screening-questions",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

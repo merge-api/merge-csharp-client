@@ -406,5 +406,5 @@ public enum CreditNotesRetrieveRequestExpand
     TrackingCategoriesContactCompany,
 
     [EnumMember(Value = "tracking_categories,contact,company,accounting_period")]
-    TrackingCategoriesContactCompanyAccountingPeriod
+    TrackingCategoriesContactCompanyAccountingPeriod,
 }

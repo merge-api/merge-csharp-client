@@ -22,5 +22,5 @@ public enum PhoneNumberTypeEnum
     Skype,
 
     [EnumMember(Value = "OTHER")]
-    Other
+    Other,
 }

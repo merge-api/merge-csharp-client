@@ -118,5 +118,5 @@ public enum EventTypeEnum
     DisabledMergeWebhook,
 
     [EnumMember(Value = "MERGE_WEBHOOK_TARGET_CHANGED")]
-    MergeWebhookTargetChanged
+    MergeWebhookTargetChanged,
 }

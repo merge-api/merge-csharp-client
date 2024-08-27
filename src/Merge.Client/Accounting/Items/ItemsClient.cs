@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class ItemsClient
     /// <summary>
     /// Returns a list of `Item` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Items.ListAsync(new ItemsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedItemList> ListAsync(
         ItemsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -44,7 +51,7 @@ public partial class ItemsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -89,8 +96,9 @@ public partial class ItemsClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/items",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -115,16 +123,22 @@ public partial class ItemsClient
     /// <summary>
     /// Returns an `Item` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Items.RetrieveAsync("id", new ItemsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Item> RetrieveAsync(
         string id,
         ItemsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -145,8 +159,9 @@ public partial class ItemsClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/items/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

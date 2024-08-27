@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -39,4 +40,9 @@ public record MultipartFormFieldRequest
     /// </summary>
     [JsonPropertyName("content_type")]
     public string? ContentType { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

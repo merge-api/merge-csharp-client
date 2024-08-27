@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Hris;
 
 public record EmployeesListRequest
@@ -165,4 +169,9 @@ public record EmployeesListRequest
     /// If provided, will only return employees for this location.
     /// </summary>
     public string? WorkLocationId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

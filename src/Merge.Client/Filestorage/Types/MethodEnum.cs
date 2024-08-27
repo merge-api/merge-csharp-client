@@ -28,5 +28,5 @@ public enum MethodEnum
     Patch,
 
     [EnumMember(Value = "DELETE")]
-    Delete
+    Delete,
 }

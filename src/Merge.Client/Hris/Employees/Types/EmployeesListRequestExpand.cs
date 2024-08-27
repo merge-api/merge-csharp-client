@@ -774,5 +774,5 @@ public enum EmployeesListRequestExpand
     WorkLocationTeamCompanyPayGroup,
 
     [EnumMember(Value = "work_location,team,pay_group")]
-    WorkLocationTeamPayGroup
+    WorkLocationTeamPayGroup,
 }

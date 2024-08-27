@@ -19,5 +19,5 @@ public enum CardinalityEnum
     ManyToMany,
 
     [EnumMember(Value = "ONE_TO_MANY")]
-    OneToMany
+    OneToMany,
 }

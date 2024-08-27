@@ -16,5 +16,5 @@ public enum CreditNoteStatusEnum
     Authorized,
 
     [EnumMember(Value = "PAID")]
-    Paid
+    Paid,
 }

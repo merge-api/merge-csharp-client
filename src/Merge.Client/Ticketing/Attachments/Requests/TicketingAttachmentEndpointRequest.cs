@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Ticketing;
 
 public record TicketingAttachmentEndpointRequest
@@ -13,4 +17,9 @@ public record TicketingAttachmentEndpointRequest
     public bool? RunAsync { get; set; }
 
     public required AttachmentRequest Model { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

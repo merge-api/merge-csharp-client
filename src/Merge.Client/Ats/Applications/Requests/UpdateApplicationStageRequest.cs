@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Ats;
 
 public record UpdateApplicationStageRequest
@@ -18,4 +22,9 @@ public record UpdateApplicationStageRequest
     public string? JobInterviewStage { get; set; }
 
     public string? RemoteUserId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

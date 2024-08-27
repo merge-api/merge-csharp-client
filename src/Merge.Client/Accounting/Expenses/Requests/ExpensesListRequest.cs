@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Accounting;
 
 public record ExpensesListRequest
@@ -66,4 +70,9 @@ public record ExpensesListRequest
     /// If provided, will only return objects created before this datetime.
     /// </summary>
     public DateTime? TransactionDateBefore { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

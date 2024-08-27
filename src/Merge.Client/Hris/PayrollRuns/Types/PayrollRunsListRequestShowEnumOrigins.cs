@@ -16,5 +16,5 @@ public enum PayrollRunsListRequestShowEnumOrigins
     RunStateRunType,
 
     [EnumMember(Value = "run_type")]
-    RunType
+    RunType,
 }

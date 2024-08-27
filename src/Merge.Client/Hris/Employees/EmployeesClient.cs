@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class EmployeesClient
     /// <summary>
     /// Returns a list of `Employee` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.Employees.ListAsync(new EmployeesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedEmployeeList> ListAsync(
         EmployeesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -48,7 +55,7 @@ public partial class EmployeesClient
         }
         if (request.EmploymentStatus != null)
         {
-            _query["employment_status"] = JsonSerializer.Serialize(request.EmploymentStatus.Value);
+            _query["employment_status"] = request.EmploymentStatus.Value.Stringify();
         }
         if (request.EmploymentType != null)
         {
@@ -56,7 +63,7 @@ public partial class EmployeesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.FirstName != null)
         {
@@ -120,7 +127,7 @@ public partial class EmployeesClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -128,7 +135,7 @@ public partial class EmployeesClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         if (request.StartedAfter != null)
         {
@@ -171,8 +178,9 @@ public partial class EmployeesClient
                 Method = HttpMethod.Get,
                 Path = "hris/v1/employees",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -197,12 +205,20 @@ public partial class EmployeesClient
     /// <summary>
     /// Creates an `Employee` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.Employees.CreateAsync(
+    ///     new EmployeeEndpointRequest { Model = new EmployeeRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<EmployeeResponse> CreateAsync(
         EmployeeEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -211,15 +227,18 @@ public partial class EmployeesClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "hris/v1/employees",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -244,16 +263,22 @@ public partial class EmployeesClient
     /// <summary>
     /// Returns an `Employee` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.Employees.RetrieveAsync("id", new EmployeesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Employee> RetrieveAsync(
         string id,
         EmployeesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -265,11 +290,11 @@ public partial class EmployeesClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -278,8 +303,9 @@ public partial class EmployeesClient
                 Method = HttpMethod.Get,
                 Path = $"hris/v1/employees/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -304,10 +330,19 @@ public partial class EmployeesClient
     /// <summary>
     /// Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.Employees.IgnoreCreateAsync(
+    ///     "model_id",
+    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    /// );
+    /// </code>
+    /// </example>
     public async System.Threading.Tasks.Task IgnoreCreateAsync(
         string modelId,
         IgnoreCommonModelRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -317,8 +352,9 @@ public partial class EmployeesClient
                 Method = HttpMethod.Post,
                 Path = $"hris/v1/employees/ignore/{modelId}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -335,7 +371,15 @@ public partial class EmployeesClient
     /// <summary>
     /// Returns metadata for `Employee` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Hris.Employees.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -343,8 +387,9 @@ public partial class EmployeesClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "hris/v1/employees/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

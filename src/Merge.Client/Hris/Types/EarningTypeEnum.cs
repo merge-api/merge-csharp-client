@@ -19,5 +19,5 @@ public enum EarningTypeEnum
     Overtime,
 
     [EnumMember(Value = "BONUS")]
-    Bonus
+    Bonus,
 }

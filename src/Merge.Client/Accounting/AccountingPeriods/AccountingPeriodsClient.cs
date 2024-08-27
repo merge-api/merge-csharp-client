@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class AccountingPeriodsClient
     /// <summary>
     /// Returns a list of `AccountingPeriod` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.AccountingPeriods.ListAsync(new AccountingPeriodsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedAccountingPeriodList> ListAsync(
         AccountingPeriodsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -47,8 +54,9 @@ public partial class AccountingPeriodsClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/accounting-periods",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -73,13 +81,22 @@ public partial class AccountingPeriodsClient
     /// <summary>
     /// Returns an `AccountingPeriod` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.AccountingPeriods.RetrieveAsync(
+    ///     "id",
+    ///     new AccountingPeriodsRetrieveRequest()
+    /// );
+    /// </code>
+    /// </example>
     public async Task<AccountingPeriod> RetrieveAsync(
         string id,
         AccountingPeriodsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
@@ -91,8 +108,9 @@ public partial class AccountingPeriodsClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/accounting-periods/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

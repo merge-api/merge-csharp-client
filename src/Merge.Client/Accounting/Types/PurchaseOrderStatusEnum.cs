@@ -22,5 +22,5 @@ public enum PurchaseOrderStatusEnum
     Billed,
 
     [EnumMember(Value = "DELETED")]
-    Deleted
+    Deleted,
 }

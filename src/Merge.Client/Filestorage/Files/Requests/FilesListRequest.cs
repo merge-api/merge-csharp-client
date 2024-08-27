@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Filestorage;
 
 public record FilesListRequest
@@ -71,4 +75,9 @@ public record FilesListRequest
     /// The API provider's ID for the given object.
     /// </summary>
     public string? RemoteId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

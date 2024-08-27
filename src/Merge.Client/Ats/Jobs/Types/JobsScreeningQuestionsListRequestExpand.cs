@@ -16,5 +16,5 @@ public enum JobsScreeningQuestionsListRequestExpand
     Options,
 
     [EnumMember(Value = "options,job")]
-    OptionsJob
+    OptionsJob,
 }

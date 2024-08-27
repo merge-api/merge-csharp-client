@@ -13,5 +13,5 @@ public enum AccountingPeriodStatusEnum
     Active,
 
     [EnumMember(Value = "INACTIVE")]
-    Inactive
+    Inactive,
 }

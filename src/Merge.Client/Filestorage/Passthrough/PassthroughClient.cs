@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,9 +19,17 @@ public partial class PassthroughClient
     /// <summary>
     /// Pull data from an endpoint not currently supported by Merge.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Passthrough.CreateAsync(
+    ///     new DataPassthroughRequest { Method = MethodEnum.Get, Path = "/scooters" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<RemoteResponse> CreateAsync(
         DataPassthroughRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -30,8 +39,9 @@ public partial class PassthroughClient
                 Method = HttpMethod.Post,
                 Path = "filestorage/v1/passthrough",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

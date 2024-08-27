@@ -13,5 +13,5 @@ public enum TaskStatusEnum
     Open,
 
     [EnumMember(Value = "CLOSED")]
-    Closed
+    Closed,
 }

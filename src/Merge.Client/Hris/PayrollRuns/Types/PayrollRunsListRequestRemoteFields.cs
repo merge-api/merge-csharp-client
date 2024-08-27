@@ -16,5 +16,5 @@ public enum PayrollRunsListRequestRemoteFields
     RunStateRunType,
 
     [EnumMember(Value = "run_type")]
-    RunType
+    RunType,
 }

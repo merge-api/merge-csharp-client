@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record PaginatedDriveList
 
     [JsonPropertyName("results")]
     public IEnumerable<Drive>? Results { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

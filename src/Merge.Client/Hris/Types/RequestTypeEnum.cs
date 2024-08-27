@@ -25,5 +25,5 @@ public enum RequestTypeEnum
     Volunteer,
 
     [EnumMember(Value = "BEREAVEMENT")]
-    Bereavement
+    Bereavement,
 }

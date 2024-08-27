@@ -16,5 +16,5 @@ public enum VisibilityEnum
     Public,
 
     [EnumMember(Value = "PRIVATE")]
-    Private
+    Private,
 }

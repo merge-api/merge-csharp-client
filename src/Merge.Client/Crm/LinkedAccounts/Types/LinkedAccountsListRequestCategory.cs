@@ -28,5 +28,5 @@ public enum LinkedAccountsListRequestCategory
     Mktg,
 
     [EnumMember(Value = "ticketing")]
-    Ticketing
+    Ticketing,
 }

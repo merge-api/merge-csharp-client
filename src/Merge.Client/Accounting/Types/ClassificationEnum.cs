@@ -22,5 +22,5 @@ public enum ClassificationEnum
     Liability,
 
     [EnumMember(Value = "REVENUE")]
-    Revenue
+    Revenue,
 }

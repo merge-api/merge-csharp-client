@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record RemoteKeyForRegenerationRequest
     /// </summary>
     [JsonPropertyName("name")]
     public required string Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -407,4 +407,9 @@ public record InvoiceLineItem
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object?>? FieldMappings { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

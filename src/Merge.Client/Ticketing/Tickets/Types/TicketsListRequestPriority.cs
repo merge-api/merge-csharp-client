@@ -19,5 +19,5 @@ public enum TicketsListRequestPriority
     Normal,
 
     [EnumMember(Value = "URGENT")]
-    Urgent
+    Urgent,
 }

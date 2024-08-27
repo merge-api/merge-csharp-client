@@ -25,5 +25,5 @@ public enum TimeOffListRequestRequestType
     Vacation,
 
     [EnumMember(Value = "VOLUNTEER")]
-    Volunteer
+    Volunteer,
 }

@@ -22,5 +22,5 @@ public enum GroupTypeEnum
     BusinessUnit,
 
     [EnumMember(Value = "GROUP")]
-    Group
+    Group,
 }

@@ -16,5 +16,5 @@ public enum CandidatesListRequestExpand
     ApplicationsAttachments,
 
     [EnumMember(Value = "attachments")]
-    Attachments
+    Attachments,
 }

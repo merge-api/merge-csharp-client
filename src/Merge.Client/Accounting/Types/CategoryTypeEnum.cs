@@ -13,5 +13,5 @@ public enum CategoryTypeEnum
     Class,
 
     [EnumMember(Value = "DEPARTMENT")]
-    Department
+    Department,
 }

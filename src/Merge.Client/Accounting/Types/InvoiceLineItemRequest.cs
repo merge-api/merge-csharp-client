@@ -389,4 +389,9 @@ public record InvoiceLineItemRequest
 
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

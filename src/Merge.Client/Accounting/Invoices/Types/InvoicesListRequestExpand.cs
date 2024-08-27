@@ -852,5 +852,5 @@ public enum InvoicesListRequestExpand
     TrackingCategoriesPurchaseOrdersContactCompany,
 
     [EnumMember(Value = "tracking_categories,purchase_orders,contact,company,accounting_period")]
-    TrackingCategoriesPurchaseOrdersContactCompanyAccountingPeriod
+    TrackingCategoriesPurchaseOrdersContactCompanyAccountingPeriod,
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -41,4 +42,9 @@ public record AccountDetails
 
     [JsonPropertyName("account_type")]
     public string? AccountType { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

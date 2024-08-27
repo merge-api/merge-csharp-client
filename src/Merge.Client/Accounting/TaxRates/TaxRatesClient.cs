@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class TaxRatesClient
     /// <summary>
     /// Returns a list of `TaxRate` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.TaxRates.ListAsync(new TaxRatesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedTaxRateList> ListAsync(
         TaxRatesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -81,8 +88,9 @@ public partial class TaxRatesClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/tax-rates",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -107,13 +115,19 @@ public partial class TaxRatesClient
     /// <summary>
     /// Returns a `TaxRate` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.TaxRates.RetrieveAsync("id", new TaxRatesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<TaxRate> RetrieveAsync(
         string id,
         TaxRatesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -129,8 +143,9 @@ public partial class TaxRatesClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/tax-rates/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

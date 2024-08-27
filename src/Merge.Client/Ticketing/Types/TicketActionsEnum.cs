@@ -25,5 +25,5 @@ public enum TicketActionsEnum
     Close,
 
     [EnumMember(Value = "ASSIGN")]
-    Assign
+    Assign,
 }

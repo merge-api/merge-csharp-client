@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class EeocsClient
     /// <summary>
     /// Returns a list of `EEOC` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Eeocs.ListAsync(new EeocsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedEeocList> ListAsync(
         EeocsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CandidateId != null)
         {
             _query["candidate_id"] = request.CandidateId;
@@ -72,7 +79,7 @@ public partial class EeocsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -80,7 +87,7 @@ public partial class EeocsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -89,8 +96,9 @@ public partial class EeocsClient
                 Method = HttpMethod.Get,
                 Path = "ats/v1/eeocs",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -115,13 +123,19 @@ public partial class EeocsClient
     /// <summary>
     /// Returns an `EEOC` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Eeocs.RetrieveAsync("id", new EeocsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Eeoc> RetrieveAsync(
         string id,
         EeocsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -132,11 +146,11 @@ public partial class EeocsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -145,8 +159,9 @@ public partial class EeocsClient
                 Method = HttpMethod.Get,
                 Path = $"ats/v1/eeocs/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

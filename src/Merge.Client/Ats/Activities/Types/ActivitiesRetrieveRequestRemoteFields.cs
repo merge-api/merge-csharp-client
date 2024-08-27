@@ -16,5 +16,5 @@ public enum ActivitiesRetrieveRequestRemoteFields
     ActivityTypeVisibility,
 
     [EnumMember(Value = "visibility")]
-    Visibility
+    Visibility,
 }

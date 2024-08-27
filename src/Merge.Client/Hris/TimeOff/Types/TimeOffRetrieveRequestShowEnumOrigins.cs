@@ -28,5 +28,5 @@ public enum TimeOffRetrieveRequestShowEnumOrigins
     StatusUnits,
 
     [EnumMember(Value = "units")]
-    Units
+    Units,
 }

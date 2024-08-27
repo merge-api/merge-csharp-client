@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record PaginatedJournalEntryList
 
     [JsonPropertyName("results")]
     public IEnumerable<JournalEntry>? Results { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

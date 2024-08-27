@@ -22,5 +22,5 @@ public enum GenderEnum
     Other,
 
     [EnumMember(Value = "DECLINE_TO_SELF_IDENTIFY")]
-    DeclineToSelfIdentify
+    DeclineToSelfIdentify,
 }

@@ -16,5 +16,5 @@ public enum AccessLevelEnum
     Company,
 
     [EnumMember(Value = "PUBLIC")]
-    Public
+    Public,
 }

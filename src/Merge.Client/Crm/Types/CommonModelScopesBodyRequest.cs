@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -15,4 +16,9 @@ public record CommonModelScopesBodyRequest
 
     [JsonPropertyName("disabled_fields")]
     public IEnumerable<string> DisabledFields { get; set; } = new List<string>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

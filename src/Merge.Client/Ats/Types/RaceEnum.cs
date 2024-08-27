@@ -31,5 +31,5 @@ public enum RaceEnum
     TwoOrMoreRaces,
 
     [EnumMember(Value = "DECLINE_TO_SELF_IDENTIFY")]
-    DeclineToSelfIdentify
+    DeclineToSelfIdentify,
 }

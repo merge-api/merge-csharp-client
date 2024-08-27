@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class EngagementsClient
     /// <summary>
     /// Returns a list of `Engagement` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Engagements.ListAsync(new EngagementsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedEngagementList> ListAsync(
         EngagementsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -40,7 +47,7 @@ public partial class EngagementsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -91,8 +98,9 @@ public partial class EngagementsClient
                 Method = HttpMethod.Get,
                 Path = "crm/v1/engagements",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -117,12 +125,20 @@ public partial class EngagementsClient
     /// <summary>
     /// Creates an `Engagement` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Engagements.CreateAsync(
+    ///     new EngagementEndpointRequest { Model = new EngagementRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<EngagementResponse> CreateAsync(
         EngagementEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -131,15 +147,18 @@ public partial class EngagementsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "crm/v1/engagements",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -164,16 +183,22 @@ public partial class EngagementsClient
     /// <summary>
     /// Returns an `Engagement` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Engagements.RetrieveAsync("id", new EngagementsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Engagement> RetrieveAsync(
         string id,
         EngagementsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -190,8 +215,9 @@ public partial class EngagementsClient
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/engagements/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -216,13 +242,22 @@ public partial class EngagementsClient
     /// <summary>
     /// Updates an `Engagement` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Engagements.PartialUpdateAsync(
+    ///     "id",
+    ///     new PatchedEngagementEndpointRequest { Model = new PatchedEngagementRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<EngagementResponse> PartialUpdateAsync(
         string id,
         PatchedEngagementEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -231,15 +266,18 @@ public partial class EngagementsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethodExtensions.Patch,
                 Path = $"crm/v1/engagements/{id}",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -264,9 +302,15 @@ public partial class EngagementsClient
     /// <summary>
     /// Returns metadata for `Engagement` PATCHs.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Engagements.MetaPatchRetrieveAsync("id");
+    /// </code>
+    /// </example>
     public async Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -275,8 +319,9 @@ public partial class EngagementsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/engagements/meta/patch/{id}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -301,7 +346,15 @@ public partial class EngagementsClient
     /// <summary>
     /// Returns metadata for `Engagement` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Crm.Engagements.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -309,8 +362,9 @@ public partial class EngagementsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/engagements/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -335,12 +389,20 @@ public partial class EngagementsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Engagements.RemoteFieldClassesListAsync(
+    ///     new EngagementsRemoteFieldClassesListRequest()
+    /// );
+    /// </code>
+    /// </example>
     public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
         EngagementsRemoteFieldClassesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -372,8 +434,9 @@ public partial class EngagementsClient
                 Method = HttpMethod.Get,
                 Path = "crm/v1/engagements/remote-field-classes",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

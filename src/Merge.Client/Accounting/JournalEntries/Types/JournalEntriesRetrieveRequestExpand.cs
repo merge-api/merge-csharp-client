@@ -198,5 +198,5 @@ public enum JournalEntriesRetrieveRequestExpand
     TrackingCategoriesCompany,
 
     [EnumMember(Value = "tracking_categories,company,accounting_period")]
-    TrackingCategoriesCompanyAccountingPeriod
+    TrackingCategoriesCompanyAccountingPeriod,
 }

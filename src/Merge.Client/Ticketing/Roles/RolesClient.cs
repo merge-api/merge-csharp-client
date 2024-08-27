@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class RolesClient
     /// <summary>
     /// Returns a list of `Role` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Roles.ListAsync(new RolesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedRoleList> ListAsync(
         RolesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -73,8 +80,9 @@ public partial class RolesClient
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/roles",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -99,13 +107,19 @@ public partial class RolesClient
     /// <summary>
     /// Returns a `Role` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Roles.RetrieveAsync("id", new RolesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Role> RetrieveAsync(
         string id,
         RolesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
@@ -117,8 +131,9 @@ public partial class RolesClient
                 Method = HttpMethod.Get,
                 Path = $"ticketing/v1/roles/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

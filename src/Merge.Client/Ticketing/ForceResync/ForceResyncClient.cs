@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,8 +19,14 @@ public partial class ForceResyncClient
     /// <summary>
     /// Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Launch, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.ForceResync.SyncStatusResyncCreateAsync();
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<SyncStatus>> SyncStatusResyncCreateAsync(
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -28,8 +35,9 @@ public partial class ForceResyncClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "ticketing/v1/sync-status/resync",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

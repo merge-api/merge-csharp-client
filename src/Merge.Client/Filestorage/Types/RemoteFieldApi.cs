@@ -26,4 +26,9 @@ public record RemoteFieldApi
     [JsonPropertyName("coverage")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<int, double>>))]
     public OneOf<int, double>? Coverage { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

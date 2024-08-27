@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class JobPostingsClient
     /// <summary>
     /// Returns a list of `JobPosting` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.JobPostings.ListAsync(new JobPostingsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedJobPostingList> ListAsync(
         JobPostingsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -72,7 +79,7 @@ public partial class JobPostingsClient
         }
         if (request.Status != null)
         {
-            _query["status"] = JsonSerializer.Serialize(request.Status.Value);
+            _query["status"] = request.Status.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -81,8 +88,9 @@ public partial class JobPostingsClient
                 Method = HttpMethod.Get,
                 Path = "ats/v1/job-postings",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -107,13 +115,19 @@ public partial class JobPostingsClient
     /// <summary>
     /// Returns a `JobPosting` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.JobPostings.RetrieveAsync("id", new JobPostingsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<JobPosting> RetrieveAsync(
         string id,
         JobPostingsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.ToString();
@@ -129,8 +143,9 @@ public partial class JobPostingsClient
                 Method = HttpMethod.Get,
                 Path = $"ats/v1/job-postings/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class TransactionsClient
     /// <summary>
     /// Returns a list of `Transaction` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Transactions.ListAsync(new TransactionsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedTransactionList> ListAsync(
         TransactionsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -44,7 +51,7 @@ public partial class TransactionsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -93,8 +100,9 @@ public partial class TransactionsClient
                 Method = HttpMethod.Get,
                 Path = "accounting/v1/transactions",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -119,16 +127,22 @@ public partial class TransactionsClient
     /// <summary>
     /// Returns a `Transaction` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Transactions.RetrieveAsync("id", new TransactionsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Transaction> RetrieveAsync(
         string id,
         TransactionsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -141,8 +155,9 @@ public partial class TransactionsClient
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/transactions/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -34,5 +34,5 @@ public enum PayPeriodEnum
     EverySixMonths,
 
     [EnumMember(Value = "YEAR")]
-    Year
+    Year,
 }

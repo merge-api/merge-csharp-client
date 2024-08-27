@@ -16,5 +16,5 @@ public enum EncodingEnum
     Base64,
 
     [EnumMember(Value = "GZIP_BASE64")]
-    GzipBase64
+    GzipBase64,
 }

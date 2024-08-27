@@ -28,5 +28,5 @@ public enum TicketsRetrieveRequestRemoteFields
     StatusTicketType,
 
     [EnumMember(Value = "ticket_type")]
-    TicketType
+    TicketType,
 }

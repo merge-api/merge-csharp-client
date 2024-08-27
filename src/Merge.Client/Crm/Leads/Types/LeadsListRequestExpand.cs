@@ -28,5 +28,5 @@ public enum LeadsListRequestExpand
     OwnerConvertedContact,
 
     [EnumMember(Value = "owner,converted_contact,converted_account")]
-    OwnerConvertedContactConvertedAccount
+    OwnerConvertedContactConvertedAccount,
 }

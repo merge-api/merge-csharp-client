@@ -28,5 +28,5 @@ public enum OpportunitiesRetrieveRequestExpand
     Stage,
 
     [EnumMember(Value = "stage,account")]
-    StageAccount
+    StageAccount,
 }

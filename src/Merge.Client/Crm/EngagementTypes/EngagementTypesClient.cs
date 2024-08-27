@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class EngagementTypesClient
     /// <summary>
     /// Returns a list of `EngagementType` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.EngagementTypes.ListAsync(new EngagementTypesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedEngagementTypeList> ListAsync(
         EngagementTypesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -77,8 +84,9 @@ public partial class EngagementTypesClient
                 Method = HttpMethod.Get,
                 Path = "crm/v1/engagement-types",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -103,13 +111,19 @@ public partial class EngagementTypesClient
     /// <summary>
     /// Returns an `EngagementType` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.EngagementTypes.RetrieveAsync("id", new EngagementTypesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<EngagementType> RetrieveAsync(
         string id,
         EngagementTypesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
@@ -125,8 +139,9 @@ public partial class EngagementTypesClient
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/engagement-types/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -151,12 +166,20 @@ public partial class EngagementTypesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.EngagementTypes.RemoteFieldClassesListAsync(
+    ///     new EngagementTypesRemoteFieldClassesListRequest()
+    /// );
+    /// </code>
+    /// </example>
     public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
         EngagementTypesRemoteFieldClassesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -188,8 +211,9 @@ public partial class EngagementTypesClient
                 Method = HttpMethod.Get,
                 Path = "crm/v1/engagement-types/remote-field-classes",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -100,5 +100,5 @@ public enum JobsRetrieveRequestExpand
     OfficesRecruiters,
 
     [EnumMember(Value = "recruiters")]
-    Recruiters
+    Recruiters,
 }

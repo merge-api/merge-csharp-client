@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,9 +19,17 @@ public partial class GenerateKeyClient
     /// <summary>
     /// Create a remote key.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.GenerateKey.CreateAsync(
+    ///     new GenerateRemoteKeyRequest { Name = "Remote Deployment Key 1" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<RemoteKey> CreateAsync(
         GenerateRemoteKeyRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -30,8 +39,9 @@ public partial class GenerateKeyClient
                 Method = HttpMethod.Post,
                 Path = "ats/v1/generate-key",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

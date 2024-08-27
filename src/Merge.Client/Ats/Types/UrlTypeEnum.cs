@@ -28,5 +28,5 @@ public enum UrlTypeEnum
     Other,
 
     [EnumMember(Value = "JOB_POSTING")]
-    JobPosting
+    JobPosting,
 }

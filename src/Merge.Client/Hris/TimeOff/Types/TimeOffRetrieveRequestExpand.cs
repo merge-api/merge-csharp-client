@@ -16,5 +16,5 @@ public enum TimeOffRetrieveRequestExpand
     Employee,
 
     [EnumMember(Value = "employee,approver")]
-    EmployeeApprover
+    EmployeeApprover,
 }

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class OfficesClient
     /// <summary>
     /// Returns a list of `Office` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Offices.ListAsync(new OfficesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedOfficeList> ListAsync(
         OfficesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -73,8 +80,9 @@ public partial class OfficesClient
                 Method = HttpMethod.Get,
                 Path = "ats/v1/offices",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -99,13 +107,19 @@ public partial class OfficesClient
     /// <summary>
     /// Returns an `Office` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ats.Offices.RetrieveAsync("id", new OfficesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Office> RetrieveAsync(
         string id,
         OfficesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
@@ -117,8 +131,9 @@ public partial class OfficesClient
                 Method = HttpMethod.Get,
                 Path = $"ats/v1/offices/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

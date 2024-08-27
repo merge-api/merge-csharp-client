@@ -22,5 +22,5 @@ public enum BenefitPlanTypeEnum
     Retirement,
 
     [EnumMember(Value = "OTHER")]
-    Other
+    Other,
 }

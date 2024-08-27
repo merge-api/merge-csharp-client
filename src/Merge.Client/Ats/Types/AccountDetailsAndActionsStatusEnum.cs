@@ -16,5 +16,5 @@ public enum AccountDetailsAndActionsStatusEnum
     Incomplete,
 
     [EnumMember(Value = "RELINK_NEEDED")]
-    RelinkNeeded
+    RelinkNeeded,
 }

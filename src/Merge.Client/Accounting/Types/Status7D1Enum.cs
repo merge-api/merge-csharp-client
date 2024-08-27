@@ -13,5 +13,5 @@ public enum Status7D1Enum
     Active,
 
     [EnumMember(Value = "ARCHIVED")]
-    Archived
+    Archived,
 }

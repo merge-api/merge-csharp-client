@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,9 +19,17 @@ public partial class AsyncPassthroughClient
     /// <summary>
     /// Asynchronously pull data from an endpoint not currently supported by Merge.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.AsyncPassthrough.CreateAsync(
+    ///     new DataPassthroughRequest { Method = MethodEnum.Get, Path = "/scooters" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<AsyncPassthroughReciept> CreateAsync(
         DataPassthroughRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -30,8 +39,9 @@ public partial class AsyncPassthroughClient
                 Method = HttpMethod.Post,
                 Path = "accounting/v1/async-passthrough",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -56,9 +66,15 @@ public partial class AsyncPassthroughClient
     /// <summary>
     /// Retrieves data from earlier async-passthrough POST request
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.AsyncPassthrough.RetrieveAsync("async_passthrough_receipt_id");
+    /// </code>
+    /// </example>
     public async Task<RemoteResponse> RetrieveAsync(
         string asyncPassthroughReceiptId,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -67,8 +83,9 @@ public partial class AsyncPassthroughClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"accounting/v1/async-passthrough/{asyncPassthroughReceiptId}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

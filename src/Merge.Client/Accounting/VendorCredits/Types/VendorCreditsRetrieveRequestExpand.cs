@@ -100,5 +100,5 @@ public enum VendorCreditsRetrieveRequestExpand
     VendorCompany,
 
     [EnumMember(Value = "vendor,company,accounting_period")]
-    VendorCompanyAccountingPeriod
+    VendorCompanyAccountingPeriod,
 }

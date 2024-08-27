@@ -19,5 +19,5 @@ public enum TicketsListRequestStatus
     OnHold,
 
     [EnumMember(Value = "OPEN")]
-    Open
+    Open,
 }

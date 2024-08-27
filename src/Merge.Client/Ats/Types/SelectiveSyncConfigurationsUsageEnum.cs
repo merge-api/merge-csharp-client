@@ -13,5 +13,5 @@ public enum SelectiveSyncConfigurationsUsageEnum
     InNextSync,
 
     [EnumMember(Value = "IN_LAST_SYNC")]
-    InLastSync
+    InLastSync,
 }

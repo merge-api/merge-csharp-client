@@ -13,5 +13,5 @@ public enum LocationsListRequestLocationType
     Home,
 
     [EnumMember(Value = "WORK")]
-    Work
+    Work,
 }

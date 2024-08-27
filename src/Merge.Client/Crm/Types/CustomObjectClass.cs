@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -47,4 +48,9 @@ public record CustomObjectClass
     /// </summary>
     [JsonPropertyName("association_types")]
     public IEnumerable<Dictionary<string, object?>>? AssociationTypes { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

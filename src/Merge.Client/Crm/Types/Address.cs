@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Merge.Client.Core;
 
 #nullable enable
 
@@ -312,4 +313,9 @@ public record Address
     /// </summary>
     [JsonPropertyName("address_type")]
     public AddressTypeEnum? AddressType { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

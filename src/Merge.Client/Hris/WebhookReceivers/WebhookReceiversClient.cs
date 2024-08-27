@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,7 +19,15 @@ public partial class WebhookReceiversClient
     /// <summary>
     /// Returns a list of `WebhookReceiver` objects.
     /// </summary>
-    public async Task<IEnumerable<WebhookReceiver>> ListAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Hris.WebhookReceivers.ListAsync();
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<WebhookReceiver>> ListAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -26,8 +35,9 @@ public partial class WebhookReceiversClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "hris/v1/webhook-receivers",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -52,9 +62,17 @@ public partial class WebhookReceiversClient
     /// <summary>
     /// Creates a `WebhookReceiver` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Hris.WebhookReceivers.CreateAsync(
+    ///     new WebhookReceiverRequest { Event = "event", IsActive = true }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<WebhookReceiver> CreateAsync(
         WebhookReceiverRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -64,8 +82,9 @@ public partial class WebhookReceiversClient
                 Method = HttpMethod.Post,
                 Path = "hris/v1/webhook-receivers",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

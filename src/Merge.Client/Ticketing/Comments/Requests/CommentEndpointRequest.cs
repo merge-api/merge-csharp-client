@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Ticketing;
 
 public record CommentEndpointRequest
@@ -13,4 +17,9 @@ public record CommentEndpointRequest
     public bool? RunAsync { get; set; }
 
     public required CommentRequest Model { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

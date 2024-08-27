@@ -1,3 +1,7 @@
+using Merge.Client.Core;
+
+#nullable enable
+
 namespace Merge.Client.Accounting;
 
 public record PatchedPaymentEndpointRequest
@@ -13,4 +17,9 @@ public record PatchedPaymentEndpointRequest
     public bool? RunAsync { get; set; }
 
     public required PatchedPaymentRequest Model { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

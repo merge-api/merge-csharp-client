@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class TicketsClient
     /// <summary>
     /// Returns a list of `Ticket` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Tickets.ListAsync(new TicketsListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedTicketList> ListAsync(
         TicketsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.AccountId != null)
         {
             _query["account_id"] = request.AccountId;
@@ -76,7 +83,7 @@ public partial class TicketsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -112,7 +119,7 @@ public partial class TicketsClient
         }
         if (request.Priority != null)
         {
-            _query["priority"] = JsonSerializer.Serialize(request.Priority.Value);
+            _query["priority"] = request.Priority.Value.Stringify();
         }
         if (request.RemoteCreatedAfter != null)
         {
@@ -128,7 +135,7 @@ public partial class TicketsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -148,11 +155,11 @@ public partial class TicketsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         if (request.Status != null)
         {
-            _query["status"] = JsonSerializer.Serialize(request.Status.Value);
+            _query["status"] = request.Status.Value.Stringify();
         }
         if (request.Tags != null)
         {
@@ -173,8 +180,9 @@ public partial class TicketsClient
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/tickets",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -199,12 +207,20 @@ public partial class TicketsClient
     /// <summary>
     /// Creates a `Ticket` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Tickets.CreateAsync(
+    ///     new TicketEndpointRequest { Model = new TicketRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<TicketResponse> CreateAsync(
         TicketEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -213,15 +229,18 @@ public partial class TicketsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "ticketing/v1/tickets",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -246,16 +265,22 @@ public partial class TicketsClient
     /// <summary>
     /// Returns a `Ticket` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Tickets.RetrieveAsync("id", new TicketsRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Ticket> RetrieveAsync(
         string id,
         TicketsRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -267,11 +292,11 @@ public partial class TicketsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = JsonSerializer.Serialize(request.RemoteFields.Value);
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = JsonSerializer.Serialize(request.ShowEnumOrigins.Value);
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -280,8 +305,9 @@ public partial class TicketsClient
                 Method = HttpMethod.Get,
                 Path = $"ticketing/v1/tickets/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -306,13 +332,22 @@ public partial class TicketsClient
     /// <summary>
     /// Updates a `Ticket` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Tickets.PartialUpdateAsync(
+    ///     "id",
+    ///     new PatchedTicketEndpointRequest { Model = new PatchedTicketRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<TicketResponse> PartialUpdateAsync(
         string id,
         PatchedTicketEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -321,15 +356,18 @@ public partial class TicketsClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethodExtensions.Patch,
                 Path = $"ticketing/v1/tickets/{id}",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -354,20 +392,29 @@ public partial class TicketsClient
     /// <summary>
     /// Returns a list of `User` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Tickets.CollaboratorsListAsync(
+    ///     "parent_id",
+    ///     new TicketsCollaboratorsListRequest()
+    /// );
+    /// </code>
+    /// </example>
     public async Task<PaginatedUserList> CollaboratorsListAsync(
         string parentId,
         TicketsCollaboratorsListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -388,8 +435,9 @@ public partial class TicketsClient
                 Method = HttpMethod.Get,
                 Path = $"ticketing/v1/tickets/{parentId}/collaborators",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -414,9 +462,15 @@ public partial class TicketsClient
     /// <summary>
     /// Returns metadata for `Ticket` PATCHs.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Tickets.MetaPatchRetrieveAsync("id");
+    /// </code>
+    /// </example>
     public async Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -425,8 +479,9 @@ public partial class TicketsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"ticketing/v1/tickets/meta/patch/{id}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -451,7 +506,15 @@ public partial class TicketsClient
     /// <summary>
     /// Returns metadata for `Ticket` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Tickets.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -459,8 +522,9 @@ public partial class TicketsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/tickets/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -485,12 +549,20 @@ public partial class TicketsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Tickets.RemoteFieldClassesListAsync(
+    ///     new TicketsRemoteFieldClassesListRequest()
+    /// );
+    /// </code>
+    /// </example>
     public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
         TicketsRemoteFieldClassesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -518,8 +590,9 @@ public partial class TicketsClient
                 Method = HttpMethod.Get,
                 Path = "ticketing/v1/tickets/remote-field-classes",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

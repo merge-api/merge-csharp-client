@@ -13,5 +13,5 @@ public enum ResponseTypeEnum
     Json,
 
     [EnumMember(Value = "BASE64_GZIP")]
-    Base64Gzip
+    Base64Gzip,
 }

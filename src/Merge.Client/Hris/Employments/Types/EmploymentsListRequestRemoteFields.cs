@@ -52,5 +52,5 @@ public enum EmploymentsListRequestRemoteFields
     PayFrequencyPayPeriod,
 
     [EnumMember(Value = "pay_period")]
-    PayPeriod
+    PayPeriod,
 }

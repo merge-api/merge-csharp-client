@@ -16,5 +16,5 @@ public enum RelationshipEnum
     Spouse,
 
     [EnumMember(Value = "DOMESTIC_PARTNER")]
-    DomesticPartner
+    DomesticPartner,
 }

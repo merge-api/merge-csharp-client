@@ -200,5 +200,5 @@ public enum PurchaseOrdersListRequestExpand
     VendorCompany,
 
     [EnumMember(Value = "vendor,company,accounting_period")]
-    VendorCompanyAccountingPeriod
+    VendorCompanyAccountingPeriod,
 }

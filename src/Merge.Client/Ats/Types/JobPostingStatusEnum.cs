@@ -22,5 +22,5 @@ public enum JobPostingStatusEnum
     Internal,
 
     [EnumMember(Value = "PENDING")]
-    Pending
+    Pending,
 }

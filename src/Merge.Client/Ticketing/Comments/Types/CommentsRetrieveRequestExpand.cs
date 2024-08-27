@@ -28,5 +28,5 @@ public enum CommentsRetrieveRequestExpand
     UserContactTicket,
 
     [EnumMember(Value = "user,ticket")]
-    UserTicket
+    UserTicket,
 }

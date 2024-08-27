@@ -13,5 +13,5 @@ public enum InvoicesListRequestType
     AccountsPayable,
 
     [EnumMember(Value = "ACCOUNTS_RECEIVABLE")]
-    AccountsReceivable
+    AccountsReceivable,
 }

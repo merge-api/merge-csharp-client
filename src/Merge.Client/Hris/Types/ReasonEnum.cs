@@ -16,5 +16,5 @@ public enum ReasonEnum
     Gdpr,
 
     [EnumMember(Value = "OTHER")]
-    Other
+    Other,
 }

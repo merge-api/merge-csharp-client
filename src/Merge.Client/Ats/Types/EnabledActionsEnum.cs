@@ -13,5 +13,5 @@ public enum EnabledActionsEnum
     Read,
 
     [EnumMember(Value = "WRITE")]
-    Write
+    Write,
 }

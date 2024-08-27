@@ -22,5 +22,5 @@ public enum RunTypeEnum
     Termination,
 
     [EnumMember(Value = "SIGN_ON_BONUS")]
-    SignOnBonus
+    SignOnBonus,
 }

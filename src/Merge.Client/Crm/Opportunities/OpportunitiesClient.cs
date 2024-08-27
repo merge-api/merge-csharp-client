@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using Merge.Client.Core;
 
 #nullable enable
@@ -18,12 +19,18 @@ public partial class OpportunitiesClient
     /// <summary>
     /// Returns a list of `Opportunity` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Opportunities.ListAsync(new OpportunitiesListRequest());
+    /// </code>
+    /// </example>
     public async Task<PaginatedOpportunityList> ListAsync(
         OpportunitiesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.AccountId != null)
         {
             _query["account_id"] = request.AccountId;
@@ -44,7 +51,7 @@ public partial class OpportunitiesClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -102,7 +109,7 @@ public partial class OpportunitiesClient
         }
         if (request.Status != null)
         {
-            _query["status"] = JsonSerializer.Serialize(request.Status.Value);
+            _query["status"] = request.Status.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -111,8 +118,9 @@ public partial class OpportunitiesClient
                 Method = HttpMethod.Get,
                 Path = "crm/v1/opportunities",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -137,12 +145,20 @@ public partial class OpportunitiesClient
     /// <summary>
     /// Creates an `Opportunity` object with the given values.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Opportunities.CreateAsync(
+    ///     new OpportunityEndpointRequest { Model = new OpportunityRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<OpportunityResponse> CreateAsync(
         OpportunityEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -151,15 +167,18 @@ public partial class OpportunitiesClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "crm/v1/opportunities",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -184,16 +203,22 @@ public partial class OpportunitiesClient
     /// <summary>
     /// Returns an `Opportunity` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Opportunities.RetrieveAsync("id", new OpportunitiesRetrieveRequest());
+    /// </code>
+    /// </example>
     public async Task<Opportunity> RetrieveAsync(
         string id,
         OpportunitiesRetrieveRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = JsonSerializer.Serialize(request.Expand.Value);
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -218,8 +243,9 @@ public partial class OpportunitiesClient
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/opportunities/{id}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -244,13 +270,22 @@ public partial class OpportunitiesClient
     /// <summary>
     /// Updates an `Opportunity` object with the given `id`.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Opportunities.PartialUpdateAsync(
+    ///     "id",
+    ///     new PatchedOpportunityEndpointRequest { Model = new PatchedOpportunityRequest() }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<OpportunityResponse> PartialUpdateAsync(
         string id,
         PatchedOpportunityEndpointRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
             _query["is_debug_mode"] = request.IsDebugMode.ToString();
@@ -259,15 +294,18 @@ public partial class OpportunitiesClient
         {
             _query["run_async"] = request.RunAsync.ToString();
         }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethodExtensions.Patch,
                 Path = $"crm/v1/opportunities/{id}",
+                Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -292,9 +330,15 @@ public partial class OpportunitiesClient
     /// <summary>
     /// Returns metadata for `Opportunity` PATCHs.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Opportunities.MetaPatchRetrieveAsync("id");
+    /// </code>
+    /// </example>
     public async Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -303,8 +347,9 @@ public partial class OpportunitiesClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"crm/v1/opportunities/meta/patch/{id}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -329,7 +374,15 @@ public partial class OpportunitiesClient
     /// <summary>
     /// Returns metadata for `Opportunity` POSTs.
     /// </summary>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Crm.Opportunities.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -337,8 +390,9 @@ public partial class OpportunitiesClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/opportunities/meta/post",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -363,12 +417,20 @@ public partial class OpportunitiesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Crm.Opportunities.RemoteFieldClassesListAsync(
+    ///     new OpportunitiesRemoteFieldClassesListRequest()
+    /// );
+    /// </code>
+    /// </example>
     public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
         OpportunitiesRemoteFieldClassesListRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -400,8 +462,9 @@ public partial class OpportunitiesClient
                 Method = HttpMethod.Get,
                 Path = "crm/v1/opportunities/remote-field-classes",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
