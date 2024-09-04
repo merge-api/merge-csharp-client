@@ -39,7 +39,6 @@ public record Team
     /// The team's parent team.
     /// </summary>
     [JsonPropertyName("parent_team")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Team>>))]
     public OneOf<string, Team>? ParentTeam { get; set; }
 
     /// <summary>

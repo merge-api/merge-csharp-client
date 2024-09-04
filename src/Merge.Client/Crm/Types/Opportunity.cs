@@ -51,21 +51,18 @@ public record Opportunity
     /// The opportunity's owner.
     /// </summary>
     [JsonPropertyName("owner")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; set; }
 
     /// <summary>
     /// The account of the opportunity.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The stage of the opportunity.
     /// </summary>
     [JsonPropertyName("stage")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Stage>>))]
     public OneOf<string, Stage>? Stage { get; set; }
 
     /// <summary>

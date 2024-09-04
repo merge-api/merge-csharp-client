@@ -36,16 +36,12 @@ public record Ticket
     public string? Name { get; set; }
 
     [JsonPropertyName("assignees")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<OneOf<string, User>, OneOfSerializer<OneOf<string, User>>>)
-    )]
     public IEnumerable<OneOf<string, User>>? Assignees { get; set; }
 
     /// <summary>
     /// The user who created this ticket.
     /// </summary>
     [JsonPropertyName("creator")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Creator { get; set; }
 
     /// <summary>
@@ -72,12 +68,6 @@ public record Ticket
     public string? Description { get; set; }
 
     [JsonPropertyName("collections")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Collection>,
-            OneOfSerializer<OneOf<string, Collection>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Collection>>? Collections { get; set; }
 
     /// <summary>
@@ -90,30 +80,21 @@ public record Ticket
     /// The account associated with the ticket.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The contact associated with the ticket.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The ticket's parent ticket.
     /// </summary>
     [JsonPropertyName("parent_ticket")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Ticket>>))]
     public OneOf<string, Ticket>? ParentTicket { get; set; }
 
     [JsonPropertyName("attachments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Attachment>,
-            OneOfSerializer<OneOf<string, Attachment>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Attachment>>? Attachments { get; set; }
 
     [JsonPropertyName("tags")]

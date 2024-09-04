@@ -51,7 +51,6 @@ public record TaxRate
     /// The subsidiary that the tax rate belongs to (in the case of multi-entity systems).
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>

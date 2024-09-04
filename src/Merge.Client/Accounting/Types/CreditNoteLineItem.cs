@@ -30,7 +30,6 @@ public record CreditNoteLineItem
     public DateTime? ModifiedAt { get; set; }
 
     [JsonPropertyName("item")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
     public OneOf<string, Item>? Item { get; set; }
 
     /// <summary>
@@ -91,7 +90,6 @@ public record CreditNoteLineItem
     /// The company the credit note belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>

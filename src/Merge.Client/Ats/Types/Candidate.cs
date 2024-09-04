@@ -108,24 +108,12 @@ public record Candidate
     /// Array of `Application` object IDs.
     /// </summary>
     [JsonPropertyName("applications")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Application>,
-            OneOfSerializer<OneOf<string, Application>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Application>>? Applications { get; set; }
 
     /// <summary>
     /// Array of `Attachment` object IDs.
     /// </summary>
     [JsonPropertyName("attachments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Attachment>,
-            OneOfSerializer<OneOf<string, Attachment>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Attachment>>? Attachments { get; set; }
 
     [JsonPropertyName("remote_was_deleted")]

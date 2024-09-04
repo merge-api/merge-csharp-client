@@ -18,14 +18,12 @@ public record PatchedPaymentRequest
     /// The supplier, or customer involved in the payment.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The supplier’s or customer’s account in which the payment is made.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
@@ -351,7 +349,6 @@ public record PatchedPaymentRequest
     /// The company the payment belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
@@ -370,31 +367,18 @@ public record PatchedPaymentRequest
     public PaymentTypeEnum? Type { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
     /// The accounting period that the Payment was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
 
     /// <summary>
     /// A list of “Payment Applied to Lines” objects.
     /// </summary>
     [JsonPropertyName("applied_to_lines")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, PaymentLineItem>,
-            OneOfSerializer<OneOf<string, PaymentLineItem>>
-        >)
-    )]
     public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedToLines { get; set; }
 
     [JsonPropertyName("integration_params")]

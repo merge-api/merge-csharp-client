@@ -33,7 +33,6 @@ public record Employment
     /// The employee holding this position.
     /// </summary>
     [JsonPropertyName("employee")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>
@@ -397,7 +396,6 @@ public record Employment
     /// The employment's pay group
     /// </summary>
     [JsonPropertyName("pay_group")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, PayGroup>>))]
     public OneOf<string, PayGroup>? PayGroup { get; set; }
 
     /// <summary>

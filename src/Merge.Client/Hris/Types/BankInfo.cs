@@ -33,7 +33,6 @@ public record BankInfo
     /// The employee with this bank account.
     /// </summary>
     [JsonPropertyName("employee")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>

@@ -130,7 +130,7 @@ public partial class ContactsClient
     /// <example>
     /// <code>
     /// await client.Crm.Contacts.CreateAsync(
-    ///     new CrmContactEndpointRequest { Model = new ContactRequest() }
+    ///     new CrmContactEndpointRequest { Model = new Merge.Client.Crm.ContactRequest() }
     /// );
     /// </code>
     /// </example>
@@ -308,7 +308,7 @@ public partial class ContactsClient
     /// <code>
     /// await client.Crm.Contacts.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new IgnoreCommonModelRequest { Reason = Merge.Client.Crm.ReasonEnum.GeneralCustomerRequest }
     /// );
     /// </code>
     /// </example>

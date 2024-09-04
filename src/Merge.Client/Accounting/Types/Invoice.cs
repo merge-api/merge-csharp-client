@@ -42,7 +42,6 @@ public record Invoice
     /// The invoice's contact.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
@@ -79,7 +78,6 @@ public record Invoice
     /// The company the invoice belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
@@ -451,36 +449,18 @@ public record Invoice
     public DateTime? RemoteUpdatedAt { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
     /// Array of `Payment` object IDs.
     /// </summary>
     [JsonPropertyName("payments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Payment>,
-            OneOfSerializer<OneOf<string, Payment>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Payment>>? Payments { get; set; }
 
     /// <summary>
     /// A list of the Payment Applied to Lines common models related to a given Invoice, Credit Note, or Journal Entry.
     /// </summary>
     [JsonPropertyName("applied_payments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, PaymentLineItem>,
-            OneOfSerializer<OneOf<string, PaymentLineItem>>
-        >)
-    )]
     public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedPayments { get; set; }
 
     [JsonPropertyName("line_items")]
@@ -493,16 +473,9 @@ public record Invoice
     /// The accounting period that the Invoice was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
 
     [JsonPropertyName("purchase_orders")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, PurchaseOrder>,
-            OneOfSerializer<OneOf<string, PurchaseOrder>>
-        >)
-    )]
     public IEnumerable<OneOf<string, PurchaseOrder>>? PurchaseOrders { get; set; }
 
     [JsonPropertyName("field_mappings")]

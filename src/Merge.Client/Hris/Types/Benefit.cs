@@ -33,7 +33,6 @@ public record Benefit
     /// The employee on the plan.
     /// </summary>
     [JsonPropertyName("employee")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>

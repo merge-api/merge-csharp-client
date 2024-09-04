@@ -110,35 +110,51 @@ public partial class ScopesClient
     /// await client.Accounting.Scopes.LinkedAccountScopesCreateAsync(
     ///     new LinkedAccountCommonModelScopeDeserializerRequest
     ///     {
-    ///         CommonModels = new List<IndividualCommonModelScopeDeserializerRequest>()
-    ///         {
-    ///             new IndividualCommonModelScopeDeserializerRequest
+    ///         CommonModels =
+    ///             new List<Merge.Client.Accounting.IndividualCommonModelScopeDeserializerRequest>()
     ///             {
-    ///                 ModelName = "Employee",
-    ///                 ModelPermissions = new Dictionary<string, ModelPermissionDeserializerRequest>()
+    ///                 new Merge.Client.Accounting.IndividualCommonModelScopeDeserializerRequest
     ///                 {
+    ///                     ModelName = "Employee",
+    ///                     ModelPermissions = new Dictionary<
+    ///                         string,
+    ///                         Merge.Client.Accounting.ModelPermissionDeserializerRequest
+    ///                     >()
     ///                     {
-    ///                         "READ",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = true }
+    ///                         {
+    ///                             "READ",
+    ///                             new Merge.Client.Accounting.ModelPermissionDeserializerRequest
+    ///                             {
+    ///                                 IsEnabled = true,
+    ///                             }
+    ///                         },
+    ///                         {
+    ///                             "WRITE",
+    ///                             new Merge.Client.Accounting.ModelPermissionDeserializerRequest
+    ///                             {
+    ///                                 IsEnabled = false,
+    ///                             }
+    ///                         },
     ///                     },
+    ///                 },
+    ///                 new Merge.Client.Accounting.IndividualCommonModelScopeDeserializerRequest
+    ///                 {
+    ///                     ModelName = "Benefit",
+    ///                     ModelPermissions = new Dictionary<
+    ///                         string,
+    ///                         Merge.Client.Accounting.ModelPermissionDeserializerRequest
+    ///                     >()
     ///                     {
-    ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
+    ///                         {
+    ///                             "WRITE",
+    ///                             new Merge.Client.Accounting.ModelPermissionDeserializerRequest
+    ///                             {
+    ///                                 IsEnabled = false,
+    ///                             }
+    ///                         },
     ///                     },
     ///                 },
     ///             },
-    ///             new IndividualCommonModelScopeDeserializerRequest
-    ///             {
-    ///                 ModelName = "Benefit",
-    ///                 ModelPermissions = new Dictionary<string, ModelPermissionDeserializerRequest>()
-    ///                 {
-    ///                     {
-    ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
-    ///                     },
-    ///                 },
-    ///             },
-    ///         },
     ///     }
     /// );
     /// </code>

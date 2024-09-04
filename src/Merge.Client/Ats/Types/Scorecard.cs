@@ -33,21 +33,18 @@ public record Scorecard
     /// The application being scored.
     /// </summary>
     [JsonPropertyName("application")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Application>>))]
     public OneOf<string, Application>? Application { get; set; }
 
     /// <summary>
     /// The interview being scored.
     /// </summary>
     [JsonPropertyName("interview")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, ScheduledInterview>>))]
     public OneOf<string, ScheduledInterview>? Interview { get; set; }
 
     /// <summary>
     /// The interviewer doing the scoring.
     /// </summary>
     [JsonPropertyName("interviewer")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? Interviewer { get; set; }
 
     /// <summary>

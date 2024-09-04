@@ -126,7 +126,7 @@ public partial class AccountsClient
     /// <example>
     /// <code>
     /// await client.Accounting.Accounts.CreateAsync(
-    ///     new AccountEndpointRequest { Model = new AccountRequest() }
+    ///     new AccountEndpointRequest { Model = new Merge.Client.Accounting.AccountRequest() }
     /// );
     /// </code>
     /// </example>

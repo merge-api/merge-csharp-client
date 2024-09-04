@@ -63,12 +63,6 @@ public record ContactRequest
     /// `Address` object IDs for the given `Contacts` object.
     /// </summary>
     [JsonPropertyName("addresses")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Address>,
-            OneOfSerializer<OneOf<string, Address>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Address>>? Addresses { get; set; }
 
     /// <summary>

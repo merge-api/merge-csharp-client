@@ -33,7 +33,6 @@ public record Note
     /// The note's owner.
     /// </summary>
     [JsonPropertyName("owner")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; set; }
 
     /// <summary>
@@ -46,21 +45,18 @@ public record Note
     /// The note's contact.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The note's account.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The note's opportunity.
     /// </summary>
     [JsonPropertyName("opportunity")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Opportunity>>))]
     public OneOf<string, Opportunity>? Opportunity { get; set; }
 
     /// <summary>

@@ -60,21 +60,18 @@ public record Item
     /// References the default account used to record a purchase of the item.
     /// </summary>
     [JsonPropertyName("purchase_account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? PurchaseAccount { get; set; }
 
     /// <summary>
     /// References the default account used to record a sale.
     /// </summary>
     [JsonPropertyName("sales_account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? SalesAccount { get; set; }
 
     /// <summary>
     /// The company the item belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>

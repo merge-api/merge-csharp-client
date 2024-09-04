@@ -170,7 +170,7 @@ public partial class UsersClient
     /// <code>
     /// await client.Crm.Users.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new IgnoreCommonModelRequest { Reason = Merge.Client.Crm.ReasonEnum.GeneralCustomerRequest }
     /// );
     /// </code>
     /// </example>

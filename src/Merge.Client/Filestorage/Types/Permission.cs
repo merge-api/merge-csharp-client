@@ -33,14 +33,12 @@ public record Permission
     /// The user that is granted this permission.
     /// </summary>
     [JsonPropertyName("user")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? User { get; set; }
 
     /// <summary>
     /// The group that is granted this permission.
     /// </summary>
     [JsonPropertyName("group")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Group>>))]
     public OneOf<string, Group>? Group { get; set; }
 
     /// <summary>

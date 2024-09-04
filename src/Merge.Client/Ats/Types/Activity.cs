@@ -33,7 +33,6 @@ public record Activity
     /// The user that performed the action.
     /// </summary>
     [JsonPropertyName("user")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? User { get; set; }
 
     /// <summary>

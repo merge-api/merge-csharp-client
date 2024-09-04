@@ -48,15 +48,9 @@ public record User
     public bool? IsActive { get; set; }
 
     [JsonPropertyName("teams")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<OneOf<string, Team>, OneOfSerializer<OneOf<string, Team>>>)
-    )]
     public IEnumerable<OneOf<string, Team>>? Teams { get; set; }
 
     [JsonPropertyName("roles")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<OneOf<string, Role>, OneOfSerializer<OneOf<string, Role>>>)
-    )]
     public IEnumerable<OneOf<string, Role>>? Roles { get; set; }
 
     /// <summary>

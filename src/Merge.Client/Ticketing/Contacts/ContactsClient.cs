@@ -114,7 +114,7 @@ public partial class ContactsClient
     /// <example>
     /// <code>
     /// await client.Ticketing.Contacts.CreateAsync(
-    ///     new TicketingContactEndpointRequest { Model = new ContactRequest() }
+    ///     new TicketingContactEndpointRequest { Model = new Merge.Client.Ticketing.ContactRequest() }
     /// );
     /// </code>
     /// </example>

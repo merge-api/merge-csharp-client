@@ -124,7 +124,10 @@ public partial class AttachmentsClient
     /// <example>
     /// <code>
     /// await client.Ticketing.Attachments.CreateAsync(
-    ///     new TicketingAttachmentEndpointRequest { Model = new AttachmentRequest() }
+    ///     new TicketingAttachmentEndpointRequest
+    ///     {
+    ///         Model = new Merge.Client.Ticketing.AttachmentRequest(),
+    ///     }
     /// );
     /// </code>
     /// </example>

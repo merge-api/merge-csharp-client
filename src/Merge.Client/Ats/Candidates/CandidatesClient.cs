@@ -316,7 +316,10 @@ public partial class CandidatesClient
     /// <code>
     /// await client.Ats.Candidates.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new Merge.Client.Ats.IgnoreCommonModelRequest
+    ///     {
+    ///         Reason = Merge.Client.Ats.ReasonEnum.GeneralCustomerRequest,
+    ///     }
     /// );
     /// </code>
     /// </example>

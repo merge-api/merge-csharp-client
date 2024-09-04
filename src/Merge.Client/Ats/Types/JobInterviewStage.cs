@@ -39,7 +39,6 @@ public record JobInterviewStage
     /// This field is populated only if the stage is specific to a particular job. If the stage is generic, this field will not be populated.
     /// </summary>
     [JsonPropertyName("job")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Job>>))]
     public OneOf<string, Job>? Job { get; set; }
 
     /// <summary>

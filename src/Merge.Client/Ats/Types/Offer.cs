@@ -33,14 +33,12 @@ public record Offer
     /// The application who is receiving the offer.
     /// </summary>
     [JsonPropertyName("application")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Application>>))]
     public OneOf<string, Application>? Application { get; set; }
 
     /// <summary>
     /// The user who created the offer.
     /// </summary>
     [JsonPropertyName("creator")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? Creator { get; set; }
 
     /// <summary>

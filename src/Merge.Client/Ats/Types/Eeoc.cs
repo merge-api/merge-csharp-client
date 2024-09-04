@@ -33,7 +33,6 @@ public record Eeoc
     /// The candidate being represented.
     /// </summary>
     [JsonPropertyName("candidate")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Candidate>>))]
     public OneOf<string, Candidate>? Candidate { get; set; }
 
     /// <summary>

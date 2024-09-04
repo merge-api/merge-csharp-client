@@ -33,14 +33,12 @@ public record TimeOff
     /// The employee requesting time off.
     /// </summary>
     [JsonPropertyName("employee")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>
     /// The Merge ID of the employee with the ability to approve the time off request.
     /// </summary>
     [JsonPropertyName("approver")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Approver { get; set; }
 
     /// <summary>

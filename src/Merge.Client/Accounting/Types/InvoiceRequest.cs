@@ -21,7 +21,6 @@ public record InvoiceRequest
     /// The invoice's contact.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
@@ -71,7 +70,6 @@ public record InvoiceRequest
     /// The company the invoice belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
@@ -427,33 +425,15 @@ public record InvoiceRequest
     /// Array of `Payment` object IDs.
     /// </summary>
     [JsonPropertyName("payments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Payment>,
-            OneOfSerializer<OneOf<string, Payment>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Payment>>? Payments { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     [JsonPropertyName("line_items")]
     public IEnumerable<InvoiceLineItemRequest>? LineItems { get; set; }
 
     [JsonPropertyName("purchase_orders")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, PurchaseOrder>,
-            OneOfSerializer<OneOf<string, PurchaseOrder>>
-        >)
-    )]
     public IEnumerable<OneOf<string, PurchaseOrder>>? PurchaseOrders { get; set; }
 
     [JsonPropertyName("integration_params")]

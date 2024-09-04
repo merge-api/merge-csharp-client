@@ -22,7 +22,11 @@ public partial class AsyncPassthroughClient
     /// <example>
     /// <code>
     /// await client.Filestorage.AsyncPassthrough.CreateAsync(
-    ///     new DataPassthroughRequest { Method = MethodEnum.Get, Path = "/scooters" }
+    ///     new Merge.Client.Filestorage.DataPassthroughRequest
+    ///     {
+    ///         Method = Merge.Client.Filestorage.MethodEnum.Get,
+    ///         Path = "/scooters",
+    ///     }
     /// );
     /// </code>
     /// </example>

@@ -18,7 +18,6 @@ public record ExpenseLineRequest
     /// The line's item.
     /// </summary>
     [JsonPropertyName("item")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
     public OneOf<string, Item>? Item { get; set; }
 
     /// <summary>
@@ -28,16 +27,9 @@ public record ExpenseLineRequest
     public double? NetAmount { get; set; }
 
     [JsonPropertyName("tracking_category")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, TrackingCategory>>))]
     public OneOf<string, TrackingCategory>? TrackingCategory { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
@@ -363,14 +355,12 @@ public record ExpenseLineRequest
     /// The expense's payment account.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The expense's contact.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>

@@ -100,48 +100,24 @@ public record Job
     /// IDs of `Department` objects for this `Job`.
     /// </summary>
     [JsonPropertyName("departments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Department>,
-            OneOfSerializer<OneOf<string, Department>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Department>>? Departments { get; set; }
 
     /// <summary>
     /// IDs of `Office` objects for this `Job`.
     /// </summary>
     [JsonPropertyName("offices")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Office>,
-            OneOfSerializer<OneOf<string, Office>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Office>>? Offices { get; set; }
 
     /// <summary>
     /// IDs of `RemoteUser` objects that serve as hiring managers for this `Job`.
     /// </summary>
     [JsonPropertyName("hiring_managers")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, RemoteUser>,
-            OneOfSerializer<OneOf<string, RemoteUser>>
-        >)
-    )]
     public IEnumerable<OneOf<string, RemoteUser>>? HiringManagers { get; set; }
 
     /// <summary>
     /// IDs of `RemoteUser` objects that serve as recruiters for this `Job`.
     /// </summary>
     [JsonPropertyName("recruiters")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, RemoteUser>,
-            OneOfSerializer<OneOf<string, RemoteUser>>
-        >)
-    )]
     public IEnumerable<OneOf<string, RemoteUser>>? Recruiters { get; set; }
 
     /// <summary>

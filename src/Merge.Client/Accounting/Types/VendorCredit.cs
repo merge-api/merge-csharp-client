@@ -45,7 +45,6 @@ public record VendorCredit
     /// The vendor that owes the gift or refund.
     /// </summary>
     [JsonPropertyName("vendor")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Vendor { get; set; }
 
     /// <summary>
@@ -377,19 +376,12 @@ public record VendorCredit
     /// The company the vendor credit belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     [JsonPropertyName("lines")]
     public IEnumerable<VendorCreditLine>? Lines { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
@@ -402,7 +394,6 @@ public record VendorCredit
     /// The accounting period that the VendorCredit was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
 
     [JsonPropertyName("field_mappings")]

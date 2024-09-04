@@ -134,7 +134,7 @@ public partial class ContactsClient
     /// <example>
     /// <code>
     /// await client.Accounting.Contacts.CreateAsync(
-    ///     new ContactEndpointRequest { Model = new ContactRequest() }
+    ///     new ContactEndpointRequest { Model = new Merge.Client.Accounting.ContactRequest() }
     /// );
     /// </code>
     /// </example>

@@ -110,35 +110,51 @@ public partial class ScopesClient
     /// await client.Ticketing.Scopes.LinkedAccountScopesCreateAsync(
     ///     new LinkedAccountCommonModelScopeDeserializerRequest
     ///     {
-    ///         CommonModels = new List<IndividualCommonModelScopeDeserializerRequest>()
-    ///         {
-    ///             new IndividualCommonModelScopeDeserializerRequest
+    ///         CommonModels =
+    ///             new List<Merge.Client.Ticketing.IndividualCommonModelScopeDeserializerRequest>()
     ///             {
-    ///                 ModelName = "Employee",
-    ///                 ModelPermissions = new Dictionary<string, ModelPermissionDeserializerRequest>()
+    ///                 new Merge.Client.Ticketing.IndividualCommonModelScopeDeserializerRequest
     ///                 {
+    ///                     ModelName = "Employee",
+    ///                     ModelPermissions = new Dictionary<
+    ///                         string,
+    ///                         Merge.Client.Ticketing.ModelPermissionDeserializerRequest
+    ///                     >()
     ///                     {
-    ///                         "READ",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = true }
+    ///                         {
+    ///                             "READ",
+    ///                             new Merge.Client.Ticketing.ModelPermissionDeserializerRequest
+    ///                             {
+    ///                                 IsEnabled = true,
+    ///                             }
+    ///                         },
+    ///                         {
+    ///                             "WRITE",
+    ///                             new Merge.Client.Ticketing.ModelPermissionDeserializerRequest
+    ///                             {
+    ///                                 IsEnabled = false,
+    ///                             }
+    ///                         },
     ///                     },
+    ///                 },
+    ///                 new Merge.Client.Ticketing.IndividualCommonModelScopeDeserializerRequest
+    ///                 {
+    ///                     ModelName = "Benefit",
+    ///                     ModelPermissions = new Dictionary<
+    ///                         string,
+    ///                         Merge.Client.Ticketing.ModelPermissionDeserializerRequest
+    ///                     >()
     ///                     {
-    ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
+    ///                         {
+    ///                             "WRITE",
+    ///                             new Merge.Client.Ticketing.ModelPermissionDeserializerRequest
+    ///                             {
+    ///                                 IsEnabled = false,
+    ///                             }
+    ///                         },
     ///                     },
     ///                 },
     ///             },
-    ///             new IndividualCommonModelScopeDeserializerRequest
-    ///             {
-    ///                 ModelName = "Benefit",
-    ///                 ModelPermissions = new Dictionary<string, ModelPermissionDeserializerRequest>()
-    ///                 {
-    ///                     {
-    ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
-    ///                     },
-    ///                 },
-    ///             },
-    ///         },
     ///     }
     /// );
     /// </code>

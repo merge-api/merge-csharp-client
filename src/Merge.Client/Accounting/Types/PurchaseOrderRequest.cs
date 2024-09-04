@@ -36,7 +36,6 @@ public record PurchaseOrderRequest
     /// The purchase order's delivery address.
     /// </summary>
     [JsonPropertyName("delivery_address")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Address>>))]
     public OneOf<string, Address>? DeliveryAddress { get; set; }
 
     /// <summary>
@@ -49,7 +48,6 @@ public record PurchaseOrderRequest
     /// The party fulfilling the purchase order.
     /// </summary>
     [JsonPropertyName("vendor")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Vendor { get; set; }
 
     /// <summary>
@@ -62,7 +60,6 @@ public record PurchaseOrderRequest
     /// The company the purchase order belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
@@ -391,12 +388,6 @@ public record PurchaseOrderRequest
     public string? ExchangeRate { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     [JsonPropertyName("line_items")]

@@ -334,7 +334,10 @@ public partial class EmployeesClient
     /// <code>
     /// await client.Hris.Employees.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new Merge.Client.Hris.IgnoreCommonModelRequest
+    ///     {
+    ///         Reason = Merge.Client.Hris.ReasonEnum.GeneralCustomerRequest,
+    ///     }
     /// );
     /// </code>
     /// </example>

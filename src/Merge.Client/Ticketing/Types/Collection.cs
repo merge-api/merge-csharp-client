@@ -54,7 +54,6 @@ public record Collection
     /// The parent collection for this collection.
     /// </summary>
     [JsonPropertyName("parent_collection")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Collection>>))]
     public OneOf<string, Collection>? ParentCollection { get; set; }
 
     /// <summary>

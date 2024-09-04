@@ -33,7 +33,6 @@ public record ScreeningQuestion
     /// The job associated with the screening question.
     /// </summary>
     [JsonPropertyName("job")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Job>>))]
     public OneOf<string, Job>? Job { get; set; }
 
     /// <summary>

@@ -48,7 +48,6 @@ public record PurchaseOrderLineItem
     public double? Quantity { get; set; }
 
     [JsonPropertyName("item")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
     public OneOf<string, Item>? Item { get; set; }
 
     /// <summary>

@@ -39,16 +39,12 @@ public record JobPosting
     /// The Url object is used to represent hyperlinks for a candidate to apply to a given job.
     /// </summary>
     [JsonPropertyName("job_posting_urls")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<OneOf<string, Url>, OneOfSerializer<OneOf<string, Url>>>)
-    )]
     public IEnumerable<OneOf<string, Url>>? JobPostingUrls { get; set; }
 
     /// <summary>
     /// ID of `Job` object for this `JobPosting`.
     /// </summary>
     [JsonPropertyName("job")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Job>>))]
     public OneOf<string, Job>? Job { get; set; }
 
     /// <summary>

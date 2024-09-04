@@ -110,31 +110,46 @@ public partial class ScopesClient
     /// await client.Hris.Scopes.LinkedAccountScopesCreateAsync(
     ///     new LinkedAccountCommonModelScopeDeserializerRequest
     ///     {
-    ///         CommonModels = new List<IndividualCommonModelScopeDeserializerRequest>()
+    ///         CommonModels = new List<Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest>()
     ///         {
-    ///             new IndividualCommonModelScopeDeserializerRequest
+    ///             new Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Employee",
-    ///                 ModelPermissions = new Dictionary<string, ModelPermissionDeserializerRequest>()
+    ///                 ModelPermissions = new Dictionary<
+    ///                     string,
+    ///                     Merge.Client.Hris.ModelPermissionDeserializerRequest
+    ///                 >()
     ///                 {
     ///                     {
     ///                         "READ",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = true }
+    ///                         new Merge.Client.Hris.ModelPermissionDeserializerRequest
+    ///                         {
+    ///                             IsEnabled = true,
+    ///                         }
     ///                     },
     ///                     {
     ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
+    ///                         new Merge.Client.Hris.ModelPermissionDeserializerRequest
+    ///                         {
+    ///                             IsEnabled = false,
+    ///                         }
     ///                     },
     ///                 },
     ///             },
-    ///             new IndividualCommonModelScopeDeserializerRequest
+    ///             new Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Benefit",
-    ///                 ModelPermissions = new Dictionary<string, ModelPermissionDeserializerRequest>()
+    ///                 ModelPermissions = new Dictionary<
+    ///                     string,
+    ///                     Merge.Client.Hris.ModelPermissionDeserializerRequest
+    ///                 >()
     ///                 {
     ///                     {
     ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
+    ///                         new Merge.Client.Hris.ModelPermissionDeserializerRequest
+    ///                         {
+    ///                             IsEnabled = false,
+    ///                         }
     ///                     },
     ///                 },
     ///             },

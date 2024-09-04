@@ -33,14 +33,12 @@ public record EmployeePayrollRun
     /// The employee whose payroll is being run.
     /// </summary>
     [JsonPropertyName("employee")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>
     /// The payroll being run.
     /// </summary>
     [JsonPropertyName("payroll_run")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, PayrollRun>>))]
     public OneOf<string, PayrollRun>? PayrollRun { get; set; }
 
     /// <summary>

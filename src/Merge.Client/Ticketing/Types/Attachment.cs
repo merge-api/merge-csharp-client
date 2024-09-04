@@ -39,7 +39,6 @@ public record Attachment
     /// The ticket associated with the attachment.
     /// </summary>
     [JsonPropertyName("ticket")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Ticket>>))]
     public OneOf<string, Ticket>? Ticket { get; set; }
 
     /// <summary>
