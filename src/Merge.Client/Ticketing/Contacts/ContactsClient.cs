@@ -57,6 +57,10 @@ public partial class ContactsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter.Value.ToString(
@@ -114,7 +118,7 @@ public partial class ContactsClient
     /// <example>
     /// <code>
     /// await client.Ticketing.Contacts.CreateAsync(
-    ///     new TicketingContactEndpointRequest { Model = new ContactRequest() }
+    ///     new TicketingContactEndpointRequest { Model = new Merge.Client.Ticketing.ContactRequest() }
     /// );
     /// </code>
     /// </example>

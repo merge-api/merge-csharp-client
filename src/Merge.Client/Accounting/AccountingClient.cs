@@ -17,18 +17,23 @@ public partial class AccountingClient
         Accounts = new AccountsClient(_client);
         Addresses = new AddressesClient(_client);
         AsyncPassthrough = new AsyncPassthroughClient(_client);
+        AsyncTasks = new AsyncTasksClient(_client);
         Attachments = new AttachmentsClient(_client);
         AuditTrail = new AuditTrailClient(_client);
         AvailableActions = new AvailableActionsClient(_client);
         BalanceSheets = new BalanceSheetsClient(_client);
+        BankFeedAccounts = new BankFeedAccountsClient(_client);
+        BankFeedTransactions = new BankFeedTransactionsClient(_client);
         CashFlowStatements = new CashFlowStatementsClient(_client);
         CompanyInfo = new CompanyInfoClient(_client);
         Contacts = new ContactsClient(_client);
         CreditNotes = new CreditNotesClient(_client);
         Scopes = new ScopesClient(_client);
         DeleteAccount = new DeleteAccountClient(_client);
+        Employees = new EmployeesClient(_client);
         Expenses = new ExpensesClient(_client);
         FieldMapping = new FieldMappingClient(_client);
+        GeneralLedgerTransactions = new GeneralLedgerTransactionsClient(_client);
         GenerateKey = new GenerateKeyClient(_client);
         IncomeStatements = new IncomeStatementsClient(_client);
         Invoices = new InvoicesClient(_client);
@@ -63,6 +68,8 @@ public partial class AccountingClient
 
     public AsyncPassthroughClient AsyncPassthrough { get; }
 
+    public AsyncTasksClient AsyncTasks { get; }
+
     public AttachmentsClient Attachments { get; }
 
     public AuditTrailClient AuditTrail { get; }
@@ -70,6 +77,10 @@ public partial class AccountingClient
     public AvailableActionsClient AvailableActions { get; }
 
     public BalanceSheetsClient BalanceSheets { get; }
+
+    public BankFeedAccountsClient BankFeedAccounts { get; }
+
+    public BankFeedTransactionsClient BankFeedTransactions { get; }
 
     public CashFlowStatementsClient CashFlowStatements { get; }
 
@@ -83,9 +94,13 @@ public partial class AccountingClient
 
     public DeleteAccountClient DeleteAccount { get; }
 
+    public EmployeesClient Employees { get; }
+
     public ExpensesClient Expenses { get; }
 
     public FieldMappingClient FieldMapping { get; }
+
+    public GeneralLedgerTransactionsClient GeneralLedgerTransactions { get; }
 
     public GenerateKeyClient GenerateKey { get; }
 

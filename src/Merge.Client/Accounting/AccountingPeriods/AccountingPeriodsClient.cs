@@ -43,6 +43,10 @@ public partial class AccountingPeriodsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.ToString();

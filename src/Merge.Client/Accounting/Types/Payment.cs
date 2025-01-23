@@ -39,14 +39,12 @@ public record Payment
     /// The supplier, or customer involved in the payment.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The supplier’s or customer’s account in which the payment is made.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
@@ -360,7 +358,7 @@ public record Payment
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The payment's exchange rate.
@@ -372,7 +370,6 @@ public record Payment
     /// The company the payment belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
@@ -391,13 +388,19 @@ public record Payment
     public PaymentTypeEnum? Type { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
+
+    /// <summary>
+    /// The accounting period that the Payment was generated in.
+    /// </summary>
+    [JsonPropertyName("accounting_period")]
+    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
+
+    /// <summary>
+    /// A list of “Payment Applied to Lines” objects.
+    /// </summary>
+    [JsonPropertyName("applied_to_lines")]
+    public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedToLines { get; set; }
 
     /// <summary>
     /// When the third party's payment entry was updated.
@@ -406,35 +409,19 @@ public record Payment
     public DateTime? RemoteUpdatedAt { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
-
-    /// <summary>
-    /// The accounting period that the Payment was generated in.
-    /// </summary>
-    [JsonPropertyName("accounting_period")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
-    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
-
-    /// <summary>
-    /// A list of “Payment Applied to Lines” objects.
-    /// </summary>
-    [JsonPropertyName("applied_to_lines")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, PaymentLineItem>,
-            OneOfSerializer<OneOf<string, PaymentLineItem>>
-        >)
-    )]
-    public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedToLines { get; set; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
     public IEnumerable<RemoteData>? RemoteData { get; set; }
+
+    [JsonPropertyName("remote_fields")]
+    public IEnumerable<RemoteField>? RemoteFields { get; set; }
 
     public override string ToString()
     {

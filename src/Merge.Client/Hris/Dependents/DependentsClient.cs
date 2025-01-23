@@ -57,6 +57,10 @@ public partial class DependentsClient
         {
             _query["include_sensitive_fields"] = request.IncludeSensitiveFields.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter.Value.ToString(

@@ -51,7 +51,7 @@ public partial class CollectionsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -60,6 +60,10 @@ public partial class CollectionsClient
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
         }
         if (request.ModifiedAfter != null)
         {
@@ -142,7 +146,7 @@ public partial class CollectionsClient
         var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.ToString();
+            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeRemoteData != null)
         {
@@ -173,73 +177,6 @@ public partial class CollectionsClient
             try
             {
                 return JsonUtils.Deserialize<Collection>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Returns a list of `User` objects.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Ticketing.Collections.UsersListAsync("parent_id", new CollectionsUsersListRequest());
-    /// </code>
-    /// </example>
-    public async Task<PaginatedUserList> UsersListAsync(
-        string parentId,
-        CollectionsUsersListRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var _query = new Dictionary<string, object>();
-        if (request.Cursor != null)
-        {
-            _query["cursor"] = request.Cursor;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
-        }
-        if (request.IncludeDeletedData != null)
-        {
-            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
-        }
-        if (request.IncludeRemoteData != null)
-        {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
-        }
-        if (request.PageSize != null)
-        {
-            _query["page_size"] = request.PageSize.ToString();
-        }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"ticketing/v1/collections/{parentId}/users",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<PaginatedUserList>(responseBody)!;
             }
             catch (JsonException e)
             {

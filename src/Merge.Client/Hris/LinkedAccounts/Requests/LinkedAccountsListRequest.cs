@@ -72,7 +72,7 @@ public record LinkedAccountsListRequest
     public int? PageSize { get; set; }
 
     /// <summary>
-    /// Filter by status. Options: `COMPLETE`, `INCOMPLETE`, `RELINK_NEEDED`
+    /// Filter by status. Options: `COMPLETE`, `IDLE`, `INCOMPLETE`, `RELINK_NEEDED`
     /// </summary>
     public string? Status { get; set; }
 

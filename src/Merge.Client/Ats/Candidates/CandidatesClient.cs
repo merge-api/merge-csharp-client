@@ -65,6 +65,10 @@ public partial class CandidatesClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.LastName != null)
         {
             _query["last_name"] = request.LastName;
@@ -316,7 +320,10 @@ public partial class CandidatesClient
     /// <code>
     /// await client.Ats.Candidates.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new Merge.Client.Ats.IgnoreCommonModelRequest
+    ///     {
+    ///         Reason = Merge.Client.Ats.ReasonEnum.GeneralCustomerRequest,
+    ///     }
     /// );
     /// </code>
     /// </example>

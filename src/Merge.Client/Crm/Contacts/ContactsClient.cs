@@ -69,6 +69,10 @@ public partial class ContactsClient
         {
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter.Value.ToString(
@@ -130,7 +134,7 @@ public partial class ContactsClient
     /// <example>
     /// <code>
     /// await client.Crm.Contacts.CreateAsync(
-    ///     new CrmContactEndpointRequest { Model = new ContactRequest() }
+    ///     new CrmContactEndpointRequest { Model = new Merge.Client.Crm.ContactRequest() }
     /// );
     /// </code>
     /// </example>
@@ -308,7 +312,7 @@ public partial class ContactsClient
     /// <code>
     /// await client.Crm.Contacts.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new IgnoreCommonModelRequest { Reason = Merge.Client.Crm.ReasonEnum.GeneralCustomerRequest }
     /// );
     /// </code>
     /// </example>
@@ -459,6 +463,10 @@ public partial class ContactsClient
         if (request.IncludeRemoteFields != null)
         {
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
         }
         if (request.IsCommonModelField != null)
         {

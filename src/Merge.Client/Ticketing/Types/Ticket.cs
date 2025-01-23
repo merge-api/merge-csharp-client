@@ -35,17 +35,22 @@ public record Ticket
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 
+    /// <summary>
+    /// The individual `Users` who are assigned to this ticket. This does not include `Users` who just have view access to this ticket.
+    /// </summary>
     [JsonPropertyName("assignees")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<OneOf<string, User>, OneOfSerializer<OneOf<string, User>>>)
-    )]
     public IEnumerable<OneOf<string, User>>? Assignees { get; set; }
+
+    /// <summary>
+    /// The `Teams` that are assigned to this ticket. This does not include `Teams` who just have view access to this ticket.
+    /// </summary>
+    [JsonPropertyName("assigned_teams")]
+    public IEnumerable<OneOf<string, Team>>? AssignedTeams { get; set; }
 
     /// <summary>
     /// The user who created this ticket.
     /// </summary>
     [JsonPropertyName("creator")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Creator { get; set; }
 
     /// <summary>
@@ -71,13 +76,10 @@ public record Ticket
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
+    /// <summary>
+    /// The `Collections` that this `Ticket` is included in.
+    /// </summary>
     [JsonPropertyName("collections")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Collection>,
-            OneOfSerializer<OneOf<string, Collection>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Collection>>? Collections { get; set; }
 
     /// <summary>
@@ -90,34 +92,28 @@ public record Ticket
     /// The account associated with the ticket.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The contact associated with the ticket.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The ticket's parent ticket.
     /// </summary>
     [JsonPropertyName("parent_ticket")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Ticket>>))]
     public OneOf<string, Ticket>? ParentTicket { get; set; }
 
     [JsonPropertyName("attachments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Attachment>,
-            OneOfSerializer<OneOf<string, Attachment>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Attachment>>? Attachments { get; set; }
 
     [JsonPropertyName("tags")]
     public IEnumerable<string>? Tags { get; set; }
+
+    [JsonPropertyName("roles")]
+    public IEnumerable<string>? Roles { get; set; }
 
     /// <summary>
     /// When the third party's ticket was created.
@@ -137,6 +133,9 @@ public record Ticket
     [JsonPropertyName("completed_at")]
     public DateTime? CompletedAt { get; set; }
 
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
+    /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 

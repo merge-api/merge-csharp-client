@@ -61,6 +61,10 @@ public partial class CreditNotesClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter.Value.ToString(
@@ -133,6 +137,64 @@ public partial class CreditNotesClient
     }
 
     /// <summary>
+    /// Creates a `CreditNote` object with the given values.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.CreditNotes.CreateAsync(
+    ///     new CreditNoteEndpointRequest { Model = new CreditNoteRequest() }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<CreditNoteResponse> CreateAsync(
+        CreditNoteEndpointRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.IsDebugMode != null)
+        {
+            _query["is_debug_mode"] = request.IsDebugMode.ToString();
+        }
+        if (request.RunAsync != null)
+        {
+            _query["run_async"] = request.RunAsync.ToString();
+        }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "accounting/v1/credit-notes",
+                Body = requestBody,
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<CreditNoteResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
     /// Returns a `CreditNote` object with the given `id`.
     /// </summary>
     /// <example>
@@ -181,6 +243,49 @@ public partial class CreditNotesClient
             try
             {
                 return JsonUtils.Deserialize<CreditNote>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
+    /// Returns metadata for `CreditNote` POSTs.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.CreditNotes.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "accounting/v1/credit-notes/meta/post",
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
             }
             catch (JsonException e)
             {

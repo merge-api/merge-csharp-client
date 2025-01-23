@@ -49,6 +49,9 @@ public record AccountDetailsAndActions
     [JsonPropertyName("account_type")]
     public required string AccountType { get; set; }
 
+    [JsonPropertyName("completed_at")]
+    public required DateTime CompletedAt { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

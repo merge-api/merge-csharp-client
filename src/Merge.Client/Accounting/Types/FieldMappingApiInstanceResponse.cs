@@ -61,8 +61,17 @@ public record FieldMappingApiInstanceResponse
     [JsonPropertyName("Transaction")]
     public IEnumerable<FieldMappingApiInstance>? Transaction { get; set; }
 
+    [JsonPropertyName("AccountingPeriod")]
+    public IEnumerable<FieldMappingApiInstance>? AccountingPeriod { get; set; }
+
     [JsonPropertyName("GeneralLedgerTransaction")]
     public IEnumerable<FieldMappingApiInstance>? GeneralLedgerTransaction { get; set; }
+
+    [JsonPropertyName("BankFeedAccount")]
+    public IEnumerable<FieldMappingApiInstance>? BankFeedAccount { get; set; }
+
+    [JsonPropertyName("Employee")]
+    public IEnumerable<FieldMappingApiInstance>? Employee { get; set; }
 
     public override string ToString()
     {

@@ -97,6 +97,10 @@ public partial class TicketsClient
         {
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter.Value.ToString(
@@ -159,7 +163,7 @@ public partial class TicketsClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.Value.Stringify();
+            _query["status"] = request.Status;
         }
         if (request.Tags != null)
         {
@@ -390,19 +394,16 @@ public partial class TicketsClient
     }
 
     /// <summary>
-    /// Returns a list of `User` objects.
+    /// Returns a list of `Viewer` objects.
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Ticketing.Tickets.CollaboratorsListAsync(
-    ///     "parent_id",
-    ///     new TicketsCollaboratorsListRequest()
-    /// );
+    /// await client.Ticketing.Tickets.ViewersListAsync("ticket_id", new TicketsViewersListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedUserList> CollaboratorsListAsync(
-        string parentId,
-        TicketsCollaboratorsListRequest request,
+    public async Task<PaginatedViewerList> ViewersListAsync(
+        string ticketId,
+        TicketsViewersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -424,6 +425,10 @@ public partial class TicketsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.ToString();
@@ -433,7 +438,7 @@ public partial class TicketsClient
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"ticketing/v1/tickets/{parentId}/collaborators",
+                Path = $"ticketing/v1/tickets/{ticketId}/viewers",
                 Query = _query,
                 Options = options,
             },
@@ -444,7 +449,7 @@ public partial class TicketsClient
         {
             try
             {
-                return JsonUtils.Deserialize<PaginatedUserList>(responseBody)!;
+                return JsonUtils.Deserialize<PaginatedViewerList>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -574,6 +579,10 @@ public partial class TicketsClient
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
         }
         if (request.IsCommonModelField != null)
         {

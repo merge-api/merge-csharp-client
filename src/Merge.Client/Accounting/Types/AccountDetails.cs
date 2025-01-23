@@ -43,6 +43,12 @@ public record AccountDetails
     [JsonPropertyName("account_type")]
     public string? AccountType { get; set; }
 
+    /// <summary>
+    /// The time at which account completes the linking flow.
+    /// </summary>
+    [JsonPropertyName("completed_at")]
+    public DateTime? CompletedAt { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

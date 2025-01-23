@@ -53,6 +53,10 @@ public partial class GroupsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.IsCommonlyUsedAsTeam != null)
         {
             _query["is_commonly_used_as_team"] = request.IsCommonlyUsedAsTeam;

@@ -33,6 +33,54 @@ public enum TicketsListRequestExpand
     [EnumMember(Value = "account,parent_ticket")]
     AccountParentTicket,
 
+    [EnumMember(Value = "assigned_teams")]
+    AssignedTeams,
+
+    [EnumMember(Value = "assigned_teams,account")]
+    AssignedTeamsAccount,
+
+    [EnumMember(Value = "assigned_teams,account,contact")]
+    AssignedTeamsAccountContact,
+
+    [EnumMember(Value = "assigned_teams,account,contact,creator")]
+    AssignedTeamsAccountContactCreator,
+
+    [EnumMember(Value = "assigned_teams,account,contact,creator,parent_ticket")]
+    AssignedTeamsAccountContactCreatorParentTicket,
+
+    [EnumMember(Value = "assigned_teams,account,contact,parent_ticket")]
+    AssignedTeamsAccountContactParentTicket,
+
+    [EnumMember(Value = "assigned_teams,account,creator")]
+    AssignedTeamsAccountCreator,
+
+    [EnumMember(Value = "assigned_teams,account,creator,parent_ticket")]
+    AssignedTeamsAccountCreatorParentTicket,
+
+    [EnumMember(Value = "assigned_teams,account,parent_ticket")]
+    AssignedTeamsAccountParentTicket,
+
+    [EnumMember(Value = "assigned_teams,contact")]
+    AssignedTeamsContact,
+
+    [EnumMember(Value = "assigned_teams,contact,creator")]
+    AssignedTeamsContactCreator,
+
+    [EnumMember(Value = "assigned_teams,contact,creator,parent_ticket")]
+    AssignedTeamsContactCreatorParentTicket,
+
+    [EnumMember(Value = "assigned_teams,contact,parent_ticket")]
+    AssignedTeamsContactParentTicket,
+
+    [EnumMember(Value = "assigned_teams,creator")]
+    AssignedTeamsCreator,
+
+    [EnumMember(Value = "assigned_teams,creator,parent_ticket")]
+    AssignedTeamsCreatorParentTicket,
+
+    [EnumMember(Value = "assigned_teams,parent_ticket")]
+    AssignedTeamsParentTicket,
+
     [EnumMember(Value = "assignees")]
     Assignees,
 
@@ -60,6 +108,54 @@ public enum TicketsListRequestExpand
     [EnumMember(Value = "assignees,account,parent_ticket")]
     AssigneesAccountParentTicket,
 
+    [EnumMember(Value = "assignees,assigned_teams")]
+    AssigneesAssignedTeams,
+
+    [EnumMember(Value = "assignees,assigned_teams,account")]
+    AssigneesAssignedTeamsAccount,
+
+    [EnumMember(Value = "assignees,assigned_teams,account,contact")]
+    AssigneesAssignedTeamsAccountContact,
+
+    [EnumMember(Value = "assignees,assigned_teams,account,contact,creator")]
+    AssigneesAssignedTeamsAccountContactCreator,
+
+    [EnumMember(Value = "assignees,assigned_teams,account,contact,creator,parent_ticket")]
+    AssigneesAssignedTeamsAccountContactCreatorParentTicket,
+
+    [EnumMember(Value = "assignees,assigned_teams,account,contact,parent_ticket")]
+    AssigneesAssignedTeamsAccountContactParentTicket,
+
+    [EnumMember(Value = "assignees,assigned_teams,account,creator")]
+    AssigneesAssignedTeamsAccountCreator,
+
+    [EnumMember(Value = "assignees,assigned_teams,account,creator,parent_ticket")]
+    AssigneesAssignedTeamsAccountCreatorParentTicket,
+
+    [EnumMember(Value = "assignees,assigned_teams,account,parent_ticket")]
+    AssigneesAssignedTeamsAccountParentTicket,
+
+    [EnumMember(Value = "assignees,assigned_teams,contact")]
+    AssigneesAssignedTeamsContact,
+
+    [EnumMember(Value = "assignees,assigned_teams,contact,creator")]
+    AssigneesAssignedTeamsContactCreator,
+
+    [EnumMember(Value = "assignees,assigned_teams,contact,creator,parent_ticket")]
+    AssigneesAssignedTeamsContactCreatorParentTicket,
+
+    [EnumMember(Value = "assignees,assigned_teams,contact,parent_ticket")]
+    AssigneesAssignedTeamsContactParentTicket,
+
+    [EnumMember(Value = "assignees,assigned_teams,creator")]
+    AssigneesAssignedTeamsCreator,
+
+    [EnumMember(Value = "assignees,assigned_teams,creator,parent_ticket")]
+    AssigneesAssignedTeamsCreatorParentTicket,
+
+    [EnumMember(Value = "assignees,assigned_teams,parent_ticket")]
+    AssigneesAssignedTeamsParentTicket,
+
     [EnumMember(Value = "assignees,collections")]
     AssigneesCollections,
 
@@ -86,6 +182,56 @@ public enum TicketsListRequestExpand
 
     [EnumMember(Value = "assignees,collections,account,parent_ticket")]
     AssigneesCollectionsAccountParentTicket,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams")]
+    AssigneesCollectionsAssignedTeams,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,account")]
+    AssigneesCollectionsAssignedTeamsAccount,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,account,contact")]
+    AssigneesCollectionsAssignedTeamsAccountContact,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,account,contact,creator")]
+    AssigneesCollectionsAssignedTeamsAccountContactCreator,
+
+    [EnumMember(
+        Value = "assignees,collections,assigned_teams,account,contact,creator,parent_ticket"
+    )]
+    AssigneesCollectionsAssignedTeamsAccountContactCreatorParentTicket,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,account,contact,parent_ticket")]
+    AssigneesCollectionsAssignedTeamsAccountContactParentTicket,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,account,creator")]
+    AssigneesCollectionsAssignedTeamsAccountCreator,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,account,creator,parent_ticket")]
+    AssigneesCollectionsAssignedTeamsAccountCreatorParentTicket,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,account,parent_ticket")]
+    AssigneesCollectionsAssignedTeamsAccountParentTicket,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,contact")]
+    AssigneesCollectionsAssignedTeamsContact,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,contact,creator")]
+    AssigneesCollectionsAssignedTeamsContactCreator,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,contact,creator,parent_ticket")]
+    AssigneesCollectionsAssignedTeamsContactCreatorParentTicket,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,contact,parent_ticket")]
+    AssigneesCollectionsAssignedTeamsContactParentTicket,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,creator")]
+    AssigneesCollectionsAssignedTeamsCreator,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,creator,parent_ticket")]
+    AssigneesCollectionsAssignedTeamsCreatorParentTicket,
+
+    [EnumMember(Value = "assignees,collections,assigned_teams,parent_ticket")]
+    AssigneesCollectionsAssignedTeamsParentTicket,
 
     [EnumMember(Value = "assignees,collections,contact")]
     AssigneesCollectionsContact,
@@ -156,6 +302,54 @@ public enum TicketsListRequestExpand
     [EnumMember(Value = "attachments,account,parent_ticket")]
     AttachmentsAccountParentTicket,
 
+    [EnumMember(Value = "attachments,assigned_teams")]
+    AttachmentsAssignedTeams,
+
+    [EnumMember(Value = "attachments,assigned_teams,account")]
+    AttachmentsAssignedTeamsAccount,
+
+    [EnumMember(Value = "attachments,assigned_teams,account,contact")]
+    AttachmentsAssignedTeamsAccountContact,
+
+    [EnumMember(Value = "attachments,assigned_teams,account,contact,creator")]
+    AttachmentsAssignedTeamsAccountContactCreator,
+
+    [EnumMember(Value = "attachments,assigned_teams,account,contact,creator,parent_ticket")]
+    AttachmentsAssignedTeamsAccountContactCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,assigned_teams,account,contact,parent_ticket")]
+    AttachmentsAssignedTeamsAccountContactParentTicket,
+
+    [EnumMember(Value = "attachments,assigned_teams,account,creator")]
+    AttachmentsAssignedTeamsAccountCreator,
+
+    [EnumMember(Value = "attachments,assigned_teams,account,creator,parent_ticket")]
+    AttachmentsAssignedTeamsAccountCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,assigned_teams,account,parent_ticket")]
+    AttachmentsAssignedTeamsAccountParentTicket,
+
+    [EnumMember(Value = "attachments,assigned_teams,contact")]
+    AttachmentsAssignedTeamsContact,
+
+    [EnumMember(Value = "attachments,assigned_teams,contact,creator")]
+    AttachmentsAssignedTeamsContactCreator,
+
+    [EnumMember(Value = "attachments,assigned_teams,contact,creator,parent_ticket")]
+    AttachmentsAssignedTeamsContactCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,assigned_teams,contact,parent_ticket")]
+    AttachmentsAssignedTeamsContactParentTicket,
+
+    [EnumMember(Value = "attachments,assigned_teams,creator")]
+    AttachmentsAssignedTeamsCreator,
+
+    [EnumMember(Value = "attachments,assigned_teams,creator,parent_ticket")]
+    AttachmentsAssignedTeamsCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,assigned_teams,parent_ticket")]
+    AttachmentsAssignedTeamsParentTicket,
+
     [EnumMember(Value = "attachments,assignees")]
     AttachmentsAssignees,
 
@@ -183,6 +377,56 @@ public enum TicketsListRequestExpand
     [EnumMember(Value = "attachments,assignees,account,parent_ticket")]
     AttachmentsAssigneesAccountParentTicket,
 
+    [EnumMember(Value = "attachments,assignees,assigned_teams")]
+    AttachmentsAssigneesAssignedTeams,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,account")]
+    AttachmentsAssigneesAssignedTeamsAccount,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,account,contact")]
+    AttachmentsAssigneesAssignedTeamsAccountContact,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,account,contact,creator")]
+    AttachmentsAssigneesAssignedTeamsAccountContactCreator,
+
+    [EnumMember(
+        Value = "attachments,assignees,assigned_teams,account,contact,creator,parent_ticket"
+    )]
+    AttachmentsAssigneesAssignedTeamsAccountContactCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,account,contact,parent_ticket")]
+    AttachmentsAssigneesAssignedTeamsAccountContactParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,account,creator")]
+    AttachmentsAssigneesAssignedTeamsAccountCreator,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,account,creator,parent_ticket")]
+    AttachmentsAssigneesAssignedTeamsAccountCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,account,parent_ticket")]
+    AttachmentsAssigneesAssignedTeamsAccountParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,contact")]
+    AttachmentsAssigneesAssignedTeamsContact,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,contact,creator")]
+    AttachmentsAssigneesAssignedTeamsContactCreator,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,contact,creator,parent_ticket")]
+    AttachmentsAssigneesAssignedTeamsContactCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,contact,parent_ticket")]
+    AttachmentsAssigneesAssignedTeamsContactParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,creator")]
+    AttachmentsAssigneesAssignedTeamsCreator,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,creator,parent_ticket")]
+    AttachmentsAssigneesAssignedTeamsCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,assigned_teams,parent_ticket")]
+    AttachmentsAssigneesAssignedTeamsParentTicket,
+
     [EnumMember(Value = "attachments,assignees,collections")]
     AttachmentsAssigneesCollections,
 
@@ -209,6 +453,62 @@ public enum TicketsListRequestExpand
 
     [EnumMember(Value = "attachments,assignees,collections,account,parent_ticket")]
     AttachmentsAssigneesCollectionsAccountParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams")]
+    AttachmentsAssigneesCollectionsAssignedTeams,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams,account")]
+    AttachmentsAssigneesCollectionsAssignedTeamsAccount,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams,account,contact")]
+    AttachmentsAssigneesCollectionsAssignedTeamsAccountContact,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams,account,contact,creator")]
+    AttachmentsAssigneesCollectionsAssignedTeamsAccountContactCreator,
+
+    [EnumMember(
+        Value = "attachments,assignees,collections,assigned_teams,account,contact,creator,parent_ticket"
+    )]
+    AttachmentsAssigneesCollectionsAssignedTeamsAccountContactCreatorParentTicket,
+
+    [EnumMember(
+        Value = "attachments,assignees,collections,assigned_teams,account,contact,parent_ticket"
+    )]
+    AttachmentsAssigneesCollectionsAssignedTeamsAccountContactParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams,account,creator")]
+    AttachmentsAssigneesCollectionsAssignedTeamsAccountCreator,
+
+    [EnumMember(
+        Value = "attachments,assignees,collections,assigned_teams,account,creator,parent_ticket"
+    )]
+    AttachmentsAssigneesCollectionsAssignedTeamsAccountCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams,account,parent_ticket")]
+    AttachmentsAssigneesCollectionsAssignedTeamsAccountParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams,contact")]
+    AttachmentsAssigneesCollectionsAssignedTeamsContact,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams,contact,creator")]
+    AttachmentsAssigneesCollectionsAssignedTeamsContactCreator,
+
+    [EnumMember(
+        Value = "attachments,assignees,collections,assigned_teams,contact,creator,parent_ticket"
+    )]
+    AttachmentsAssigneesCollectionsAssignedTeamsContactCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams,contact,parent_ticket")]
+    AttachmentsAssigneesCollectionsAssignedTeamsContactParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams,creator")]
+    AttachmentsAssigneesCollectionsAssignedTeamsCreator,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams,creator,parent_ticket")]
+    AttachmentsAssigneesCollectionsAssignedTeamsCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,assignees,collections,assigned_teams,parent_ticket")]
+    AttachmentsAssigneesCollectionsAssignedTeamsParentTicket,
 
     [EnumMember(Value = "attachments,assignees,collections,contact")]
     AttachmentsAssigneesCollectionsContact,
@@ -279,6 +579,56 @@ public enum TicketsListRequestExpand
     [EnumMember(Value = "attachments,collections,account,parent_ticket")]
     AttachmentsCollectionsAccountParentTicket,
 
+    [EnumMember(Value = "attachments,collections,assigned_teams")]
+    AttachmentsCollectionsAssignedTeams,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,account")]
+    AttachmentsCollectionsAssignedTeamsAccount,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,account,contact")]
+    AttachmentsCollectionsAssignedTeamsAccountContact,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,account,contact,creator")]
+    AttachmentsCollectionsAssignedTeamsAccountContactCreator,
+
+    [EnumMember(
+        Value = "attachments,collections,assigned_teams,account,contact,creator,parent_ticket"
+    )]
+    AttachmentsCollectionsAssignedTeamsAccountContactCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,account,contact,parent_ticket")]
+    AttachmentsCollectionsAssignedTeamsAccountContactParentTicket,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,account,creator")]
+    AttachmentsCollectionsAssignedTeamsAccountCreator,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,account,creator,parent_ticket")]
+    AttachmentsCollectionsAssignedTeamsAccountCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,account,parent_ticket")]
+    AttachmentsCollectionsAssignedTeamsAccountParentTicket,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,contact")]
+    AttachmentsCollectionsAssignedTeamsContact,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,contact,creator")]
+    AttachmentsCollectionsAssignedTeamsContactCreator,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,contact,creator,parent_ticket")]
+    AttachmentsCollectionsAssignedTeamsContactCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,contact,parent_ticket")]
+    AttachmentsCollectionsAssignedTeamsContactParentTicket,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,creator")]
+    AttachmentsCollectionsAssignedTeamsCreator,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,creator,parent_ticket")]
+    AttachmentsCollectionsAssignedTeamsCreatorParentTicket,
+
+    [EnumMember(Value = "attachments,collections,assigned_teams,parent_ticket")]
+    AttachmentsCollectionsAssignedTeamsParentTicket,
+
     [EnumMember(Value = "attachments,collections,contact")]
     AttachmentsCollectionsContact,
 
@@ -347,6 +697,54 @@ public enum TicketsListRequestExpand
 
     [EnumMember(Value = "collections,account,parent_ticket")]
     CollectionsAccountParentTicket,
+
+    [EnumMember(Value = "collections,assigned_teams")]
+    CollectionsAssignedTeams,
+
+    [EnumMember(Value = "collections,assigned_teams,account")]
+    CollectionsAssignedTeamsAccount,
+
+    [EnumMember(Value = "collections,assigned_teams,account,contact")]
+    CollectionsAssignedTeamsAccountContact,
+
+    [EnumMember(Value = "collections,assigned_teams,account,contact,creator")]
+    CollectionsAssignedTeamsAccountContactCreator,
+
+    [EnumMember(Value = "collections,assigned_teams,account,contact,creator,parent_ticket")]
+    CollectionsAssignedTeamsAccountContactCreatorParentTicket,
+
+    [EnumMember(Value = "collections,assigned_teams,account,contact,parent_ticket")]
+    CollectionsAssignedTeamsAccountContactParentTicket,
+
+    [EnumMember(Value = "collections,assigned_teams,account,creator")]
+    CollectionsAssignedTeamsAccountCreator,
+
+    [EnumMember(Value = "collections,assigned_teams,account,creator,parent_ticket")]
+    CollectionsAssignedTeamsAccountCreatorParentTicket,
+
+    [EnumMember(Value = "collections,assigned_teams,account,parent_ticket")]
+    CollectionsAssignedTeamsAccountParentTicket,
+
+    [EnumMember(Value = "collections,assigned_teams,contact")]
+    CollectionsAssignedTeamsContact,
+
+    [EnumMember(Value = "collections,assigned_teams,contact,creator")]
+    CollectionsAssignedTeamsContactCreator,
+
+    [EnumMember(Value = "collections,assigned_teams,contact,creator,parent_ticket")]
+    CollectionsAssignedTeamsContactCreatorParentTicket,
+
+    [EnumMember(Value = "collections,assigned_teams,contact,parent_ticket")]
+    CollectionsAssignedTeamsContactParentTicket,
+
+    [EnumMember(Value = "collections,assigned_teams,creator")]
+    CollectionsAssignedTeamsCreator,
+
+    [EnumMember(Value = "collections,assigned_teams,creator,parent_ticket")]
+    CollectionsAssignedTeamsCreatorParentTicket,
+
+    [EnumMember(Value = "collections,assigned_teams,parent_ticket")]
+    CollectionsAssignedTeamsParentTicket,
 
     [EnumMember(Value = "collections,contact")]
     CollectionsContact,

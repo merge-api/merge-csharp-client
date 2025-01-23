@@ -26,13 +26,13 @@ public record AccountIntegration
     public IEnumerable<CategoriesEnum>? Categories { get; set; }
 
     /// <summary>
-    /// Company logo in rectangular shape. <b>Upload an image with a clear background.</b>
+    /// Company logo in rectangular shape.
     /// </summary>
     [JsonPropertyName("image")]
     public string? Image { get; set; }
 
     /// <summary>
-    /// Company logo in square shape. <b>Upload an image with a white background.</b>
+    /// Company logo in square shape.
     /// </summary>
     [JsonPropertyName("square_image")]
     public string? SquareImage { get; set; }

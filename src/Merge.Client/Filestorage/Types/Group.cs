@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 #nullable enable
 
@@ -41,7 +42,13 @@ public record Group
     public IEnumerable<string> Users { get; set; } = new List<string>();
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Groups that inherit the permissions of the parent group.
+    /// </summary>
+    [JsonPropertyName("child_groups")]
+    public IEnumerable<OneOf<string, Group>>? ChildGroups { get; set; }
+
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
@@ -50,7 +57,7 @@ public record Group
     public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<Dictionary<string, object?>>? RemoteData { get; set; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 
     public override string ToString()
     {

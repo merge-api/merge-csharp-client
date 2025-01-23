@@ -61,6 +61,10 @@ public partial class AttachmentsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter.Value.ToString(
@@ -128,7 +132,7 @@ public partial class AttachmentsClient
     /// await client.Ats.Attachments.CreateAsync(
     ///     new AttachmentEndpointRequest
     ///     {
-    ///         Model = new AttachmentRequest(),
+    ///         Model = new Merge.Client.Ats.AttachmentRequest(),
     ///         RemoteUserId = "remote_user_id",
     ///     }
     /// );

@@ -33,7 +33,6 @@ public record ScreeningQuestion
     /// The job associated with the screening question.
     /// </summary>
     [JsonPropertyName("job")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Job>>))]
     public OneOf<string, Job>? Job { get; set; }
 
     /// <summary>
@@ -73,7 +72,7 @@ public record ScreeningQuestion
     public IEnumerable<object>? Options { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }

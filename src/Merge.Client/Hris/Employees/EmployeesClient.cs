@@ -89,6 +89,10 @@ public partial class EmployeesClient
         {
             _query["include_sensitive_fields"] = request.IncludeSensitiveFields.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.JobTitle != null)
         {
             _query["job_title"] = request.JobTitle;
@@ -334,7 +338,10 @@ public partial class EmployeesClient
     /// <code>
     /// await client.Hris.Employees.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new Merge.Client.Hris.IgnoreCommonModelRequest
+    ///     {
+    ///         Reason = Merge.Client.Hris.ReasonEnum.GeneralCustomerRequest,
+    ///     }
     /// );
     /// </code>
     /// </example>

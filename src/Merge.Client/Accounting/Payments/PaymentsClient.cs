@@ -69,6 +69,14 @@ public partial class PaymentsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeRemoteFields != null)
+        {
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter.Value.ToString(
@@ -214,6 +222,10 @@ public partial class PaymentsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeRemoteFields != null)
+        {
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
@@ -306,6 +318,78 @@ public partial class PaymentsClient
     }
 
     /// <summary>
+    /// Returns a list of `RemoteFieldClass` objects.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Payments.LineItemsRemoteFieldClassesListAsync(
+    ///     new PaymentsLineItemsRemoteFieldClassesListRequest()
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListAsync(
+        PaymentsLineItemsRemoteFieldClassesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.IncludeDeletedData != null)
+        {
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+        }
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
+        if (request.IsCommonModelField != null)
+        {
+            _query["is_common_model_field"] = request.IsCommonModelField.ToString();
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.ToString();
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "accounting/v1/payments/line-items/remote-field-classes",
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
     /// Returns metadata for `Payment` PATCHs.
     /// </summary>
     /// <example>
@@ -378,6 +462,78 @@ public partial class PaymentsClient
             try
             {
                 return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
+    /// Returns a list of `RemoteFieldClass` objects.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Payments.RemoteFieldClassesListAsync(
+    ///     new PaymentsRemoteFieldClassesListRequest()
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
+        PaymentsRemoteFieldClassesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.IncludeDeletedData != null)
+        {
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+        }
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
+        if (request.IsCommonModelField != null)
+        {
+            _query["is_common_model_field"] = request.IsCommonModelField.ToString();
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.ToString();
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "accounting/v1/payments/remote-field-classes",
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
             }
             catch (JsonException e)
             {

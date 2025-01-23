@@ -39,7 +39,6 @@ public record JobInterviewStage
     /// This field is populated only if the stage is specific to a particular job. If the stage is generic, this field will not be populated.
     /// </summary>
     [JsonPropertyName("job")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Job>>))]
     public OneOf<string, Job>? Job { get; set; }
 
     /// <summary>
@@ -49,7 +48,7 @@ public record JobInterviewStage
     public int? StageOrder { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }

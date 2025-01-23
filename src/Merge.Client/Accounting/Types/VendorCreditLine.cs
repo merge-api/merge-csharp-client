@@ -42,10 +42,10 @@ public record VendorCreditLine
     public string? TrackingCategory { get; set; }
 
     /// <summary>
-    /// The line's associated tracking categories.
+    /// The vendor credit line item's associated tracking categories.
     /// </summary>
     [JsonPropertyName("tracking_categories")]
-    public IEnumerable<string> TrackingCategories { get; set; } = new List<string>();
+    public IEnumerable<string>? TrackingCategories { get; set; }
 
     /// <summary>
     /// The line's description.
@@ -57,7 +57,6 @@ public record VendorCreditLine
     /// The line's account.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
@@ -67,13 +66,19 @@ public record VendorCreditLine
     public string? Company { get; set; }
 
     /// <summary>
+    /// The tax rate that applies to this line item.
+    /// </summary>
+    [JsonPropertyName("tax_rate")]
+    public string? TaxRate { get; set; }
+
+    /// <summary>
     /// The vendor credit line item's exchange rate.
     /// </summary>
     [JsonPropertyName("exchange_rate")]
     public string? ExchangeRate { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }

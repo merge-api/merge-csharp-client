@@ -21,7 +21,6 @@ public record InvoiceRequest
     /// The invoice's contact.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
@@ -49,6 +48,12 @@ public record InvoiceRequest
     public DateTime? PaidOnDate { get; set; }
 
     /// <summary>
+    /// The employee this overall transaction relates to.
+    /// </summary>
+    [JsonPropertyName("employee")]
+    public OneOf<string, Employee>? Employee { get; set; }
+
+    /// <summary>
     /// The invoice's private note.
     /// </summary>
     [JsonPropertyName("memo")]
@@ -71,7 +76,6 @@ public record InvoiceRequest
     /// The company the invoice belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
@@ -385,7 +389,7 @@ public record InvoiceRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The invoice's exchange rate.
@@ -412,6 +416,12 @@ public record InvoiceRequest
     public double? TotalTaxAmount { get; set; }
 
     /// <summary>
+    /// If the transaction is inclusive or exclusive of tax. `True` if inclusive, `False` if exclusive.
+    /// </summary>
+    [JsonPropertyName("inclusive_of_tax")]
+    public bool? InclusiveOfTax { get; set; }
+
+    /// <summary>
     /// The invoice's total amount.
     /// </summary>
     [JsonPropertyName("total_amount")]
@@ -427,33 +437,15 @@ public record InvoiceRequest
     /// Array of `Payment` object IDs.
     /// </summary>
     [JsonPropertyName("payments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Payment>,
-            OneOfSerializer<OneOf<string, Payment>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Payment>>? Payments { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     [JsonPropertyName("line_items")]
     public IEnumerable<InvoiceLineItemRequest>? LineItems { get; set; }
 
     [JsonPropertyName("purchase_orders")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, PurchaseOrder>,
-            OneOfSerializer<OneOf<string, PurchaseOrder>>
-        >)
-    )]
     public IEnumerable<OneOf<string, PurchaseOrder>>? PurchaseOrders { get; set; }
 
     [JsonPropertyName("integration_params")]
@@ -461,6 +453,9 @@ public record InvoiceRequest
 
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
+
+    [JsonPropertyName("remote_fields")]
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
 
     public override string ToString()
     {

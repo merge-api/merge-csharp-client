@@ -48,7 +48,6 @@ public record TransactionLineItem
     public string? Quantity { get; set; }
 
     [JsonPropertyName("item")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
     public OneOf<string, Item>? Item { get; set; }
 
     /// <summary>
@@ -64,10 +63,10 @@ public record TransactionLineItem
     public string? TrackingCategory { get; set; }
 
     /// <summary>
-    /// The line's associated tracking categories.
+    /// The transaction line item's associated tracking categories.
     /// </summary>
     [JsonPropertyName("tracking_categories")]
-    public IEnumerable<string> TrackingCategories { get; set; } = new List<string>();
+    public IEnumerable<string>? TrackingCategories { get; set; }
 
     /// <summary>
     /// The line item's total.
@@ -75,6 +74,9 @@ public record TransactionLineItem
     [JsonPropertyName("total_line_amount")]
     public string? TotalLineAmount { get; set; }
 
+    /// <summary>
+    /// The tax rate that applies to this line item.
+    /// </summary>
     [JsonPropertyName("tax_rate")]
     public string? TaxRate { get; set; }
 
@@ -389,7 +391,7 @@ public record TransactionLineItem
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The line item's exchange rate.
@@ -404,7 +406,7 @@ public record TransactionLineItem
     public string? Company { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }

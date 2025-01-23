@@ -2,6 +2,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
+using OneOf;
 
 #nullable enable
 
@@ -22,7 +23,11 @@ public partial class AsyncPassthroughClient
     /// <example>
     /// <code>
     /// await client.Filestorage.AsyncPassthrough.CreateAsync(
-    ///     new DataPassthroughRequest { Method = MethodEnum.Get, Path = "/scooters" }
+    ///     new Merge.Client.Filestorage.DataPassthroughRequest
+    ///     {
+    ///         Method = Merge.Client.Filestorage.MethodEnum.Get,
+    ///         Path = "/scooters",
+    ///     }
     /// );
     /// </code>
     /// </example>
@@ -71,7 +76,7 @@ public partial class AsyncPassthroughClient
     /// await client.Filestorage.AsyncPassthrough.RetrieveAsync("async_passthrough_receipt_id");
     /// </code>
     /// </example>
-    public async Task<RemoteResponse> RetrieveAsync(
+    public async Task<OneOf<RemoteResponse, string>> RetrieveAsync(
         string asyncPassthroughReceiptId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -92,7 +97,7 @@ public partial class AsyncPassthroughClient
         {
             try
             {
-                return JsonUtils.Deserialize<RemoteResponse>(responseBody)!;
+                return JsonUtils.Deserialize<OneOf<RemoteResponse, string>>(responseBody)!;
             }
             catch (JsonException e)
             {

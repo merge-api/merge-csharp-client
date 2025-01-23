@@ -31,6 +31,10 @@ public partial class AccountsClient
     )
     {
         var _query = new Dictionary<string, object>();
+        if (request.AccountType != null)
+        {
+            _query["account_type"] = request.AccountType;
+        }
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -60,6 +64,10 @@ public partial class AccountsClient
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
         }
         if (request.ModifiedAfter != null)
         {
@@ -126,7 +134,7 @@ public partial class AccountsClient
     /// <example>
     /// <code>
     /// await client.Accounting.Accounts.CreateAsync(
-    ///     new AccountEndpointRequest { Model = new AccountRequest() }
+    ///     new AccountEndpointRequest { Model = new Merge.Client.Accounting.AccountRequest() }
     /// );
     /// </code>
     /// </example>

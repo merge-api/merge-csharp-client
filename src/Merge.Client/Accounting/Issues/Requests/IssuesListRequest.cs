@@ -48,6 +48,11 @@ public record IssuesListRequest
     public DateTime? LastIncidentTimeBefore { get; set; }
 
     /// <summary>
+    /// If provided, will only include issues pertaining to the linked account passed in.
+    /// </summary>
+    public string? LinkedAccountId { get; set; }
+
+    /// <summary>
     /// Number of results to return per page.
     /// </summary>
     public int? PageSize { get; set; }

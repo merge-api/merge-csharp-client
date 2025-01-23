@@ -33,14 +33,12 @@ public record Offer
     /// The application who is receiving the offer.
     /// </summary>
     [JsonPropertyName("application")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Application>>))]
     public OneOf<string, Application>? Application { get; set; }
 
     /// <summary>
     /// The user who created the offer.
     /// </summary>
     [JsonPropertyName("creator")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? Creator { get; set; }
 
     /// <summary>
@@ -84,7 +82,7 @@ public record Offer
     public OfferStatusEnum? Status { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }

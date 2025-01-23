@@ -33,7 +33,6 @@ public record Employment
     /// The employee holding this position.
     /// </summary>
     [JsonPropertyName("employee")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>
@@ -43,7 +42,7 @@ public record Employment
     public string? JobTitle { get; set; }
 
     /// <summary>
-    /// The position's pay rate in dollars.
+    /// The position's pay rate.
     /// </summary>
     [JsonPropertyName("pay_rate")]
     public double? PayRate { get; set; }
@@ -397,7 +396,6 @@ public record Employment
     /// The employment's pay group
     /// </summary>
     [JsonPropertyName("pay_group")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, PayGroup>>))]
     public OneOf<string, PayGroup>? PayGroup { get; set; }
 
     /// <summary>
@@ -430,7 +428,7 @@ public record Employment
     public EmploymentTypeEnum? EmploymentType { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }

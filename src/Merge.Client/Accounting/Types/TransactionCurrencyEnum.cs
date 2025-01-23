@@ -6,8 +6,8 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(StringEnumSerializer<CurrencyEnum>))]
-public enum CurrencyEnum
+[JsonConverter(typeof(StringEnumSerializer<TransactionCurrencyEnum>))]
+public enum TransactionCurrencyEnum
 {
     [EnumMember(Value = "XUA")]
     Xua,

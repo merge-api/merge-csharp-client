@@ -57,6 +57,10 @@ public partial class StagesClient
         {
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter.Value.ToString(
@@ -193,6 +197,10 @@ public partial class StagesClient
         if (request.IncludeRemoteFields != null)
         {
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
         }
         if (request.IsCommonModelField != null)
         {

@@ -33,21 +33,18 @@ public record Scorecard
     /// The application being scored.
     /// </summary>
     [JsonPropertyName("application")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Application>>))]
     public OneOf<string, Application>? Application { get; set; }
 
     /// <summary>
     /// The interview being scored.
     /// </summary>
     [JsonPropertyName("interview")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, ScheduledInterview>>))]
     public OneOf<string, ScheduledInterview>? Interview { get; set; }
 
     /// <summary>
     /// The interviewer doing the scoring.
     /// </summary>
     [JsonPropertyName("interviewer")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? Interviewer { get; set; }
 
     /// <summary>
@@ -75,7 +72,7 @@ public record Scorecard
     public OverallRecommendationEnum? OverallRecommendation { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }

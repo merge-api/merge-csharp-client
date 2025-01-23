@@ -30,7 +30,6 @@ public record Association
     /// The association type the association belongs to.
     /// </summary>
     [JsonPropertyName("association_type")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AssociationType>>))]
     public OneOf<string, AssociationType>? AssociationType { get; set; }
 
     public override string ToString()

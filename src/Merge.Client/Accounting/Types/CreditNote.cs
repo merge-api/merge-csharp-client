@@ -55,14 +55,12 @@ public record CreditNote
     /// The credit note's contact.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The company the credit note belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
@@ -83,16 +81,16 @@ public record CreditNote
     [JsonPropertyName("remaining_credit")]
     public double? RemainingCredit { get; set; }
 
+    /// <summary>
+    /// If the transaction is inclusive or exclusive of tax. `True` if inclusive, `False` if exclusive.
+    /// </summary>
+    [JsonPropertyName("inclusive_of_tax")]
+    public bool? InclusiveOfTax { get; set; }
+
     [JsonPropertyName("line_items")]
     public IEnumerable<CreditNoteLineItem>? LineItems { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
@@ -406,7 +404,7 @@ public record CreditNote
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// When the third party's credit note was created.
@@ -424,38 +422,31 @@ public record CreditNote
     /// Array of `Payment` object IDs
     /// </summary>
     [JsonPropertyName("payments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Payment>,
-            OneOfSerializer<OneOf<string, Payment>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Payment>>? Payments { get; set; }
 
     /// <summary>
     /// A list of the Payment Applied to Lines common models related to a given Invoice, Credit Note, or Journal Entry.
     /// </summary>
     [JsonPropertyName("applied_payments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, PaymentLineItem>,
-            OneOfSerializer<OneOf<string, PaymentLineItem>>
-        >)
-    )]
     public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedPayments { get; set; }
-
-    /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
-    /// </summary>
-    [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; set; }
 
     /// <summary>
     /// The accounting period that the CreditNote was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
+
+    /// <summary>
+    /// A list of the CreditNote Applied to Lines common models related to a given Credit Note
+    /// </summary>
+    [JsonPropertyName("applied_to_lines")]
+    public IEnumerable<CreditNoteApplyLineForCreditNote>? AppliedToLines { get; set; }
+
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
+    /// </summary>
+    [JsonPropertyName("remote_was_deleted")]
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object?>? FieldMappings { get; set; }

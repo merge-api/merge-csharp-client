@@ -27,7 +27,7 @@ public record CompanyInfoListRequest
     public CompanyInfoListRequestExpand? Expand { get; set; }
 
     /// <summary>
-    /// Whether to include data that was marked as deleted by third party webhooks.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     public bool? IncludeDeletedData { get; set; }
 
@@ -35,6 +35,11 @@ public record CompanyInfoListRequest
     /// Whether to include the original data Merge fetched from the third-party to produce these models.
     /// </summary>
     public bool? IncludeRemoteData { get; set; }
+
+    /// <summary>
+    /// Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null).
+    /// </summary>
+    public bool? IncludeShellData { get; set; }
 
     /// <summary>
     /// If provided, only objects synced by Merge after this date time will be returned.

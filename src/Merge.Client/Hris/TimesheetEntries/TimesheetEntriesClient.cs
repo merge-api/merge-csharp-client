@@ -51,11 +51,15 @@ public partial class TimesheetEntriesClient
         }
         if (request.EndedAfter != null)
         {
-            _query["ended_after"] = request.EndedAfter;
+            _query["ended_after"] = request.EndedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.EndedBefore != null)
         {
-            _query["ended_before"] = request.EndedBefore;
+            _query["ended_before"] = request.EndedBefore.Value.ToString(Constants.DateTimeFormat);
+        }
+        if (request.Expand != null)
+        {
+            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -64,6 +68,10 @@ public partial class TimesheetEntriesClient
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
         }
         if (request.ModifiedAfter != null)
         {
@@ -91,11 +99,13 @@ public partial class TimesheetEntriesClient
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter;
+            _query["started_after"] = request.StartedAfter.Value.ToString(Constants.DateTimeFormat);
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore;
+            _query["started_before"] = request.StartedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -202,6 +212,10 @@ public partial class TimesheetEntriesClient
     )
     {
         var _query = new Dictionary<string, object>();
+        if (request.Expand != null)
+        {
+            _query["expand"] = request.Expand.ToString();
+        }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();

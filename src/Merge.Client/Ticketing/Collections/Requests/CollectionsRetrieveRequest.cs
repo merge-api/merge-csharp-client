@@ -9,7 +9,7 @@ public record CollectionsRetrieveRequest
     /// <summary>
     /// Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     /// </summary>
-    public string? Expand { get; set; }
+    public CollectionsRetrieveRequestExpand? Expand { get; set; }
 
     /// <summary>
     /// Whether to include the original data Merge fetched from the third-party to produce these models.

@@ -51,15 +51,19 @@ public record Transaction
     /// The transaction's account.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The contact to whom the transaction relates to.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
+
+    /// <summary>
+    /// If the transaction is inclusive or exclusive of tax. `True` if inclusive, `False` if exclusive.
+    /// </summary>
+    [JsonPropertyName("inclusive_of_tax")]
+    public bool? InclusiveOfTax { get; set; }
 
     /// <summary>
     /// The total amount being paid after taxes.
@@ -378,7 +382,7 @@ public record Transaction
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The transaction's exchange rate.
@@ -393,19 +397,13 @@ public record Transaction
     public string? Company { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     [JsonPropertyName("line_items")]
     public IEnumerable<TransactionLineItem>? LineItems { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
@@ -414,7 +412,6 @@ public record Transaction
     /// The accounting period that the Transaction was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
 
     [JsonPropertyName("field_mappings")]

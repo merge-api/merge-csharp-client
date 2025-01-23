@@ -60,22 +60,31 @@ public record Item
     /// References the default account used to record a purchase of the item.
     /// </summary>
     [JsonPropertyName("purchase_account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? PurchaseAccount { get; set; }
 
     /// <summary>
     /// References the default account used to record a sale.
     /// </summary>
     [JsonPropertyName("sales_account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? SalesAccount { get; set; }
 
     /// <summary>
     /// The company the item belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
+
+    /// <summary>
+    /// The default purchase tax rate for this item.
+    /// </summary>
+    [JsonPropertyName("purchase_tax_rate")]
+    public OneOf<string, TaxRate>? PurchaseTaxRate { get; set; }
+
+    /// <summary>
+    /// The default sales tax rate for this item.
+    /// </summary>
+    [JsonPropertyName("sales_tax_rate")]
+    public OneOf<string, TaxRate>? SalesTaxRate { get; set; }
 
     /// <summary>
     /// When the third party's item note was updated.
@@ -84,7 +93,7 @@ public record Item
     public DateTime? RemoteUpdatedAt { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }

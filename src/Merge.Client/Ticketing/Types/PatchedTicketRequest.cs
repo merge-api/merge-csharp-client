@@ -13,8 +13,17 @@ public record PatchedTicketRequest
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 
+    /// <summary>
+    /// The individual `Users` who are assigned to this ticket. This does not include `Users` who just have view access to this ticket.
+    /// </summary>
     [JsonPropertyName("assignees")]
     public IEnumerable<string>? Assignees { get; set; }
+
+    /// <summary>
+    /// The `Teams` that are assigned to this ticket. This does not include `Teams` who just have view access to this ticket.
+    /// </summary>
+    [JsonPropertyName("assigned_teams")]
+    public IEnumerable<string>? AssignedTeams { get; set; }
 
     /// <summary>
     /// The user who created this ticket.
@@ -45,6 +54,9 @@ public record PatchedTicketRequest
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
+    /// <summary>
+    /// The `Collections` that this `Ticket` is included in.
+    /// </summary>
     [JsonPropertyName("collections")]
     public IEnumerable<string>? Collections { get; set; }
 
@@ -74,6 +86,9 @@ public record PatchedTicketRequest
 
     [JsonPropertyName("tags")]
     public IEnumerable<string>? Tags { get; set; }
+
+    [JsonPropertyName("roles")]
+    public IEnumerable<string>? Roles { get; set; }
 
     /// <summary>
     /// When the ticket was completed.

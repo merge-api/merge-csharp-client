@@ -71,10 +71,19 @@ public record EndUserDetailsRequest
     >? CategoryCommonModelScopes { get; set; }
 
     /// <summary>
-    /// The language code for the language to localize Merge Link to.
+    /// The following subset of IETF language tags can be used to configure localization.
+    ///
+    /// * `en` - en
+    /// * `de` - de
     /// </summary>
     [JsonPropertyName("language")]
-    public string? Language { get; set; }
+    public LanguageEnum? Language { get; set; }
+
+    /// <summary>
+    /// The boolean that indicates whether initial, periodic, and force syncs will be disabled.
+    /// </summary>
+    [JsonPropertyName("are_syncs_disabled")]
+    public bool? AreSyncsDisabled { get; set; }
 
     /// <summary>
     /// A JSON object containing integration-specific configuration options.

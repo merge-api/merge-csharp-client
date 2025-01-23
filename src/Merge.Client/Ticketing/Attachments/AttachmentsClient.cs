@@ -57,6 +57,10 @@ public partial class AttachmentsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter.Value.ToString(
@@ -124,7 +128,10 @@ public partial class AttachmentsClient
     /// <example>
     /// <code>
     /// await client.Ticketing.Attachments.CreateAsync(
-    ///     new TicketingAttachmentEndpointRequest { Model = new AttachmentRequest() }
+    ///     new TicketingAttachmentEndpointRequest
+    ///     {
+    ///         Model = new Merge.Client.Ticketing.AttachmentRequest(),
+    ///     }
     /// );
     /// </code>
     /// </example>

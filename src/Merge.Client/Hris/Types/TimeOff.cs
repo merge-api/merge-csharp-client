@@ -33,14 +33,12 @@ public record TimeOff
     /// The employee requesting time off.
     /// </summary>
     [JsonPropertyName("employee")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>
     /// The Merge ID of the employee with the ability to approve the time off request.
     /// </summary>
     [JsonPropertyName("approver")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Approver { get; set; }
 
     /// <summary>
@@ -101,6 +99,9 @@ public record TimeOff
     [JsonPropertyName("end_time")]
     public DateTime? EndTime { get; set; }
 
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
+    /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 

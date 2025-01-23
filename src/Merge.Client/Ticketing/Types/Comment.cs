@@ -30,17 +30,15 @@ public record Comment
     public DateTime? ModifiedAt { get; set; }
 
     /// <summary>
-    /// The author of the Comment, if the author is a User.
+    /// The author of the Comment, if the author is a User. If the third party does not support specifying an author, we will append "[Posted on behalf of {name}]" to the comment.
     /// </summary>
     [JsonPropertyName("user")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? User { get; set; }
 
     /// <summary>
-    /// The author of the Comment, if the author is a Contact.
+    /// The author of the Comment, if the author is a Contact.If the third party does not support specifying an author, we will append "[Posted on behalf of {name}]" to the comment.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
@@ -59,7 +57,6 @@ public record Comment
     /// The ticket associated with the comment.
     /// </summary>
     [JsonPropertyName("ticket")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Ticket>>))]
     public OneOf<string, Ticket>? Ticket { get; set; }
 
     /// <summary>
@@ -74,6 +71,9 @@ public record Comment
     [JsonPropertyName("remote_created_at")]
     public DateTime? RemoteCreatedAt { get; set; }
 
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
+    /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 

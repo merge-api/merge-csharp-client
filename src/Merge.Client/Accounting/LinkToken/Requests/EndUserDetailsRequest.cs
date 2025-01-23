@@ -50,6 +50,12 @@ public record EndUserDetailsRequest
     public bool? ShouldCreateMagicLinkUrl { get; set; }
 
     /// <summary>
+    /// Whether to generate a Magic Link URL on the Admin Needed screen during the linking flow. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/integrations-fast-say-hello-to-magic-link.
+    /// </summary>
+    [JsonPropertyName("hide_admin_magic_link")]
+    public bool? HideAdminMagicLink { get; set; }
+
+    /// <summary>
     /// An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.
     /// </summary>
     [JsonPropertyName("common_models")]
@@ -65,10 +71,19 @@ public record EndUserDetailsRequest
     >? CategoryCommonModelScopes { get; set; }
 
     /// <summary>
-    /// The language code for the language to localize Merge Link to.
+    /// The following subset of IETF language tags can be used to configure localization.
+    ///
+    /// * `en` - en
+    /// * `de` - de
     /// </summary>
     [JsonPropertyName("language")]
-    public string? Language { get; set; }
+    public LanguageEnum? Language { get; set; }
+
+    /// <summary>
+    /// The boolean that indicates whether initial, periodic, and force syncs will be disabled.
+    /// </summary>
+    [JsonPropertyName("are_syncs_disabled")]
+    public bool? AreSyncsDisabled { get; set; }
 
     /// <summary>
     /// A JSON object containing integration-specific configuration options.

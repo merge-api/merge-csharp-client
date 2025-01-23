@@ -7,11 +7,11 @@ namespace Merge.Client.Accounting;
 
 public record FieldPermissionDeserializer
 {
-    [JsonPropertyName("enabled")]
-    public IEnumerable<object>? Enabled { get; set; }
+    [JsonPropertyName("enabled_fields")]
+    public IEnumerable<object>? EnabledFields { get; set; }
 
-    [JsonPropertyName("disabled")]
-    public IEnumerable<object>? Disabled { get; set; }
+    [JsonPropertyName("disabled_fields")]
+    public IEnumerable<object>? DisabledFields { get; set; }
 
     public override string ToString()
     {

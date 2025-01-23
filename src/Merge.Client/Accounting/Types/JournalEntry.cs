@@ -36,39 +36,15 @@ public record JournalEntry
     public DateTime? TransactionDate { get; set; }
 
     /// <summary>
-    /// When the third party's journal entry was created.
-    /// </summary>
-    [JsonPropertyName("remote_created_at")]
-    public DateTime? RemoteCreatedAt { get; set; }
-
-    /// <summary>
-    /// When the third party's journal entry was updated.
-    /// </summary>
-    [JsonPropertyName("remote_updated_at")]
-    public DateTime? RemoteUpdatedAt { get; set; }
-
-    /// <summary>
     /// Array of `Payment` object IDs.
     /// </summary>
     [JsonPropertyName("payments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Payment>,
-            OneOfSerializer<OneOf<string, Payment>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Payment>>? Payments { get; set; }
 
     /// <summary>
     /// A list of the Payment Applied to Lines common models related to a given Invoice, Credit Note, or Journal Entry.
     /// </summary>
     [JsonPropertyName("applied_payments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, PaymentLineItem>,
-            OneOfSerializer<OneOf<string, PaymentLineItem>>
-        >)
-    )]
     public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedPayments { get; set; }
 
     /// <summary>
@@ -388,7 +364,7 @@ public record JournalEntry
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The journal entry's exchange rate.
@@ -400,8 +376,13 @@ public record JournalEntry
     /// The company the journal entry belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
+
+    /// <summary>
+    /// If the transaction is inclusive or exclusive of tax. `True` if inclusive, `False` if exclusive.
+    /// </summary>
+    [JsonPropertyName("inclusive_of_tax")]
+    public bool? InclusiveOfTax { get; set; }
 
     [JsonPropertyName("lines")]
     public IEnumerable<JournalLine>? Lines { get; set; }
@@ -413,14 +394,11 @@ public record JournalEntry
     public string? JournalNumber { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
+    /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 
@@ -437,14 +415,28 @@ public record JournalEntry
     /// The accounting period that the JournalEntry was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
+
+    /// <summary>
+    /// When the third party's journal entry was created.
+    /// </summary>
+    [JsonPropertyName("remote_created_at")]
+    public DateTime? RemoteCreatedAt { get; set; }
+
+    /// <summary>
+    /// When the third party's journal entry was updated.
+    /// </summary>
+    [JsonPropertyName("remote_updated_at")]
+    public DateTime? RemoteUpdatedAt { get; set; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
     public IEnumerable<RemoteData>? RemoteData { get; set; }
+
+    [JsonPropertyName("remote_fields")]
+    public IEnumerable<RemoteField>? RemoteFields { get; set; }
 
     public override string ToString()
     {

@@ -29,15 +29,20 @@ public record TimesheetEntriesListRequest
     /// <summary>
     /// If provided, will only return timesheet entries ended after this datetime.
     /// </summary>
-    public string? EndedAfter { get; set; }
+    public DateTime? EndedAfter { get; set; }
 
     /// <summary>
     /// If provided, will only return timesheet entries ended before this datetime.
     /// </summary>
-    public string? EndedBefore { get; set; }
+    public DateTime? EndedBefore { get; set; }
 
     /// <summary>
-    /// Whether to include data that was marked as deleted by third party webhooks.
+    /// Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+    /// </summary>
+    public string? Expand { get; set; }
+
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     public bool? IncludeDeletedData { get; set; }
 
@@ -45,6 +50,11 @@ public record TimesheetEntriesListRequest
     /// Whether to include the original data Merge fetched from the third-party to produce these models.
     /// </summary>
     public bool? IncludeRemoteData { get; set; }
+
+    /// <summary>
+    /// Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null).
+    /// </summary>
+    public bool? IncludeShellData { get; set; }
 
     /// <summary>
     /// If provided, only objects synced by Merge after this date time will be returned.
@@ -74,12 +84,12 @@ public record TimesheetEntriesListRequest
     /// <summary>
     /// If provided, will only return timesheet entries started after this datetime.
     /// </summary>
-    public string? StartedAfter { get; set; }
+    public DateTime? StartedAfter { get; set; }
 
     /// <summary>
     /// If provided, will only return timesheet entries started before this datetime.
     /// </summary>
-    public string? StartedBefore { get; set; }
+    public DateTime? StartedBefore { get; set; }
 
     public override string ToString()
     {

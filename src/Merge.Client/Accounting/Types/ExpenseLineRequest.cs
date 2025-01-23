@@ -18,7 +18,6 @@ public record ExpenseLineRequest
     /// The line's item.
     /// </summary>
     [JsonPropertyName("item")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
     public OneOf<string, Item>? Item { get; set; }
 
     /// <summary>
@@ -28,23 +27,25 @@ public record ExpenseLineRequest
     public double? NetAmount { get; set; }
 
     [JsonPropertyName("tracking_category")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, TrackingCategory>>))]
     public OneOf<string, TrackingCategory>? TrackingCategory { get; set; }
 
+    /// <summary>
+    /// The expense line item's associated tracking categories.
+    /// </summary>
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
-    /// The company the line belongs to.
+    /// The company the expense belongs to.
     /// </summary>
     [JsonPropertyName("company")]
     public string? Company { get; set; }
+
+    /// <summary>
+    /// The employee this overall transaction relates to.
+    /// </summary>
+    [JsonPropertyName("employee")]
+    public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>
     /// The expense line item's currency.
@@ -357,20 +358,18 @@ public record ExpenseLineRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The expense's payment account.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The expense's contact.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
@@ -385,11 +384,20 @@ public record ExpenseLineRequest
     [JsonPropertyName("exchange_rate")]
     public string? ExchangeRate { get; set; }
 
+    /// <summary>
+    /// The tax rate that applies to this line item.
+    /// </summary>
+    [JsonPropertyName("tax_rate")]
+    public string? TaxRate { get; set; }
+
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object?>? IntegrationParams { get; set; }
 
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
+
+    [JsonPropertyName("remote_fields")]
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
 
     public override string ToString()
     {

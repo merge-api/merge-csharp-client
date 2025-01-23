@@ -33,33 +33,24 @@ public record ScheduledInterview
     /// The application being interviewed.
     /// </summary>
     [JsonPropertyName("application")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Application>>))]
     public OneOf<string, Application>? Application { get; set; }
 
     /// <summary>
     /// The stage of the interview.
     /// </summary>
     [JsonPropertyName("job_interview_stage")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, JobInterviewStage>>))]
     public OneOf<string, JobInterviewStage>? JobInterviewStage { get; set; }
 
     /// <summary>
     /// The user organizing the interview.
     /// </summary>
     [JsonPropertyName("organizer")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteUser>>))]
     public OneOf<string, RemoteUser>? Organizer { get; set; }
 
     /// <summary>
     /// Array of `RemoteUser` IDs.
     /// </summary>
     [JsonPropertyName("interviewers")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, RemoteUser>,
-            OneOfSerializer<OneOf<string, RemoteUser>>
-        >)
-    )]
     public IEnumerable<OneOf<string, RemoteUser>>? Interviewers { get; set; }
 
     /// <summary>
@@ -103,7 +94,7 @@ public record ScheduledInterview
     public ScheduledInterviewStatusEnum? Status { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }

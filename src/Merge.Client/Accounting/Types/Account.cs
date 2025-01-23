@@ -59,6 +59,26 @@ public record Account
     public string? Type { get; set; }
 
     /// <summary>
+    /// Normalized account type- which is a narrower and more specific grouping within the account's classification.
+    ///
+    /// - `BANK` - BANK
+    /// - `CREDIT_CARD` - CREDIT_CARD
+    /// - `ACCOUNTS_PAYABLE` - ACCOUNTS_PAYABLE
+    /// - `ACCOUNTS_RECEIVABLE` - ACCOUNTS_RECEIVABLE
+    /// - `FIXED_ASSET` - FIXED_ASSET
+    /// - `OTHER_ASSET` - OTHER_ASSET
+    /// - `OTHER_CURRENT_ASSET` - OTHER_CURRENT_ASSET
+    /// - `OTHER_EXPENSE` - OTHER_EXPENSE
+    /// - `OTHER_INCOME` - OTHER_INCOME
+    /// - `COST_OF_GOODS_SOLD` - COST_OF_GOODS_SOLD
+    /// - `OTHER_CURRENT_LIABILITY` - OTHER_CURRENT_LIABILITY
+    /// - `LONG_TERM_LIABILITY` - LONG_TERM_LIABILITY
+    /// - `NON_POSTING` - NON_POSTING
+    /// </summary>
+    [JsonPropertyName("account_type")]
+    public AccountAccountTypeEnum? AccountType { get; set; }
+
+    /// <summary>
     /// The account's status.
     ///
     /// - `ACTIVE` - ACTIVE
@@ -385,7 +405,7 @@ public record Account
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The account's number.
@@ -406,7 +426,7 @@ public record Account
     public string? Company { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }

@@ -39,7 +39,6 @@ public record Employee
     /// The ID of the employee's company.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Company>>))]
     public OneOf<string, Company>? Company { get; set; }
 
     /// <summary>
@@ -73,12 +72,6 @@ public record Employee
     public string? Username { get; set; }
 
     [JsonPropertyName("groups")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Group>,
-            OneOfSerializer<OneOf<string, Group>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Group>>? Groups { get; set; }
 
     /// <summary>
@@ -103,47 +96,36 @@ public record Employee
     /// Array of `Employment` IDs for this Employee.
     /// </summary>
     [JsonPropertyName("employments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Employment>,
-            OneOfSerializer<OneOf<string, Employment>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Employment>>? Employments { get; set; }
 
     /// <summary>
     /// The employee's home address.
     /// </summary>
     [JsonPropertyName("home_location")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Location>>))]
     public OneOf<string, Location>? HomeLocation { get; set; }
 
     /// <summary>
     /// The employee's work address.
     /// </summary>
     [JsonPropertyName("work_location")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Location>>))]
     public OneOf<string, Location>? WorkLocation { get; set; }
 
     /// <summary>
     /// The employee ID of the employee's manager.
     /// </summary>
     [JsonPropertyName("manager")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Employee>>))]
     public OneOf<string, Employee>? Manager { get; set; }
 
     /// <summary>
     /// The employee's team.
     /// </summary>
     [JsonPropertyName("team")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Team>>))]
     public OneOf<string, Team>? Team { get; set; }
 
     /// <summary>
     /// The employee's pay group
     /// </summary>
     [JsonPropertyName("pay_group")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, PayGroup>>))]
     public OneOf<string, PayGroup>? PayGroup { get; set; }
 
     /// <summary>
@@ -243,6 +225,9 @@ public record Employee
     [JsonPropertyName("custom_fields")]
     public Dictionary<string, object?>? CustomFields { get; set; }
 
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
+    /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 

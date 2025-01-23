@@ -11,6 +11,12 @@ public record AccountingPeriod
     public string? Id { get; set; }
 
     /// <summary>
+    /// The third-party API ID of the matching object.
+    /// </summary>
+    [JsonPropertyName("remote_id")]
+    public string? RemoteId { get; set; }
+
+    /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
     [JsonPropertyName("created_at")]
@@ -21,6 +27,15 @@ public record AccountingPeriod
     /// </summary>
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; set; }
+
+    /// <summary>
+    /// Name of the accounting period.
+    /// </summary>
+    [JsonPropertyName("name")]
+    public string? Name { get; set; }
+
+    [JsonPropertyName("status")]
+    public Status895Enum? Status { get; set; }
 
     /// <summary>
     /// Beginning date of the period
@@ -34,14 +49,11 @@ public record AccountingPeriod
     [JsonPropertyName("end_date")]
     public DateTime? EndDate { get; set; }
 
-    [JsonPropertyName("status")]
-    public AccountingPeriodStatusEnum? Status { get; set; }
+    [JsonPropertyName("field_mappings")]
+    public Dictionary<string, object?>? FieldMappings { get; set; }
 
-    /// <summary>
-    /// Name of the accounting period.
-    /// </summary>
-    [JsonPropertyName("name")]
-    public string? Name { get; set; }
+    [JsonPropertyName("remote_data")]
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 
     public override string ToString()
     {

@@ -17,7 +17,7 @@ public partial class ScopesClient
     }
 
     /// <summary>
-    /// Get the default permissions for Merge Common Models and fields across all Linked Accounts of a given category. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes).
+    /// Get the default permissions for Merge Common Models and fields across all Linked Accounts of a given category. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).
     /// </summary>
     /// <example>
     /// <code>
@@ -60,7 +60,7 @@ public partial class ScopesClient
     }
 
     /// <summary>
-    /// Get all available permissions for Merge Common Models and fields for a single Linked Account. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes).
+    /// Get all available permissions for Merge Common Models and fields for a single Linked Account. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).
     /// </summary>
     /// <example>
     /// <code>
@@ -103,38 +103,55 @@ public partial class ScopesClient
     }
 
     /// <summary>
-    /// Update permissions for any Common Model or field for a single Linked Account. Any Scopes not set in this POST request will inherit the default Scopes. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes)
+    /// Update permissions for any Common Model or field for a single Linked Account. Any Scopes not set in this POST request will inherit the default Scopes. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes)
     /// </summary>
     /// <example>
     /// <code>
     /// await client.Ats.Scopes.LinkedAccountScopesCreateAsync(
     ///     new LinkedAccountCommonModelScopeDeserializerRequest
     ///     {
-    ///         CommonModels = new List<IndividualCommonModelScopeDeserializerRequest>()
+    ///         CommonModels = new List<Merge.Client.Ats.IndividualCommonModelScopeDeserializerRequest>()
     ///         {
-    ///             new IndividualCommonModelScopeDeserializerRequest
+    ///             new Merge.Client.Ats.IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Employee",
-    ///                 ModelPermissions = new Dictionary<string, ModelPermissionDeserializerRequest>()
+    ///                 ModelPermissions = new Dictionary<
+    ///                     string,
+    ///                     Merge.Client.Ats.ModelPermissionDeserializerRequest
+    ///                 >()
     ///                 {
     ///                     {
     ///                         "READ",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = true }
+    ///                         new Merge.Client.Ats.ModelPermissionDeserializerRequest { IsEnabled = true }
     ///                     },
     ///                     {
     ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
+    ///                         new Merge.Client.Ats.ModelPermissionDeserializerRequest
+    ///                         {
+    ///                             IsEnabled = false,
+    ///                         }
     ///                     },
     ///                 },
+    ///                 FieldPermissions = new Merge.Client.Ats.FieldPermissionDeserializerRequest
+    ///                 {
+    ///                     EnabledFields = new List<object>() { "avatar", "home_location" },
+    ///                     DisabledFields = new List<object>() { "work_location" },
+    ///                 },
     ///             },
-    ///             new IndividualCommonModelScopeDeserializerRequest
+    ///             new Merge.Client.Ats.IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Benefit",
-    ///                 ModelPermissions = new Dictionary<string, ModelPermissionDeserializerRequest>()
+    ///                 ModelPermissions = new Dictionary<
+    ///                     string,
+    ///                     Merge.Client.Ats.ModelPermissionDeserializerRequest
+    ///                 >()
     ///                 {
     ///                     {
     ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
+    ///                         new Merge.Client.Ats.ModelPermissionDeserializerRequest
+    ///                         {
+    ///                             IsEnabled = false,
+    ///                         }
     ///                     },
     ///                 },
     ///             },
