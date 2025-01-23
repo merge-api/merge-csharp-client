@@ -42,7 +42,6 @@ public record Invoice
     /// The invoice's contact.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
@@ -79,8 +78,13 @@ public record Invoice
     /// The company the invoice belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
+
+    /// <summary>
+    /// The employee this overall transaction relates to.
+    /// </summary>
+    [JsonPropertyName("employee")]
+    public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>
     /// The invoice's currency.
@@ -393,7 +397,7 @@ public record Invoice
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The invoice's exchange rate.
@@ -451,65 +455,68 @@ public record Invoice
     public DateTime? RemoteUpdatedAt { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
+
+    /// <summary>
+    /// The accounting period that the Invoice was generated in.
+    /// </summary>
+    [JsonPropertyName("accounting_period")]
+    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
+
+    [JsonPropertyName("purchase_orders")]
+    public IEnumerable<OneOf<string, PurchaseOrder>>? PurchaseOrders { get; set; }
 
     /// <summary>
     /// Array of `Payment` object IDs.
     /// </summary>
     [JsonPropertyName("payments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Payment>,
-            OneOfSerializer<OneOf<string, Payment>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Payment>>? Payments { get; set; }
 
     /// <summary>
     /// A list of the Payment Applied to Lines common models related to a given Invoice, Credit Note, or Journal Entry.
     /// </summary>
     [JsonPropertyName("applied_payments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, PaymentLineItem>,
-            OneOfSerializer<OneOf<string, PaymentLineItem>>
-        >)
-    )]
     public IEnumerable<OneOf<string, PaymentLineItem>>? AppliedPayments { get; set; }
 
     [JsonPropertyName("line_items")]
     public IEnumerable<InvoiceLineItem>? LineItems { get; set; }
 
-    [JsonPropertyName("remote_was_deleted")]
-    public bool? RemoteWasDeleted { get; set; }
+    /// <summary>
+    /// `CreditNoteApplyLines` applied to the Invoice.
+    /// </summary>
+    [JsonPropertyName("applied_credit_notes")]
+    public IEnumerable<
+        OneOf<string, CreditNoteApplyLineForInvoice>
+    >? AppliedCreditNotes { get; set; }
 
     /// <summary>
-    /// The accounting period that the Invoice was generated in.
+    /// `VendorCreditApplyLines` applied to the Invoice.
     /// </summary>
-    [JsonPropertyName("accounting_period")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
-    public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
+    [JsonPropertyName("applied_vendor_credits")]
+    public IEnumerable<
+        OneOf<string, VendorCreditApplyLineForInvoice>
+    >? AppliedVendorCredits { get; set; }
 
-    [JsonPropertyName("purchase_orders")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, PurchaseOrder>,
-            OneOfSerializer<OneOf<string, PurchaseOrder>>
-        >)
-    )]
-    public IEnumerable<OneOf<string, PurchaseOrder>>? PurchaseOrders { get; set; }
+    /// <summary>
+    /// If the transaction is inclusive or exclusive of tax. `True` if inclusive, `False` if exclusive.
+    /// </summary>
+    [JsonPropertyName("inclusive_of_tax")]
+    public bool? InclusiveOfTax { get; set; }
+
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
+    /// </summary>
+    [JsonPropertyName("remote_was_deleted")]
+    public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
     public IEnumerable<RemoteData>? RemoteData { get; set; }
+
+    [JsonPropertyName("remote_fields")]
+    public IEnumerable<RemoteField>? RemoteFields { get; set; }
 
     public override string ToString()
     {

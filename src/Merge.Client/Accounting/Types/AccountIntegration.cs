@@ -14,19 +14,25 @@ public record AccountIntegration
     public required string Name { get; set; }
 
     /// <summary>
+    /// Optional. This shortened name appears in places with limited space, usually in conjunction with the platform's logo (e.g., Merge Link menu).<br><br>Example: <i>Workforce Now (in lieu of ADP Workforce Now), SuccessFactors (in lieu of SAP SuccessFactors)</i>
+    /// </summary>
+    [JsonPropertyName("abbreviated_name")]
+    public string? AbbreviatedName { get; set; }
+
+    /// <summary>
     /// Category or categories this integration belongs to. Multiple categories should be comma separated, i.e. [ats, hris].
     /// </summary>
     [JsonPropertyName("categories")]
     public IEnumerable<CategoriesEnum>? Categories { get; set; }
 
     /// <summary>
-    /// Company logo in rectangular shape. <b>Upload an image with a clear background.</b>
+    /// Company logo in rectangular shape.
     /// </summary>
     [JsonPropertyName("image")]
     public string? Image { get; set; }
 
     /// <summary>
-    /// Company logo in square shape. <b>Upload an image with a white background.</b>
+    /// Company logo in square shape.
     /// </summary>
     [JsonPropertyName("square_image")]
     public string? SquareImage { get; set; }

@@ -22,7 +22,11 @@ public partial class PassthroughClient
     /// <example>
     /// <code>
     /// await client.Accounting.Passthrough.CreateAsync(
-    ///     new DataPassthroughRequest { Method = MethodEnum.Get, Path = "/scooters" }
+    ///     new Merge.Client.Accounting.DataPassthroughRequest
+    ///     {
+    ///         Method = Merge.Client.Accounting.MethodEnum.Get,
+    ///         Path = "/scooters",
+    ///     }
     /// );
     /// </code>
     /// </example>

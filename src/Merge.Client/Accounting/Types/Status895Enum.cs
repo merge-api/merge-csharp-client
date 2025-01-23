@@ -6,8 +6,8 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(StringEnumSerializer<AccountingPeriodStatusEnum>))]
-public enum AccountingPeriodStatusEnum
+[JsonConverter(typeof(StringEnumSerializer<Status895Enum>))]
+public enum Status895Enum
 {
     [EnumMember(Value = "ACTIVE")]
     Active,

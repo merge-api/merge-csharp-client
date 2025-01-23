@@ -12,7 +12,6 @@ public record EngagementRequest
     /// The engagement's owner.
     /// </summary>
     [JsonPropertyName("owner")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; set; }
 
     /// <summary>
@@ -40,7 +39,6 @@ public record EngagementRequest
     /// The engagement type of the engagement.
     /// </summary>
     [JsonPropertyName("engagement_type")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, EngagementType>>))]
     public OneOf<string, EngagementType>? EngagementType { get; set; }
 
     /// <summary>
@@ -59,16 +57,9 @@ public record EngagementRequest
     /// The account of the engagement.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     [JsonPropertyName("contacts")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Contact>,
-            OneOfSerializer<OneOf<string, Contact>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Contact>>? Contacts { get; set; }
 
     [JsonPropertyName("integration_params")]

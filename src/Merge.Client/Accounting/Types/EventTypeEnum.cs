@@ -102,6 +102,15 @@ public enum EventTypeEnum
     [EnumMember(Value = "DELETED_LINKED_ACCOUNT_FIELD_MAPPING")]
     DeletedLinkedAccountFieldMapping,
 
+    [EnumMember(Value = "CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE")]
+    CreatedLinkedAccountCommonModelOverride,
+
+    [EnumMember(Value = "CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE")]
+    ChangedLinkedAccountCommonModelOverride,
+
+    [EnumMember(Value = "DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE")]
+    DeletedLinkedAccountCommonModelOverride,
+
     [EnumMember(Value = "FORCED_LINKED_ACCOUNT_RESYNC")]
     ForcedLinkedAccountResync,
 
@@ -119,4 +128,7 @@ public enum EventTypeEnum
 
     [EnumMember(Value = "MERGE_WEBHOOK_TARGET_CHANGED")]
     MergeWebhookTargetChanged,
+
+    [EnumMember(Value = "END_USER_CREDENTIALS_ACCESSED")]
+    EndUserCredentialsAccessed,
 }

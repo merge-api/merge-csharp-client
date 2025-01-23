@@ -45,6 +45,10 @@ public partial class UsersClient
         {
             _query["cursor"] = request.Cursor;
         }
+        if (request.Email != null)
+        {
+            _query["email"] = request.Email;
+        }
         if (request.IncludeDeletedData != null)
         {
             _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
@@ -56,6 +60,10 @@ public partial class UsersClient
         if (request.IncludeRemoteFields != null)
         {
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
         }
         if (request.ModifiedAfter != null)
         {
@@ -170,7 +178,7 @@ public partial class UsersClient
     /// <code>
     /// await client.Crm.Users.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new IgnoreCommonModelRequest { Reason = Merge.Client.Crm.ReasonEnum.GeneralCustomerRequest }
     /// );
     /// </code>
     /// </example>
@@ -234,6 +242,10 @@ public partial class UsersClient
         if (request.IncludeRemoteFields != null)
         {
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
         }
         if (request.IsCommonModelField != null)
         {

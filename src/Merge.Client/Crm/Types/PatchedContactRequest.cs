@@ -30,7 +30,6 @@ public record PatchedContactRequest
     /// The contact's owner.
     /// </summary>
     [JsonPropertyName("owner")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; set; }
 
     [JsonPropertyName("addresses")]

@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 #nullable enable
 
@@ -11,7 +12,7 @@ public record TimesheetEntryRequest
     /// The employee the timesheet entry is for.
     /// </summary>
     [JsonPropertyName("employee")]
-    public string? Employee { get; set; }
+    public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>
     /// The number of hours logged by the employee.

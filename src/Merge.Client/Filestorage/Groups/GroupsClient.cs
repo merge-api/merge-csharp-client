@@ -45,6 +45,10 @@ public partial class GroupsClient
         {
             _query["cursor"] = request.Cursor;
         }
+        if (request.Expand != null)
+        {
+            _query["expand"] = request.Expand.ToString();
+        }
         if (request.IncludeDeletedData != null)
         {
             _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
@@ -52,6 +56,10 @@ public partial class GroupsClient
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
         }
         if (request.ModifiedAfter != null)
         {
@@ -120,6 +128,10 @@ public partial class GroupsClient
     )
     {
         var _query = new Dictionary<string, object>();
+        if (request.Expand != null)
+        {
+            _query["expand"] = request.Expand.ToString();
+        }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();

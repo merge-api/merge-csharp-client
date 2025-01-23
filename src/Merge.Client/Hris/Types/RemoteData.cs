@@ -7,6 +7,9 @@ namespace Merge.Client.Hris;
 
 public record RemoteData
 {
+    /// <summary>
+    /// The third-party API path that is being called.
+    /// </summary>
     [JsonPropertyName("path")]
     public required string Path { get; set; }
 

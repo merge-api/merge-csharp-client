@@ -69,6 +69,10 @@ public partial class ApplicationsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.JobId != null)
         {
             _query["job_id"] = request.JobId;
@@ -134,6 +138,9 @@ public partial class ApplicationsClient
 
     /// <summary>
     /// Creates an `Application` object with the given values.
+    /// For certain integrations, but not all, our API detects duplicate candidates and will associate applications with existing records in the third-party. New candidates are created and automatically linked to the application.
+    ///
+    /// See our [Help Center article](https://help.merge.dev/en/articles/10012366-updates-to-post-applications-oct-2024) for detailed support per integration.
     /// </summary>
     /// <example>
     /// <code>

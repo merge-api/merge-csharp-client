@@ -17,4 +17,7 @@ public enum AccountDetailsAndActionsStatusEnum
 
     [EnumMember(Value = "RELINK_NEEDED")]
     RelinkNeeded,
+
+    [EnumMember(Value = "IDLE")]
+    Idle,
 }

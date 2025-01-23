@@ -17,6 +17,11 @@ public record InvoicesRetrieveRequest
     public bool? IncludeRemoteData { get; set; }
 
     /// <summary>
+    /// Whether to include all remote fields, including fields that Merge did not map to common models, in a normalized format.
+    /// </summary>
+    public bool? IncludeRemoteFields { get; set; }
+
+    /// <summary>
     /// Deprecated. Use show_enum_origins.
     /// </summary>
     public string? RemoteFields { get; set; }

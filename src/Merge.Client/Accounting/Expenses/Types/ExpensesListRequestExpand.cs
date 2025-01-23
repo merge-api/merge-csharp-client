@@ -21,6 +21,12 @@ public enum ExpensesListRequestExpand
     [EnumMember(Value = "account,company,accounting_period")]
     AccountCompanyAccountingPeriod,
 
+    [EnumMember(Value = "account,company,employee")]
+    AccountCompanyEmployee,
+
+    [EnumMember(Value = "account,company,employee,accounting_period")]
+    AccountCompanyEmployeeAccountingPeriod,
+
     [EnumMember(Value = "account,contact")]
     AccountContact,
 
@@ -33,6 +39,24 @@ public enum ExpensesListRequestExpand
     [EnumMember(Value = "account,contact,company,accounting_period")]
     AccountContactCompanyAccountingPeriod,
 
+    [EnumMember(Value = "account,contact,company,employee")]
+    AccountContactCompanyEmployee,
+
+    [EnumMember(Value = "account,contact,company,employee,accounting_period")]
+    AccountContactCompanyEmployeeAccountingPeriod,
+
+    [EnumMember(Value = "account,contact,employee")]
+    AccountContactEmployee,
+
+    [EnumMember(Value = "account,contact,employee,accounting_period")]
+    AccountContactEmployeeAccountingPeriod,
+
+    [EnumMember(Value = "account,employee")]
+    AccountEmployee,
+
+    [EnumMember(Value = "account,employee,accounting_period")]
+    AccountEmployeeAccountingPeriod,
+
     [EnumMember(Value = "accounting_period")]
     AccountingPeriod,
 
@@ -41,6 +65,12 @@ public enum ExpensesListRequestExpand
 
     [EnumMember(Value = "company,accounting_period")]
     CompanyAccountingPeriod,
+
+    [EnumMember(Value = "company,employee")]
+    CompanyEmployee,
+
+    [EnumMember(Value = "company,employee,accounting_period")]
+    CompanyEmployeeAccountingPeriod,
 
     [EnumMember(Value = "contact")]
     Contact,
@@ -53,6 +83,24 @@ public enum ExpensesListRequestExpand
 
     [EnumMember(Value = "contact,company,accounting_period")]
     ContactCompanyAccountingPeriod,
+
+    [EnumMember(Value = "contact,company,employee")]
+    ContactCompanyEmployee,
+
+    [EnumMember(Value = "contact,company,employee,accounting_period")]
+    ContactCompanyEmployeeAccountingPeriod,
+
+    [EnumMember(Value = "contact,employee")]
+    ContactEmployee,
+
+    [EnumMember(Value = "contact,employee,accounting_period")]
+    ContactEmployeeAccountingPeriod,
+
+    [EnumMember(Value = "employee")]
+    Employee,
+
+    [EnumMember(Value = "employee,accounting_period")]
+    EmployeeAccountingPeriod,
 
     [EnumMember(Value = "tracking_categories")]
     TrackingCategories,
@@ -69,6 +117,12 @@ public enum ExpensesListRequestExpand
     [EnumMember(Value = "tracking_categories,account,company,accounting_period")]
     TrackingCategoriesAccountCompanyAccountingPeriod,
 
+    [EnumMember(Value = "tracking_categories,account,company,employee")]
+    TrackingCategoriesAccountCompanyEmployee,
+
+    [EnumMember(Value = "tracking_categories,account,company,employee,accounting_period")]
+    TrackingCategoriesAccountCompanyEmployeeAccountingPeriod,
+
     [EnumMember(Value = "tracking_categories,account,contact")]
     TrackingCategoriesAccountContact,
 
@@ -81,6 +135,24 @@ public enum ExpensesListRequestExpand
     [EnumMember(Value = "tracking_categories,account,contact,company,accounting_period")]
     TrackingCategoriesAccountContactCompanyAccountingPeriod,
 
+    [EnumMember(Value = "tracking_categories,account,contact,company,employee")]
+    TrackingCategoriesAccountContactCompanyEmployee,
+
+    [EnumMember(Value = "tracking_categories,account,contact,company,employee,accounting_period")]
+    TrackingCategoriesAccountContactCompanyEmployeeAccountingPeriod,
+
+    [EnumMember(Value = "tracking_categories,account,contact,employee")]
+    TrackingCategoriesAccountContactEmployee,
+
+    [EnumMember(Value = "tracking_categories,account,contact,employee,accounting_period")]
+    TrackingCategoriesAccountContactEmployeeAccountingPeriod,
+
+    [EnumMember(Value = "tracking_categories,account,employee")]
+    TrackingCategoriesAccountEmployee,
+
+    [EnumMember(Value = "tracking_categories,account,employee,accounting_period")]
+    TrackingCategoriesAccountEmployeeAccountingPeriod,
+
     [EnumMember(Value = "tracking_categories,accounting_period")]
     TrackingCategoriesAccountingPeriod,
 
@@ -89,6 +161,12 @@ public enum ExpensesListRequestExpand
 
     [EnumMember(Value = "tracking_categories,company,accounting_period")]
     TrackingCategoriesCompanyAccountingPeriod,
+
+    [EnumMember(Value = "tracking_categories,company,employee")]
+    TrackingCategoriesCompanyEmployee,
+
+    [EnumMember(Value = "tracking_categories,company,employee,accounting_period")]
+    TrackingCategoriesCompanyEmployeeAccountingPeriod,
 
     [EnumMember(Value = "tracking_categories,contact")]
     TrackingCategoriesContact,
@@ -101,4 +179,22 @@ public enum ExpensesListRequestExpand
 
     [EnumMember(Value = "tracking_categories,contact,company,accounting_period")]
     TrackingCategoriesContactCompanyAccountingPeriod,
+
+    [EnumMember(Value = "tracking_categories,contact,company,employee")]
+    TrackingCategoriesContactCompanyEmployee,
+
+    [EnumMember(Value = "tracking_categories,contact,company,employee,accounting_period")]
+    TrackingCategoriesContactCompanyEmployeeAccountingPeriod,
+
+    [EnumMember(Value = "tracking_categories,contact,employee")]
+    TrackingCategoriesContactEmployee,
+
+    [EnumMember(Value = "tracking_categories,contact,employee,accounting_period")]
+    TrackingCategoriesContactEmployeeAccountingPeriod,
+
+    [EnumMember(Value = "tracking_categories,employee")]
+    TrackingCategoriesEmployee,
+
+    [EnumMember(Value = "tracking_categories,employee,accounting_period")]
+    TrackingCategoriesEmployeeAccountingPeriod,
 }

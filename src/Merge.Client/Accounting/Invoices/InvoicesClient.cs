@@ -65,6 +65,14 @@ public partial class InvoicesClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeRemoteFields != null)
+        {
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.IssueDateAfter != null)
         {
             _query["issue_date_after"] = request.IssueDateAfter.Value.ToString(
@@ -89,6 +97,10 @@ public partial class InvoicesClient
                 Constants.DateTimeFormat
             );
         }
+        if (request.Number != null)
+        {
+            _query["number"] = request.Number;
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.ToString();
@@ -104,6 +116,10 @@ public partial class InvoicesClient
         if (request.ShowEnumOrigins != null)
         {
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+        }
+        if (request.Status != null)
+        {
+            _query["status"] = request.Status.Value.Stringify();
         }
         if (request.Type != null)
         {
@@ -142,6 +158,7 @@ public partial class InvoicesClient
 
     /// <summary>
     /// Creates an `Invoice` object with the given values.
+    /// Including a `PurchaseOrder` id in the `purchase_orders` property will generate an Accounts Payable Invoice from the specified Purchase Order(s).
     /// </summary>
     /// <example>
     /// <code>
@@ -221,6 +238,10 @@ public partial class InvoicesClient
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeRemoteFields != null)
+        {
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
         if (request.RemoteFields != null)
         {
@@ -322,6 +343,78 @@ public partial class InvoicesClient
     }
 
     /// <summary>
+    /// Returns a list of `RemoteFieldClass` objects.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Invoices.LineItemsRemoteFieldClassesListAsync(
+    ///     new InvoicesLineItemsRemoteFieldClassesListRequest()
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListAsync(
+        InvoicesLineItemsRemoteFieldClassesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.IncludeDeletedData != null)
+        {
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+        }
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
+        if (request.IsCommonModelField != null)
+        {
+            _query["is_common_model_field"] = request.IsCommonModelField.ToString();
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.ToString();
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "accounting/v1/invoices/line-items/remote-field-classes",
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
     /// Returns metadata for `Invoice` PATCHs.
     /// </summary>
     /// <example>
@@ -394,6 +487,78 @@ public partial class InvoicesClient
             try
             {
                 return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
+    /// Returns a list of `RemoteFieldClass` objects.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Invoices.RemoteFieldClassesListAsync(
+    ///     new InvoicesRemoteFieldClassesListRequest()
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
+        InvoicesRemoteFieldClassesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.IncludeDeletedData != null)
+        {
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+        }
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
+        if (request.IsCommonModelField != null)
+        {
+            _query["is_common_model_field"] = request.IsCommonModelField.ToString();
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.ToString();
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "accounting/v1/invoices/remote-field-classes",
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
             }
             catch (JsonException e)
             {

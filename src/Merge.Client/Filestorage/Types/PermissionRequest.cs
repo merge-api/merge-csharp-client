@@ -15,17 +15,15 @@ public record PermissionRequest
     public string? RemoteId { get; set; }
 
     /// <summary>
-    /// The user that is granted this permission.
+    /// The user that is granted this permission. This will only be populated if the type is `USER`.
     /// </summary>
     [JsonPropertyName("user")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? User { get; set; }
 
     /// <summary>
-    /// The group that is granted this permission.
+    /// The group that is granted this permission. This will only be populated if the type is `GROUP`.
     /// </summary>
     [JsonPropertyName("group")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Group>>))]
     public OneOf<string, Group>? Group { get; set; }
 
     /// <summary>

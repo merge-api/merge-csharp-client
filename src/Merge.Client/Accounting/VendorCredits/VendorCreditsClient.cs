@@ -61,6 +61,10 @@ public partial class VendorCreditsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter.Value.ToString(
@@ -125,6 +129,64 @@ public partial class VendorCreditsClient
     }
 
     /// <summary>
+    /// Creates a `VendorCredit` object with the given values.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.VendorCredits.CreateAsync(
+    ///     new VendorCreditEndpointRequest { Model = new VendorCreditRequest() }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<VendorCreditResponse> CreateAsync(
+        VendorCreditEndpointRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.IsDebugMode != null)
+        {
+            _query["is_debug_mode"] = request.IsDebugMode.ToString();
+        }
+        if (request.RunAsync != null)
+        {
+            _query["run_async"] = request.RunAsync.ToString();
+        }
+        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "accounting/v1/vendor-credits",
+                Body = requestBody,
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<VendorCreditResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
     /// Returns a `VendorCredit` object with the given `id`.
     /// </summary>
     /// <example>
@@ -165,6 +227,49 @@ public partial class VendorCreditsClient
             try
             {
                 return JsonUtils.Deserialize<VendorCredit>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
+    /// Returns metadata for `VendorCredit` POSTs.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.VendorCredits.MetaPostRetrieveAsync();
+    /// </code>
+    /// </example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "accounting/v1/vendor-credits/meta/post",
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
             }
             catch (JsonException e)
             {

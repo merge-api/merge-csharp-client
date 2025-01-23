@@ -61,6 +61,10 @@ public partial class AccountsClient
         {
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.ModifiedAfter != null)
         {
             _query["modified_after"] = request.ModifiedAfter.Value.ToString(
@@ -126,7 +130,7 @@ public partial class AccountsClient
     /// <example>
     /// <code>
     /// await client.Crm.Accounts.CreateAsync(
-    ///     new CrmAccountEndpointRequest { Model = new AccountRequest() }
+    ///     new CrmAccountEndpointRequest { Model = new Merge.Client.Crm.AccountRequest() }
     /// );
     /// </code>
     /// </example>
@@ -414,6 +418,10 @@ public partial class AccountsClient
         if (request.IncludeRemoteFields != null)
         {
             _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
         }
         if (request.IsCommonModelField != null)
         {

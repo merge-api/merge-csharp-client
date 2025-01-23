@@ -33,7 +33,6 @@ public record PurchaseOrderLineItemRequest
     public double? Quantity { get; set; }
 
     [JsonPropertyName("item")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
     public OneOf<string, Item>? Item { get; set; }
 
     /// <summary>
@@ -52,7 +51,7 @@ public record PurchaseOrderLineItemRequest
     /// The purchase order line item's associated tracking categories.
     /// </summary>
     [JsonPropertyName("tracking_categories")]
-    public IEnumerable<string> TrackingCategories { get; set; } = new List<string>();
+    public IEnumerable<string>? TrackingCategories { get; set; }
 
     /// <summary>
     /// The purchase order line item's tax amount.
@@ -377,7 +376,13 @@ public record PurchaseOrderLineItemRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
+
+    /// <summary>
+    /// The tax rate that applies to this line item.
+    /// </summary>
+    [JsonPropertyName("tax_rate")]
+    public string? TaxRate { get; set; }
 
     /// <summary>
     /// The purchase order line item's exchange rate.
@@ -396,6 +401,9 @@ public record PurchaseOrderLineItemRequest
 
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
+
+    [JsonPropertyName("remote_fields")]
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
 
     public override string ToString()
     {

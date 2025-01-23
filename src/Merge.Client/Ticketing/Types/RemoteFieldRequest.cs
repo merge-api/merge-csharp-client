@@ -9,7 +9,6 @@ namespace Merge.Client.Ticketing;
 public record RemoteFieldRequest
 {
     [JsonPropertyName("remote_field_class")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, RemoteFieldClass>>))]
     public required OneOf<string, RemoteFieldClass> RemoteFieldClass { get; set; }
 
     [JsonPropertyName("value")]

@@ -48,18 +48,12 @@ public record FileRequest
     /// The folder that the file belongs to.
     /// </summary>
     [JsonPropertyName("folder")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Folder>>))]
     public OneOf<string, Folder>? Folder { get; set; }
 
     /// <summary>
     /// The Permission object is used to represent a user's or group's access to a File or Folder. Permissions are unexpanded by default. Use the query param `expand=permissions` to see more details under `GET /files`.
     /// </summary>
     [JsonPropertyName("permissions")]
-    [JsonConverter(
-        typeof(OneOfSerializer<
-            OneOf<string, PermissionRequest, IEnumerable<OneOf<string, PermissionRequest>>>
-        >)
-    )]
     public OneOf<
         string,
         PermissionRequest,
@@ -70,7 +64,6 @@ public record FileRequest
     /// The drive that the file belongs to.
     /// </summary>
     [JsonPropertyName("drive")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Drive>>))]
     public OneOf<string, Drive>? Drive { get; set; }
 
     [JsonPropertyName("integration_params")]

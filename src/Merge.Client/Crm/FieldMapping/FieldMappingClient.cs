@@ -21,20 +21,27 @@ public partial class FieldMappingClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Crm.FieldMapping.FieldMappingsRetrieveAsync();
+    /// await client.Crm.FieldMapping.FieldMappingsRetrieveAsync(new FieldMappingsRetrieveRequest());
     /// </code>
     /// </example>
     public async Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync(
+        FieldMappingsRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _query = new Dictionary<string, object>();
+        if (request.ExcludeRemoteFieldMetadata != null)
+        {
+            _query["exclude_remote_field_metadata"] = request.ExcludeRemoteFieldMetadata.ToString();
+        }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "crm/v1/field-mappings",
+                Query = _query,
                 Options = options,
             },
             cancellationToken
@@ -83,13 +90,28 @@ public partial class FieldMappingClient
         CancellationToken cancellationToken = default
     )
     {
+        var _query = new Dictionary<string, object>();
+        if (request.ExcludeRemoteFieldMetadata != null)
+        {
+            _query["exclude_remote_field_metadata"] = request.ExcludeRemoteFieldMetadata.ToString();
+        }
+        var requestBody = new Dictionary<string, object>()
+        {
+            { "target_field_name", request.TargetFieldName },
+            { "target_field_description", request.TargetFieldDescription },
+            { "remote_field_traversal_path", request.RemoteFieldTraversalPath },
+            { "remote_method", request.RemoteMethod },
+            { "remote_url_path", request.RemoteUrlPath },
+            { "common_model_name", request.CommonModelName },
+        };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "crm/v1/field-mappings",
-                Body = request,
+                Body = requestBody,
+                Query = _query,
                 Options = options,
             },
             cancellationToken

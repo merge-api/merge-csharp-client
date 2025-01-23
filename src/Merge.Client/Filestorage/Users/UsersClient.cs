@@ -53,6 +53,10 @@ public partial class UsersClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.IsMe != null)
         {
             _query["is_me"] = request.IsMe;

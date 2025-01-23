@@ -17,7 +17,7 @@ public partial class IssuesClient
     }
 
     /// <summary>
-    /// Gets issues.
+    /// Gets all issues for Organization.
     /// </summary>
     /// <example>
     /// <code>
@@ -78,6 +78,10 @@ public partial class IssuesClient
             _query["last_incident_time_before"] = request.LastIncidentTimeBefore.Value.ToString(
                 Constants.DateTimeFormat
             );
+        }
+        if (request.LinkedAccountId != null)
+        {
+            _query["linked_account_id"] = request.LinkedAccountId;
         }
         if (request.PageSize != null)
         {

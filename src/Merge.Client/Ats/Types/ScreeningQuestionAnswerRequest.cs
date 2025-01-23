@@ -18,7 +18,6 @@ public record ScreeningQuestionAnswerRequest
     /// The screening question associated with the candidate’s answer. To determine the data type of the answer, you can expand on the screening question by adding `screening_question_answers.question` to the `expand` query parameter.
     /// </summary>
     [JsonPropertyName("question")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, ScreeningQuestion>>))]
     public OneOf<string, ScreeningQuestion>? Question { get; set; }
 
     /// <summary>

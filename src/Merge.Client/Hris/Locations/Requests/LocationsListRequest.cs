@@ -22,7 +22,7 @@ public record LocationsListRequest
     public string? Cursor { get; set; }
 
     /// <summary>
-    /// Whether to include data that was marked as deleted by third party webhooks.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     public bool? IncludeDeletedData { get; set; }
 
@@ -30,6 +30,11 @@ public record LocationsListRequest
     /// Whether to include the original data Merge fetched from the third-party to produce these models.
     /// </summary>
     public bool? IncludeRemoteData { get; set; }
+
+    /// <summary>
+    /// Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null).
+    /// </summary>
+    public bool? IncludeShellData { get; set; }
 
     /// <summary>
     /// If provided, will only return locations with this location_type
@@ -57,7 +62,7 @@ public record LocationsListRequest
     /// <summary>
     /// Deprecated. Use show_enum_origins.
     /// </summary>
-    public string? RemoteFields { get; set; }
+    public LocationsListRequestRemoteFields? RemoteFields { get; set; }
 
     /// <summary>
     /// The API provider's ID for the given object.
@@ -67,7 +72,7 @@ public record LocationsListRequest
     /// <summary>
     /// A comma separated list of enum field names for which you'd like the original values to be returned, instead of Merge's normalized enum values. [Learn more](https://help.merge.dev/en/articles/8950958-show_enum_origins-query-parameter)
     /// </summary>
-    public string? ShowEnumOrigins { get; set; }
+    public LocationsListRequestShowEnumOrigins? ShowEnumOrigins { get; set; }
 
     public override string ToString()
     {

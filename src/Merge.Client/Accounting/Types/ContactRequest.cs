@@ -63,12 +63,6 @@ public record ContactRequest
     /// `Address` object IDs for the given `Contacts` object.
     /// </summary>
     [JsonPropertyName("addresses")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Address>,
-            OneOfSerializer<OneOf<string, Address>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Address>>? Addresses { get; set; }
 
     /// <summary>
@@ -82,6 +76,9 @@ public record ContactRequest
 
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
+
+    [JsonPropertyName("remote_fields")]
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
 
     public override string ToString()
     {

@@ -49,6 +49,10 @@ public partial class ContactsClient
         {
             _query["cursor"] = request.Cursor;
         }
+        if (request.EmailAddress != null)
+        {
+            _query["email_address"] = request.EmailAddress;
+        }
         if (request.Expand != null)
         {
             _query["expand"] = request.Expand.Value.Stringify();
@@ -60,6 +64,14 @@ public partial class ContactsClient
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeRemoteFields != null)
+        {
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
         }
         if (request.IsCustomer != null)
         {
@@ -80,6 +92,10 @@ public partial class ContactsClient
             _query["modified_before"] = request.ModifiedBefore.Value.ToString(
                 Constants.DateTimeFormat
             );
+        }
+        if (request.Name != null)
+        {
+            _query["name"] = request.Name;
         }
         if (request.PageSize != null)
         {
@@ -134,7 +150,7 @@ public partial class ContactsClient
     /// <example>
     /// <code>
     /// await client.Accounting.Contacts.CreateAsync(
-    ///     new ContactEndpointRequest { Model = new ContactRequest() }
+    ///     new ContactEndpointRequest { Model = new Merge.Client.Accounting.ContactRequest() }
     /// );
     /// </code>
     /// </example>
@@ -210,6 +226,10 @@ public partial class ContactsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeRemoteFields != null)
+        {
+            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+        }
         if (request.RemoteFields != null)
         {
             _query["remote_fields"] = request.RemoteFields.ToString();
@@ -278,6 +298,78 @@ public partial class ContactsClient
             try
             {
                 return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
+    /// Returns a list of `RemoteFieldClass` objects.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Accounting.Contacts.RemoteFieldClassesListAsync(
+    ///     new ContactsRemoteFieldClassesListRequest()
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
+        ContactsRemoteFieldClassesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.IncludeDeletedData != null)
+        {
+            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+        }
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
+        if (request.IsCommonModelField != null)
+        {
+            _query["is_common_model_field"] = request.IsCommonModelField.ToString();
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.ToString();
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "accounting/v1/contacts/remote-field-classes",
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
             }
             catch (JsonException e)
             {

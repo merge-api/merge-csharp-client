@@ -108,26 +108,17 @@ public record Candidate
     /// Array of `Application` object IDs.
     /// </summary>
     [JsonPropertyName("applications")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Application>,
-            OneOfSerializer<OneOf<string, Application>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Application>>? Applications { get; set; }
 
     /// <summary>
     /// Array of `Attachment` object IDs.
     /// </summary>
     [JsonPropertyName("attachments")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, Attachment>,
-            OneOfSerializer<OneOf<string, Attachment>>
-        >)
-    )]
     public IEnumerable<OneOf<string, Attachment>>? Attachments { get; set; }
 
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
+    /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 

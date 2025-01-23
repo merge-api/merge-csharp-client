@@ -8,10 +8,10 @@ namespace Merge.Client.Ticketing;
 public record FieldMappingApiInstanceRemoteField
 {
     [JsonPropertyName("remote_key_name")]
-    public required string RemoteKeyName { get; set; }
+    public string? RemoteKeyName { get; set; }
 
     [JsonPropertyName("schema")]
-    public Dictionary<string, object?> Schema { get; set; } = new Dictionary<string, object?>();
+    public Dictionary<string, object?>? Schema { get; set; }
 
     [JsonPropertyName("remote_endpoint_info")]
     public required FieldMappingApiInstanceRemoteFieldRemoteEndpointInfo RemoteEndpointInfo { get; set; }

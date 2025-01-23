@@ -69,18 +69,12 @@ public record File
     /// The folder that the file belongs to.
     /// </summary>
     [JsonPropertyName("folder")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Folder>>))]
     public OneOf<string, Folder>? Folder { get; set; }
 
     /// <summary>
     /// The Permission object is used to represent a user's or group's access to a File or Folder. Permissions are unexpanded by default. Use the query param `expand=permissions` to see more details under `GET /files`.
     /// </summary>
     [JsonPropertyName("permissions")]
-    [JsonConverter(
-        typeof(OneOfSerializer<
-            OneOf<string, PermissionRequest, IEnumerable<OneOf<string, PermissionRequest>>>
-        >)
-    )]
     public OneOf<
         string,
         PermissionRequest,
@@ -91,7 +85,6 @@ public record File
     /// The drive that the file belongs to.
     /// </summary>
     [JsonPropertyName("drive")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Drive>>))]
     public OneOf<string, Drive>? Drive { get; set; }
 
     /// <summary>
@@ -107,7 +100,7 @@ public record File
     public DateTime? RemoteUpdatedAt { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
@@ -116,7 +109,7 @@ public record File
     public Dictionary<string, object?>? FieldMappings { get; set; }
 
     [JsonPropertyName("remote_data")]
-    public IEnumerable<Dictionary<string, object?>>? RemoteData { get; set; }
+    public IEnumerable<RemoteData>? RemoteData { get; set; }
 
     public override string ToString()
     {

@@ -33,7 +33,6 @@ public record Lead
     /// The lead's owner.
     /// </summary>
     [JsonPropertyName("owner")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; set; }
 
     /// <summary>
@@ -97,16 +96,17 @@ public record Lead
     /// The contact of the converted lead.
     /// </summary>
     [JsonPropertyName("converted_contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? ConvertedContact { get; set; }
 
     /// <summary>
     /// The account of the converted lead.
     /// </summary>
     [JsonPropertyName("converted_account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? ConvertedAccount { get; set; }
 
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
+    /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 

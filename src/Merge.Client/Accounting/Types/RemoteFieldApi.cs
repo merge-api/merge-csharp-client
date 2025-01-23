@@ -18,13 +18,12 @@ public record RemoteFieldApi
     public required RemoteEndpointInfo RemoteEndpointInfo { get; set; }
 
     [JsonPropertyName("example_values")]
-    public IEnumerable<object> ExampleValues { get; set; } = new List<object>();
+    public IEnumerable<object>? ExampleValues { get; set; }
 
     [JsonPropertyName("advanced_metadata")]
     public AdvancedMetadata? AdvancedMetadata { get; set; }
 
     [JsonPropertyName("coverage")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<int, double>>))]
     public OneOf<int, double>? Coverage { get; set; }
 
     public override string ToString()

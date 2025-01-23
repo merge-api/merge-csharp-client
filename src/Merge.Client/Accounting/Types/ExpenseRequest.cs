@@ -18,14 +18,12 @@ public record ExpenseRequest
     /// The expense's payment account.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The expense's contact.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
@@ -357,7 +355,7 @@ public record ExpenseRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The expense's exchange rate.
@@ -366,11 +364,22 @@ public record ExpenseRequest
     public string? ExchangeRate { get; set; }
 
     /// <summary>
+    /// If the transaction is inclusive or exclusive of tax. `True` if inclusive, `False` if exclusive.
+    /// </summary>
+    [JsonPropertyName("inclusive_of_tax")]
+    public bool? InclusiveOfTax { get; set; }
+
+    /// <summary>
     /// The company the expense belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
+
+    /// <summary>
+    /// The employee this overall transaction relates to.
+    /// </summary>
+    [JsonPropertyName("employee")]
+    public OneOf<string, Employee>? Employee { get; set; }
 
     /// <summary>
     /// The expense's private note.
@@ -382,19 +391,12 @@ public record ExpenseRequest
     public IEnumerable<ExpenseLineRequest>? Lines { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
     /// The accounting period that the Expense was generated in.
     /// </summary>
     [JsonPropertyName("accounting_period")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, AccountingPeriod>>))]
     public OneOf<string, AccountingPeriod>? AccountingPeriod { get; set; }
 
     [JsonPropertyName("integration_params")]
@@ -402,6 +404,9 @@ public record ExpenseRequest
 
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
+
+    [JsonPropertyName("remote_fields")]
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
 
     public override string ToString()
     {

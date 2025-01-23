@@ -54,6 +54,12 @@ public record InvoiceLineItem
     public double? TotalAmount { get; set; }
 
     /// <summary>
+    /// The employee this overall transaction relates to.
+    /// </summary>
+    [JsonPropertyName("employee")]
+    public OneOf<string, Employee>? Employee { get; set; }
+
+    /// <summary>
     /// The line item's currency.
     ///
     /// - `XUA` - ADB Unit of Account
@@ -364,7 +370,7 @@ public record InvoiceLineItem
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
 
     /// <summary>
     /// The line item's exchange rate.
@@ -373,40 +379,43 @@ public record InvoiceLineItem
     public string? ExchangeRate { get; set; }
 
     [JsonPropertyName("item")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
     public OneOf<string, Item>? Item { get; set; }
 
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
+    /// <summary>
+    /// The tax rate that applies to this line item.
+    /// </summary>
+    [JsonPropertyName("tax_rate")]
+    public string? TaxRate { get; set; }
+
     [JsonPropertyName("tracking_category")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, TrackingCategory>>))]
     public OneOf<string, TrackingCategory>? TrackingCategory { get; set; }
 
+    /// <summary>
+    /// The invoice line item's associated tracking categories.
+    /// </summary>
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     /// <summary>
-    /// The company the line item belongs to.
+    /// The company the invoice belongs to.
     /// </summary>
     [JsonPropertyName("company")]
     public string? Company { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object?>? FieldMappings { get; set; }
+
+    [JsonPropertyName("remote_fields")]
+    public IEnumerable<RemoteField>? RemoteFields { get; set; }
 
     public override string ToString()
     {

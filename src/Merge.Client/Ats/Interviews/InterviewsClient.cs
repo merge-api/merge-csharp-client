@@ -61,6 +61,10 @@ public partial class InterviewsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.JobId != null)
         {
             _query["job_id"] = request.JobId;

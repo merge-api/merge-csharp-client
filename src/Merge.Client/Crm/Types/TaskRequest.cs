@@ -24,21 +24,18 @@ public record TaskRequest
     /// The task's owner.
     /// </summary>
     [JsonPropertyName("owner")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; set; }
 
     /// <summary>
     /// The task's account.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The task's opportunity.
     /// </summary>
     [JsonPropertyName("opportunity")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Opportunity>>))]
     public OneOf<string, Opportunity>? Opportunity { get; set; }
 
     /// <summary>

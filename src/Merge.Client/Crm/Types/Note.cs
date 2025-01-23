@@ -33,7 +33,6 @@ public record Note
     /// The note's owner.
     /// </summary>
     [JsonPropertyName("owner")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, User>>))]
     public OneOf<string, User>? Owner { get; set; }
 
     /// <summary>
@@ -46,21 +45,18 @@ public record Note
     /// The note's contact.
     /// </summary>
     [JsonPropertyName("contact")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Contact { get; set; }
 
     /// <summary>
     /// The note's account.
     /// </summary>
     [JsonPropertyName("account")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Account>>))]
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
     /// The note's opportunity.
     /// </summary>
     [JsonPropertyName("opportunity")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Opportunity>>))]
     public OneOf<string, Opportunity>? Opportunity { get; set; }
 
     /// <summary>
@@ -75,6 +71,9 @@ public record Note
     [JsonPropertyName("remote_created_at")]
     public DateTime? RemoteCreatedAt { get; set; }
 
+    /// <summary>
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
+    /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 

@@ -36,7 +36,6 @@ public record PurchaseOrderRequest
     /// The purchase order's delivery address.
     /// </summary>
     [JsonPropertyName("delivery_address")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Address>>))]
     public OneOf<string, Address>? DeliveryAddress { get; set; }
 
     /// <summary>
@@ -49,7 +48,6 @@ public record PurchaseOrderRequest
     /// The party fulfilling the purchase order.
     /// </summary>
     [JsonPropertyName("vendor")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Contact>>))]
     public OneOf<string, Contact>? Vendor { get; set; }
 
     /// <summary>
@@ -62,7 +60,6 @@ public record PurchaseOrderRequest
     /// The company the purchase order belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
@@ -382,7 +379,13 @@ public record PurchaseOrderRequest
     /// - `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public CurrencyEnum? Currency { get; set; }
+    public TransactionCurrencyEnum? Currency { get; set; }
+
+    /// <summary>
+    /// If the transaction is inclusive or exclusive of tax. `True` if inclusive, `False` if exclusive.
+    /// </summary>
+    [JsonPropertyName("inclusive_of_tax")]
+    public bool? InclusiveOfTax { get; set; }
 
     /// <summary>
     /// The purchase order's exchange rate.
@@ -391,12 +394,6 @@ public record PurchaseOrderRequest
     public string? ExchangeRate { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<string, TrackingCategory>,
-            OneOfSerializer<OneOf<string, TrackingCategory>>
-        >)
-    )]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     [JsonPropertyName("line_items")]
@@ -407,6 +404,9 @@ public record PurchaseOrderRequest
 
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
+
+    [JsonPropertyName("remote_fields")]
+    public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
 
     public override string ToString()
     {

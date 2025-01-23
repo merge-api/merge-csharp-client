@@ -61,8 +61,17 @@ public record ExternalTargetFieldApiResponse
     [JsonPropertyName("Transaction")]
     public IEnumerable<ExternalTargetFieldApi>? Transaction { get; set; }
 
+    [JsonPropertyName("AccountingPeriod")]
+    public IEnumerable<ExternalTargetFieldApi>? AccountingPeriod { get; set; }
+
     [JsonPropertyName("GeneralLedgerTransaction")]
     public IEnumerable<ExternalTargetFieldApi>? GeneralLedgerTransaction { get; set; }
+
+    [JsonPropertyName("BankFeedAccount")]
+    public IEnumerable<ExternalTargetFieldApi>? BankFeedAccount { get; set; }
+
+    [JsonPropertyName("Employee")]
+    public IEnumerable<ExternalTargetFieldApi>? Employee { get; set; }
 
     public override string ToString()
     {

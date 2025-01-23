@@ -61,8 +61,17 @@ public record RemoteFieldApiResponse
     [JsonPropertyName("Transaction")]
     public IEnumerable<RemoteFieldApi>? Transaction { get; set; }
 
+    [JsonPropertyName("AccountingPeriod")]
+    public IEnumerable<RemoteFieldApi>? AccountingPeriod { get; set; }
+
     [JsonPropertyName("GeneralLedgerTransaction")]
     public IEnumerable<RemoteFieldApi>? GeneralLedgerTransaction { get; set; }
+
+    [JsonPropertyName("BankFeedAccount")]
+    public IEnumerable<RemoteFieldApi>? BankFeedAccount { get; set; }
+
+    [JsonPropertyName("Employee")]
+    public IEnumerable<RemoteFieldApi>? Employee { get; set; }
 
     public override string ToString()
     {

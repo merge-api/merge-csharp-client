@@ -61,6 +61,10 @@ public partial class ScorecardsClient
         {
             _query["include_remote_data"] = request.IncludeRemoteData.ToString();
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = request.IncludeShellData.ToString();
+        }
         if (request.InterviewId != null)
         {
             _query["interview_id"] = request.InterviewId;

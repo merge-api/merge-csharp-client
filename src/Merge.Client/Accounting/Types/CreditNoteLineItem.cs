@@ -30,7 +30,6 @@ public record CreditNoteLineItem
     public DateTime? ModifiedAt { get; set; }
 
     [JsonPropertyName("item")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, Item>>))]
     public OneOf<string, Item>? Item { get; set; }
 
     /// <summary>
@@ -64,6 +63,12 @@ public record CreditNoteLineItem
     public string? UnitPrice { get; set; }
 
     /// <summary>
+    /// The tax rate that applies to this line item.
+    /// </summary>
+    [JsonPropertyName("tax_rate")]
+    public string? TaxRate { get; set; }
+
+    /// <summary>
     /// The credit note line item's total.
     /// </summary>
     [JsonPropertyName("total_line_amount")]
@@ -79,7 +84,7 @@ public record CreditNoteLineItem
     /// The credit note line item's associated tracking categories.
     /// </summary>
     [JsonPropertyName("tracking_categories")]
-    public IEnumerable<string> TrackingCategories { get; set; } = new List<string>();
+    public IEnumerable<string>? TrackingCategories { get; set; }
 
     /// <summary>
     /// The credit note line item's account.
@@ -91,11 +96,10 @@ public record CreditNoteLineItem
     /// The company the credit note belongs to.
     /// </summary>
     [JsonPropertyName("company")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<string, CompanyInfo>>))]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform.
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
