@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
 public partial class EeocsClient
@@ -24,7 +22,7 @@ public partial class EeocsClient
     /// await client.Ats.Eeocs.ListAsync(new EeocsListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedEeocList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedEeocList> ListAsync(
         EeocsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -55,15 +53,15 @@ public partial class EeocsClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.IncludeShellData != null)
         {
-            _query["include_shell_data"] = request.IncludeShellData.ToString();
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.ModifiedAfter != null)
         {
@@ -79,7 +77,7 @@ public partial class EeocsClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
         if (request.RemoteFields != null)
         {
@@ -93,17 +91,19 @@ public partial class EeocsClient
         {
             _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "ats/v1/eeocs",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "ats/v1/eeocs",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -132,7 +132,7 @@ public partial class EeocsClient
     /// await client.Ats.Eeocs.RetrieveAsync("id", new EeocsRetrieveRequest());
     /// </code>
     /// </example>
-    public async Task<Eeoc> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Eeoc> RetrieveAsync(
         string id,
         EeocsRetrieveRequest request,
         RequestOptions? options = null,
@@ -146,7 +146,7 @@ public partial class EeocsClient
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.RemoteFields != null)
         {
@@ -156,17 +156,19 @@ public partial class EeocsClient
         {
             _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"ats/v1/eeocs/{id}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"ats/v1/eeocs/{id}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

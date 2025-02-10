@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
-[JsonConverter(typeof(StringEnumSerializer<EeocsListRequestRemoteFields>))]
+[JsonConverter(typeof(EnumSerializer<EeocsListRequestRemoteFields>))]
 public enum EeocsListRequestRemoteFields
 {
     [EnumMember(Value = "disability_status")]

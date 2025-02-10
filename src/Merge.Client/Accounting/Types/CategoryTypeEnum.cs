@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(StringEnumSerializer<CategoryTypeEnum>))]
+[JsonConverter(typeof(EnumSerializer<CategoryTypeEnum>))]
 public enum CategoryTypeEnum
 {
     [EnumMember(Value = "CLASS")]

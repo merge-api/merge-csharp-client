@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
-[JsonConverter(typeof(StringEnumSerializer<RaceEnum>))]
+[JsonConverter(typeof(EnumSerializer<RaceEnum>))]
 public enum RaceEnum
 {
     [EnumMember(Value = "AMERICAN_INDIAN_OR_ALASKAN_NATIVE")]

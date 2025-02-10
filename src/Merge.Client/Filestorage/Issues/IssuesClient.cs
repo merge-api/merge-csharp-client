@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Filestorage;
 
 public partial class IssuesClient
@@ -24,7 +22,7 @@ public partial class IssuesClient
     /// await client.Filestorage.Issues.ListAsync(new IssuesListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedIssueList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedIssueList> ListAsync(
         IssuesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -85,7 +83,7 @@ public partial class IssuesClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
         if (request.StartDate != null)
         {
@@ -95,17 +93,19 @@ public partial class IssuesClient
         {
             _query["status"] = request.Status.Value.Stringify();
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "filestorage/v1/issues",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "filestorage/v1/issues",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -134,22 +134,24 @@ public partial class IssuesClient
     /// await client.Filestorage.Issues.RetrieveAsync("id");
     /// </code>
     /// </example>
-    public async Task<Issue> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Issue> RetrieveAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"filestorage/v1/issues/{id}",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"filestorage/v1/issues/{id}",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

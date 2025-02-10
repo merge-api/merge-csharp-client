@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ticketing;
 
-[JsonConverter(typeof(StringEnumSerializer<MethodEnum>))]
+[JsonConverter(typeof(EnumSerializer<MethodEnum>))]
 public enum MethodEnum
 {
     [EnumMember(Value = "GET")]

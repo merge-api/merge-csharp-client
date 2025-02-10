@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using OneOf;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
 public record VendorCreditApplyLineForVendorCredit

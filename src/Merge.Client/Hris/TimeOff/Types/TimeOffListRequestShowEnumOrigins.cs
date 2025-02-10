@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(StringEnumSerializer<TimeOffListRequestShowEnumOrigins>))]
+[JsonConverter(typeof(EnumSerializer<TimeOffListRequestShowEnumOrigins>))]
 public enum TimeOffListRequestShowEnumOrigins
 {
     [EnumMember(Value = "request_type")]

@@ -6,13 +6,11 @@ using Merge.Client.Filestorage;
 using Merge.Client.Hris;
 using Merge.Client.Ticketing;
 
-#nullable enable
-
 namespace Merge.Client;
 
 public partial class Merge
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public Merge(
         string? apiKey = null,
@@ -28,7 +26,7 @@ public partial class Merge
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Merge.Client" },
                 { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Merge.Client/1.0.0" },
+                { "User-Agent", "Merge.Client/1.0.1" },
             }
         );
         clientOptions ??= new ClientOptions();

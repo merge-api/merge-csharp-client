@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(StringEnumSerializer<LocationsRetrieveRequestShowEnumOrigins>))]
+[JsonConverter(typeof(EnumSerializer<LocationsRetrieveRequestShowEnumOrigins>))]
 public enum LocationsRetrieveRequestShowEnumOrigins
 {
     [EnumMember(Value = "country")]

@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
 public partial class LinkTokenClient
@@ -27,7 +25,7 @@ public partial class LinkTokenClient
     ///         EndUserEmailAddress = "example@gmail.com",
     ///         EndUserOrganizationName = "Test Organization",
     ///         EndUserOriginId = "12345",
-    ///         Categories = new List<Merge.Client.Accounting.CategoriesEnum>()
+    ///         Categories = new List&lt;Merge.Client.Accounting.CategoriesEnum&gt;()
     ///         {
     ///             Merge.Client.Accounting.CategoriesEnum.Hris,
     ///             Merge.Client.Accounting.CategoriesEnum.Ats,
@@ -36,23 +34,26 @@ public partial class LinkTokenClient
     /// );
     /// </code>
     /// </example>
-    public async Task<LinkToken> CreateAsync(
+    public async System.Threading.Tasks.Task<LinkToken> CreateAsync(
         EndUserDetailsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "accounting/v1/link-token",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "accounting/v1/link-token",
+                    Body = request,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(StringEnumSerializer<ContactsRetrieveRequestExpand>))]
+[JsonConverter(typeof(EnumSerializer<ContactsRetrieveRequestExpand>))]
 public enum ContactsRetrieveRequestExpand
 {
     [EnumMember(Value = "addresses")]

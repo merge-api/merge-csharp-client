@@ -1,7 +1,5 @@
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ticketing;
 
 public record FieldMappingsRetrieveRequest

@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
-[JsonConverter(typeof(StringEnumSerializer<JobsListRequestExpand>))]
+[JsonConverter(typeof(EnumSerializer<JobsListRequestExpand>))]
 public enum JobsListRequestExpand
 {
     [EnumMember(Value = "departments")]

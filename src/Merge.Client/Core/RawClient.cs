@@ -1,10 +1,10 @@
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
+using SystemTask = System.Threading.Tasks.Task;
 
 namespace Merge.Client.Core;
-
-#nullable enable
 
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
@@ -30,7 +30,7 @@ internal class RawClient(ClientOptions clientOptions)
         cts.CancelAfter(timeout);
 
         // Send the request.
-        return await SendWithRetriesAsync(request, cts.Token);
+        return await SendWithRetriesAsync(request, cts.Token).ConfigureAwait(false);
     }
 
     public record BaseApiRequest
@@ -47,7 +47,7 @@ internal class RawClient(ClientOptions clientOptions)
 
         public Headers Headers { get; init; } = new();
 
-        public RequestOptions? Options { get; init; }
+        public IRequestOptions? Options { get; init; }
     }
 
     /// <summary>
@@ -83,7 +83,9 @@ internal class RawClient(ClientOptions clientOptions)
     {
         var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
         var maxRetries = request.Options?.MaxRetries ?? Options.MaxRetries;
-        var response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken);
+        var response = await httpClient
+            .SendAsync(BuildHttpRequest(request), cancellationToken)
+            .ConfigureAwait(false);
         for (var i = 0; i < maxRetries; i++)
         {
             if (!ShouldRetry(response))
@@ -91,8 +93,10 @@ internal class RawClient(ClientOptions clientOptions)
                 break;
             }
             var delayMs = Math.Min(InitialRetryDelayMs * (int)Math.Pow(2, i), MaxRetryDelayMs);
-            await System.Threading.Tasks.Task.Delay(delayMs, cancellationToken);
-            response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken);
+            await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+            response = await httpClient
+                .SendAsync(BuildHttpRequest(request), cancellationToken)
+                .ConfigureAwait(false);
         }
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
@@ -128,11 +132,14 @@ internal class RawClient(ClientOptions clientOptions)
         }
         if (request.ContentType != null)
         {
-            request.Headers.Add("Content-Type", request.ContentType);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(
+                request.ContentType
+            );
         }
         SetHeaders(httpRequest, Options.Headers);
         SetHeaders(httpRequest, request.Headers);
         SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
+
         return httpRequest;
     }
 

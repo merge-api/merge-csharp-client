@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ticketing;
 
 public record AccountIntegration
@@ -14,7 +12,7 @@ public record AccountIntegration
     public required string Name { get; set; }
 
     /// <summary>
-    /// Optional. This shortened name appears in places with limited space, usually in conjunction with the platform's logo (e.g., Merge Link menu).<br><br>Example: <i>Workforce Now (in lieu of ADP Workforce Now), SuccessFactors (in lieu of SAP SuccessFactors)</i>
+    /// Optional. This shortened name appears in places with limited space, usually in conjunction with the platform's logo (e.g., Merge Link menu).&lt;br&gt;&lt;br&gt;Example: &lt;i&gt;Workforce Now (in lieu of ADP Workforce Now), SuccessFactors (in lieu of SAP SuccessFactors)&lt;/i&gt;
     /// </summary>
     [JsonPropertyName("abbreviated_name")]
     public string? AbbreviatedName { get; set; }
@@ -38,7 +36,7 @@ public record AccountIntegration
     public string? SquareImage { get; set; }
 
     /// <summary>
-    /// The color of this integration used for buttons and text throughout the app and landing pages. <b>Choose a darker, saturated color.</b>
+    /// The color of this integration used for buttons and text throughout the app and landing pages. &lt;b&gt;Choose a darker, saturated color.&lt;/b&gt;
     /// </summary>
     [JsonPropertyName("color")]
     public string? Color { get; set; }

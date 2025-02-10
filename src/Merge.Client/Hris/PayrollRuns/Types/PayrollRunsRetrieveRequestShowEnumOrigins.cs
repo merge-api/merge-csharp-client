@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(StringEnumSerializer<PayrollRunsRetrieveRequestShowEnumOrigins>))]
+[JsonConverter(typeof(EnumSerializer<PayrollRunsRetrieveRequestShowEnumOrigins>))]
 public enum PayrollRunsRetrieveRequestShowEnumOrigins
 {
     [EnumMember(Value = "run_state")]

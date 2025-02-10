@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(StringEnumSerializer<PayPeriodEnum>))]
+[JsonConverter(typeof(EnumSerializer<PayPeriodEnum>))]
 public enum PayPeriodEnum
 {
     [EnumMember(Value = "HOUR")]

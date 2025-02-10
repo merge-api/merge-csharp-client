@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Crm;
 
 public partial class SyncStatusClient
@@ -24,7 +22,7 @@ public partial class SyncStatusClient
     /// await client.Crm.SyncStatus.ListAsync(new SyncStatusListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedSyncStatusList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedSyncStatusList> ListAsync(
         SyncStatusListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -37,19 +35,21 @@ public partial class SyncStatusClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "crm/v1/sync-status",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "crm/v1/sync-status",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

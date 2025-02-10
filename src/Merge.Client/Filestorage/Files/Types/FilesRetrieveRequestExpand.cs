@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Filestorage;
 
-[JsonConverter(typeof(StringEnumSerializer<FilesRetrieveRequestExpand>))]
+[JsonConverter(typeof(EnumSerializer<FilesRetrieveRequestExpand>))]
 public enum FilesRetrieveRequestExpand
 {
     [EnumMember(Value = "drive")]

@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
-[JsonConverter(typeof(StringEnumSerializer<ScorecardsRetrieveRequestExpand>))]
+[JsonConverter(typeof(EnumSerializer<ScorecardsRetrieveRequestExpand>))]
 public enum ScorecardsRetrieveRequestExpand
 {
     [EnumMember(Value = "application")]

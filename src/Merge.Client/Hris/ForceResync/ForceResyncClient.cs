@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
 public partial class ForceResyncClient
@@ -24,21 +22,23 @@ public partial class ForceResyncClient
     /// await client.Hris.ForceResync.SyncStatusResyncCreateAsync();
     /// </code>
     /// </example>
-    public async Task<IEnumerable<SyncStatus>> SyncStatusResyncCreateAsync(
+    public async System.Threading.Tasks.Task<IEnumerable<SyncStatus>> SyncStatusResyncCreateAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "hris/v1/sync-status/resync",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "hris/v1/sync-status/resync",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

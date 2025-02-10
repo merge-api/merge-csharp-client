@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ticketing;
 
 public partial class AuditTrailClient
@@ -24,7 +22,7 @@ public partial class AuditTrailClient
     /// await client.Ticketing.AuditTrail.ListAsync(new AuditTrailListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedAuditLogEventList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedAuditLogEventList> ListAsync(
         AuditTrailListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -45,7 +43,7 @@ public partial class AuditTrailClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
         if (request.StartDate != null)
         {
@@ -55,17 +53,19 @@ public partial class AuditTrailClient
         {
             _query["user_email"] = request.UserEmail;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "ticketing/v1/audit-trail",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "ticketing/v1/audit-trail",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
