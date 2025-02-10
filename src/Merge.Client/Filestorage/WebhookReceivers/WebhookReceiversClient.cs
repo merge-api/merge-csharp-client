@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Filestorage;
 
 public partial class WebhookReceiversClient
@@ -24,21 +22,23 @@ public partial class WebhookReceiversClient
     /// await client.Filestorage.WebhookReceivers.ListAsync();
     /// </code>
     /// </example>
-    public async Task<IEnumerable<WebhookReceiver>> ListAsync(
+    public async System.Threading.Tasks.Task<IEnumerable<WebhookReceiver>> ListAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "filestorage/v1/webhook-receivers",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "filestorage/v1/webhook-receivers",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -69,23 +69,26 @@ public partial class WebhookReceiversClient
     /// );
     /// </code>
     /// </example>
-    public async Task<WebhookReceiver> CreateAsync(
+    public async System.Threading.Tasks.Task<WebhookReceiver> CreateAsync(
         WebhookReceiverRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "filestorage/v1/webhook-receivers",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "filestorage/v1/webhook-receivers",
+                    Body = request,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
-[JsonConverter(typeof(StringEnumSerializer<ActivitiesRetrieveRequestRemoteFields>))]
+[JsonConverter(typeof(EnumSerializer<ActivitiesRetrieveRequestRemoteFields>))]
 public enum ActivitiesRetrieveRequestRemoteFields
 {
     [EnumMember(Value = "activity_type")]

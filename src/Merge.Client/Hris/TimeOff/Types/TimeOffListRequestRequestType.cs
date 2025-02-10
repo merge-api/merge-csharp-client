@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(StringEnumSerializer<TimeOffListRequestRequestType>))]
+[JsonConverter(typeof(EnumSerializer<TimeOffListRequestRequestType>))]
 public enum TimeOffListRequestRequestType
 {
     [EnumMember(Value = "BEREAVEMENT")]

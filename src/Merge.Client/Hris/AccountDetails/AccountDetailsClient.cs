@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
 public partial class AccountDetailsClient
@@ -24,21 +22,23 @@ public partial class AccountDetailsClient
     /// await client.Hris.AccountDetails.RetrieveAsync();
     /// </code>
     /// </example>
-    public async Task<AccountDetails> RetrieveAsync(
+    public async System.Threading.Tasks.Task<AccountDetails> RetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "hris/v1/account-details",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "hris/v1/account-details",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

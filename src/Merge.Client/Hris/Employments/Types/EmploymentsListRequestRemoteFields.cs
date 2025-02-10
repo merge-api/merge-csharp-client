@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(StringEnumSerializer<EmploymentsListRequestRemoteFields>))]
+[JsonConverter(typeof(EnumSerializer<EmploymentsListRequestRemoteFields>))]
 public enum EmploymentsListRequestRemoteFields
 {
     [EnumMember(Value = "employment_type")]

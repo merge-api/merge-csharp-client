@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(StringEnumSerializer<CreditNotesListRequestShowEnumOrigins>))]
+[JsonConverter(typeof(EnumSerializer<CreditNotesListRequestShowEnumOrigins>))]
 public enum CreditNotesListRequestShowEnumOrigins
 {
     [EnumMember(Value = "status")]

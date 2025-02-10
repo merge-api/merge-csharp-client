@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
 public partial class BankFeedAccountsClient
@@ -24,7 +22,7 @@ public partial class BankFeedAccountsClient
     /// await client.Accounting.BankFeedAccounts.ListAsync(new BankFeedAccountsListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedBankFeedAccountList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedBankFeedAccountList> ListAsync(
         BankFeedAccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -37,31 +35,33 @@ public partial class BankFeedAccountsClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.IncludeShellData != null)
         {
-            _query["include_shell_data"] = request.IncludeShellData.ToString();
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "accounting/v1/bank-feed-accounts",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "accounting/v1/bank-feed-accounts",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -92,7 +92,7 @@ public partial class BankFeedAccountsClient
     /// );
     /// </code>
     /// </example>
-    public async Task<BankFeedAccountResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<BankFeedAccountResponse> CreateAsync(
         BankFeedAccountEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -101,25 +101,28 @@ public partial class BankFeedAccountsClient
         var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
-            _query["is_debug_mode"] = request.IsDebugMode.ToString();
+            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
         }
         if (request.RunAsync != null)
         {
-            _query["run_async"] = request.RunAsync.ToString();
+            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
         }
         var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "accounting/v1/bank-feed-accounts",
-                Body = requestBody,
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "accounting/v1/bank-feed-accounts",
+                    Body = requestBody,
+                    Query = _query,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -148,7 +151,7 @@ public partial class BankFeedAccountsClient
     /// await client.Accounting.BankFeedAccounts.RetrieveAsync("id", new BankFeedAccountsRetrieveRequest());
     /// </code>
     /// </example>
-    public async Task<BankFeedAccount> RetrieveAsync(
+    public async System.Threading.Tasks.Task<BankFeedAccount> RetrieveAsync(
         string id,
         BankFeedAccountsRetrieveRequest request,
         RequestOptions? options = null,
@@ -158,19 +161,21 @@ public partial class BankFeedAccountsClient
         var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"accounting/v1/bank-feed-accounts/{id}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"accounting/v1/bank-feed-accounts/{id}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -199,21 +204,23 @@ public partial class BankFeedAccountsClient
     /// await client.Accounting.BankFeedAccounts.MetaPostRetrieveAsync();
     /// </code>
     /// </example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "accounting/v1/bank-feed-accounts/meta/post",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "accounting/v1/bank-feed-accounts/meta/post",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

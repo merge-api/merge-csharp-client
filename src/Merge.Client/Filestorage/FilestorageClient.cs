@@ -1,7 +1,5 @@
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Filestorage;
 
 public partial class FilestorageClient

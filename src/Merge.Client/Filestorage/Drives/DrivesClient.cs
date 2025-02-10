@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Filestorage;
 
 public partial class DrivesClient
@@ -24,7 +22,7 @@ public partial class DrivesClient
     /// await client.Filestorage.Drives.ListAsync(new DrivesListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedDriveList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedDriveList> ListAsync(
         DrivesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -47,15 +45,15 @@ public partial class DrivesClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.IncludeShellData != null)
         {
-            _query["include_shell_data"] = request.IncludeShellData.ToString();
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.ModifiedAfter != null)
         {
@@ -75,23 +73,25 @@ public partial class DrivesClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
         if (request.RemoteId != null)
         {
             _query["remote_id"] = request.RemoteId;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "filestorage/v1/drives",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "filestorage/v1/drives",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -120,7 +120,7 @@ public partial class DrivesClient
     /// await client.Filestorage.Drives.RetrieveAsync("id", new DrivesRetrieveRequest());
     /// </code>
     /// </example>
-    public async Task<Drive> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Drive> RetrieveAsync(
         string id,
         DrivesRetrieveRequest request,
         RequestOptions? options = null,
@@ -130,19 +130,21 @@ public partial class DrivesClient
         var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"filestorage/v1/drives/{id}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"filestorage/v1/drives/{id}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

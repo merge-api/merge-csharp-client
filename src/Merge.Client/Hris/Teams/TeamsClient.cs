@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
 public partial class TeamsClient
@@ -24,7 +22,7 @@ public partial class TeamsClient
     /// await client.Hris.Teams.ListAsync(new TeamsListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedTeamList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedTeamList> ListAsync(
         TeamsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -51,15 +49,15 @@ public partial class TeamsClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.IncludeShellData != null)
         {
-            _query["include_shell_data"] = request.IncludeShellData.ToString();
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.ModifiedAfter != null)
         {
@@ -75,7 +73,7 @@ public partial class TeamsClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
         if (request.ParentTeamId != null)
         {
@@ -85,17 +83,19 @@ public partial class TeamsClient
         {
             _query["remote_id"] = request.RemoteId;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "hris/v1/teams",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "hris/v1/teams",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -124,7 +124,7 @@ public partial class TeamsClient
     /// await client.Hris.Teams.RetrieveAsync("id", new TeamsRetrieveRequest());
     /// </code>
     /// </example>
-    public async Task<Team> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Team> RetrieveAsync(
         string id,
         TeamsRetrieveRequest request,
         RequestOptions? options = null,
@@ -138,19 +138,21 @@ public partial class TeamsClient
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"hris/v1/teams/{id}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"hris/v1/teams/{id}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

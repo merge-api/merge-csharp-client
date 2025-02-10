@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Filestorage;
 
 public partial class FilesClient
@@ -24,7 +22,7 @@ public partial class FilesClient
     /// await client.Filestorage.Files.ListAsync(new FilesListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedFileList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedFileList> ListAsync(
         FilesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -59,15 +57,15 @@ public partial class FilesClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.IncludeShellData != null)
         {
-            _query["include_shell_data"] = request.IncludeShellData.ToString();
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.MimeType != null)
         {
@@ -91,23 +89,25 @@ public partial class FilesClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
         if (request.RemoteId != null)
         {
             _query["remote_id"] = request.RemoteId;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "filestorage/v1/files",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "filestorage/v1/files",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -138,7 +138,7 @@ public partial class FilesClient
     /// );
     /// </code>
     /// </example>
-    public async Task<FileStorageFileResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<FileStorageFileResponse> CreateAsync(
         FileStorageFileEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -147,25 +147,28 @@ public partial class FilesClient
         var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
-            _query["is_debug_mode"] = request.IsDebugMode.ToString();
+            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
         }
         if (request.RunAsync != null)
         {
-            _query["run_async"] = request.RunAsync.ToString();
+            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
         }
         var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "filestorage/v1/files",
-                Body = requestBody,
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "filestorage/v1/files",
+                    Body = requestBody,
+                    Query = _query,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -194,7 +197,7 @@ public partial class FilesClient
     /// await client.Filestorage.Files.RetrieveAsync("id", new FilesRetrieveRequest());
     /// </code>
     /// </example>
-    public async Task<File> RetrieveAsync(
+    public async System.Threading.Tasks.Task<File> RetrieveAsync(
         string id,
         FilesRetrieveRequest request,
         RequestOptions? options = null,
@@ -208,19 +211,21 @@ public partial class FilesClient
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"filestorage/v1/files/{id}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"filestorage/v1/files/{id}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -264,17 +269,19 @@ public partial class FilesClient
         {
             _query["mime_type"] = request.MimeType;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"filestorage/v1/files/{id}/download",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"filestorage/v1/files/{id}/download",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         throw new MergeApiException(
             $"Error with status code {response.StatusCode}",
@@ -291,21 +298,23 @@ public partial class FilesClient
     /// await client.Filestorage.Files.MetaPostRetrieveAsync();
     /// </code>
     /// </example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "filestorage/v1/files/meta/post",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "filestorage/v1/files/meta/post",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

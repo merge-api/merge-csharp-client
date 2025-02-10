@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
 public partial class ScopesClient
@@ -24,21 +22,23 @@ public partial class ScopesClient
     /// await client.Hris.Scopes.DefaultScopesRetrieveAsync();
     /// </code>
     /// </example>
-    public async Task<CommonModelScopeApi> DefaultScopesRetrieveAsync(
+    public async System.Threading.Tasks.Task<CommonModelScopeApi> DefaultScopesRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "hris/v1/default-scopes",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "hris/v1/default-scopes",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -67,21 +67,23 @@ public partial class ScopesClient
     /// await client.Hris.Scopes.LinkedAccountScopesRetrieveAsync();
     /// </code>
     /// </example>
-    public async Task<CommonModelScopeApi> LinkedAccountScopesRetrieveAsync(
+    public async System.Threading.Tasks.Task<CommonModelScopeApi> LinkedAccountScopesRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "hris/v1/linked-account-scopes",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "hris/v1/linked-account-scopes",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -110,15 +112,15 @@ public partial class ScopesClient
     /// await client.Hris.Scopes.LinkedAccountScopesCreateAsync(
     ///     new LinkedAccountCommonModelScopeDeserializerRequest
     ///     {
-    ///         CommonModels = new List<Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest>()
+    ///         CommonModels = new List&lt;Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest&gt;()
     ///         {
     ///             new Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Employee",
-    ///                 ModelPermissions = new Dictionary<
+    ///                 ModelPermissions = new Dictionary&lt;
     ///                     string,
     ///                     Merge.Client.Hris.ModelPermissionDeserializerRequest
-    ///                 >()
+    ///                 &gt;()
     ///                 {
     ///                     {
     ///                         "READ",
@@ -137,17 +139,17 @@ public partial class ScopesClient
     ///                 },
     ///                 FieldPermissions = new Merge.Client.Hris.FieldPermissionDeserializerRequest
     ///                 {
-    ///                     EnabledFields = new List<object>() { "avatar", "home_location" },
-    ///                     DisabledFields = new List<object>() { "work_location" },
+    ///                     EnabledFields = new List&lt;object&gt;() { "avatar", "home_location" },
+    ///                     DisabledFields = new List&lt;object&gt;() { "work_location" },
     ///                 },
     ///             },
     ///             new Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Benefit",
-    ///                 ModelPermissions = new Dictionary<
+    ///                 ModelPermissions = new Dictionary&lt;
     ///                     string,
     ///                     Merge.Client.Hris.ModelPermissionDeserializerRequest
-    ///                 >()
+    ///                 &gt;()
     ///                 {
     ///                     {
     ///                         "WRITE",
@@ -163,23 +165,26 @@ public partial class ScopesClient
     /// );
     /// </code>
     /// </example>
-    public async Task<CommonModelScopeApi> LinkedAccountScopesCreateAsync(
+    public async System.Threading.Tasks.Task<CommonModelScopeApi> LinkedAccountScopesCreateAsync(
         LinkedAccountCommonModelScopeDeserializerRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "hris/v1/linked-account-scopes",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "hris/v1/linked-account-scopes",
+                    Body = request,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ticketing;
 
-[JsonConverter(typeof(StringEnumSerializer<RequestFormatEnum>))]
+[JsonConverter(typeof(EnumSerializer<RequestFormatEnum>))]
 public enum RequestFormatEnum
 {
     [EnumMember(Value = "JSON")]

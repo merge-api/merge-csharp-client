@@ -1,7 +1,5 @@
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
 public record AttachmentsRetrieveRequest

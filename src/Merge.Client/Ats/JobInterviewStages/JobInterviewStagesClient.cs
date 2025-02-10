@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
 public partial class JobInterviewStagesClient
@@ -24,7 +22,7 @@ public partial class JobInterviewStagesClient
     /// await client.Ats.JobInterviewStages.ListAsync(new JobInterviewStagesListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedJobInterviewStageList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedJobInterviewStageList> ListAsync(
         JobInterviewStagesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -51,15 +49,15 @@ public partial class JobInterviewStagesClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.IncludeShellData != null)
         {
-            _query["include_shell_data"] = request.IncludeShellData.ToString();
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.JobId != null)
         {
@@ -79,23 +77,25 @@ public partial class JobInterviewStagesClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
         if (request.RemoteId != null)
         {
             _query["remote_id"] = request.RemoteId;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "ats/v1/job-interview-stages",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "ats/v1/job-interview-stages",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -124,7 +124,7 @@ public partial class JobInterviewStagesClient
     /// await client.Ats.JobInterviewStages.RetrieveAsync("id", new JobInterviewStagesRetrieveRequest());
     /// </code>
     /// </example>
-    public async Task<JobInterviewStage> RetrieveAsync(
+    public async System.Threading.Tasks.Task<JobInterviewStage> RetrieveAsync(
         string id,
         JobInterviewStagesRetrieveRequest request,
         RequestOptions? options = null,
@@ -138,19 +138,21 @@ public partial class JobInterviewStagesClient
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"ats/v1/job-interview-stages/{id}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"ats/v1/job-interview-stages/{id}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

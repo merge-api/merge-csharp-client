@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Crm;
 
 public partial class TasksClient
@@ -24,7 +22,7 @@ public partial class TasksClient
     /// await client.Crm.Tasks.ListAsync(new TasksListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedTaskList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedTaskList> ListAsync(
         TasksListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -51,19 +49,21 @@ public partial class TasksClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.IncludeRemoteFields != null)
         {
-            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+            _query["include_remote_fields"] = JsonUtils.Serialize(
+                request.IncludeRemoteFields.Value
+            );
         }
         if (request.IncludeShellData != null)
         {
-            _query["include_shell_data"] = request.IncludeShellData.ToString();
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.ModifiedAfter != null)
         {
@@ -79,23 +79,25 @@ public partial class TasksClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
         if (request.RemoteId != null)
         {
             _query["remote_id"] = request.RemoteId;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "crm/v1/tasks",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "crm/v1/tasks",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -124,7 +126,7 @@ public partial class TasksClient
     /// await client.Crm.Tasks.CreateAsync(new TaskEndpointRequest { Model = new TaskRequest() });
     /// </code>
     /// </example>
-    public async Task<TaskResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<TaskResponse> CreateAsync(
         TaskEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -133,25 +135,28 @@ public partial class TasksClient
         var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
-            _query["is_debug_mode"] = request.IsDebugMode.ToString();
+            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
         }
         if (request.RunAsync != null)
         {
-            _query["run_async"] = request.RunAsync.ToString();
+            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
         }
         var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "crm/v1/tasks",
-                Body = requestBody,
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "crm/v1/tasks",
+                    Body = requestBody,
+                    Query = _query,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -180,7 +185,7 @@ public partial class TasksClient
     /// await client.Crm.Tasks.RetrieveAsync("id", new TasksRetrieveRequest());
     /// </code>
     /// </example>
-    public async Task<Task> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Task> RetrieveAsync(
         string id,
         TasksRetrieveRequest request,
         RequestOptions? options = null,
@@ -194,23 +199,27 @@ public partial class TasksClient
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.IncludeRemoteFields != null)
         {
-            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+            _query["include_remote_fields"] = JsonUtils.Serialize(
+                request.IncludeRemoteFields.Value
+            );
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"crm/v1/tasks/{id}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"crm/v1/tasks/{id}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -242,7 +251,7 @@ public partial class TasksClient
     /// );
     /// </code>
     /// </example>
-    public async Task<TaskResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<TaskResponse> PartialUpdateAsync(
         string id,
         PatchedTaskEndpointRequest request,
         RequestOptions? options = null,
@@ -252,25 +261,28 @@ public partial class TasksClient
         var _query = new Dictionary<string, object>();
         if (request.IsDebugMode != null)
         {
-            _query["is_debug_mode"] = request.IsDebugMode.ToString();
+            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
         }
         if (request.RunAsync != null)
         {
-            _query["run_async"] = request.RunAsync.ToString();
+            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
         }
         var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethodExtensions.Patch,
-                Path = $"crm/v1/tasks/{id}",
-                Body = requestBody,
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethodExtensions.Patch,
+                    Path = $"crm/v1/tasks/{id}",
+                    Body = requestBody,
+                    Query = _query,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -299,22 +311,24 @@ public partial class TasksClient
     /// await client.Crm.Tasks.MetaPatchRetrieveAsync("id");
     /// </code>
     /// </example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"crm/v1/tasks/meta/patch/{id}",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"crm/v1/tasks/meta/patch/{id}",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -343,21 +357,23 @@ public partial class TasksClient
     /// await client.Crm.Tasks.MetaPostRetrieveAsync();
     /// </code>
     /// </example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "crm/v1/tasks/meta/post",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "crm/v1/tasks/meta/post",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -386,7 +402,7 @@ public partial class TasksClient
     /// await client.Crm.Tasks.RemoteFieldClassesListAsync(new TasksRemoteFieldClassesListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
         TasksRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -399,39 +415,43 @@ public partial class TasksClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.IncludeRemoteFields != null)
         {
-            _query["include_remote_fields"] = request.IncludeRemoteFields.ToString();
+            _query["include_remote_fields"] = JsonUtils.Serialize(
+                request.IncludeRemoteFields.Value
+            );
         }
         if (request.IncludeShellData != null)
         {
-            _query["include_shell_data"] = request.IncludeShellData.ToString();
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.IsCommonModelField != null)
         {
-            _query["is_common_model_field"] = request.IsCommonModelField.ToString();
+            _query["is_common_model_field"] = JsonUtils.Serialize(request.IsCommonModelField.Value);
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "crm/v1/tasks/remote-field-classes",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "crm/v1/tasks/remote-field-classes",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

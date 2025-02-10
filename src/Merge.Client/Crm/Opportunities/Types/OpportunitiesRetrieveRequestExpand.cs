@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Crm;
 
-[JsonConverter(typeof(StringEnumSerializer<OpportunitiesRetrieveRequestExpand>))]
+[JsonConverter(typeof(EnumSerializer<OpportunitiesRetrieveRequestExpand>))]
 public enum OpportunitiesRetrieveRequestExpand
 {
     [EnumMember(Value = "account")]

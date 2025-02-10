@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(StringEnumSerializer<InvoicesRetrieveRequestExpand>))]
+[JsonConverter(typeof(EnumSerializer<InvoicesRetrieveRequestExpand>))]
 public enum InvoicesRetrieveRequestExpand
 {
     [EnumMember(Value = "accounting_period")]

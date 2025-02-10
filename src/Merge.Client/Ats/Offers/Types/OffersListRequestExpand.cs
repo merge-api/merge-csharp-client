@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
-[JsonConverter(typeof(StringEnumSerializer<OffersListRequestExpand>))]
+[JsonConverter(typeof(EnumSerializer<OffersListRequestExpand>))]
 public enum OffersListRequestExpand
 {
     [EnumMember(Value = "application")]

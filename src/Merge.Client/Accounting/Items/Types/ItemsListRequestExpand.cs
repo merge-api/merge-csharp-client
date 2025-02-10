@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(StringEnumSerializer<ItemsListRequestExpand>))]
+[JsonConverter(typeof(EnumSerializer<ItemsListRequestExpand>))]
 public enum ItemsListRequestExpand
 {
     [EnumMember(Value = "company")]

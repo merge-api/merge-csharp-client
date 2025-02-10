@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(StringEnumSerializer<SelectiveSyncConfigurationsUsageEnum>))]
+[JsonConverter(typeof(EnumSerializer<SelectiveSyncConfigurationsUsageEnum>))]
 public enum SelectiveSyncConfigurationsUsageEnum
 {
     [EnumMember(Value = "IN_NEXT_SYNC")]

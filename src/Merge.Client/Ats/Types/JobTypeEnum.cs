@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
-[JsonConverter(typeof(StringEnumSerializer<JobTypeEnum>))]
+[JsonConverter(typeof(EnumSerializer<JobTypeEnum>))]
 public enum JobTypeEnum
 {
     [EnumMember(Value = "POSTING")]

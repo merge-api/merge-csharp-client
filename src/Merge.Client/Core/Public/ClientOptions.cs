@@ -1,8 +1,6 @@
 using System;
 using System.Net.Http;
 
-#nullable enable
-
 namespace Merge.Client.Core;
 
 public partial class ClientOptions
@@ -31,4 +29,19 @@ public partial class ClientOptions
     /// The http headers sent with the request.
     /// </summary>
     internal Headers Headers { get; init; } = new();
+
+    /// <summary>
+    /// Clones this and returns a new instance
+    /// </summary>
+    internal ClientOptions Clone()
+    {
+        return new ClientOptions
+        {
+            BaseUrl = BaseUrl,
+            HttpClient = HttpClient,
+            MaxRetries = MaxRetries,
+            Timeout = Timeout,
+            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+        };
+    }
 }

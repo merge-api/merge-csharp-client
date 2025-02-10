@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(StringEnumSerializer<RequestTypeEnum>))]
+[JsonConverter(typeof(EnumSerializer<RequestTypeEnum>))]
 public enum RequestTypeEnum
 {
     [EnumMember(Value = "VACATION")]

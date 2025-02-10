@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(StringEnumSerializer<ItemFormatEnum>))]
+[JsonConverter(typeof(EnumSerializer<ItemFormatEnum>))]
 public enum ItemFormatEnum
 {
     [EnumMember(Value = "string")]

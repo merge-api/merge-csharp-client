@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
 public record UrlRequest

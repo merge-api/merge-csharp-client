@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(StringEnumSerializer<EncodingEnum>))]
+[JsonConverter(typeof(EnumSerializer<EncodingEnum>))]
 public enum EncodingEnum
 {
     [EnumMember(Value = "RAW")]

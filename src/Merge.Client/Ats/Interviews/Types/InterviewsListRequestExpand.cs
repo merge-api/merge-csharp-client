@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
-[JsonConverter(typeof(StringEnumSerializer<InterviewsListRequestExpand>))]
+[JsonConverter(typeof(EnumSerializer<InterviewsListRequestExpand>))]
 public enum InterviewsListRequestExpand
 {
     [EnumMember(Value = "application")]

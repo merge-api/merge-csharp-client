@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
 public partial class GroupsClient
@@ -24,7 +22,7 @@ public partial class GroupsClient
     /// await client.Hris.Groups.ListAsync(new GroupsListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedGroupList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedGroupList> ListAsync(
         GroupsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -47,15 +45,15 @@ public partial class GroupsClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.IncludeShellData != null)
         {
-            _query["include_shell_data"] = request.IncludeShellData.ToString();
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.IsCommonlyUsedAsTeam != null)
         {
@@ -79,7 +77,7 @@ public partial class GroupsClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
         if (request.RemoteFields != null)
         {
@@ -97,17 +95,19 @@ public partial class GroupsClient
         {
             _query["types"] = request.Types;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "hris/v1/groups",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "hris/v1/groups",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -136,7 +136,7 @@ public partial class GroupsClient
     /// await client.Hris.Groups.RetrieveAsync("id", new GroupsRetrieveRequest());
     /// </code>
     /// </example>
-    public async Task<Group> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Group> RetrieveAsync(
         string id,
         GroupsRetrieveRequest request,
         RequestOptions? options = null,
@@ -146,7 +146,7 @@ public partial class GroupsClient
         var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.RemoteFields != null)
         {
@@ -156,17 +156,19 @@ public partial class GroupsClient
         {
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"hris/v1/groups/{id}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"hris/v1/groups/{id}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

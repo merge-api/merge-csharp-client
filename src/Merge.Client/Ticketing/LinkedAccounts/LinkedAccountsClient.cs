@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ticketing;
 
 public partial class LinkedAccountsClient
@@ -24,7 +22,7 @@ public partial class LinkedAccountsClient
     /// await client.Ticketing.LinkedAccounts.ListAsync(new LinkedAccountsListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedAccountDetailsAndActionsList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedAccountDetailsAndActionsList> ListAsync(
         LinkedAccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -65,7 +63,7 @@ public partial class LinkedAccountsClient
         }
         if (request.IncludeDuplicates != null)
         {
-            _query["include_duplicates"] = request.IncludeDuplicates.ToString();
+            _query["include_duplicates"] = JsonUtils.Serialize(request.IncludeDuplicates.Value);
         }
         if (request.IntegrationName != null)
         {
@@ -77,23 +75,25 @@ public partial class LinkedAccountsClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
         if (request.Status != null)
         {
             _query["status"] = request.Status;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "ticketing/v1/linked-accounts",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "ticketing/v1/linked-accounts",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

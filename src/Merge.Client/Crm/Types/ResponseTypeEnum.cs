@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Crm;
 
-[JsonConverter(typeof(StringEnumSerializer<ResponseTypeEnum>))]
+[JsonConverter(typeof(EnumSerializer<ResponseTypeEnum>))]
 public enum ResponseTypeEnum
 {
     [EnumMember(Value = "JSON")]

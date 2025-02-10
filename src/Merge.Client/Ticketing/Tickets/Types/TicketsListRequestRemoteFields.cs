@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ticketing;
 
-[JsonConverter(typeof(StringEnumSerializer<TicketsListRequestRemoteFields>))]
+[JsonConverter(typeof(EnumSerializer<TicketsListRequestRemoteFields>))]
 public enum TicketsListRequestRemoteFields
 {
     [EnumMember(Value = "priority")]

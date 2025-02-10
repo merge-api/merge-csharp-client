@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Ats;
 
-[JsonConverter(typeof(StringEnumSerializer<GenderEnum>))]
+[JsonConverter(typeof(EnumSerializer<GenderEnum>))]
 public enum GenderEnum
 {
     [EnumMember(Value = "MALE")]

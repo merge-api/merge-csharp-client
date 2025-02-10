@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Hris;
 
 public partial class PayrollRunsClient
@@ -24,7 +22,7 @@ public partial class PayrollRunsClient
     /// await client.Hris.PayrollRuns.ListAsync(new PayrollRunsListRequest());
     /// </code>
     /// </example>
-    public async Task<PaginatedPayrollRunList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedPayrollRunList> ListAsync(
         PayrollRunsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -55,15 +53,15 @@ public partial class PayrollRunsClient
         }
         if (request.IncludeDeletedData != null)
         {
-            _query["include_deleted_data"] = request.IncludeDeletedData.ToString();
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
         }
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.IncludeShellData != null)
         {
-            _query["include_shell_data"] = request.IncludeShellData.ToString();
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.ModifiedAfter != null)
         {
@@ -79,7 +77,7 @@ public partial class PayrollRunsClient
         }
         if (request.PageSize != null)
         {
-            _query["page_size"] = request.PageSize.ToString();
+            _query["page_size"] = request.PageSize.Value.ToString();
         }
         if (request.RemoteFields != null)
         {
@@ -107,17 +105,19 @@ public partial class PayrollRunsClient
                 Constants.DateTimeFormat
             );
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "hris/v1/payroll-runs",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "hris/v1/payroll-runs",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -146,7 +146,7 @@ public partial class PayrollRunsClient
     /// await client.Hris.PayrollRuns.RetrieveAsync("id", new PayrollRunsRetrieveRequest());
     /// </code>
     /// </example>
-    public async Task<PayrollRun> RetrieveAsync(
+    public async System.Threading.Tasks.Task<PayrollRun> RetrieveAsync(
         string id,
         PayrollRunsRetrieveRequest request,
         RequestOptions? options = null,
@@ -156,7 +156,7 @@ public partial class PayrollRunsClient
         var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.RemoteFields != null)
         {
@@ -166,17 +166,19 @@ public partial class PayrollRunsClient
         {
             _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"hris/v1/payroll-runs/{id}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"hris/v1/payroll-runs/{id}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {

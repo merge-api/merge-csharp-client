@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using Merge.Client.Core;
 
-#nullable enable
-
 namespace Merge.Client.Accounting;
 
 public partial class AddressesClient
@@ -24,7 +22,7 @@ public partial class AddressesClient
     /// await client.Accounting.Addresses.RetrieveAsync("id", new AddressesRetrieveRequest());
     /// </code>
     /// </example>
-    public async Task<Address> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Address> RetrieveAsync(
         string id,
         AddressesRetrieveRequest request,
         RequestOptions? options = null,
@@ -34,7 +32,7 @@ public partial class AddressesClient
         var _query = new Dictionary<string, object>();
         if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = request.IncludeRemoteData.ToString();
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
         if (request.RemoteFields != null)
         {
@@ -44,17 +42,19 @@ public partial class AddressesClient
         {
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"accounting/v1/addresses/{id}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"accounting/v1/addresses/{id}",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
