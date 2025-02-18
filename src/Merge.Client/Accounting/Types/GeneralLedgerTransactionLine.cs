@@ -681,7 +681,7 @@ public record GeneralLedgerTransactionLine
     public string? Description { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    public IEnumerable<TrackingCategory>? TrackingCategories { get; set; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     [JsonPropertyName("debit_amount")]
     public required string DebitAmount { get; set; }
@@ -699,7 +699,7 @@ public record GeneralLedgerTransactionLine
     public required string ForeignCreditAmount { get; set; }
 
     /// <summary>
-    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
+    /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/accounting/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
