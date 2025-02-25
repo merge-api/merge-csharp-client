@@ -681,7 +681,7 @@ public record GeneralLedgerTransactionLine
     public string? Description { get; set; }
 
     [JsonPropertyName("tracking_categories")]
-    public IEnumerable<TrackingCategory>? TrackingCategories { get; set; }
+    public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }
 
     [JsonPropertyName("debit_amount")]
     public required string DebitAmount { get; set; }
