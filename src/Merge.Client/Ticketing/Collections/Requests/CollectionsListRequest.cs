@@ -27,7 +27,7 @@ public record CollectionsListRequest
     /// <summary>
     /// Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     /// </summary>
-    public CollectionsListRequestExpand? Expand { get; set; }
+    public string? Expand { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).

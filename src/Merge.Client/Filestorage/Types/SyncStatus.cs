@@ -17,8 +17,14 @@ public record SyncStatus
     [JsonPropertyName("next_sync_start")]
     public DateTime? NextSyncStart { get; set; }
 
+    [JsonPropertyName("last_sync_result")]
+    public LastSyncResultEnum? LastSyncResult { get; set; }
+
+    [JsonPropertyName("last_sync_finished")]
+    public DateTime? LastSyncFinished { get; set; }
+
     [JsonPropertyName("status")]
-    public required SyncStatusStatusEnum Status { get; set; }
+    public required StatusFd5Enum Status { get; set; }
 
     [JsonPropertyName("is_initial_sync")]
     public required bool IsInitialSync { get; set; }

@@ -71,6 +71,12 @@ public record ExternalTargetFieldApiResponse
     [JsonPropertyName("Employee")]
     public IEnumerable<ExternalTargetFieldApi>? Employee { get; set; }
 
+    [JsonPropertyName("PaymentMethod")]
+    public IEnumerable<ExternalTargetFieldApi>? PaymentMethod { get; set; }
+
+    [JsonPropertyName("PaymentTerm")]
+    public IEnumerable<ExternalTargetFieldApi>? PaymentTerm { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

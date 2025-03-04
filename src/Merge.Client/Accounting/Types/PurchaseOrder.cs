@@ -412,6 +412,12 @@ public record PurchaseOrder
     [JsonPropertyName("exchange_rate")]
     public string? ExchangeRate { get; set; }
 
+    /// <summary>
+    /// The payment term that applies to this transaction.
+    /// </summary>
+    [JsonPropertyName("payment_term")]
+    public OneOf<string, PaymentTerm>? PaymentTerm { get; set; }
+
     [JsonPropertyName("line_items")]
     public IEnumerable<PurchaseOrderLineItem>? LineItems { get; set; }
 

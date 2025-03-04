@@ -217,6 +217,10 @@ public partial class CandidatesClient
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest

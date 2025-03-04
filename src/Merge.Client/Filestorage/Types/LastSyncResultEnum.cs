@@ -2,10 +2,10 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
-namespace Merge.Client.Hris;
+namespace Merge.Client.Filestorage;
 
-[JsonConverter(typeof(EnumSerializer<SyncStatusStatusEnum>))]
-public enum SyncStatusStatusEnum
+[JsonConverter(typeof(EnumSerializer<LastSyncResultEnum>))]
+public enum LastSyncResultEnum
 {
     [EnumMember(Value = "SYNCING")]
     Syncing,

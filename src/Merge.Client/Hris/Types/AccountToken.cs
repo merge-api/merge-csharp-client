@@ -11,6 +11,9 @@ public record AccountToken
     [JsonPropertyName("integration")]
     public required AccountIntegration Integration { get; set; }
 
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

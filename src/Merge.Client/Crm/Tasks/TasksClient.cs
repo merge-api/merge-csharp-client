@@ -207,6 +207,10 @@ public partial class TasksClient
                 request.IncludeRemoteFields.Value
             );
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest

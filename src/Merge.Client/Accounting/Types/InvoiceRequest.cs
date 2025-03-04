@@ -408,6 +408,12 @@ public record InvoiceRequest
     public double? SubTotal { get; set; }
 
     /// <summary>
+    /// The payment term that applies to this transaction.
+    /// </summary>
+    [JsonPropertyName("payment_term")]
+    public OneOf<string, PaymentTerm>? PaymentTerm { get; set; }
+
+    /// <summary>
     /// The total amount being paid in taxes.
     /// </summary>
     [JsonPropertyName("total_tax_amount")]

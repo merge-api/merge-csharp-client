@@ -75,6 +75,10 @@ public partial class TaxRatesClient
                 Constants.DateTimeFormat
             );
         }
+        if (request.Name != null)
+        {
+            _query["name"] = request.Name;
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.Value.ToString();
@@ -139,6 +143,10 @@ public partial class TaxRatesClient
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         var response = await _client
             .MakeRequestAsync(

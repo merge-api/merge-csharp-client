@@ -10,6 +10,11 @@ public record TicketsRemoteFieldClassesListRequest
     public string? Cursor { get; set; }
 
     /// <summary>
+    /// If provided, will only return remote field classes with the `ids` in this list
+    /// </summary>
+    public string? Ids { get; set; }
+
+    /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     public bool? IncludeDeletedData { get; set; }
