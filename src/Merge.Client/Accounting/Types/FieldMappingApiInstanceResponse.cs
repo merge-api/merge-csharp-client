@@ -71,6 +71,12 @@ public record FieldMappingApiInstanceResponse
     [JsonPropertyName("Employee")]
     public IEnumerable<FieldMappingApiInstance>? Employee { get; set; }
 
+    [JsonPropertyName("PaymentMethod")]
+    public IEnumerable<FieldMappingApiInstance>? PaymentMethod { get; set; }
+
+    [JsonPropertyName("PaymentTerm")]
+    public IEnumerable<FieldMappingApiInstance>? PaymentTerm { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

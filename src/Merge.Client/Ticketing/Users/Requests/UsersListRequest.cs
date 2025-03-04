@@ -64,6 +64,11 @@ public record UsersListRequest
     /// </summary>
     public string? RemoteId { get; set; }
 
+    /// <summary>
+    /// If provided, will only return users matching in this team.
+    /// </summary>
+    public string? Team { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

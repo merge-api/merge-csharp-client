@@ -213,6 +213,10 @@ public partial class FilesClient
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
@@ -253,7 +257,7 @@ public partial class FilesClient
     /// <code>
     /// await client.Filestorage.Files.DownloadRetrieveAsync(
     ///     "string",
-    ///     new FilesDownloadRetrieveRequest { MimeType = "string" }
+    ///     new FilesDownloadRetrieveRequest { IncludeShellData = true, MimeType = "string" }
     /// );
     /// </code>
     /// </example>
@@ -265,6 +269,10 @@ public partial class FilesClient
     )
     {
         var _query = new Dictionary<string, object>();
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         if (request.MimeType != null)
         {
             _query["mime_type"] = request.MimeType;
@@ -283,6 +291,128 @@ public partial class FilesClient
             )
             .ConfigureAwait(false);
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
+    /// Returns metadata to construct an authenticated file download request for a singular file, allowing you to download file directly from the third-party.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Files.DownloadRequestMetaRetrieveAsync(
+    ///     "id",
+    ///     new FilesDownloadRequestMetaRetrieveRequest()
+    /// );
+    /// </code>
+    /// </example>
+    public async System.Threading.Tasks.Task<DownloadRequestMeta> DownloadRequestMetaRetrieveAsync(
+        string id,
+        FilesDownloadRequestMetaRetrieveRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.MimeType != null)
+        {
+            _query["mime_type"] = request.MimeType;
+        }
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"filestorage/v1/files/{id}/download/request-meta",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<DownloadRequestMeta>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
+    /// Returns metadata to construct authenticated file download requests, allowing you to download files directly from the third-party.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Filestorage.Files.DownloadRequestMetaListAsync(
+    ///     new FilesDownloadRequestMetaListRequest()
+    /// );
+    /// </code>
+    /// </example>
+    public async System.Threading.Tasks.Task<PaginatedDownloadRequestMetaList> DownloadRequestMetaListAsync(
+        FilesDownloadRequestMetaListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.IncludeDeletedData != null)
+        {
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
+        }
+        if (request.MimeType != null)
+        {
+            _query["mime_type"] = request.MimeType;
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.Value.ToString();
+        }
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "filestorage/v1/files/download/request-meta",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedDownloadRequestMetaList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
         throw new MergeApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,

@@ -19,6 +19,11 @@ public record ExpensesRetrieveRequest
     /// </summary>
     public bool? IncludeRemoteFields { get; set; }
 
+    /// <summary>
+    /// Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null).
+    /// </summary>
+    public bool? IncludeShellData { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -210,6 +210,10 @@ public partial class AttachmentsClient
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
@@ -250,7 +254,7 @@ public partial class AttachmentsClient
     /// <code>
     /// await client.Ticketing.Attachments.DownloadRetrieveAsync(
     ///     "string",
-    ///     new AttachmentsDownloadRetrieveRequest { MimeType = "string" }
+    ///     new AttachmentsDownloadRetrieveRequest { IncludeShellData = true, MimeType = "string" }
     /// );
     /// </code>
     /// </example>
@@ -262,6 +266,10 @@ public partial class AttachmentsClient
     )
     {
         var _query = new Dictionary<string, object>();
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         if (request.MimeType != null)
         {
             _query["mime_type"] = request.MimeType;

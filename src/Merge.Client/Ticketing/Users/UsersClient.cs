@@ -83,6 +83,10 @@ public partial class UsersClient
         {
             _query["remote_id"] = request.RemoteId;
         }
+        if (request.Team != null)
+        {
+            _query["team"] = request.Team;
+        }
         var response = await _client
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
@@ -139,6 +143,10 @@ public partial class UsersClient
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         var response = await _client
             .MakeRequestAsync(

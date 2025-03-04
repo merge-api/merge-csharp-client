@@ -46,6 +46,12 @@ public record Payment
     public OneOf<string, Account>? Account { get; set; }
 
     /// <summary>
+    /// The method which this payment was made by.
+    /// </summary>
+    [JsonPropertyName("payment_method")]
+    public OneOf<string, PaymentMethod>? PaymentMethod { get; set; }
+
+    /// <summary>
     /// The payment's currency.
     ///
     /// - `XUA` - ADB Unit of Account

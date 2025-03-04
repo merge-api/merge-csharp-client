@@ -71,6 +71,12 @@ public record RemoteFieldApiResponse
     [JsonPropertyName("Employee")]
     public IEnumerable<RemoteFieldApi>? Employee { get; set; }
 
+    [JsonPropertyName("PaymentMethod")]
+    public IEnumerable<RemoteFieldApi>? PaymentMethod { get; set; }
+
+    [JsonPropertyName("PaymentTerm")]
+    public IEnumerable<RemoteFieldApi>? PaymentTerm { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

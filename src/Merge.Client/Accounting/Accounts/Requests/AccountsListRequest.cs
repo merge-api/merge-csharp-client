@@ -60,6 +60,11 @@ public record AccountsListRequest
     public DateTime? ModifiedBefore { get; set; }
 
     /// <summary>
+    /// If provided, will only return Accounts with this name.
+    /// </summary>
+    public string? Name { get; set; }
+
+    /// <summary>
     /// Number of results to return per page.
     /// </summary>
     public int? PageSize { get; set; }

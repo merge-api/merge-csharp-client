@@ -20,6 +20,11 @@ public record TicketsRetrieveRequest
     public bool? IncludeRemoteFields { get; set; }
 
     /// <summary>
+    /// Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null).
+    /// </summary>
+    public bool? IncludeShellData { get; set; }
+
+    /// <summary>
     /// Deprecated. Use show_enum_origins.
     /// </summary>
     public TicketsRetrieveRequestRemoteFields? RemoteFields { get; set; }

@@ -301,6 +301,10 @@ public partial class TicketsClient
                 request.IncludeRemoteFields.Value
             );
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         if (request.RemoteFields != null)
         {
             _query["remote_fields"] = request.RemoteFields.Value.Stringify();
@@ -406,7 +410,7 @@ public partial class TicketsClient
     }
 
     /// <summary>
-    /// Returns a list of `Viewer` objects.
+    /// Returns a list of `Viewer` objects that point to a User id or Team id that is either an assignee or viewer on a `Ticket` with the given id. [Learn more.](https://help.merge.dev/en/articles/10333658-ticketing-access-control-list-acls)
     /// </summary>
     /// <example>
     /// <code>
@@ -589,6 +593,10 @@ public partial class TicketsClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
+        }
+        if (request.Ids != null)
+        {
+            _query["ids"] = request.Ids;
         }
         if (request.IncludeDeletedData != null)
         {

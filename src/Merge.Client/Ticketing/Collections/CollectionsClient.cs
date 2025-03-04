@@ -49,7 +49,7 @@ public partial class CollectionsClient
         }
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.Value.Stringify();
+            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -129,6 +129,82 @@ public partial class CollectionsClient
     }
 
     /// <summary>
+    /// Returns a list of `Viewer` objects that point to a User id or Team id that is either an assignee or viewer on a `Collection` with the given id. [Learn more.](https://help.merge.dev/en/articles/10333658-ticketing-access-control-list-acls)
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Ticketing.Collections.ViewersListAsync(
+    ///     "collection_id",
+    ///     new CollectionsViewersListRequest()
+    /// );
+    /// </code>
+    /// </example>
+    public async System.Threading.Tasks.Task<PaginatedViewerList> ViewersListAsync(
+        string collectionId,
+        CollectionsViewersListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.Expand != null)
+        {
+            _query["expand"] = request.Expand.Value.Stringify();
+        }
+        if (request.IncludeDeletedData != null)
+        {
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
+        }
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.Value.ToString();
+        }
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"ticketing/v1/collections/{collectionId}/viewers",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedViewerList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new MergeApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
     /// Returns a `Collection` object with the given `id`.
     /// </summary>
     /// <example>
@@ -146,11 +222,15 @@ public partial class CollectionsClient
         var _query = new Dictionary<string, object>();
         if (request.Expand != null)
         {
-            _query["expand"] = request.Expand.Value.Stringify();
+            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.RemoteFields != null)
         {

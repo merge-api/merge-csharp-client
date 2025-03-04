@@ -3738,7 +3738,7 @@ await client.Ats.Scorecards.RetrieveAsync("id", new ScorecardsRetrieveRequest())
 <dl>
 <dd>
 
-Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`. Learn more about sync status in our [Help Center](https://help.merge.dev/en/articles/8184193-merge-sync-statuses).
+Get sync status for the current sync and the most recently finished sync. `last_sync_start` represents the most recent time any sync began. `last_sync_finished` represents the most recent time any sync completed. These timestamps may correspond to different sync instances which may result in a sync start time being later than a separate sync completed time. To ensure you are retrieving the latest available data reference the `last_sync_finished` timestamp where `last_sync_result` is `DONE`. Possible values for `status` and `last_sync_result` are `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`. Learn more about sync status in our [Help Center](https://help.merge.dev/en/articles/8184193-merge-sync-statuses).
 </dd>
 </dl>
 </dd>
@@ -3793,7 +3793,7 @@ await client.Ats.SyncStatus.ListAsync(new SyncStatusListRequest());
 <dl>
 <dd>
 
-Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Professional or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.
+Force re-sync of all models. This endpoint is available for monthly, quarterly, and highest sync frequency customers on the Professional or Enterprise plans. Doing so will consume a sync credit for the relevant linked account. Force re-syncs can also be triggered manually in the Merge Dashboard and is available for all customers.
 </dd>
 </dl>
 </dd>
@@ -8798,7 +8798,7 @@ await client.Crm.SyncStatus.ListAsync(new SyncStatusListRequest());
 <dl>
 <dd>
 
-Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Professional or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.
+Force re-sync of all models. This endpoint is available for monthly, quarterly, and highest sync frequency customers on the Professional or Enterprise plans. Doing so will consume a sync credit for the relevant linked account. Force re-syncs can also be triggered manually in the Merge Dashboard and is available for all customers.
 </dd>
 </dl>
 </dd>
@@ -10725,7 +10725,7 @@ Returns the `File` content with the given `id` as a stream of bytes.
 ```csharp
 await client.Filestorage.Files.DownloadRetrieveAsync(
     "string",
-    new FilesDownloadRetrieveRequest { MimeType = "string" }
+    new FilesDownloadRetrieveRequest { IncludeShellData = true, MimeType = "string" }
 );
 ```
 </dd>
@@ -10750,6 +10750,127 @@ await client.Filestorage.Files.DownloadRetrieveAsync(
 <dd>
 
 **request:** `FilesDownloadRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Filestorage.Files.<a href="/src/Merge.Client/Filestorage/Files/FilesClient.cs">DownloadRequestMetaRetrieveAsync</a>(id, FilesDownloadRequestMetaRetrieveRequest { ... }) -> DownloadRequestMeta</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata to construct an authenticated file download request for a singular file, allowing you to download file directly from the third-party.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Filestorage.Files.DownloadRequestMetaRetrieveAsync(
+    "id",
+    new FilesDownloadRequestMetaRetrieveRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `FilesDownloadRequestMetaRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Filestorage.Files.<a href="/src/Merge.Client/Filestorage/Files/FilesClient.cs">DownloadRequestMetaListAsync</a>(FilesDownloadRequestMetaListRequest { ... }) -> PaginatedDownloadRequestMetaList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata to construct authenticated file download requests, allowing you to download files directly from the third-party.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Filestorage.Files.DownloadRequestMetaListAsync(
+    new FilesDownloadRequestMetaListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `FilesDownloadRequestMetaListRequest` 
     
 </dd>
 </dl>
@@ -11476,3 +11597,14189 @@ await client.Filestorage.Passthrough.CreateAsync(
 
 </dd>
 </dl>
+</details>
+
+## Filestorage RegenerateKey
+<details><summary><code>client.Filestorage.RegenerateKey.<a href="/src/Merge.Client/Filestorage/RegenerateKey/RegenerateKeyClient.cs">CreateAsync</a>(RemoteKeyForRegenerationRequest { ... }) -> Filestorage.RemoteKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Exchange remote keys.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Filestorage.RegenerateKey.CreateAsync(
+    new RemoteKeyForRegenerationRequest { Name = "Remote Deployment Key 1" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `RemoteKeyForRegenerationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Filestorage SyncStatus
+<details><summary><code>client.Filestorage.SyncStatus.<a href="/src/Merge.Client/Filestorage/SyncStatus/SyncStatusClient.cs">ListAsync</a>(SyncStatusListRequest { ... }) -> Filestorage.PaginatedSyncStatusList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`. Learn more about sync status in our [Help Center](https://help.merge.dev/en/articles/8184193-merge-sync-statuses).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Filestorage.SyncStatus.ListAsync(new SyncStatusListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SyncStatusListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Filestorage ForceResync
+<details><summary><code>client.Filestorage.ForceResync.<a href="/src/Merge.Client/Filestorage/ForceResync/ForceResyncClient.cs">SyncStatusResyncCreateAsync</a>() -> IEnumerable<Filestorage.SyncStatus></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Force re-sync of all models. This endpoint is available for monthly, quarterly, and highest sync frequency customers on the Professional or Enterprise plans. Doing so will consume a sync credit for the relevant linked account. Force re-syncs can also be triggered manually in the Merge Dashboard and is available for all customers.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Filestorage.ForceResync.SyncStatusResyncCreateAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Filestorage Users
+<details><summary><code>client.Filestorage.Users.<a href="/src/Merge.Client/Filestorage/Users/UsersClient.cs">ListAsync</a>(UsersListRequest { ... }) -> Filestorage.PaginatedUserList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `User` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Filestorage.Users.ListAsync(new UsersListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UsersListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Filestorage.Users.<a href="/src/Merge.Client/Filestorage/Users/UsersClient.cs">RetrieveAsync</a>(id, UsersRetrieveRequest { ... }) -> Filestorage.User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `User` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Filestorage.Users.RetrieveAsync("id", new UsersRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UsersRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Filestorage WebhookReceivers
+<details><summary><code>client.Filestorage.WebhookReceivers.<a href="/src/Merge.Client/Filestorage/WebhookReceivers/WebhookReceiversClient.cs">ListAsync</a>() -> IEnumerable<Filestorage.WebhookReceiver></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `WebhookReceiver` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Filestorage.WebhookReceivers.ListAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Filestorage.WebhookReceivers.<a href="/src/Merge.Client/Filestorage/WebhookReceivers/WebhookReceiversClient.cs">CreateAsync</a>(WebhookReceiverRequest { ... }) -> Filestorage.WebhookReceiver</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `WebhookReceiver` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Filestorage.WebhookReceivers.CreateAsync(
+    new WebhookReceiverRequest { Event = "event", IsActive = true }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `WebhookReceiverRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris AccountDetails
+<details><summary><code>client.Hris.AccountDetails.<a href="/src/Merge.Client/Hris/AccountDetails/AccountDetailsClient.cs">RetrieveAsync</a>() -> Hris.AccountDetails</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details for a linked account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.AccountDetails.RetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris AccountToken
+<details><summary><code>client.Hris.AccountToken.<a href="/src/Merge.Client/Hris/AccountToken/AccountTokenClient.cs">RetrieveAsync</a>(publicToken) -> Hris.AccountToken</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the account token for the end user with the provided public token.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.AccountToken.RetrieveAsync("public_token");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**publicToken:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris AsyncPassthrough
+<details><summary><code>client.Hris.AsyncPassthrough.<a href="/src/Merge.Client/Hris/AsyncPassthrough/AsyncPassthroughClient.cs">CreateAsync</a>(Hris.DataPassthroughRequest { ... }) -> Hris.AsyncPassthroughReciept</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Asynchronously pull data from an endpoint not currently supported by Merge.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.AsyncPassthrough.CreateAsync(
+    new Merge.Client.Hris.DataPassthroughRequest
+    {
+        Method = Merge.Client.Hris.MethodEnum.Get,
+        Path = "/scooters",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Hris.DataPassthroughRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.AsyncPassthrough.<a href="/src/Merge.Client/Hris/AsyncPassthrough/AsyncPassthroughClient.cs">RetrieveAsync</a>(asyncPassthroughReceiptId) -> OneOf<Hris.RemoteResponse, string></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves data from earlier async-passthrough POST request
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.AsyncPassthrough.RetrieveAsync("async_passthrough_receipt_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**asyncPassthroughReceiptId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris AuditTrail
+<details><summary><code>client.Hris.AuditTrail.<a href="/src/Merge.Client/Hris/AuditTrail/AuditTrailClient.cs">ListAsync</a>(AuditTrailListRequest { ... }) -> Hris.PaginatedAuditLogEventList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets a list of audit trail events.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.AuditTrail.ListAsync(new AuditTrailListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AuditTrailListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris AvailableActions
+<details><summary><code>client.Hris.AvailableActions.<a href="/src/Merge.Client/Hris/AvailableActions/AvailableActionsClient.cs">RetrieveAsync</a>() -> Hris.AvailableActions</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of models and actions available for an account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.AvailableActions.RetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris BankInfo
+<details><summary><code>client.Hris.BankInfo.<a href="/src/Merge.Client/Hris/BankInfo/BankInfoClient.cs">ListAsync</a>(BankInfoListRequest { ... }) -> PaginatedBankInfoList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `BankInfo` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.BankInfo.ListAsync(new BankInfoListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BankInfoListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.BankInfo.<a href="/src/Merge.Client/Hris/BankInfo/BankInfoClient.cs">RetrieveAsync</a>(id, BankInfoRetrieveRequest { ... }) -> BankInfo</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `BankInfo` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.BankInfo.RetrieveAsync("id", new BankInfoRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `BankInfoRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris Benefits
+<details><summary><code>client.Hris.Benefits.<a href="/src/Merge.Client/Hris/Benefits/BenefitsClient.cs">ListAsync</a>(BenefitsListRequest { ... }) -> PaginatedBenefitList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Benefit` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Benefits.ListAsync(new BenefitsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BenefitsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Benefits.<a href="/src/Merge.Client/Hris/Benefits/BenefitsClient.cs">RetrieveAsync</a>(id, BenefitsRetrieveRequest { ... }) -> Benefit</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Benefit` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Benefits.RetrieveAsync("id", new BenefitsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `BenefitsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris Companies
+<details><summary><code>client.Hris.Companies.<a href="/src/Merge.Client/Hris/Companies/CompaniesClient.cs">ListAsync</a>(CompaniesListRequest { ... }) -> PaginatedCompanyList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Company` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Companies.ListAsync(new CompaniesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CompaniesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Companies.<a href="/src/Merge.Client/Hris/Companies/CompaniesClient.cs">RetrieveAsync</a>(id, CompaniesRetrieveRequest { ... }) -> Company</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Company` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Companies.RetrieveAsync("id", new CompaniesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CompaniesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris Scopes
+<details><summary><code>client.Hris.Scopes.<a href="/src/Merge.Client/Hris/Scopes/ScopesClient.cs">DefaultScopesRetrieveAsync</a>() -> Hris.CommonModelScopeApi</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the default permissions for Merge Common Models and fields across all Linked Accounts of a given category. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Scopes.DefaultScopesRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Scopes.<a href="/src/Merge.Client/Hris/Scopes/ScopesClient.cs">LinkedAccountScopesRetrieveAsync</a>() -> Hris.CommonModelScopeApi</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all available permissions for Merge Common Models and fields for a single Linked Account. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Scopes.LinkedAccountScopesRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Scopes.<a href="/src/Merge.Client/Hris/Scopes/ScopesClient.cs">LinkedAccountScopesCreateAsync</a>(LinkedAccountCommonModelScopeDeserializerRequest { ... }) -> Hris.CommonModelScopeApi</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update permissions for any Common Model or field for a single Linked Account. Any Scopes not set in this POST request will inherit the default Scopes. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Scopes.LinkedAccountScopesCreateAsync(
+    new LinkedAccountCommonModelScopeDeserializerRequest
+    {
+        CommonModels = new List<Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest>()
+        {
+            new Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest
+            {
+                ModelName = "Employee",
+                ModelPermissions = new Dictionary<
+                    string,
+                    Merge.Client.Hris.ModelPermissionDeserializerRequest
+                >()
+                {
+                    {
+                        "READ",
+                        new Merge.Client.Hris.ModelPermissionDeserializerRequest
+                        {
+                            IsEnabled = true,
+                        }
+                    },
+                    {
+                        "WRITE",
+                        new Merge.Client.Hris.ModelPermissionDeserializerRequest
+                        {
+                            IsEnabled = false,
+                        }
+                    },
+                },
+                FieldPermissions = new Merge.Client.Hris.FieldPermissionDeserializerRequest
+                {
+                    EnabledFields = new List<object>() { "avatar", "home_location" },
+                    DisabledFields = new List<object>() { "work_location" },
+                },
+            },
+            new Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest
+            {
+                ModelName = "Benefit",
+                ModelPermissions = new Dictionary<
+                    string,
+                    Merge.Client.Hris.ModelPermissionDeserializerRequest
+                >()
+                {
+                    {
+                        "WRITE",
+                        new Merge.Client.Hris.ModelPermissionDeserializerRequest
+                        {
+                            IsEnabled = false,
+                        }
+                    },
+                },
+            },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `LinkedAccountCommonModelScopeDeserializerRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris DeleteAccount
+<details><summary><code>client.Hris.DeleteAccount.<a href="/src/Merge.Client/Hris/DeleteAccount/DeleteAccountClient.cs">DeleteAsync</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a linked account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.DeleteAccount.DeleteAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris Dependents
+<details><summary><code>client.Hris.Dependents.<a href="/src/Merge.Client/Hris/Dependents/DependentsClient.cs">ListAsync</a>(DependentsListRequest { ... }) -> PaginatedDependentList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Dependent` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Dependents.ListAsync(new DependentsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `DependentsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Dependents.<a href="/src/Merge.Client/Hris/Dependents/DependentsClient.cs">RetrieveAsync</a>(id, DependentsRetrieveRequest { ... }) -> Dependent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Dependent` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Dependents.RetrieveAsync("id", new DependentsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `DependentsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris EmployeePayrollRuns
+<details><summary><code>client.Hris.EmployeePayrollRuns.<a href="/src/Merge.Client/Hris/EmployeePayrollRuns/EmployeePayrollRunsClient.cs">ListAsync</a>(EmployeePayrollRunsListRequest { ... }) -> PaginatedEmployeePayrollRunList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `EmployeePayrollRun` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.EmployeePayrollRuns.ListAsync(new EmployeePayrollRunsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EmployeePayrollRunsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.EmployeePayrollRuns.<a href="/src/Merge.Client/Hris/EmployeePayrollRuns/EmployeePayrollRunsClient.cs">RetrieveAsync</a>(id, EmployeePayrollRunsRetrieveRequest { ... }) -> EmployeePayrollRun</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `EmployeePayrollRun` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.EmployeePayrollRuns.RetrieveAsync("id", new EmployeePayrollRunsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmployeePayrollRunsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris Employees
+<details><summary><code>client.Hris.Employees.<a href="/src/Merge.Client/Hris/Employees/EmployeesClient.cs">ListAsync</a>(EmployeesListRequest { ... }) -> Hris.PaginatedEmployeeList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Employee` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Employees.ListAsync(new EmployeesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EmployeesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Employees.<a href="/src/Merge.Client/Hris/Employees/EmployeesClient.cs">CreateAsync</a>(EmployeeEndpointRequest { ... }) -> EmployeeResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates an `Employee` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Employees.CreateAsync(
+    new EmployeeEndpointRequest { Model = new EmployeeRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EmployeeEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Employees.<a href="/src/Merge.Client/Hris/Employees/EmployeesClient.cs">RetrieveAsync</a>(id, EmployeesRetrieveRequest { ... }) -> Hris.Employee</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `Employee` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Employees.RetrieveAsync("id", new EmployeesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmployeesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Employees.<a href="/src/Merge.Client/Hris/Employees/EmployeesClient.cs">IgnoreCreateAsync</a>(modelId, Hris.IgnoreCommonModelRequest { ... })</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Employees.IgnoreCreateAsync(
+    "model_id",
+    new Merge.Client.Hris.IgnoreCommonModelRequest
+    {
+        Reason = Merge.Client.Hris.ReasonEnum.GeneralCustomerRequest,
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**modelId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Hris.IgnoreCommonModelRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Employees.<a href="/src/Merge.Client/Hris/Employees/EmployeesClient.cs">MetaPostRetrieveAsync</a>() -> Hris.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `Employee` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Employees.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris EmployerBenefits
+<details><summary><code>client.Hris.EmployerBenefits.<a href="/src/Merge.Client/Hris/EmployerBenefits/EmployerBenefitsClient.cs">ListAsync</a>(EmployerBenefitsListRequest { ... }) -> PaginatedEmployerBenefitList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `EmployerBenefit` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.EmployerBenefits.ListAsync(new EmployerBenefitsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EmployerBenefitsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.EmployerBenefits.<a href="/src/Merge.Client/Hris/EmployerBenefits/EmployerBenefitsClient.cs">RetrieveAsync</a>(id, EmployerBenefitsRetrieveRequest { ... }) -> EmployerBenefit</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `EmployerBenefit` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.EmployerBenefits.RetrieveAsync("id", new EmployerBenefitsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmployerBenefitsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris Employments
+<details><summary><code>client.Hris.Employments.<a href="/src/Merge.Client/Hris/Employments/EmploymentsClient.cs">ListAsync</a>(EmploymentsListRequest { ... }) -> PaginatedEmploymentList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Employment` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Employments.ListAsync(new EmploymentsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EmploymentsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Employments.<a href="/src/Merge.Client/Hris/Employments/EmploymentsClient.cs">RetrieveAsync</a>(id, EmploymentsRetrieveRequest { ... }) -> Employment</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `Employment` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Employments.RetrieveAsync("id", new EmploymentsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmploymentsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris FieldMapping
+<details><summary><code>client.Hris.FieldMapping.<a href="/src/Merge.Client/Hris/FieldMapping/FieldMappingClient.cs">FieldMappingsRetrieveAsync</a>(FieldMappingsRetrieveRequest { ... }) -> Hris.FieldMappingApiInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all Field Mappings for this Linked Account. Field Mappings are mappings between third-party Remote Fields and user defined Merge fields. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.FieldMapping.FieldMappingsRetrieveAsync(new FieldMappingsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `FieldMappingsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.FieldMapping.<a href="/src/Merge.Client/Hris/FieldMapping/FieldMappingClient.cs">FieldMappingsCreateAsync</a>(CreateFieldMappingRequest { ... }) -> Hris.FieldMappingInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create new Field Mappings that will be available after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.FieldMapping.FieldMappingsCreateAsync(
+    new CreateFieldMappingRequest
+    {
+        TargetFieldName = "example_target_field_name",
+        TargetFieldDescription = "this is a example description of the target field",
+        RemoteFieldTraversalPath = new List<object>() { "example_remote_field" },
+        RemoteMethod = "GET",
+        RemoteUrlPath = "/example-url-path",
+        CommonModelName = "ExampleCommonModel",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateFieldMappingRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.FieldMapping.<a href="/src/Merge.Client/Hris/FieldMapping/FieldMappingClient.cs">FieldMappingsDestroyAsync</a>(fieldMappingId) -> Hris.FieldMappingInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes Field Mappings for a Linked Account. All data related to this Field Mapping will be deleted and these changes will be reflected after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.FieldMapping.FieldMappingsDestroyAsync("field_mapping_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fieldMappingId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.FieldMapping.<a href="/src/Merge.Client/Hris/FieldMapping/FieldMappingClient.cs">FieldMappingsPartialUpdateAsync</a>(fieldMappingId, PatchedEditFieldMappingRequest { ... }) -> Hris.FieldMappingInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or update existing Field Mappings for a Linked Account. Changes will be reflected after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.FieldMapping.FieldMappingsPartialUpdateAsync(
+    "field_mapping_id",
+    new PatchedEditFieldMappingRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fieldMappingId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PatchedEditFieldMappingRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.FieldMapping.<a href="/src/Merge.Client/Hris/FieldMapping/FieldMappingClient.cs">RemoteFieldsRetrieveAsync</a>(RemoteFieldsRetrieveRequest { ... }) -> Hris.RemoteFieldApiResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all remote fields for a Linked Account. Remote fields are third-party fields that are accessible after initial sync if remote_data is enabled. You can use remote fields to override existing Merge fields or map a new Merge field. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.FieldMapping.RemoteFieldsRetrieveAsync(new RemoteFieldsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `RemoteFieldsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.FieldMapping.<a href="/src/Merge.Client/Hris/FieldMapping/FieldMappingClient.cs">TargetFieldsRetrieveAsync</a>() -> Hris.ExternalTargetFieldApiResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all organization-wide Target Fields, this will not include any Linked Account specific Target Fields. Organization-wide Target Fields are additional fields appended to the Merge Common Model for all Linked Accounts in a category. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/target-fields/).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.FieldMapping.TargetFieldsRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris GenerateKey
+<details><summary><code>client.Hris.GenerateKey.<a href="/src/Merge.Client/Hris/GenerateKey/GenerateKeyClient.cs">CreateAsync</a>(GenerateRemoteKeyRequest { ... }) -> Hris.RemoteKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a remote key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.GenerateKey.CreateAsync(
+    new GenerateRemoteKeyRequest { Name = "Remote Deployment Key 1" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GenerateRemoteKeyRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris Groups
+<details><summary><code>client.Hris.Groups.<a href="/src/Merge.Client/Hris/Groups/GroupsClient.cs">ListAsync</a>(GroupsListRequest { ... }) -> Hris.PaginatedGroupList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Group` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Groups.ListAsync(new GroupsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GroupsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Groups.<a href="/src/Merge.Client/Hris/Groups/GroupsClient.cs">RetrieveAsync</a>(id, GroupsRetrieveRequest { ... }) -> Hris.Group</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Group` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Groups.RetrieveAsync("id", new GroupsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `GroupsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris Issues
+<details><summary><code>client.Hris.Issues.<a href="/src/Merge.Client/Hris/Issues/IssuesClient.cs">ListAsync</a>(IssuesListRequest { ... }) -> Hris.PaginatedIssueList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets all issues for Organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Issues.ListAsync(new IssuesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IssuesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Issues.<a href="/src/Merge.Client/Hris/Issues/IssuesClient.cs">RetrieveAsync</a>(id) -> Hris.Issue</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific issue.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Issues.RetrieveAsync("id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris LinkToken
+<details><summary><code>client.Hris.LinkToken.<a href="/src/Merge.Client/Hris/LinkToken/LinkTokenClient.cs">CreateAsync</a>(EndUserDetailsRequest { ... }) -> Hris.LinkToken</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a link token to be used when linking a new end user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.LinkToken.CreateAsync(
+    new EndUserDetailsRequest
+    {
+        EndUserEmailAddress = "example@gmail.com",
+        EndUserOrganizationName = "Test Organization",
+        EndUserOriginId = "12345",
+        Categories = new List<Merge.Client.Hris.CategoriesEnum>()
+        {
+            Merge.Client.Hris.CategoriesEnum.Hris,
+            Merge.Client.Hris.CategoriesEnum.Ats,
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EndUserDetailsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris LinkedAccounts
+<details><summary><code>client.Hris.LinkedAccounts.<a href="/src/Merge.Client/Hris/LinkedAccounts/LinkedAccountsClient.cs">ListAsync</a>(LinkedAccountsListRequest { ... }) -> Hris.PaginatedAccountDetailsAndActionsList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List linked accounts for your organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.LinkedAccounts.ListAsync(new LinkedAccountsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `LinkedAccountsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris Locations
+<details><summary><code>client.Hris.Locations.<a href="/src/Merge.Client/Hris/Locations/LocationsClient.cs">ListAsync</a>(LocationsListRequest { ... }) -> PaginatedLocationList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Location` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Locations.ListAsync(new LocationsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `LocationsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Locations.<a href="/src/Merge.Client/Hris/Locations/LocationsClient.cs">RetrieveAsync</a>(id, LocationsRetrieveRequest { ... }) -> Location</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Location` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Locations.RetrieveAsync("id", new LocationsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `LocationsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris Passthrough
+<details><summary><code>client.Hris.Passthrough.<a href="/src/Merge.Client/Hris/Passthrough/PassthroughClient.cs">CreateAsync</a>(Hris.DataPassthroughRequest { ... }) -> Hris.RemoteResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pull data from an endpoint not currently supported by Merge.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Passthrough.CreateAsync(
+    new Merge.Client.Hris.DataPassthroughRequest
+    {
+        Method = Merge.Client.Hris.MethodEnum.Get,
+        Path = "/scooters",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Hris.DataPassthroughRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris PayGroups
+<details><summary><code>client.Hris.PayGroups.<a href="/src/Merge.Client/Hris/PayGroups/PayGroupsClient.cs">ListAsync</a>(PayGroupsListRequest { ... }) -> PaginatedPayGroupList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `PayGroup` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.PayGroups.ListAsync(new PayGroupsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PayGroupsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.PayGroups.<a href="/src/Merge.Client/Hris/PayGroups/PayGroupsClient.cs">RetrieveAsync</a>(id, PayGroupsRetrieveRequest { ... }) -> PayGroup</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `PayGroup` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.PayGroups.RetrieveAsync("id", new PayGroupsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PayGroupsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris PayrollRuns
+<details><summary><code>client.Hris.PayrollRuns.<a href="/src/Merge.Client/Hris/PayrollRuns/PayrollRunsClient.cs">ListAsync</a>(PayrollRunsListRequest { ... }) -> PaginatedPayrollRunList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `PayrollRun` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.PayrollRuns.ListAsync(new PayrollRunsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PayrollRunsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.PayrollRuns.<a href="/src/Merge.Client/Hris/PayrollRuns/PayrollRunsClient.cs">RetrieveAsync</a>(id, PayrollRunsRetrieveRequest { ... }) -> PayrollRun</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `PayrollRun` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.PayrollRuns.RetrieveAsync("id", new PayrollRunsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PayrollRunsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris RegenerateKey
+<details><summary><code>client.Hris.RegenerateKey.<a href="/src/Merge.Client/Hris/RegenerateKey/RegenerateKeyClient.cs">CreateAsync</a>(RemoteKeyForRegenerationRequest { ... }) -> Hris.RemoteKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Exchange remote keys.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.RegenerateKey.CreateAsync(
+    new RemoteKeyForRegenerationRequest { Name = "Remote Deployment Key 1" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `RemoteKeyForRegenerationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris SyncStatus
+<details><summary><code>client.Hris.SyncStatus.<a href="/src/Merge.Client/Hris/SyncStatus/SyncStatusClient.cs">ListAsync</a>(SyncStatusListRequest { ... }) -> Hris.PaginatedSyncStatusList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get sync status for the current sync and the most recently finished sync. `last_sync_start` represents the most recent time any sync began. `last_sync_finished` represents the most recent time any sync completed. These timestamps may correspond to different sync instances which may result in a sync start time being later than a separate sync completed time. To ensure you are retrieving the latest available data reference the `last_sync_finished` timestamp where `last_sync_result` is `DONE`. Possible values for `status` and `last_sync_result` are `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`. Learn more about sync status in our [Help Center](https://help.merge.dev/en/articles/8184193-merge-sync-statuses).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.SyncStatus.ListAsync(new SyncStatusListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SyncStatusListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris ForceResync
+<details><summary><code>client.Hris.ForceResync.<a href="/src/Merge.Client/Hris/ForceResync/ForceResyncClient.cs">SyncStatusResyncCreateAsync</a>() -> IEnumerable<Hris.SyncStatus></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Force re-sync of all models. This endpoint is available for monthly, quarterly, and highest sync frequency customers on the Professional or Enterprise plans. Doing so will consume a sync credit for the relevant linked account. Force re-syncs can also be triggered manually in the Merge Dashboard and is available for all customers.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.ForceResync.SyncStatusResyncCreateAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris Teams
+<details><summary><code>client.Hris.Teams.<a href="/src/Merge.Client/Hris/Teams/TeamsClient.cs">ListAsync</a>(TeamsListRequest { ... }) -> Hris.PaginatedTeamList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Team` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Teams.ListAsync(new TeamsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TeamsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.Teams.<a href="/src/Merge.Client/Hris/Teams/TeamsClient.cs">RetrieveAsync</a>(id, TeamsRetrieveRequest { ... }) -> Hris.Team</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Team` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.Teams.RetrieveAsync("id", new TeamsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TeamsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris TimeOff
+<details><summary><code>client.Hris.TimeOff.<a href="/src/Merge.Client/Hris/TimeOff/TimeOffClient.cs">ListAsync</a>(TimeOffListRequest { ... }) -> PaginatedTimeOffList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `TimeOff` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.TimeOff.ListAsync(new TimeOffListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TimeOffListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.TimeOff.<a href="/src/Merge.Client/Hris/TimeOff/TimeOffClient.cs">CreateAsync</a>(TimeOffEndpointRequest { ... }) -> TimeOffResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `TimeOff` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.TimeOff.CreateAsync(new TimeOffEndpointRequest { Model = new TimeOffRequest() });
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TimeOffEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.TimeOff.<a href="/src/Merge.Client/Hris/TimeOff/TimeOffClient.cs">RetrieveAsync</a>(id, TimeOffRetrieveRequest { ... }) -> TimeOff</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `TimeOff` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.TimeOff.RetrieveAsync("id", new TimeOffRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TimeOffRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.TimeOff.<a href="/src/Merge.Client/Hris/TimeOff/TimeOffClient.cs">MetaPostRetrieveAsync</a>() -> Hris.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `TimeOff` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.TimeOff.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris TimeOffBalances
+<details><summary><code>client.Hris.TimeOffBalances.<a href="/src/Merge.Client/Hris/TimeOffBalances/TimeOffBalancesClient.cs">ListAsync</a>(TimeOffBalancesListRequest { ... }) -> PaginatedTimeOffBalanceList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `TimeOffBalance` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.TimeOffBalances.ListAsync(new TimeOffBalancesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TimeOffBalancesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.TimeOffBalances.<a href="/src/Merge.Client/Hris/TimeOffBalances/TimeOffBalancesClient.cs">RetrieveAsync</a>(id, TimeOffBalancesRetrieveRequest { ... }) -> TimeOffBalance</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `TimeOffBalance` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.TimeOffBalances.RetrieveAsync("id", new TimeOffBalancesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TimeOffBalancesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris TimesheetEntries
+<details><summary><code>client.Hris.TimesheetEntries.<a href="/src/Merge.Client/Hris/TimesheetEntries/TimesheetEntriesClient.cs">ListAsync</a>(TimesheetEntriesListRequest { ... }) -> PaginatedTimesheetEntryList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `TimesheetEntry` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.TimesheetEntries.ListAsync(new TimesheetEntriesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TimesheetEntriesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.TimesheetEntries.<a href="/src/Merge.Client/Hris/TimesheetEntries/TimesheetEntriesClient.cs">CreateAsync</a>(TimesheetEntryEndpointRequest { ... }) -> TimesheetEntryResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `TimesheetEntry` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.TimesheetEntries.CreateAsync(
+    new TimesheetEntryEndpointRequest { Model = new TimesheetEntryRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TimesheetEntryEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.TimesheetEntries.<a href="/src/Merge.Client/Hris/TimesheetEntries/TimesheetEntriesClient.cs">RetrieveAsync</a>(id, TimesheetEntriesRetrieveRequest { ... }) -> TimesheetEntry</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `TimesheetEntry` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.TimesheetEntries.RetrieveAsync("id", new TimesheetEntriesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TimesheetEntriesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.TimesheetEntries.<a href="/src/Merge.Client/Hris/TimesheetEntries/TimesheetEntriesClient.cs">MetaPostRetrieveAsync</a>() -> Hris.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `TimesheetEntry` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.TimesheetEntries.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Hris WebhookReceivers
+<details><summary><code>client.Hris.WebhookReceivers.<a href="/src/Merge.Client/Hris/WebhookReceivers/WebhookReceiversClient.cs">ListAsync</a>() -> IEnumerable<Hris.WebhookReceiver></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `WebhookReceiver` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.WebhookReceivers.ListAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hris.WebhookReceivers.<a href="/src/Merge.Client/Hris/WebhookReceivers/WebhookReceiversClient.cs">CreateAsync</a>(WebhookReceiverRequest { ... }) -> Hris.WebhookReceiver</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `WebhookReceiver` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Hris.WebhookReceivers.CreateAsync(
+    new WebhookReceiverRequest { Event = "event", IsActive = true }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `WebhookReceiverRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing AccountDetails
+<details><summary><code>client.Ticketing.AccountDetails.<a href="/src/Merge.Client/Ticketing/AccountDetails/AccountDetailsClient.cs">RetrieveAsync</a>() -> Ticketing.AccountDetails</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details for a linked account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.AccountDetails.RetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing AccountToken
+<details><summary><code>client.Ticketing.AccountToken.<a href="/src/Merge.Client/Ticketing/AccountToken/AccountTokenClient.cs">RetrieveAsync</a>(publicToken) -> Ticketing.AccountToken</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the account token for the end user with the provided public token.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.AccountToken.RetrieveAsync("public_token");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**publicToken:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Accounts
+<details><summary><code>client.Ticketing.Accounts.<a href="/src/Merge.Client/Ticketing/Accounts/AccountsClient.cs">ListAsync</a>(AccountsListRequest { ... }) -> Ticketing.PaginatedAccountList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Account` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Accounts.ListAsync(new AccountsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AccountsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Accounts.<a href="/src/Merge.Client/Ticketing/Accounts/AccountsClient.cs">RetrieveAsync</a>(id, AccountsRetrieveRequest { ... }) -> Ticketing.Account</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `Account` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Accounts.RetrieveAsync("id", new AccountsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AccountsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing AsyncPassthrough
+<details><summary><code>client.Ticketing.AsyncPassthrough.<a href="/src/Merge.Client/Ticketing/AsyncPassthrough/AsyncPassthroughClient.cs">CreateAsync</a>(Ticketing.DataPassthroughRequest { ... }) -> Ticketing.AsyncPassthroughReciept</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Asynchronously pull data from an endpoint not currently supported by Merge.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.AsyncPassthrough.CreateAsync(
+    new Merge.Client.Ticketing.DataPassthroughRequest
+    {
+        Method = Merge.Client.Ticketing.MethodEnum.Get,
+        Path = "/scooters",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Ticketing.DataPassthroughRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.AsyncPassthrough.<a href="/src/Merge.Client/Ticketing/AsyncPassthrough/AsyncPassthroughClient.cs">RetrieveAsync</a>(asyncPassthroughReceiptId) -> OneOf<Ticketing.RemoteResponse, string></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves data from earlier async-passthrough POST request
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.AsyncPassthrough.RetrieveAsync("async_passthrough_receipt_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**asyncPassthroughReceiptId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Attachments
+<details><summary><code>client.Ticketing.Attachments.<a href="/src/Merge.Client/Ticketing/Attachments/AttachmentsClient.cs">ListAsync</a>(AttachmentsListRequest { ... }) -> Ticketing.PaginatedAttachmentList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Attachment` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Attachments.ListAsync(new AttachmentsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AttachmentsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Attachments.<a href="/src/Merge.Client/Ticketing/Attachments/AttachmentsClient.cs">CreateAsync</a>(TicketingAttachmentEndpointRequest { ... }) -> TicketingAttachmentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates an `Attachment` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Attachments.CreateAsync(
+    new TicketingAttachmentEndpointRequest
+    {
+        Model = new Merge.Client.Ticketing.AttachmentRequest(),
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TicketingAttachmentEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Attachments.<a href="/src/Merge.Client/Ticketing/Attachments/AttachmentsClient.cs">RetrieveAsync</a>(id, AttachmentsRetrieveRequest { ... }) -> Ticketing.Attachment</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `Attachment` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Attachments.RetrieveAsync("id", new AttachmentsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AttachmentsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Attachments.<a href="/src/Merge.Client/Ticketing/Attachments/AttachmentsClient.cs">DownloadRetrieveAsync</a>(id, AttachmentsDownloadRetrieveRequest { ... })</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the `File` content with the given `id` as a stream of bytes.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Attachments.DownloadRetrieveAsync(
+    "string",
+    new AttachmentsDownloadRetrieveRequest { IncludeShellData = true, MimeType = "string" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AttachmentsDownloadRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Attachments.<a href="/src/Merge.Client/Ticketing/Attachments/AttachmentsClient.cs">MetaPostRetrieveAsync</a>() -> Ticketing.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `TicketingAttachment` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Attachments.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing AuditTrail
+<details><summary><code>client.Ticketing.AuditTrail.<a href="/src/Merge.Client/Ticketing/AuditTrail/AuditTrailClient.cs">ListAsync</a>(AuditTrailListRequest { ... }) -> Ticketing.PaginatedAuditLogEventList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets a list of audit trail events.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.AuditTrail.ListAsync(new AuditTrailListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AuditTrailListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing AvailableActions
+<details><summary><code>client.Ticketing.AvailableActions.<a href="/src/Merge.Client/Ticketing/AvailableActions/AvailableActionsClient.cs">RetrieveAsync</a>() -> Ticketing.AvailableActions</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of models and actions available for an account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.AvailableActions.RetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Collections
+<details><summary><code>client.Ticketing.Collections.<a href="/src/Merge.Client/Ticketing/Collections/CollectionsClient.cs">ListAsync</a>(CollectionsListRequest { ... }) -> PaginatedCollectionList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Collection` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Collections.ListAsync(new CollectionsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CollectionsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Collections.<a href="/src/Merge.Client/Ticketing/Collections/CollectionsClient.cs">ViewersListAsync</a>(collectionId, CollectionsViewersListRequest { ... }) -> PaginatedViewerList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Viewer` objects that point to a User id or Team id that is either an assignee or viewer on a `Collection` with the given id. [Learn more.](https://help.merge.dev/en/articles/10333658-ticketing-access-control-list-acls)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Collections.ViewersListAsync(
+    "collection_id",
+    new CollectionsViewersListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**collectionId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CollectionsViewersListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Collections.<a href="/src/Merge.Client/Ticketing/Collections/CollectionsClient.cs">RetrieveAsync</a>(id, CollectionsRetrieveRequest { ... }) -> Collection</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Collection` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Collections.RetrieveAsync("id", new CollectionsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CollectionsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Comments
+<details><summary><code>client.Ticketing.Comments.<a href="/src/Merge.Client/Ticketing/Comments/CommentsClient.cs">ListAsync</a>(CommentsListRequest { ... }) -> PaginatedCommentList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Comment` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Comments.ListAsync(new CommentsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CommentsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Comments.<a href="/src/Merge.Client/Ticketing/Comments/CommentsClient.cs">CreateAsync</a>(CommentEndpointRequest { ... }) -> CommentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `Comment` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Comments.CreateAsync(
+    new CommentEndpointRequest { Model = new CommentRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CommentEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Comments.<a href="/src/Merge.Client/Ticketing/Comments/CommentsClient.cs">RetrieveAsync</a>(id, CommentsRetrieveRequest { ... }) -> Comment</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Comment` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Comments.RetrieveAsync("id", new CommentsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CommentsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Comments.<a href="/src/Merge.Client/Ticketing/Comments/CommentsClient.cs">MetaPostRetrieveAsync</a>() -> Ticketing.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `Comment` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Comments.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Contacts
+<details><summary><code>client.Ticketing.Contacts.<a href="/src/Merge.Client/Ticketing/Contacts/ContactsClient.cs">ListAsync</a>(ContactsListRequest { ... }) -> Ticketing.PaginatedContactList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Contact` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Contacts.ListAsync(new ContactsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ContactsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Contacts.<a href="/src/Merge.Client/Ticketing/Contacts/ContactsClient.cs">CreateAsync</a>(TicketingContactEndpointRequest { ... }) -> TicketingContactResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `Contact` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Contacts.CreateAsync(
+    new TicketingContactEndpointRequest { Model = new Merge.Client.Ticketing.ContactRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TicketingContactEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Contacts.<a href="/src/Merge.Client/Ticketing/Contacts/ContactsClient.cs">RetrieveAsync</a>(id, ContactsRetrieveRequest { ... }) -> Ticketing.Contact</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Contact` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Contacts.RetrieveAsync("id", new ContactsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ContactsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Contacts.<a href="/src/Merge.Client/Ticketing/Contacts/ContactsClient.cs">MetaPostRetrieveAsync</a>() -> Ticketing.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `TicketingContact` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Contacts.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Scopes
+<details><summary><code>client.Ticketing.Scopes.<a href="/src/Merge.Client/Ticketing/Scopes/ScopesClient.cs">DefaultScopesRetrieveAsync</a>() -> Ticketing.CommonModelScopeApi</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the default permissions for Merge Common Models and fields across all Linked Accounts of a given category. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Scopes.DefaultScopesRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Scopes.<a href="/src/Merge.Client/Ticketing/Scopes/ScopesClient.cs">LinkedAccountScopesRetrieveAsync</a>() -> Ticketing.CommonModelScopeApi</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all available permissions for Merge Common Models and fields for a single Linked Account. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Scopes.LinkedAccountScopesRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Scopes.<a href="/src/Merge.Client/Ticketing/Scopes/ScopesClient.cs">LinkedAccountScopesCreateAsync</a>(LinkedAccountCommonModelScopeDeserializerRequest { ... }) -> Ticketing.CommonModelScopeApi</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update permissions for any Common Model or field for a single Linked Account. Any Scopes not set in this POST request will inherit the default Scopes. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Scopes.LinkedAccountScopesCreateAsync(
+    new LinkedAccountCommonModelScopeDeserializerRequest
+    {
+        CommonModels =
+            new List<Merge.Client.Ticketing.IndividualCommonModelScopeDeserializerRequest>()
+            {
+                new Merge.Client.Ticketing.IndividualCommonModelScopeDeserializerRequest
+                {
+                    ModelName = "Employee",
+                    ModelPermissions = new Dictionary<
+                        string,
+                        Merge.Client.Ticketing.ModelPermissionDeserializerRequest
+                    >()
+                    {
+                        {
+                            "READ",
+                            new Merge.Client.Ticketing.ModelPermissionDeserializerRequest
+                            {
+                                IsEnabled = true,
+                            }
+                        },
+                        {
+                            "WRITE",
+                            new Merge.Client.Ticketing.ModelPermissionDeserializerRequest
+                            {
+                                IsEnabled = false,
+                            }
+                        },
+                    },
+                    FieldPermissions = new Merge.Client.Ticketing.FieldPermissionDeserializerRequest
+                    {
+                        EnabledFields = new List<object>() { "avatar", "home_location" },
+                        DisabledFields = new List<object>() { "work_location" },
+                    },
+                },
+                new Merge.Client.Ticketing.IndividualCommonModelScopeDeserializerRequest
+                {
+                    ModelName = "Benefit",
+                    ModelPermissions = new Dictionary<
+                        string,
+                        Merge.Client.Ticketing.ModelPermissionDeserializerRequest
+                    >()
+                    {
+                        {
+                            "WRITE",
+                            new Merge.Client.Ticketing.ModelPermissionDeserializerRequest
+                            {
+                                IsEnabled = false,
+                            }
+                        },
+                    },
+                },
+            },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `LinkedAccountCommonModelScopeDeserializerRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing DeleteAccount
+<details><summary><code>client.Ticketing.DeleteAccount.<a href="/src/Merge.Client/Ticketing/DeleteAccount/DeleteAccountClient.cs">DeleteAsync</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a linked account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.DeleteAccount.DeleteAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing FieldMapping
+<details><summary><code>client.Ticketing.FieldMapping.<a href="/src/Merge.Client/Ticketing/FieldMapping/FieldMappingClient.cs">FieldMappingsRetrieveAsync</a>(FieldMappingsRetrieveRequest { ... }) -> Ticketing.FieldMappingApiInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all Field Mappings for this Linked Account. Field Mappings are mappings between third-party Remote Fields and user defined Merge fields. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.FieldMapping.FieldMappingsRetrieveAsync(new FieldMappingsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `FieldMappingsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.FieldMapping.<a href="/src/Merge.Client/Ticketing/FieldMapping/FieldMappingClient.cs">FieldMappingsCreateAsync</a>(CreateFieldMappingRequest { ... }) -> Ticketing.FieldMappingInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create new Field Mappings that will be available after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.FieldMapping.FieldMappingsCreateAsync(
+    new CreateFieldMappingRequest
+    {
+        TargetFieldName = "example_target_field_name",
+        TargetFieldDescription = "this is a example description of the target field",
+        RemoteFieldTraversalPath = new List<object>() { "example_remote_field" },
+        RemoteMethod = "GET",
+        RemoteUrlPath = "/example-url-path",
+        CommonModelName = "ExampleCommonModel",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateFieldMappingRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.FieldMapping.<a href="/src/Merge.Client/Ticketing/FieldMapping/FieldMappingClient.cs">FieldMappingsDestroyAsync</a>(fieldMappingId) -> Ticketing.FieldMappingInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes Field Mappings for a Linked Account. All data related to this Field Mapping will be deleted and these changes will be reflected after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.FieldMapping.FieldMappingsDestroyAsync("field_mapping_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fieldMappingId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.FieldMapping.<a href="/src/Merge.Client/Ticketing/FieldMapping/FieldMappingClient.cs">FieldMappingsPartialUpdateAsync</a>(fieldMappingId, PatchedEditFieldMappingRequest { ... }) -> Ticketing.FieldMappingInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or update existing Field Mappings for a Linked Account. Changes will be reflected after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.FieldMapping.FieldMappingsPartialUpdateAsync(
+    "field_mapping_id",
+    new PatchedEditFieldMappingRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fieldMappingId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PatchedEditFieldMappingRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.FieldMapping.<a href="/src/Merge.Client/Ticketing/FieldMapping/FieldMappingClient.cs">RemoteFieldsRetrieveAsync</a>(RemoteFieldsRetrieveRequest { ... }) -> Ticketing.RemoteFieldApiResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all remote fields for a Linked Account. Remote fields are third-party fields that are accessible after initial sync if remote_data is enabled. You can use remote fields to override existing Merge fields or map a new Merge field. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.FieldMapping.RemoteFieldsRetrieveAsync(new RemoteFieldsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `RemoteFieldsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.FieldMapping.<a href="/src/Merge.Client/Ticketing/FieldMapping/FieldMappingClient.cs">TargetFieldsRetrieveAsync</a>() -> Ticketing.ExternalTargetFieldApiResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all organization-wide Target Fields, this will not include any Linked Account specific Target Fields. Organization-wide Target Fields are additional fields appended to the Merge Common Model for all Linked Accounts in a category. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/target-fields/).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.FieldMapping.TargetFieldsRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing GenerateKey
+<details><summary><code>client.Ticketing.GenerateKey.<a href="/src/Merge.Client/Ticketing/GenerateKey/GenerateKeyClient.cs">CreateAsync</a>(GenerateRemoteKeyRequest { ... }) -> Ticketing.RemoteKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a remote key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.GenerateKey.CreateAsync(
+    new GenerateRemoteKeyRequest { Name = "Remote Deployment Key 1" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GenerateRemoteKeyRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Issues
+<details><summary><code>client.Ticketing.Issues.<a href="/src/Merge.Client/Ticketing/Issues/IssuesClient.cs">ListAsync</a>(IssuesListRequest { ... }) -> Ticketing.PaginatedIssueList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets all issues for Organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Issues.ListAsync(new IssuesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IssuesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Issues.<a href="/src/Merge.Client/Ticketing/Issues/IssuesClient.cs">RetrieveAsync</a>(id) -> Ticketing.Issue</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific issue.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Issues.RetrieveAsync("id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing LinkToken
+<details><summary><code>client.Ticketing.LinkToken.<a href="/src/Merge.Client/Ticketing/LinkToken/LinkTokenClient.cs">CreateAsync</a>(EndUserDetailsRequest { ... }) -> Ticketing.LinkToken</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a link token to be used when linking a new end user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.LinkToken.CreateAsync(
+    new EndUserDetailsRequest
+    {
+        EndUserEmailAddress = "example@gmail.com",
+        EndUserOrganizationName = "Test Organization",
+        EndUserOriginId = "12345",
+        Categories = new List<Merge.Client.Ticketing.CategoriesEnum>()
+        {
+            Merge.Client.Ticketing.CategoriesEnum.Hris,
+            Merge.Client.Ticketing.CategoriesEnum.Ats,
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EndUserDetailsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing LinkedAccounts
+<details><summary><code>client.Ticketing.LinkedAccounts.<a href="/src/Merge.Client/Ticketing/LinkedAccounts/LinkedAccountsClient.cs">ListAsync</a>(LinkedAccountsListRequest { ... }) -> Ticketing.PaginatedAccountDetailsAndActionsList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List linked accounts for your organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.LinkedAccounts.ListAsync(new LinkedAccountsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `LinkedAccountsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Passthrough
+<details><summary><code>client.Ticketing.Passthrough.<a href="/src/Merge.Client/Ticketing/Passthrough/PassthroughClient.cs">CreateAsync</a>(Ticketing.DataPassthroughRequest { ... }) -> Ticketing.RemoteResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pull data from an endpoint not currently supported by Merge.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Passthrough.CreateAsync(
+    new Merge.Client.Ticketing.DataPassthroughRequest
+    {
+        Method = Merge.Client.Ticketing.MethodEnum.Get,
+        Path = "/scooters",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Ticketing.DataPassthroughRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Projects
+<details><summary><code>client.Ticketing.Projects.<a href="/src/Merge.Client/Ticketing/Projects/ProjectsClient.cs">ListAsync</a>(ProjectsListRequest { ... }) -> PaginatedProjectList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Project` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Projects.ListAsync(new ProjectsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ProjectsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Projects.<a href="/src/Merge.Client/Ticketing/Projects/ProjectsClient.cs">RetrieveAsync</a>(id, ProjectsRetrieveRequest { ... }) -> Project</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Project` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Projects.RetrieveAsync("id", new ProjectsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ProjectsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Projects.<a href="/src/Merge.Client/Ticketing/Projects/ProjectsClient.cs">UsersListAsync</a>(parentId, ProjectsUsersListRequest { ... }) -> Ticketing.PaginatedUserList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `User` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Projects.UsersListAsync("parent_id", new ProjectsUsersListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**parentId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ProjectsUsersListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing RegenerateKey
+<details><summary><code>client.Ticketing.RegenerateKey.<a href="/src/Merge.Client/Ticketing/RegenerateKey/RegenerateKeyClient.cs">CreateAsync</a>(RemoteKeyForRegenerationRequest { ... }) -> Ticketing.RemoteKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Exchange remote keys.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.RegenerateKey.CreateAsync(
+    new RemoteKeyForRegenerationRequest { Name = "Remote Deployment Key 1" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `RemoteKeyForRegenerationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Roles
+<details><summary><code>client.Ticketing.Roles.<a href="/src/Merge.Client/Ticketing/Roles/RolesClient.cs">ListAsync</a>(RolesListRequest { ... }) -> PaginatedRoleList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Role` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Roles.ListAsync(new RolesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `RolesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Roles.<a href="/src/Merge.Client/Ticketing/Roles/RolesClient.cs">RetrieveAsync</a>(id, RolesRetrieveRequest { ... }) -> Role</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Role` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Roles.RetrieveAsync("id", new RolesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `RolesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing SyncStatus
+<details><summary><code>client.Ticketing.SyncStatus.<a href="/src/Merge.Client/Ticketing/SyncStatus/SyncStatusClient.cs">ListAsync</a>(SyncStatusListRequest { ... }) -> Ticketing.PaginatedSyncStatusList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get sync status for the current sync and the most recently finished sync. `last_sync_start` represents the most recent time any sync began. `last_sync_finished` represents the most recent time any sync completed. These timestamps may correspond to different sync instances which may result in a sync start time being later than a separate sync completed time. To ensure you are retrieving the latest available data reference the `last_sync_finished` timestamp where `last_sync_result` is `DONE`. Possible values for `status` and `last_sync_result` are `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`. Learn more about sync status in our [Help Center](https://help.merge.dev/en/articles/8184193-merge-sync-statuses).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.SyncStatus.ListAsync(new SyncStatusListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SyncStatusListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing ForceResync
+<details><summary><code>client.Ticketing.ForceResync.<a href="/src/Merge.Client/Ticketing/ForceResync/ForceResyncClient.cs">SyncStatusResyncCreateAsync</a>() -> IEnumerable<Ticketing.SyncStatus></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Force re-sync of all models. This endpoint is available for monthly, quarterly, and highest sync frequency customers on the Professional or Enterprise plans. Doing so will consume a sync credit for the relevant linked account. Force re-syncs can also be triggered manually in the Merge Dashboard and is available for all customers.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.ForceResync.SyncStatusResyncCreateAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Tags
+<details><summary><code>client.Ticketing.Tags.<a href="/src/Merge.Client/Ticketing/Tags/TagsClient.cs">ListAsync</a>(TagsListRequest { ... }) -> Ticketing.PaginatedTagList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Tag` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Tags.ListAsync(new TagsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TagsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Tags.<a href="/src/Merge.Client/Ticketing/Tags/TagsClient.cs">RetrieveAsync</a>(id, TagsRetrieveRequest { ... }) -> Ticketing.Tag</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Tag` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Tags.RetrieveAsync("id", new TagsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TagsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Teams
+<details><summary><code>client.Ticketing.Teams.<a href="/src/Merge.Client/Ticketing/Teams/TeamsClient.cs">ListAsync</a>(TeamsListRequest { ... }) -> Ticketing.PaginatedTeamList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Team` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Teams.ListAsync(new TeamsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TeamsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Teams.<a href="/src/Merge.Client/Ticketing/Teams/TeamsClient.cs">RetrieveAsync</a>(id, TeamsRetrieveRequest { ... }) -> Ticketing.Team</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Team` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Teams.RetrieveAsync("id", new TeamsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TeamsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Tickets
+<details><summary><code>client.Ticketing.Tickets.<a href="/src/Merge.Client/Ticketing/Tickets/TicketsClient.cs">ListAsync</a>(TicketsListRequest { ... }) -> PaginatedTicketList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Ticket` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Tickets.ListAsync(new TicketsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TicketsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Tickets.<a href="/src/Merge.Client/Ticketing/Tickets/TicketsClient.cs">CreateAsync</a>(TicketEndpointRequest { ... }) -> TicketResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `Ticket` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Tickets.CreateAsync(
+    new TicketEndpointRequest { Model = new TicketRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TicketEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Tickets.<a href="/src/Merge.Client/Ticketing/Tickets/TicketsClient.cs">RetrieveAsync</a>(id, TicketsRetrieveRequest { ... }) -> Ticket</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Ticket` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Tickets.RetrieveAsync("id", new TicketsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TicketsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Tickets.<a href="/src/Merge.Client/Ticketing/Tickets/TicketsClient.cs">PartialUpdateAsync</a>(id, PatchedTicketEndpointRequest { ... }) -> TicketResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates a `Ticket` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Tickets.PartialUpdateAsync(
+    "id",
+    new PatchedTicketEndpointRequest { Model = new PatchedTicketRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PatchedTicketEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Tickets.<a href="/src/Merge.Client/Ticketing/Tickets/TicketsClient.cs">ViewersListAsync</a>(ticketId, TicketsViewersListRequest { ... }) -> PaginatedViewerList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Viewer` objects that point to a User id or Team id that is either an assignee or viewer on a `Ticket` with the given id. [Learn more.](https://help.merge.dev/en/articles/10333658-ticketing-access-control-list-acls)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Tickets.ViewersListAsync("ticket_id", new TicketsViewersListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ticketId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TicketsViewersListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Tickets.<a href="/src/Merge.Client/Ticketing/Tickets/TicketsClient.cs">MetaPatchRetrieveAsync</a>(id) -> Ticketing.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `Ticket` PATCHs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Tickets.MetaPatchRetrieveAsync("id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Tickets.<a href="/src/Merge.Client/Ticketing/Tickets/TicketsClient.cs">MetaPostRetrieveAsync</a>() -> Ticketing.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `Ticket` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Tickets.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Tickets.<a href="/src/Merge.Client/Ticketing/Tickets/TicketsClient.cs">RemoteFieldClassesListAsync</a>(TicketsRemoteFieldClassesListRequest { ... }) -> Ticketing.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Tickets.RemoteFieldClassesListAsync(
+    new TicketsRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TicketsRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing Users
+<details><summary><code>client.Ticketing.Users.<a href="/src/Merge.Client/Ticketing/Users/UsersClient.cs">ListAsync</a>(UsersListRequest { ... }) -> Ticketing.PaginatedUserList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `User` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Users.ListAsync(new UsersListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UsersListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.Users.<a href="/src/Merge.Client/Ticketing/Users/UsersClient.cs">RetrieveAsync</a>(id, UsersRetrieveRequest { ... }) -> Ticketing.User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `User` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.Users.RetrieveAsync("id", new UsersRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UsersRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ticketing WebhookReceivers
+<details><summary><code>client.Ticketing.WebhookReceivers.<a href="/src/Merge.Client/Ticketing/WebhookReceivers/WebhookReceiversClient.cs">ListAsync</a>() -> IEnumerable<Ticketing.WebhookReceiver></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `WebhookReceiver` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.WebhookReceivers.ListAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Ticketing.WebhookReceivers.<a href="/src/Merge.Client/Ticketing/WebhookReceivers/WebhookReceiversClient.cs">CreateAsync</a>(WebhookReceiverRequest { ... }) -> Ticketing.WebhookReceiver</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `WebhookReceiver` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Ticketing.WebhookReceivers.CreateAsync(
+    new WebhookReceiverRequest { Event = "event", IsActive = true }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `WebhookReceiverRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting AccountDetails
+<details><summary><code>client.Accounting.AccountDetails.<a href="/src/Merge.Client/Accounting/AccountDetails/AccountDetailsClient.cs">RetrieveAsync</a>() -> Accounting.AccountDetails</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details for a linked account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.AccountDetails.RetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting AccountToken
+<details><summary><code>client.Accounting.AccountToken.<a href="/src/Merge.Client/Accounting/AccountToken/AccountTokenClient.cs">RetrieveAsync</a>(publicToken) -> Accounting.AccountToken</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the account token for the end user with the provided public token.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.AccountToken.RetrieveAsync("public_token");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**publicToken:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting AccountingPeriods
+<details><summary><code>client.Accounting.AccountingPeriods.<a href="/src/Merge.Client/Accounting/AccountingPeriods/AccountingPeriodsClient.cs">ListAsync</a>(AccountingPeriodsListRequest { ... }) -> PaginatedAccountingPeriodList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `AccountingPeriod` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.AccountingPeriods.ListAsync(new AccountingPeriodsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AccountingPeriodsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.AccountingPeriods.<a href="/src/Merge.Client/Accounting/AccountingPeriods/AccountingPeriodsClient.cs">RetrieveAsync</a>(id, AccountingPeriodsRetrieveRequest { ... }) -> AccountingPeriod</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `AccountingPeriod` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.AccountingPeriods.RetrieveAsync(
+    "id",
+    new AccountingPeriodsRetrieveRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AccountingPeriodsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Accounts
+<details><summary><code>client.Accounting.Accounts.<a href="/src/Merge.Client/Accounting/Accounts/AccountsClient.cs">ListAsync</a>(AccountsListRequest { ... }) -> Accounting.PaginatedAccountList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Account` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Accounts.ListAsync(new AccountsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AccountsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Accounts.<a href="/src/Merge.Client/Accounting/Accounts/AccountsClient.cs">CreateAsync</a>(AccountEndpointRequest { ... }) -> AccountResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates an `Account` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Accounts.CreateAsync(
+    new AccountEndpointRequest { Model = new Merge.Client.Accounting.AccountRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AccountEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Accounts.<a href="/src/Merge.Client/Accounting/Accounts/AccountsClient.cs">RetrieveAsync</a>(id, AccountsRetrieveRequest { ... }) -> Accounting.Account</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `Account` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Accounts.RetrieveAsync("id", new AccountsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AccountsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Accounts.<a href="/src/Merge.Client/Accounting/Accounts/AccountsClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `Account` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Accounts.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Addresses
+<details><summary><code>client.Accounting.Addresses.<a href="/src/Merge.Client/Accounting/Addresses/AddressesClient.cs">RetrieveAsync</a>(id, AddressesRetrieveRequest { ... }) -> Accounting.Address</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `Address` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Addresses.RetrieveAsync("id", new AddressesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AddressesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting AsyncPassthrough
+<details><summary><code>client.Accounting.AsyncPassthrough.<a href="/src/Merge.Client/Accounting/AsyncPassthrough/AsyncPassthroughClient.cs">CreateAsync</a>(Accounting.DataPassthroughRequest { ... }) -> Accounting.AsyncPassthroughReciept</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Asynchronously pull data from an endpoint not currently supported by Merge.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.AsyncPassthrough.CreateAsync(
+    new Merge.Client.Accounting.DataPassthroughRequest
+    {
+        Method = Merge.Client.Accounting.MethodEnum.Get,
+        Path = "/scooters",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Accounting.DataPassthroughRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.AsyncPassthrough.<a href="/src/Merge.Client/Accounting/AsyncPassthrough/AsyncPassthroughClient.cs">RetrieveAsync</a>(asyncPassthroughReceiptId) -> OneOf<Accounting.RemoteResponse, string></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves data from earlier async-passthrough POST request
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.AsyncPassthrough.RetrieveAsync("async_passthrough_receipt_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**asyncPassthroughReceiptId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting AsyncTasks
+<details><summary><code>client.Accounting.AsyncTasks.<a href="/src/Merge.Client/Accounting/AsyncTasks/AsyncTasksClient.cs">RetrieveAsync</a>(id) -> AsyncPostTask</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `AsyncPostTask` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.AsyncTasks.RetrieveAsync("id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Attachments
+<details><summary><code>client.Accounting.Attachments.<a href="/src/Merge.Client/Accounting/Attachments/AttachmentsClient.cs">ListAsync</a>(AttachmentsListRequest { ... }) -> PaginatedAccountingAttachmentList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `AccountingAttachment` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Attachments.ListAsync(new AttachmentsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AttachmentsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Attachments.<a href="/src/Merge.Client/Accounting/Attachments/AttachmentsClient.cs">CreateAsync</a>(AccountingAttachmentEndpointRequest { ... }) -> AccountingAttachmentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates an `AccountingAttachment` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Attachments.CreateAsync(
+    new AccountingAttachmentEndpointRequest { Model = new AccountingAttachmentRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AccountingAttachmentEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Attachments.<a href="/src/Merge.Client/Accounting/Attachments/AttachmentsClient.cs">RetrieveAsync</a>(id, AttachmentsRetrieveRequest { ... }) -> AccountingAttachment</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `AccountingAttachment` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Attachments.RetrieveAsync("id", new AttachmentsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AttachmentsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Attachments.<a href="/src/Merge.Client/Accounting/Attachments/AttachmentsClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `AccountingAttachment` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Attachments.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting AuditTrail
+<details><summary><code>client.Accounting.AuditTrail.<a href="/src/Merge.Client/Accounting/AuditTrail/AuditTrailClient.cs">ListAsync</a>(AuditTrailListRequest { ... }) -> Accounting.PaginatedAuditLogEventList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets a list of audit trail events.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.AuditTrail.ListAsync(new AuditTrailListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AuditTrailListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting AvailableActions
+<details><summary><code>client.Accounting.AvailableActions.<a href="/src/Merge.Client/Accounting/AvailableActions/AvailableActionsClient.cs">RetrieveAsync</a>() -> Accounting.AvailableActions</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of models and actions available for an account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.AvailableActions.RetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting BalanceSheets
+<details><summary><code>client.Accounting.BalanceSheets.<a href="/src/Merge.Client/Accounting/BalanceSheets/BalanceSheetsClient.cs">ListAsync</a>(BalanceSheetsListRequest { ... }) -> PaginatedBalanceSheetList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `BalanceSheet` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.BalanceSheets.ListAsync(new BalanceSheetsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BalanceSheetsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.BalanceSheets.<a href="/src/Merge.Client/Accounting/BalanceSheets/BalanceSheetsClient.cs">RetrieveAsync</a>(id, BalanceSheetsRetrieveRequest { ... }) -> BalanceSheet</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `BalanceSheet` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.BalanceSheets.RetrieveAsync("id", new BalanceSheetsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `BalanceSheetsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting BankFeedAccounts
+<details><summary><code>client.Accounting.BankFeedAccounts.<a href="/src/Merge.Client/Accounting/BankFeedAccounts/BankFeedAccountsClient.cs">ListAsync</a>(BankFeedAccountsListRequest { ... }) -> PaginatedBankFeedAccountList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `BankFeedAccount` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.BankFeedAccounts.ListAsync(new BankFeedAccountsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BankFeedAccountsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.BankFeedAccounts.<a href="/src/Merge.Client/Accounting/BankFeedAccounts/BankFeedAccountsClient.cs">CreateAsync</a>(BankFeedAccountEndpointRequest { ... }) -> BankFeedAccountResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `BankFeedAccount` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.BankFeedAccounts.CreateAsync(
+    new BankFeedAccountEndpointRequest { Model = new BankFeedAccountRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BankFeedAccountEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.BankFeedAccounts.<a href="/src/Merge.Client/Accounting/BankFeedAccounts/BankFeedAccountsClient.cs">RetrieveAsync</a>(id, BankFeedAccountsRetrieveRequest { ... }) -> BankFeedAccount</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `BankFeedAccount` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.BankFeedAccounts.RetrieveAsync("id", new BankFeedAccountsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `BankFeedAccountsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.BankFeedAccounts.<a href="/src/Merge.Client/Accounting/BankFeedAccounts/BankFeedAccountsClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `BankFeedAccount` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.BankFeedAccounts.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting BankFeedTransactions
+<details><summary><code>client.Accounting.BankFeedTransactions.<a href="/src/Merge.Client/Accounting/BankFeedTransactions/BankFeedTransactionsClient.cs">ListAsync</a>(BankFeedTransactionsListRequest { ... }) -> PaginatedBankFeedTransactionList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `BankFeedTransaction` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.BankFeedTransactions.ListAsync(new BankFeedTransactionsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BankFeedTransactionsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.BankFeedTransactions.<a href="/src/Merge.Client/Accounting/BankFeedTransactions/BankFeedTransactionsClient.cs">CreateAsync</a>(BankFeedTransactionEndpointRequest { ... }) -> BankFeedTransactionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `BankFeedTransaction` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.BankFeedTransactions.CreateAsync(
+    new BankFeedTransactionEndpointRequest { Model = new BankFeedTransactionRequestRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `BankFeedTransactionEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.BankFeedTransactions.<a href="/src/Merge.Client/Accounting/BankFeedTransactions/BankFeedTransactionsClient.cs">RetrieveAsync</a>(id, BankFeedTransactionsRetrieveRequest { ... }) -> BankFeedTransaction</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `BankFeedTransaction` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.BankFeedTransactions.RetrieveAsync(
+    "id",
+    new BankFeedTransactionsRetrieveRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `BankFeedTransactionsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.BankFeedTransactions.<a href="/src/Merge.Client/Accounting/BankFeedTransactions/BankFeedTransactionsClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `BankFeedTransaction` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.BankFeedTransactions.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting CashFlowStatements
+<details><summary><code>client.Accounting.CashFlowStatements.<a href="/src/Merge.Client/Accounting/CashFlowStatements/CashFlowStatementsClient.cs">ListAsync</a>(CashFlowStatementsListRequest { ... }) -> PaginatedCashFlowStatementList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `CashFlowStatement` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.CashFlowStatements.ListAsync(new CashFlowStatementsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CashFlowStatementsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.CashFlowStatements.<a href="/src/Merge.Client/Accounting/CashFlowStatements/CashFlowStatementsClient.cs">RetrieveAsync</a>(id, CashFlowStatementsRetrieveRequest { ... }) -> CashFlowStatement</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `CashFlowStatement` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.CashFlowStatements.RetrieveAsync(
+    "id",
+    new CashFlowStatementsRetrieveRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CashFlowStatementsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting CompanyInfo
+<details><summary><code>client.Accounting.CompanyInfo.<a href="/src/Merge.Client/Accounting/CompanyInfo/CompanyInfoClient.cs">ListAsync</a>(CompanyInfoListRequest { ... }) -> PaginatedCompanyInfoList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `CompanyInfo` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.CompanyInfo.ListAsync(new CompanyInfoListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CompanyInfoListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.CompanyInfo.<a href="/src/Merge.Client/Accounting/CompanyInfo/CompanyInfoClient.cs">RetrieveAsync</a>(id, CompanyInfoRetrieveRequest { ... }) -> CompanyInfo</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `CompanyInfo` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.CompanyInfo.RetrieveAsync("id", new CompanyInfoRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CompanyInfoRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Contacts
+<details><summary><code>client.Accounting.Contacts.<a href="/src/Merge.Client/Accounting/Contacts/ContactsClient.cs">ListAsync</a>(ContactsListRequest { ... }) -> Accounting.PaginatedContactList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Contact` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Contacts.ListAsync(new ContactsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ContactsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Contacts.<a href="/src/Merge.Client/Accounting/Contacts/ContactsClient.cs">CreateAsync</a>(ContactEndpointRequest { ... }) -> ContactResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `Contact` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Contacts.CreateAsync(
+    new ContactEndpointRequest { Model = new Merge.Client.Accounting.ContactRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ContactEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Contacts.<a href="/src/Merge.Client/Accounting/Contacts/ContactsClient.cs">RetrieveAsync</a>(id, ContactsRetrieveRequest { ... }) -> Accounting.Contact</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Contact` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Contacts.RetrieveAsync("id", new ContactsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ContactsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Contacts.<a href="/src/Merge.Client/Accounting/Contacts/ContactsClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `Contact` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Contacts.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Contacts.<a href="/src/Merge.Client/Accounting/Contacts/ContactsClient.cs">RemoteFieldClassesListAsync</a>(ContactsRemoteFieldClassesListRequest { ... }) -> Accounting.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Contacts.RemoteFieldClassesListAsync(
+    new ContactsRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ContactsRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting CreditNotes
+<details><summary><code>client.Accounting.CreditNotes.<a href="/src/Merge.Client/Accounting/CreditNotes/CreditNotesClient.cs">ListAsync</a>(CreditNotesListRequest { ... }) -> PaginatedCreditNoteList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `CreditNote` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.CreditNotes.ListAsync(new CreditNotesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreditNotesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.CreditNotes.<a href="/src/Merge.Client/Accounting/CreditNotes/CreditNotesClient.cs">CreateAsync</a>(CreditNoteEndpointRequest { ... }) -> CreditNoteResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `CreditNote` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.CreditNotes.CreateAsync(
+    new CreditNoteEndpointRequest { Model = new CreditNoteRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreditNoteEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.CreditNotes.<a href="/src/Merge.Client/Accounting/CreditNotes/CreditNotesClient.cs">RetrieveAsync</a>(id, CreditNotesRetrieveRequest { ... }) -> CreditNote</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `CreditNote` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.CreditNotes.RetrieveAsync("id", new CreditNotesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreditNotesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.CreditNotes.<a href="/src/Merge.Client/Accounting/CreditNotes/CreditNotesClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `CreditNote` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.CreditNotes.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Scopes
+<details><summary><code>client.Accounting.Scopes.<a href="/src/Merge.Client/Accounting/Scopes/ScopesClient.cs">DefaultScopesRetrieveAsync</a>() -> Accounting.CommonModelScopeApi</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the default permissions for Merge Common Models and fields across all Linked Accounts of a given category. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Scopes.DefaultScopesRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Scopes.<a href="/src/Merge.Client/Accounting/Scopes/ScopesClient.cs">LinkedAccountScopesRetrieveAsync</a>() -> Accounting.CommonModelScopeApi</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all available permissions for Merge Common Models and fields for a single Linked Account. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Scopes.LinkedAccountScopesRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Scopes.<a href="/src/Merge.Client/Accounting/Scopes/ScopesClient.cs">LinkedAccountScopesCreateAsync</a>(LinkedAccountCommonModelScopeDeserializerRequest { ... }) -> Accounting.CommonModelScopeApi</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update permissions for any Common Model or field for a single Linked Account. Any Scopes not set in this POST request will inherit the default Scopes. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Scopes.LinkedAccountScopesCreateAsync(
+    new LinkedAccountCommonModelScopeDeserializerRequest
+    {
+        CommonModels =
+            new List<Merge.Client.Accounting.IndividualCommonModelScopeDeserializerRequest>()
+            {
+                new Merge.Client.Accounting.IndividualCommonModelScopeDeserializerRequest
+                {
+                    ModelName = "Employee",
+                    ModelPermissions = new Dictionary<
+                        string,
+                        Merge.Client.Accounting.ModelPermissionDeserializerRequest
+                    >()
+                    {
+                        {
+                            "READ",
+                            new Merge.Client.Accounting.ModelPermissionDeserializerRequest
+                            {
+                                IsEnabled = true,
+                            }
+                        },
+                        {
+                            "WRITE",
+                            new Merge.Client.Accounting.ModelPermissionDeserializerRequest
+                            {
+                                IsEnabled = false,
+                            }
+                        },
+                    },
+                    FieldPermissions =
+                        new Merge.Client.Accounting.FieldPermissionDeserializerRequest
+                        {
+                            EnabledFields = new List<object>() { "avatar", "home_location" },
+                            DisabledFields = new List<object>() { "work_location" },
+                        },
+                },
+                new Merge.Client.Accounting.IndividualCommonModelScopeDeserializerRequest
+                {
+                    ModelName = "Benefit",
+                    ModelPermissions = new Dictionary<
+                        string,
+                        Merge.Client.Accounting.ModelPermissionDeserializerRequest
+                    >()
+                    {
+                        {
+                            "WRITE",
+                            new Merge.Client.Accounting.ModelPermissionDeserializerRequest
+                            {
+                                IsEnabled = false,
+                            }
+                        },
+                    },
+                },
+            },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `LinkedAccountCommonModelScopeDeserializerRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting DeleteAccount
+<details><summary><code>client.Accounting.DeleteAccount.<a href="/src/Merge.Client/Accounting/DeleteAccount/DeleteAccountClient.cs">DeleteAsync</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a linked account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.DeleteAccount.DeleteAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Employees
+<details><summary><code>client.Accounting.Employees.<a href="/src/Merge.Client/Accounting/Employees/EmployeesClient.cs">ListAsync</a>(EmployeesListRequest { ... }) -> Accounting.PaginatedEmployeeList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Employee` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Employees.ListAsync(new EmployeesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EmployeesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Employees.<a href="/src/Merge.Client/Accounting/Employees/EmployeesClient.cs">RetrieveAsync</a>(id, EmployeesRetrieveRequest { ... }) -> Accounting.Employee</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `Employee` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Employees.RetrieveAsync("id", new EmployeesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmployeesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Expenses
+<details><summary><code>client.Accounting.Expenses.<a href="/src/Merge.Client/Accounting/Expenses/ExpensesClient.cs">ListAsync</a>(ExpensesListRequest { ... }) -> PaginatedExpenseList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Expense` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Expenses.ListAsync(new ExpensesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ExpensesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Expenses.<a href="/src/Merge.Client/Accounting/Expenses/ExpensesClient.cs">CreateAsync</a>(ExpenseEndpointRequest { ... }) -> ExpenseResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates an `Expense` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Expenses.CreateAsync(
+    new ExpenseEndpointRequest { Model = new ExpenseRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ExpenseEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Expenses.<a href="/src/Merge.Client/Accounting/Expenses/ExpensesClient.cs">RetrieveAsync</a>(id, ExpensesRetrieveRequest { ... }) -> Expense</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `Expense` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Expenses.RetrieveAsync("id", new ExpensesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ExpensesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Expenses.<a href="/src/Merge.Client/Accounting/Expenses/ExpensesClient.cs">LinesRemoteFieldClassesListAsync</a>(ExpensesLinesRemoteFieldClassesListRequest { ... }) -> Accounting.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Expenses.LinesRemoteFieldClassesListAsync(
+    new ExpensesLinesRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ExpensesLinesRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Expenses.<a href="/src/Merge.Client/Accounting/Expenses/ExpensesClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `Expense` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Expenses.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Expenses.<a href="/src/Merge.Client/Accounting/Expenses/ExpensesClient.cs">RemoteFieldClassesListAsync</a>(ExpensesRemoteFieldClassesListRequest { ... }) -> Accounting.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Expenses.RemoteFieldClassesListAsync(
+    new ExpensesRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ExpensesRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting FieldMapping
+<details><summary><code>client.Accounting.FieldMapping.<a href="/src/Merge.Client/Accounting/FieldMapping/FieldMappingClient.cs">FieldMappingsRetrieveAsync</a>(FieldMappingsRetrieveRequest { ... }) -> Accounting.FieldMappingApiInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all Field Mappings for this Linked Account. Field Mappings are mappings between third-party Remote Fields and user defined Merge fields. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.FieldMapping.FieldMappingsRetrieveAsync(new FieldMappingsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `FieldMappingsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.FieldMapping.<a href="/src/Merge.Client/Accounting/FieldMapping/FieldMappingClient.cs">FieldMappingsCreateAsync</a>(CreateFieldMappingRequest { ... }) -> Accounting.FieldMappingInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create new Field Mappings that will be available after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.FieldMapping.FieldMappingsCreateAsync(
+    new CreateFieldMappingRequest
+    {
+        TargetFieldName = "example_target_field_name",
+        TargetFieldDescription = "this is a example description of the target field",
+        RemoteFieldTraversalPath = new List<object>() { "example_remote_field" },
+        RemoteMethod = "GET",
+        RemoteUrlPath = "/example-url-path",
+        CommonModelName = "ExampleCommonModel",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateFieldMappingRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.FieldMapping.<a href="/src/Merge.Client/Accounting/FieldMapping/FieldMappingClient.cs">FieldMappingsDestroyAsync</a>(fieldMappingId) -> Accounting.FieldMappingInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes Field Mappings for a Linked Account. All data related to this Field Mapping will be deleted and these changes will be reflected after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.FieldMapping.FieldMappingsDestroyAsync("field_mapping_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fieldMappingId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.FieldMapping.<a href="/src/Merge.Client/Accounting/FieldMapping/FieldMappingClient.cs">FieldMappingsPartialUpdateAsync</a>(fieldMappingId, PatchedEditFieldMappingRequest { ... }) -> Accounting.FieldMappingInstanceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or update existing Field Mappings for a Linked Account. Changes will be reflected after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.FieldMapping.FieldMappingsPartialUpdateAsync(
+    "field_mapping_id",
+    new PatchedEditFieldMappingRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fieldMappingId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PatchedEditFieldMappingRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.FieldMapping.<a href="/src/Merge.Client/Accounting/FieldMapping/FieldMappingClient.cs">RemoteFieldsRetrieveAsync</a>(RemoteFieldsRetrieveRequest { ... }) -> Accounting.RemoteFieldApiResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all remote fields for a Linked Account. Remote fields are third-party fields that are accessible after initial sync if remote_data is enabled. You can use remote fields to override existing Merge fields or map a new Merge field. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.FieldMapping.RemoteFieldsRetrieveAsync(new RemoteFieldsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `RemoteFieldsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.FieldMapping.<a href="/src/Merge.Client/Accounting/FieldMapping/FieldMappingClient.cs">TargetFieldsRetrieveAsync</a>() -> Accounting.ExternalTargetFieldApiResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all organization-wide Target Fields, this will not include any Linked Account specific Target Fields. Organization-wide Target Fields are additional fields appended to the Merge Common Model for all Linked Accounts in a category. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/target-fields/).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.FieldMapping.TargetFieldsRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting GeneralLedgerTransactions
+<details><summary><code>client.Accounting.GeneralLedgerTransactions.<a href="/src/Merge.Client/Accounting/GeneralLedgerTransactions/GeneralLedgerTransactionsClient.cs">ListAsync</a>(GeneralLedgerTransactionsListRequest { ... }) -> PaginatedGeneralLedgerTransactionList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `GeneralLedgerTransaction` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.GeneralLedgerTransactions.ListAsync(
+    new GeneralLedgerTransactionsListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GeneralLedgerTransactionsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.GeneralLedgerTransactions.<a href="/src/Merge.Client/Accounting/GeneralLedgerTransactions/GeneralLedgerTransactionsClient.cs">RetrieveAsync</a>(id, GeneralLedgerTransactionsRetrieveRequest { ... }) -> GeneralLedgerTransaction</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `GeneralLedgerTransaction` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.GeneralLedgerTransactions.RetrieveAsync(
+    "id",
+    new GeneralLedgerTransactionsRetrieveRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `GeneralLedgerTransactionsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting GenerateKey
+<details><summary><code>client.Accounting.GenerateKey.<a href="/src/Merge.Client/Accounting/GenerateKey/GenerateKeyClient.cs">CreateAsync</a>(GenerateRemoteKeyRequest { ... }) -> Accounting.RemoteKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a remote key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.GenerateKey.CreateAsync(
+    new GenerateRemoteKeyRequest { Name = "Remote Deployment Key 1" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GenerateRemoteKeyRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting IncomeStatements
+<details><summary><code>client.Accounting.IncomeStatements.<a href="/src/Merge.Client/Accounting/IncomeStatements/IncomeStatementsClient.cs">ListAsync</a>(IncomeStatementsListRequest { ... }) -> PaginatedIncomeStatementList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `IncomeStatement` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.IncomeStatements.ListAsync(new IncomeStatementsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IncomeStatementsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.IncomeStatements.<a href="/src/Merge.Client/Accounting/IncomeStatements/IncomeStatementsClient.cs">RetrieveAsync</a>(id, IncomeStatementsRetrieveRequest { ... }) -> IncomeStatement</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `IncomeStatement` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.IncomeStatements.RetrieveAsync("id", new IncomeStatementsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `IncomeStatementsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Invoices
+<details><summary><code>client.Accounting.Invoices.<a href="/src/Merge.Client/Accounting/Invoices/InvoicesClient.cs">ListAsync</a>(InvoicesListRequest { ... }) -> PaginatedInvoiceList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Invoice` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Invoices.ListAsync(new InvoicesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InvoicesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Invoices.<a href="/src/Merge.Client/Accounting/Invoices/InvoicesClient.cs">CreateAsync</a>(InvoiceEndpointRequest { ... }) -> InvoiceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates an `Invoice` object with the given values.
+Including a `PurchaseOrder` id in the `purchase_orders` property will generate an Accounts Payable Invoice from the specified Purchase Order(s).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Invoices.CreateAsync(
+    new InvoiceEndpointRequest { Model = new InvoiceRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InvoiceEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Invoices.<a href="/src/Merge.Client/Accounting/Invoices/InvoicesClient.cs">RetrieveAsync</a>(id, InvoicesRetrieveRequest { ... }) -> Invoice</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `Invoice` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Invoices.RetrieveAsync("id", new InvoicesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `InvoicesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Invoices.<a href="/src/Merge.Client/Accounting/Invoices/InvoicesClient.cs">PartialUpdateAsync</a>(id, PatchedInvoiceEndpointRequest { ... }) -> InvoiceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates an `Invoice` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Invoices.PartialUpdateAsync(
+    "id",
+    new PatchedInvoiceEndpointRequest { Model = new InvoiceRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PatchedInvoiceEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Invoices.<a href="/src/Merge.Client/Accounting/Invoices/InvoicesClient.cs">LineItemsRemoteFieldClassesListAsync</a>(InvoicesLineItemsRemoteFieldClassesListRequest { ... }) -> Accounting.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Invoices.LineItemsRemoteFieldClassesListAsync(
+    new InvoicesLineItemsRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InvoicesLineItemsRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Invoices.<a href="/src/Merge.Client/Accounting/Invoices/InvoicesClient.cs">MetaPatchRetrieveAsync</a>(id) -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `Invoice` PATCHs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Invoices.MetaPatchRetrieveAsync("id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Invoices.<a href="/src/Merge.Client/Accounting/Invoices/InvoicesClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `Invoice` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Invoices.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Invoices.<a href="/src/Merge.Client/Accounting/Invoices/InvoicesClient.cs">RemoteFieldClassesListAsync</a>(InvoicesRemoteFieldClassesListRequest { ... }) -> Accounting.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Invoices.RemoteFieldClassesListAsync(
+    new InvoicesRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InvoicesRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Issues
+<details><summary><code>client.Accounting.Issues.<a href="/src/Merge.Client/Accounting/Issues/IssuesClient.cs">ListAsync</a>(IssuesListRequest { ... }) -> Accounting.PaginatedIssueList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets all issues for Organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Issues.ListAsync(new IssuesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IssuesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Issues.<a href="/src/Merge.Client/Accounting/Issues/IssuesClient.cs">RetrieveAsync</a>(id) -> Accounting.Issue</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific issue.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Issues.RetrieveAsync("id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Items
+<details><summary><code>client.Accounting.Items.<a href="/src/Merge.Client/Accounting/Items/ItemsClient.cs">ListAsync</a>(ItemsListRequest { ... }) -> PaginatedItemList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Item` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Items.ListAsync(new ItemsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ItemsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Items.<a href="/src/Merge.Client/Accounting/Items/ItemsClient.cs">RetrieveAsync</a>(id, ItemsRetrieveRequest { ... }) -> Item</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `Item` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Items.RetrieveAsync("id", new ItemsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ItemsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting JournalEntries
+<details><summary><code>client.Accounting.JournalEntries.<a href="/src/Merge.Client/Accounting/JournalEntries/JournalEntriesClient.cs">ListAsync</a>(JournalEntriesListRequest { ... }) -> PaginatedJournalEntryList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `JournalEntry` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.JournalEntries.ListAsync(new JournalEntriesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `JournalEntriesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.JournalEntries.<a href="/src/Merge.Client/Accounting/JournalEntries/JournalEntriesClient.cs">CreateAsync</a>(JournalEntryEndpointRequest { ... }) -> JournalEntryResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `JournalEntry` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.JournalEntries.CreateAsync(
+    new JournalEntryEndpointRequest { Model = new JournalEntryRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `JournalEntryEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.JournalEntries.<a href="/src/Merge.Client/Accounting/JournalEntries/JournalEntriesClient.cs">RetrieveAsync</a>(id, JournalEntriesRetrieveRequest { ... }) -> JournalEntry</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `JournalEntry` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.JournalEntries.RetrieveAsync("id", new JournalEntriesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `JournalEntriesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.JournalEntries.<a href="/src/Merge.Client/Accounting/JournalEntries/JournalEntriesClient.cs">LinesRemoteFieldClassesListAsync</a>(JournalEntriesLinesRemoteFieldClassesListRequest { ... }) -> Accounting.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.JournalEntries.LinesRemoteFieldClassesListAsync(
+    new JournalEntriesLinesRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `JournalEntriesLinesRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.JournalEntries.<a href="/src/Merge.Client/Accounting/JournalEntries/JournalEntriesClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `JournalEntry` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.JournalEntries.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.JournalEntries.<a href="/src/Merge.Client/Accounting/JournalEntries/JournalEntriesClient.cs">RemoteFieldClassesListAsync</a>(JournalEntriesRemoteFieldClassesListRequest { ... }) -> Accounting.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.JournalEntries.RemoteFieldClassesListAsync(
+    new JournalEntriesRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `JournalEntriesRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting LinkToken
+<details><summary><code>client.Accounting.LinkToken.<a href="/src/Merge.Client/Accounting/LinkToken/LinkTokenClient.cs">CreateAsync</a>(EndUserDetailsRequest { ... }) -> Accounting.LinkToken</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a link token to be used when linking a new end user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.LinkToken.CreateAsync(
+    new EndUserDetailsRequest
+    {
+        EndUserEmailAddress = "example@gmail.com",
+        EndUserOrganizationName = "Test Organization",
+        EndUserOriginId = "12345",
+        Categories = new List<Merge.Client.Accounting.CategoriesEnum>()
+        {
+            Merge.Client.Accounting.CategoriesEnum.Hris,
+            Merge.Client.Accounting.CategoriesEnum.Ats,
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EndUserDetailsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting LinkedAccounts
+<details><summary><code>client.Accounting.LinkedAccounts.<a href="/src/Merge.Client/Accounting/LinkedAccounts/LinkedAccountsClient.cs">ListAsync</a>(LinkedAccountsListRequest { ... }) -> Accounting.PaginatedAccountDetailsAndActionsList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List linked accounts for your organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.LinkedAccounts.ListAsync(new LinkedAccountsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `LinkedAccountsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Passthrough
+<details><summary><code>client.Accounting.Passthrough.<a href="/src/Merge.Client/Accounting/Passthrough/PassthroughClient.cs">CreateAsync</a>(Accounting.DataPassthroughRequest { ... }) -> Accounting.RemoteResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pull data from an endpoint not currently supported by Merge.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Passthrough.CreateAsync(
+    new Merge.Client.Accounting.DataPassthroughRequest
+    {
+        Method = Merge.Client.Accounting.MethodEnum.Get,
+        Path = "/scooters",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Accounting.DataPassthroughRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting PaymentMethods
+<details><summary><code>client.Accounting.PaymentMethods.<a href="/src/Merge.Client/Accounting/PaymentMethods/PaymentMethodsClient.cs">ListAsync</a>(PaymentMethodsListRequest { ... }) -> PaginatedPaymentMethodList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `PaymentMethod` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.PaymentMethods.ListAsync(new PaymentMethodsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PaymentMethodsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.PaymentMethods.<a href="/src/Merge.Client/Accounting/PaymentMethods/PaymentMethodsClient.cs">RetrieveAsync</a>(id, PaymentMethodsRetrieveRequest { ... }) -> PaymentMethod</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `PaymentMethod` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.PaymentMethods.RetrieveAsync("id", new PaymentMethodsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PaymentMethodsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting PaymentTerms
+<details><summary><code>client.Accounting.PaymentTerms.<a href="/src/Merge.Client/Accounting/PaymentTerms/PaymentTermsClient.cs">ListAsync</a>(PaymentTermsListRequest { ... }) -> PaginatedPaymentTermList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `PaymentTerm` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.PaymentTerms.ListAsync(new PaymentTermsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PaymentTermsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.PaymentTerms.<a href="/src/Merge.Client/Accounting/PaymentTerms/PaymentTermsClient.cs">RetrieveAsync</a>(id, PaymentTermsRetrieveRequest { ... }) -> PaymentTerm</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `PaymentTerm` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.PaymentTerms.RetrieveAsync("id", new PaymentTermsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PaymentTermsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Payments
+<details><summary><code>client.Accounting.Payments.<a href="/src/Merge.Client/Accounting/Payments/PaymentsClient.cs">ListAsync</a>(PaymentsListRequest { ... }) -> PaginatedPaymentList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Payment` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Payments.ListAsync(new PaymentsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PaymentsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Payments.<a href="/src/Merge.Client/Accounting/Payments/PaymentsClient.cs">CreateAsync</a>(PaymentEndpointRequest { ... }) -> PaymentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `Payment` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Payments.CreateAsync(
+    new PaymentEndpointRequest { Model = new PaymentRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PaymentEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Payments.<a href="/src/Merge.Client/Accounting/Payments/PaymentsClient.cs">RetrieveAsync</a>(id, PaymentsRetrieveRequest { ... }) -> Payment</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Payment` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Payments.RetrieveAsync("id", new PaymentsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PaymentsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Payments.<a href="/src/Merge.Client/Accounting/Payments/PaymentsClient.cs">PartialUpdateAsync</a>(id, PatchedPaymentEndpointRequest { ... }) -> PaymentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates a `Payment` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Payments.PartialUpdateAsync(
+    "id",
+    new PatchedPaymentEndpointRequest { Model = new PatchedPaymentRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PatchedPaymentEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Payments.<a href="/src/Merge.Client/Accounting/Payments/PaymentsClient.cs">LineItemsRemoteFieldClassesListAsync</a>(PaymentsLineItemsRemoteFieldClassesListRequest { ... }) -> Accounting.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Payments.LineItemsRemoteFieldClassesListAsync(
+    new PaymentsLineItemsRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PaymentsLineItemsRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Payments.<a href="/src/Merge.Client/Accounting/Payments/PaymentsClient.cs">MetaPatchRetrieveAsync</a>(id) -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `Payment` PATCHs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Payments.MetaPatchRetrieveAsync("id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Payments.<a href="/src/Merge.Client/Accounting/Payments/PaymentsClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `Payment` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Payments.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Payments.<a href="/src/Merge.Client/Accounting/Payments/PaymentsClient.cs">RemoteFieldClassesListAsync</a>(PaymentsRemoteFieldClassesListRequest { ... }) -> Accounting.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Payments.RemoteFieldClassesListAsync(
+    new PaymentsRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PaymentsRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting PhoneNumbers
+<details><summary><code>client.Accounting.PhoneNumbers.<a href="/src/Merge.Client/Accounting/PhoneNumbers/PhoneNumbersClient.cs">RetrieveAsync</a>(id, PhoneNumbersRetrieveRequest { ... }) -> AccountingPhoneNumber</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns an `AccountingPhoneNumber` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.PhoneNumbers.RetrieveAsync("id", new PhoneNumbersRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PhoneNumbersRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting PurchaseOrders
+<details><summary><code>client.Accounting.PurchaseOrders.<a href="/src/Merge.Client/Accounting/PurchaseOrders/PurchaseOrdersClient.cs">ListAsync</a>(PurchaseOrdersListRequest { ... }) -> PaginatedPurchaseOrderList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `PurchaseOrder` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.PurchaseOrders.ListAsync(new PurchaseOrdersListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PurchaseOrdersListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.PurchaseOrders.<a href="/src/Merge.Client/Accounting/PurchaseOrders/PurchaseOrdersClient.cs">CreateAsync</a>(PurchaseOrderEndpointRequest { ... }) -> PurchaseOrderResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `PurchaseOrder` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.PurchaseOrders.CreateAsync(
+    new PurchaseOrderEndpointRequest { Model = new PurchaseOrderRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PurchaseOrderEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.PurchaseOrders.<a href="/src/Merge.Client/Accounting/PurchaseOrders/PurchaseOrdersClient.cs">RetrieveAsync</a>(id, PurchaseOrdersRetrieveRequest { ... }) -> PurchaseOrder</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `PurchaseOrder` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.PurchaseOrders.RetrieveAsync("id", new PurchaseOrdersRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PurchaseOrdersRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.PurchaseOrders.<a href="/src/Merge.Client/Accounting/PurchaseOrders/PurchaseOrdersClient.cs">LineItemsRemoteFieldClassesListAsync</a>(PurchaseOrdersLineItemsRemoteFieldClassesListRequest { ... }) -> Accounting.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.PurchaseOrders.LineItemsRemoteFieldClassesListAsync(
+    new PurchaseOrdersLineItemsRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PurchaseOrdersLineItemsRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.PurchaseOrders.<a href="/src/Merge.Client/Accounting/PurchaseOrders/PurchaseOrdersClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `PurchaseOrder` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.PurchaseOrders.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.PurchaseOrders.<a href="/src/Merge.Client/Accounting/PurchaseOrders/PurchaseOrdersClient.cs">RemoteFieldClassesListAsync</a>(PurchaseOrdersRemoteFieldClassesListRequest { ... }) -> Accounting.PaginatedRemoteFieldClassList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `RemoteFieldClass` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.PurchaseOrders.RemoteFieldClassesListAsync(
+    new PurchaseOrdersRemoteFieldClassesListRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `PurchaseOrdersRemoteFieldClassesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting RegenerateKey
+<details><summary><code>client.Accounting.RegenerateKey.<a href="/src/Merge.Client/Accounting/RegenerateKey/RegenerateKeyClient.cs">CreateAsync</a>(RemoteKeyForRegenerationRequest { ... }) -> Accounting.RemoteKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Exchange remote keys.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.RegenerateKey.CreateAsync(
+    new RemoteKeyForRegenerationRequest { Name = "Remote Deployment Key 1" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `RemoteKeyForRegenerationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting SyncStatus
+<details><summary><code>client.Accounting.SyncStatus.<a href="/src/Merge.Client/Accounting/SyncStatus/SyncStatusClient.cs">ListAsync</a>(SyncStatusListRequest { ... }) -> Accounting.PaginatedSyncStatusList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get sync status for the current sync and the most recently finished sync. `last_sync_start` represents the most recent time any sync began. `last_sync_finished` represents the most recent time any sync completed. These timestamps may correspond to different sync instances which may result in a sync start time being later than a separate sync completed time. To ensure you are retrieving the latest available data reference the `last_sync_finished` timestamp where `last_sync_result` is `DONE`. Possible values for `status` and `last_sync_result` are `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`. Learn more about sync status in our [Help Center](https://help.merge.dev/en/articles/8184193-merge-sync-statuses).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.SyncStatus.ListAsync(new SyncStatusListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SyncStatusListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting ForceResync
+<details><summary><code>client.Accounting.ForceResync.<a href="/src/Merge.Client/Accounting/ForceResync/ForceResyncClient.cs">SyncStatusResyncCreateAsync</a>() -> IEnumerable<Accounting.SyncStatus></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Force re-sync of all models. This endpoint is available for monthly, quarterly, and highest sync frequency customers on the Professional or Enterprise plans. Doing so will consume a sync credit for the relevant linked account. Force re-syncs can also be triggered manually in the Merge Dashboard and is available for all customers.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.ForceResync.SyncStatusResyncCreateAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting TaxRates
+<details><summary><code>client.Accounting.TaxRates.<a href="/src/Merge.Client/Accounting/TaxRates/TaxRatesClient.cs">ListAsync</a>(TaxRatesListRequest { ... }) -> PaginatedTaxRateList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `TaxRate` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.TaxRates.ListAsync(new TaxRatesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TaxRatesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.TaxRates.<a href="/src/Merge.Client/Accounting/TaxRates/TaxRatesClient.cs">RetrieveAsync</a>(id, TaxRatesRetrieveRequest { ... }) -> TaxRate</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `TaxRate` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.TaxRates.RetrieveAsync("id", new TaxRatesRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TaxRatesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting TrackingCategories
+<details><summary><code>client.Accounting.TrackingCategories.<a href="/src/Merge.Client/Accounting/TrackingCategories/TrackingCategoriesClient.cs">ListAsync</a>(TrackingCategoriesListRequest { ... }) -> PaginatedTrackingCategoryList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `TrackingCategory` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.TrackingCategories.ListAsync(new TrackingCategoriesListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TrackingCategoriesListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.TrackingCategories.<a href="/src/Merge.Client/Accounting/TrackingCategories/TrackingCategoriesClient.cs">RetrieveAsync</a>(id, TrackingCategoriesRetrieveRequest { ... }) -> TrackingCategory</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `TrackingCategory` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.TrackingCategories.RetrieveAsync(
+    "id",
+    new TrackingCategoriesRetrieveRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TrackingCategoriesRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting Transactions
+<details><summary><code>client.Accounting.Transactions.<a href="/src/Merge.Client/Accounting/Transactions/TransactionsClient.cs">ListAsync</a>(TransactionsListRequest { ... }) -> PaginatedTransactionList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `Transaction` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Transactions.ListAsync(new TransactionsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TransactionsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.Transactions.<a href="/src/Merge.Client/Accounting/Transactions/TransactionsClient.cs">RetrieveAsync</a>(id, TransactionsRetrieveRequest { ... }) -> Transaction</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `Transaction` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.Transactions.RetrieveAsync("id", new TransactionsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TransactionsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting VendorCredits
+<details><summary><code>client.Accounting.VendorCredits.<a href="/src/Merge.Client/Accounting/VendorCredits/VendorCreditsClient.cs">ListAsync</a>(VendorCreditsListRequest { ... }) -> PaginatedVendorCreditList</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `VendorCredit` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.VendorCredits.ListAsync(new VendorCreditsListRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `VendorCreditsListRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.VendorCredits.<a href="/src/Merge.Client/Accounting/VendorCredits/VendorCreditsClient.cs">CreateAsync</a>(VendorCreditEndpointRequest { ... }) -> VendorCreditResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `VendorCredit` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.VendorCredits.CreateAsync(
+    new VendorCreditEndpointRequest { Model = new VendorCreditRequest() }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `VendorCreditEndpointRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.VendorCredits.<a href="/src/Merge.Client/Accounting/VendorCredits/VendorCreditsClient.cs">RetrieveAsync</a>(id, VendorCreditsRetrieveRequest { ... }) -> VendorCredit</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a `VendorCredit` object with the given `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.VendorCredits.RetrieveAsync("id", new VendorCreditsRetrieveRequest());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `VendorCreditsRetrieveRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.VendorCredits.<a href="/src/Merge.Client/Accounting/VendorCredits/VendorCreditsClient.cs">MetaPostRetrieveAsync</a>() -> Accounting.MetaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns metadata for `VendorCredit` POSTs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.VendorCredits.MetaPostRetrieveAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounting WebhookReceivers
+<details><summary><code>client.Accounting.WebhookReceivers.<a href="/src/Merge.Client/Accounting/WebhookReceivers/WebhookReceiversClient.cs">ListAsync</a>() -> IEnumerable<Accounting.WebhookReceiver></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of `WebhookReceiver` objects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.WebhookReceivers.ListAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Accounting.WebhookReceivers.<a href="/src/Merge.Client/Accounting/WebhookReceivers/WebhookReceiversClient.cs">CreateAsync</a>(WebhookReceiverRequest { ... }) -> Accounting.WebhookReceiver</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a `WebhookReceiver` object with the given values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Accounting.WebhookReceivers.CreateAsync(
+    new WebhookReceiverRequest { Event = "event", IsActive = true }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `WebhookReceiverRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

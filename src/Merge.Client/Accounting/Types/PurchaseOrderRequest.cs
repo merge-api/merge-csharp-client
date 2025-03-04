@@ -67,6 +67,12 @@ public record PurchaseOrderRequest
     public double? TotalAmount { get; set; }
 
     /// <summary>
+    /// The payment term that applies to this transaction.
+    /// </summary>
+    [JsonPropertyName("payment_term")]
+    public OneOf<string, PaymentTerm>? PaymentTerm { get; set; }
+
+    /// <summary>
     /// The purchase order's currency.
     ///
     /// - `XUA` - ADB Unit of Account
