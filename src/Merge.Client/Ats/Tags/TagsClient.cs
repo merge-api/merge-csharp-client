@@ -17,12 +17,10 @@ public partial class TagsClient
     /// <summary>
     /// Returns a list of `Tag` objects.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Ats.Tags.ListAsync(new TagsListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedTagList> ListAsync(
+    /// </code></example>
+    public async Task<PaginatedTagList> ListAsync(
         TagsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,8 +74,8 @@ public partial class TagsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -88,23 +86,26 @@ public partial class TagsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedTagList>(responseBody)!;
             }
             catch (JsonException e)
             {
-                throw new MergeException("Failed to deserialize response", e);
+                throw new BaseMergeClientException("Failed to deserialize response", e);
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new BaseMergeClientApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

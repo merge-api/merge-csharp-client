@@ -11,6 +11,7 @@ public record IgnoreCommonModelRequest
     [JsonPropertyName("message")]
     public string? Message { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

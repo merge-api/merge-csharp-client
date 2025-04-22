@@ -1,9 +1,17 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using OneOf;
 
 namespace Merge.Client.Filestorage;
 
+/// <summary>
+/// # The File Object
+/// ### Description
+/// The `File` object is used to represent a file in the workspace. The Object typically exists under a folder or drive, if it exists.
+/// ### Usage Example
+/// Fetch from the `GET /api/filestorage/v1/files` endpoint and view their files.
+/// </summary>
 public record FileRequest
 {
     /// <summary>
@@ -64,12 +72,25 @@ public record FileRequest
     [JsonPropertyName("drive")]
     public OneOf<string, Drive>? Drive { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object?>? IntegrationParams { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

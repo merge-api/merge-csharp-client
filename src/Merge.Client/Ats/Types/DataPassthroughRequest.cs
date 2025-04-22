@@ -1,8 +1,17 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
 
+/// <summary>
+/// # The DataPassthrough Object
+/// ### Description
+/// The `DataPassthrough` object is used to send information to an otherwise-unsupported third-party endpoint.
+///
+/// ### Usage Example
+/// Create a `DataPassthrough` to get team hierarchies from your Rippling integration.
+/// </summary>
 public record DataPassthroughRequest
 {
     [JsonPropertyName("method")]
@@ -47,6 +56,17 @@ public record DataPassthroughRequest
     [JsonPropertyName("normalize_response")]
     public bool? NormalizeResponse { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

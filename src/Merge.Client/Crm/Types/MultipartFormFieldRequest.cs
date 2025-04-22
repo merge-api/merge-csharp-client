@@ -1,8 +1,17 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
 
+/// <summary>
+/// # The MultipartFormField Object
+/// ### Description
+/// The `MultipartFormField` object is used to represent fields in an HTTP request using `multipart/form-data`.
+///
+/// ### Usage Example
+/// Create a `MultipartFormField` to define a multipart form entry.
+/// </summary>
 public record MultipartFormFieldRequest
 {
     /// <summary>
@@ -20,9 +29,9 @@ public record MultipartFormFieldRequest
     /// <summary>
     /// The encoding of the value of `data`. Defaults to `RAW` if not defined.
     ///
-    /// - `RAW` - RAW
-    /// - `BASE64` - BASE64
-    /// - `GZIP_BASE64` - GZIP_BASE64
+    /// * `RAW` - RAW
+    /// * `BASE64` - BASE64
+    /// * `GZIP_BASE64` - GZIP_BASE64
     /// </summary>
     [JsonPropertyName("encoding")]
     public EncodingEnum? Encoding { get; set; }
@@ -39,6 +48,17 @@ public record MultipartFormFieldRequest
     [JsonPropertyName("content_type")]
     public string? ContentType { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
