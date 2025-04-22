@@ -17,12 +17,10 @@ public partial class IncomeStatementsClient
     /// <summary>
     /// Returns a list of `IncomeStatement` objects.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Accounting.IncomeStatements.ListAsync(new IncomeStatementsListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedIncomeStatementList> ListAsync(
+    /// </code></example>
+    public async Task<PaginatedIncomeStatementList> ListAsync(
         IncomeStatementsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -84,8 +82,8 @@ public partial class IncomeStatementsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -96,9 +94,9 @@ public partial class IncomeStatementsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedIncomeStatementList>(responseBody)!;
@@ -109,22 +107,23 @@ public partial class IncomeStatementsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns an `IncomeStatement` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Accounting.IncomeStatements.RetrieveAsync("id", new IncomeStatementsRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<IncomeStatement> RetrieveAsync(
+    /// </code></example>
+    public async Task<IncomeStatement> RetrieveAsync(
         string id,
         IncomeStatementsRetrieveRequest request,
         RequestOptions? options = null,
@@ -140,22 +139,29 @@ public partial class IncomeStatementsClient
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"accounting/v1/income-statements/{id}",
+                    Path = string.Format(
+                        "accounting/v1/income-statements/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<IncomeStatement>(responseBody)!;
@@ -166,10 +172,13 @@ public partial class IncomeStatementsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -1,10 +1,19 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
 
+/// <summary>
+/// # The Custom Object Class Object
+/// ### Description
+/// The `Custom Object Class` object is used to represent a Custom Object Schema in the remote system.
+/// ### Usage Example
+/// TODO
+/// </summary>
 public record CustomObjectClass
 {
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
@@ -14,9 +23,11 @@ public record CustomObjectClass
     [JsonPropertyName("remote_id")]
     public string? RemoteId { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; set; }
 
@@ -35,18 +46,32 @@ public record CustomObjectClass
     /// <summary>
     /// The custom object class's singular and plural labels.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("labels")]
     public Dictionary<string, string?>? Labels { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("fields")]
     public IEnumerable<RemoteFieldClassForCustomObjectClass>? Fields { get; set; }
 
     /// <summary>
     /// The types of associations with other models that the custom object class can have.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("association_types")]
     public IEnumerable<Dictionary<string, object?>>? AssociationTypes { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

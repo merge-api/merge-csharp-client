@@ -12,6 +12,7 @@ public record LinkedAccountCommonModelScopeDeserializerRequest
     public IEnumerable<IndividualCommonModelScopeDeserializerRequest> CommonModels { get; set; } =
         new List<IndividualCommonModelScopeDeserializerRequest>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

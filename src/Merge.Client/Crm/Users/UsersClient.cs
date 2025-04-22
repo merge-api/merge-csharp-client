@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,12 +18,10 @@ public partial class UsersClient
     /// <summary>
     /// Returns a list of `User` objects.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Crm.Users.ListAsync(new UsersListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedUserList> ListAsync(
+    /// </code></example>
+    public async Task<PaginatedUserList> ListAsync(
         UsersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -86,8 +85,8 @@ public partial class UsersClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -98,9 +97,9 @@ public partial class UsersClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedUserList>(responseBody)!;
@@ -111,22 +110,23 @@ public partial class UsersClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns a `User` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Crm.Users.RetrieveAsync("id", new UsersRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<User> RetrieveAsync(
+    /// </code></example>
+    public async Task<User> RetrieveAsync(
         string id,
         UsersRetrieveRequest request,
         RequestOptions? options = null,
@@ -144,22 +144,29 @@ public partial class UsersClient
                 request.IncludeRemoteFields.Value
             );
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"crm/v1/users/{id}",
+                    Path = string.Format(
+                        "crm/v1/users/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<User>(responseBody)!;
@@ -170,25 +177,26 @@ public partial class UsersClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Crm.Users.IgnoreCreateAsync(
     ///     "model_id",
     ///     new IgnoreCommonModelRequest { Reason = Merge.Client.Crm.ReasonEnum.GeneralCustomerRequest }
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task IgnoreCreateAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task IgnoreCreateAsync(
         string modelId,
         IgnoreCommonModelRequest request,
         RequestOptions? options = null,
@@ -196,12 +204,15 @@ public partial class UsersClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"crm/v1/users/ignore/{modelId}",
+                    Path = string.Format(
+                        "crm/v1/users/ignore/{0}",
+                        ValueConvert.ToPathParameterString(modelId)
+                    ),
                     Body = request,
                     ContentType = "application/json",
                     Options = options,
@@ -213,23 +224,23 @@ public partial class UsersClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Crm.Users.RemoteFieldClassesListAsync(new UsersRemoteFieldClassesListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
+    /// </code></example>
+    public async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
         UsersRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -267,8 +278,8 @@ public partial class UsersClient
             _query["page_size"] = request.PageSize.Value.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -279,9 +290,9 @@ public partial class UsersClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
@@ -292,10 +303,13 @@ public partial class UsersClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

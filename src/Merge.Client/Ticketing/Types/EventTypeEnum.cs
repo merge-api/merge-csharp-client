@@ -34,6 +34,9 @@ public enum EventTypeEnum
     [EnumMember(Value = "DELETED_LINKED_ACCOUNT")]
     DeletedLinkedAccount,
 
+    [EnumMember(Value = "DELETED_ALL_COMMON_MODELS_FOR_LINKED_ACCOUNT")]
+    DeletedAllCommonModelsForLinkedAccount,
+
     [EnumMember(Value = "CREATED_DESTINATION")]
     CreatedDestination,
 

@@ -1,10 +1,20 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
 
+/// <summary>
+/// # The PaymentLineItem Object
+/// ### Description
+/// The `PaymentLineItem` object is an applied-to-line on a `Payment` that can either be a `Invoice`, `CreditNote`, or `JournalEntry`.
+///
+/// ### Usage Example
+/// `Payment` will have a field called `applied-to-lines` which will be an array of `PaymentLineItemInternalMappingSerializer` objects that can either be a `Invoice`, `CreditNote`, or `JournalEntry`.
+/// </summary>
 public record PaymentLineItem
 {
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
@@ -17,12 +27,14 @@ public record PaymentLineItem
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; set; }
 
@@ -50,6 +62,17 @@ public record PaymentLineItem
     [JsonPropertyName("related_object_type")]
     public string? RelatedObjectType { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

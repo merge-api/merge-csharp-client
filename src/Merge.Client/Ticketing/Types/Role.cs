@@ -1,10 +1,20 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
 
+/// <summary>
+/// # The Role Object
+/// ### Description
+/// The `Role` object is used to represent the set of actions & access that a user with this role is allowed to perform.
+///
+/// ### Usage Example
+/// TODO
+/// </summary>
 public record Role
 {
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
@@ -17,12 +27,14 @@ public record Role
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; set; }
 
@@ -41,9 +53,9 @@ public record Role
     /// <summary>
     /// The level of Ticket access that a User with this Role can perform.
     ///
-    /// - `ALL` - ALL
-    /// - `ASSIGNED_ONLY` - ASSIGNED_ONLY
-    /// - `TEAM_ONLY` - TEAM_ONLY
+    /// * `ALL` - ALL
+    /// * `ASSIGNED_ONLY` - ASSIGNED_ONLY
+    /// * `TEAM_ONLY` - TEAM_ONLY
     /// </summary>
     [JsonPropertyName("ticket_access")]
     public TicketAccessEnum? TicketAccess { get; set; }
@@ -54,12 +66,25 @@ public record Role
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object?>? FieldMappings { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("remote_data")]
     public IEnumerable<RemoteData>? RemoteData { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
