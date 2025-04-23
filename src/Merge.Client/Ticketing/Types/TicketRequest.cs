@@ -1,9 +1,17 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using OneOf;
 
 namespace Merge.Client.Ticketing;
 
+/// <summary>
+/// # The Ticket Object
+/// ### Description
+/// The `Ticket` object is used to represent a ticket, issue, task or case.
+/// ### Usage Example
+/// TODO
+/// </summary>
 public record TicketRequest
 {
     /// <summary>
@@ -13,13 +21,13 @@ public record TicketRequest
     public string? Name { get; set; }
 
     /// <summary>
-    /// The individual `Users` who are assigned to this ticket. This does not include `Users` who just have view access to this ticket.
+    /// The individual `Users` who are assigned to this ticket. This does not include `Users` who just have view access to this ticket. To fetch all `Users` and `Teams` that can access the ticket, use the `GET /tickets/{ticket_id}/viewers` [endpoint](https://docs.merge.dev/ticketing/tickets/#tickets_viewers_list).
     /// </summary>
     [JsonPropertyName("assignees")]
     public IEnumerable<OneOf<string, User>>? Assignees { get; set; }
 
     /// <summary>
-    /// The `Teams` that are assigned to this ticket. This does not include `Teams` who just have view access to this ticket.
+    /// The `Teams` that are assigned to this ticket. This does not include `Teams` who just have view access to this ticket. To fetch all `Users` and `Teams` that can access this ticket, use the `GET /tickets/{ticket_id}/viewers` [endpoint](https://docs.merge.dev/ticketing/tickets/#tickets_viewers_list).
     /// </summary>
     [JsonPropertyName("assigned_teams")]
     public IEnumerable<OneOf<string, Team>>? AssignedTeams { get; set; }
@@ -39,10 +47,10 @@ public record TicketRequest
     /// <summary>
     /// The current status of the ticket.
     ///
-    /// - `OPEN` - OPEN
-    /// - `CLOSED` - CLOSED
-    /// - `IN_PROGRESS` - IN_PROGRESS
-    /// - `ON_HOLD` - ON_HOLD
+    /// * `OPEN` - OPEN
+    /// * `CLOSED` - CLOSED
+    /// * `IN_PROGRESS` - IN_PROGRESS
+    /// * `ON_HOLD` - ON_HOLD
     /// </summary>
     [JsonPropertyName("status")]
     public TicketStatusEnum? Status { get; set; }
@@ -107,23 +115,37 @@ public record TicketRequest
     /// <summary>
     /// The priority or urgency of the Ticket.
     ///
-    /// - `URGENT` - URGENT
-    /// - `HIGH` - HIGH
-    /// - `NORMAL` - NORMAL
-    /// - `LOW` - LOW
+    /// * `URGENT` - URGENT
+    /// * `HIGH` - HIGH
+    /// * `NORMAL` - NORMAL
+    /// * `LOW` - LOW
     /// </summary>
     [JsonPropertyName("priority")]
     public PriorityEnum? Priority { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object?>? IntegrationParams { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("remote_fields")]
     public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

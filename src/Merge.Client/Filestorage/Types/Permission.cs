@@ -1,11 +1,21 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using OneOf;
 
 namespace Merge.Client.Filestorage;
 
+/// <summary>
+/// # The Permission Object
+/// ### Description
+/// The Permission object is used to represent a user's or group's access to a File or Folder. Permissions are unexpanded by default.
+///
+/// ### Usage Example
+/// Fetch from the `GET Files` or `GET Folders` endpoint. Permissions are unexpanded by default. Use the query param `expand=permissions` to see more details.
+/// </summary>
 public record Permission
 {
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
@@ -18,12 +28,14 @@ public record Permission
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; set; }
 
@@ -42,10 +54,10 @@ public record Permission
     /// <summary>
     /// Denotes what type of people have access to the file.
     ///
-    /// - `USER` - USER
-    /// - `GROUP` - GROUP
-    /// - `COMPANY` - COMPANY
-    /// - `ANYONE` - ANYONE
+    /// * `USER` - USER
+    /// * `GROUP` - GROUP
+    /// * `COMPANY` - COMPANY
+    /// * `ANYONE` - ANYONE
     /// </summary>
     [JsonPropertyName("type")]
     public TypeEnum? Type { get; set; }
@@ -56,6 +68,17 @@ public record Permission
     [JsonPropertyName("roles")]
     public IEnumerable<RolesEnum>? Roles { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

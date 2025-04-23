@@ -1,9 +1,18 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using OneOf;
 
 namespace Merge.Client.Accounting;
 
+/// <summary>
+/// # The VendorCreditLine Object
+/// ### Description
+/// The `VendorCreditLine` object is used to represent a vendor credit's line items.
+///
+/// ### Usage Example
+/// Fetch from the `GET VendorCredit` endpoint and view the vendor credit's line items.
+/// </summary>
 public record VendorCreditLineRequest
 {
     /// <summary>
@@ -60,12 +69,25 @@ public record VendorCreditLineRequest
     [JsonPropertyName("exchange_rate")]
     public string? ExchangeRate { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object?>? IntegrationParams { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

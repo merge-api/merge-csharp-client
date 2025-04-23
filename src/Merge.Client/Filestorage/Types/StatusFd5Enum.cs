@@ -4,8 +4,8 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Filestorage;
 
-[JsonConverter(typeof(EnumSerializer<SyncStatusStatusEnum>))]
-public enum SyncStatusStatusEnum
+[JsonConverter(typeof(EnumSerializer<StatusFd5Enum>))]
+public enum StatusFd5Enum
 {
     [EnumMember(Value = "SYNCING")]
     Syncing,

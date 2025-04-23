@@ -8,11 +8,11 @@ using Merge.Client.Ticketing;
 
 namespace Merge.Client;
 
-public partial class Merge
+internal partial class BaseMergeClient
 {
     private readonly RawClient _client;
 
-    public Merge(
+    public BaseMergeClient(
         string? apiKey = null,
         string? accountToken = null,
         ClientOptions? clientOptions = null
@@ -26,7 +26,7 @@ public partial class Merge
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Merge.Client" },
                 { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Merge.Client/1.0.2" },
+                { "User-Agent", "Merge.Client/1.1.0" },
             }
         );
         clientOptions ??= new ClientOptions();
@@ -38,23 +38,23 @@ public partial class Merge
             }
         }
         _client = new RawClient(clientOptions);
-        Ats = new AtsClient(_client);
         Crm = new CrmClient(_client);
-        Filestorage = new FilestorageClient(_client);
+        Ats = new AtsClient(_client);
         Hris = new HrisClient(_client);
+        Filestorage = new FilestorageClient(_client);
         Ticketing = new TicketingClient(_client);
         Accounting = new AccountingClient(_client);
     }
 
-    public AtsClient Ats { get; init; }
+    public CrmClient Crm { get; }
 
-    public CrmClient Crm { get; init; }
+    public AtsClient Ats { get; }
 
-    public FilestorageClient Filestorage { get; init; }
+    public HrisClient Hris { get; }
 
-    public HrisClient Hris { get; init; }
+    public FilestorageClient Filestorage { get; }
 
-    public TicketingClient Ticketing { get; init; }
+    public TicketingClient Ticketing { get; }
 
-    public AccountingClient Accounting { get; init; }
+    public AccountingClient Accounting { get; }
 }
