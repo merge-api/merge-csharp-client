@@ -89,6 +89,7 @@ public record EndUserDetailsRequest
     [JsonPropertyName("integration_specific_config")]
     public Dictionary<string, object?>? IntegrationSpecificConfig { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

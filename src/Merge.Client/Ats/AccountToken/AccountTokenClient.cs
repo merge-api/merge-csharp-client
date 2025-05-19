@@ -17,32 +17,33 @@ public partial class AccountTokenClient
     /// <summary>
     /// Returns the account token for the end user with the provided public token.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Ats.AccountToken.RetrieveAsync("public_token");
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<AccountToken> RetrieveAsync(
+    /// </code></example>
+    public async Task<AccountToken> RetrieveAsync(
         string publicToken,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"ats/v1/account-token/{publicToken}",
+                    Path = string.Format(
+                        "ats/v1/account-token/{0}",
+                        ValueConvert.ToPathParameterString(publicToken)
+                    ),
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<AccountToken>(responseBody)!;
@@ -53,10 +54,13 @@ public partial class AccountTokenClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -1,9 +1,17 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using OneOf;
 
 namespace Merge.Client.Ats;
 
+/// <summary>
+/// # The ScheduledInterview Object
+/// ### Description
+/// The `ScheduledInterview` object is used to represent a scheduled interview for a given candidate’s application to a job. An `Application` can have multiple `ScheduledInterview`s depending on the particular hiring process.
+/// ### Usage Example
+/// Fetch from the `LIST ScheduledInterviews` endpoint and filter by `interviewers` to show all office locations.
+/// </summary>
 public record ScheduledInterviewRequest
 {
     /// <summary>
@@ -51,19 +59,32 @@ public record ScheduledInterviewRequest
     /// <summary>
     /// The interview's status.
     ///
-    /// - `SCHEDULED` - SCHEDULED
-    /// - `AWAITING_FEEDBACK` - AWAITING_FEEDBACK
-    /// - `COMPLETE` - COMPLETE
+    /// * `SCHEDULED` - SCHEDULED
+    /// * `AWAITING_FEEDBACK` - AWAITING_FEEDBACK
+    /// * `COMPLETE` - COMPLETE
     /// </summary>
     [JsonPropertyName("status")]
     public ScheduledInterviewStatusEnum? Status { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object?>? IntegrationParams { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

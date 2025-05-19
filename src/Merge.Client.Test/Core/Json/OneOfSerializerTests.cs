@@ -4,9 +4,10 @@ using Merge.Client.Core;
 using NUnit.Framework;
 using OneOf;
 
-namespace Merge.Client.Test.Core;
+namespace Merge.Client.Test.Core.Json;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class OneOfSerializerTests
 {
     private class Foo
@@ -55,7 +56,7 @@ public class OneOfSerializerTests
         Foo,
         Bar
     >.FromT3(new Foo { StringProp = "test" });
-    private const string OneOf4String = "{\n  \"string_prop\": \"test\"\n}";
+    private const string OneOf4String = "{\"string_prop\": \"test\"}";
 
     private static readonly OneOf<string, int, object, Foo, Bar> OneOf5 = OneOf<
         string,
@@ -64,7 +65,7 @@ public class OneOfSerializerTests
         Foo,
         Bar
     >.FromT4(new Bar { IntProp = 5 });
-    private const string OneOf5String = "{\n  \"int_prop\": 5\n}";
+    private const string OneOf5String = "{\"int_prop\": 5}";
 
     [Test]
     public void Serialize_OneOfs_Should_Return_Expected_String()
@@ -82,7 +83,7 @@ public class OneOfSerializerTests
             foreach (var (oneOf, expected) in testData)
             {
                 var result = JsonUtils.Serialize(oneOf);
-                Assert.That(result, Is.EqualTo(expected));
+                Assert.That(result, Is.EqualTo(expected).IgnoreWhiteSpace);
             }
         });
     }
@@ -104,7 +105,7 @@ public class OneOfSerializerTests
             {
                 var result = JsonUtils.Deserialize<OneOf<string, int, object, Foo, Bar>>(json);
                 Assert.That(result.Index, Is.EqualTo(oneOf.Index));
-                Assert.That(json, Is.EqualTo(JsonUtils.Serialize(result.Value)));
+                Assert.That(json, Is.EqualTo(JsonUtils.Serialize(result.Value)).IgnoreWhiteSpace);
             }
         });
     }
@@ -119,7 +120,7 @@ public class OneOfSerializerTests
         Foo,
         Bar
     >.FromT4(new Bar { IntProp = 5 });
-    private const string NullableOneOf2String = "{\n  \"int_prop\": 5\n}";
+    private const string NullableOneOf2String = "{\"int_prop\": 5}";
 
     [Test]
     public void Serialize_NullableOneOfs_Should_Return_Expected_String()
@@ -134,7 +135,7 @@ public class OneOfSerializerTests
             foreach (var (oneOf, expected) in testData)
             {
                 var result = JsonUtils.Serialize(oneOf);
-                Assert.That(result, Is.EqualTo(expected));
+                Assert.That(result, Is.EqualTo(expected).IgnoreWhiteSpace);
             }
         });
     }
@@ -153,7 +154,7 @@ public class OneOfSerializerTests
             {
                 var result = JsonUtils.Deserialize<OneOf<string, int, object, Foo, Bar>?>(json);
                 Assert.That(result?.Index, Is.EqualTo(oneOf?.Index));
-                Assert.That(json, Is.EqualTo(JsonUtils.Serialize(result?.Value)));
+                Assert.That(json, Is.EqualTo(JsonUtils.Serialize(result?.Value)).IgnoreWhiteSpace);
             }
         });
     }
@@ -170,7 +171,7 @@ public class OneOfSerializerTests
         int,
         Foo?
     >.FromT2(new Foo { StringProp = "test" });
-    private const string OneOfWithNullable2String = "{\n  \"string_prop\": \"test\"\n}";
+    private const string OneOfWithNullable2String = "{\"string_prop\": \"test\"}";
 
     private static readonly OneOf<string, int, Foo?> OneOfWithNullable3 = OneOf<
         string,
@@ -193,7 +194,7 @@ public class OneOfSerializerTests
             foreach (var (oneOf, expected) in testData)
             {
                 var result = JsonUtils.Serialize(oneOf);
-                Assert.That(result, Is.EqualTo(expected));
+                Assert.That(result, Is.EqualTo(expected).IgnoreWhiteSpace);
             }
         });
     }
@@ -213,7 +214,7 @@ public class OneOfSerializerTests
             {
                 var result = JsonUtils.Deserialize<OneOf<string, int, Foo?>>(json);
                 Assert.That(result.Index, Is.EqualTo(oneOf.Index));
-                Assert.That(json, Is.EqualTo(JsonUtils.Serialize(result.Value)));
+                Assert.That(json, Is.EqualTo(JsonUtils.Serialize(result.Value)).IgnoreWhiteSpace);
             }
         });
     }
@@ -224,16 +225,16 @@ public class OneOfSerializerTests
         var oneOfWithObjectLast = OneOf<string, int, Foo, Bar, object>.FromT4(
             new { random = "data" }
         );
-        const string oneOfWithObjectLastString = "{\n  \"random\": \"data\"\n}";
+        const string oneOfWithObjectLastString = "{\"random\": \"data\"}";
 
         var result = JsonUtils.Serialize(oneOfWithObjectLast);
-        Assert.That(result, Is.EqualTo(oneOfWithObjectLastString));
+        Assert.That(result, Is.EqualTo(oneOfWithObjectLastString).IgnoreWhiteSpace);
     }
 
     [Test]
     public void OneOfWithObjectLast_Should_Deserialize_From_String()
     {
-        const string oneOfWithObjectLastString = "{\n  \"random\": \"data\"\n}";
+        const string oneOfWithObjectLastString = "{\"random\": \"data\"}";
         var result = JsonUtils.Deserialize<OneOf<string, int, Foo, Bar, object>>(
             oneOfWithObjectLastString
         );
@@ -241,7 +242,10 @@ public class OneOfSerializerTests
         {
             Assert.That(result.Index, Is.EqualTo(4));
             Assert.That(result.Value, Is.InstanceOf<object>());
-            Assert.That(JsonUtils.Serialize(result.Value), Is.EqualTo(oneOfWithObjectLastString));
+            Assert.That(
+                JsonUtils.Serialize(result.Value),
+                Is.EqualTo(oneOfWithObjectLastString).IgnoreWhiteSpace
+            );
         });
     }
 
@@ -251,16 +255,16 @@ public class OneOfSerializerTests
         var oneOfWithObjectNotLast = OneOf<string, object, int, Foo, Bar>.FromT1(
             new { random = "data" }
         );
-        const string oneOfWithObjectNotLastString = "{\n  \"random\": \"data\"\n}";
+        const string oneOfWithObjectNotLastString = "{\"random\": \"data\"}";
 
         var result = JsonUtils.Serialize(oneOfWithObjectNotLast);
-        Assert.That(result, Is.EqualTo(oneOfWithObjectNotLastString));
+        Assert.That(result, Is.EqualTo(oneOfWithObjectNotLastString).IgnoreWhiteSpace);
     }
 
     [Test]
     public void OneOfWithObjectNotLast_Should_Deserialize_From_String()
     {
-        const string oneOfWithObjectNotLastString = "{\n  \"random\": \"data\"\n}";
+        const string oneOfWithObjectNotLastString = "{\"random\": \"data\"}";
         var result = JsonUtils.Deserialize<OneOf<string, object, int, Foo, Bar>>(
             oneOfWithObjectNotLastString
         );
@@ -270,7 +274,7 @@ public class OneOfSerializerTests
             Assert.That(result.Value, Is.InstanceOf<object>());
             Assert.That(
                 JsonUtils.Serialize(result.Value),
-                Is.EqualTo(oneOfWithObjectNotLastString)
+                Is.EqualTo(oneOfWithObjectNotLastString).IgnoreWhiteSpace
             );
         });
     }

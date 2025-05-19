@@ -17,12 +17,10 @@ public partial class TrackingCategoriesClient
     /// <summary>
     /// Returns a list of `TrackingCategory` objects.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Accounting.TrackingCategories.ListAsync(new TrackingCategoriesListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedTrackingCategoryList> ListAsync(
+    /// </code></example>
+    public async Task<PaginatedTrackingCategoryList> ListAsync(
         TrackingCategoriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -75,6 +73,10 @@ public partial class TrackingCategoriesClient
                 Constants.DateTimeFormat
             );
         }
+        if (request.Name != null)
+        {
+            _query["name"] = request.Name;
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.Value.ToString();
@@ -92,8 +94,8 @@ public partial class TrackingCategoriesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -104,9 +106,9 @@ public partial class TrackingCategoriesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedTrackingCategoryList>(responseBody)!;
@@ -117,25 +119,26 @@ public partial class TrackingCategoriesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns a `TrackingCategory` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Accounting.TrackingCategories.RetrieveAsync(
     ///     "id",
     ///     new TrackingCategoriesRetrieveRequest()
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<TrackingCategory> RetrieveAsync(
+    /// </code></example>
+    public async Task<TrackingCategory> RetrieveAsync(
         string id,
         TrackingCategoriesRetrieveRequest request,
         RequestOptions? options = null,
@@ -151,6 +154,10 @@ public partial class TrackingCategoriesClient
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         if (request.RemoteFields != null)
         {
             _query["remote_fields"] = request.RemoteFields.ToString();
@@ -160,21 +167,24 @@ public partial class TrackingCategoriesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"accounting/v1/tracking-categories/{id}",
+                    Path = string.Format(
+                        "accounting/v1/tracking-categories/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<TrackingCategory>(responseBody)!;
@@ -185,10 +195,13 @@ public partial class TrackingCategoriesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

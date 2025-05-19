@@ -17,12 +17,10 @@ public partial class CustomObjectClassesClient
     /// <summary>
     /// Returns a list of `CustomObjectClass` objects.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Crm.CustomObjectClasses.ListAsync(new CustomObjectClassesListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedCustomObjectClassList> ListAsync(
+    /// </code></example>
+    public async Task<PaginatedCustomObjectClassList> ListAsync(
         CustomObjectClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -80,8 +78,8 @@ public partial class CustomObjectClassesClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -92,9 +90,9 @@ public partial class CustomObjectClassesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedCustomObjectClassList>(responseBody)!;
@@ -105,22 +103,23 @@ public partial class CustomObjectClassesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns a `CustomObjectClass` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Crm.CustomObjectClasses.RetrieveAsync("id", new CustomObjectClassesRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<CustomObjectClass> RetrieveAsync(
+    /// </code></example>
+    public async Task<CustomObjectClass> RetrieveAsync(
         string id,
         CustomObjectClassesRetrieveRequest request,
         RequestOptions? options = null,
@@ -136,22 +135,29 @@ public partial class CustomObjectClassesClient
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"crm/v1/custom-object-classes/{id}",
+                    Path = string.Format(
+                        "crm/v1/custom-object-classes/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<CustomObjectClass>(responseBody)!;
@@ -162,10 +168,13 @@ public partial class CustomObjectClassesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

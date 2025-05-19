@@ -1,8 +1,16 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
 
+/// <summary>
+/// # The Candidate Object
+/// ### Description
+/// The `Candidate` object is used to represent profile information about a given Candidate. Because it is specific to a Candidate, this information stays constant across applications.
+/// ### Usage Example
+/// Fetch from the `LIST Candidates` endpoint and filter by `ID` to show all candidates.
+/// </summary>
 public record PatchedCandidateRequest
 {
     /// <summary>
@@ -80,15 +88,29 @@ public record PatchedCandidateRequest
     [JsonPropertyName("attachments")]
     public IEnumerable<string>? Attachments { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("remote_template_id")]
     public string? RemoteTemplateId { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object?>? IntegrationParams { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

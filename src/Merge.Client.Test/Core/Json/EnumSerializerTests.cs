@@ -4,9 +4,10 @@ using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using NUnit.Framework;
 
-namespace Merge.Client.Test.Core;
+namespace Merge.Client.Test.Core.Json;
 
 [TestFixture]
+[Parallelizable(ParallelScope.All)]
 public class StringEnumSerializerTests
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };

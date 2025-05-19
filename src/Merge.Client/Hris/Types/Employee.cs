@@ -1,11 +1,21 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using OneOf;
 
 namespace Merge.Client.Hris;
 
+/// <summary>
+/// # The Employee Object
+/// ### Description
+/// The `Employee` object is used to represent any person who has been employed by a company. By default, it returns all employees. To filter for only active employees, set the `employment_status` query parameter to `ACTIVE`.
+///
+/// ### Usage Example
+/// Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees.
+/// </summary>
 public record Employee
 {
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
@@ -18,12 +28,14 @@ public record Employee
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; set; }
 
@@ -135,11 +147,11 @@ public record Employee
     /// <summary>
     /// The employee's gender.
     ///
-    /// - `MALE` - MALE
-    /// - `FEMALE` - FEMALE
-    /// - `NON-BINARY` - NON-BINARY
-    /// - `OTHER` - OTHER
-    /// - `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
+    /// * `MALE` - MALE
+    /// * `FEMALE` - FEMALE
+    /// * `NON-BINARY` - NON-BINARY
+    /// * `OTHER` - OTHER
+    /// * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
     /// </summary>
     [JsonPropertyName("gender")]
     public GenderEnum? Gender { get; set; }
@@ -147,14 +159,14 @@ public record Employee
     /// <summary>
     /// The employee's ethnicity.
     ///
-    /// - `AMERICAN_INDIAN_OR_ALASKA_NATIVE` - AMERICAN_INDIAN_OR_ALASKA_NATIVE
-    /// - `ASIAN_OR_INDIAN_SUBCONTINENT` - ASIAN_OR_INDIAN_SUBCONTINENT
-    /// - `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN
-    /// - `HISPANIC_OR_LATINO` - HISPANIC_OR_LATINO
-    /// - `NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER
-    /// - `TWO_OR_MORE_RACES` - TWO_OR_MORE_RACES
-    /// - `WHITE` - WHITE
-    /// - `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
+    /// * `AMERICAN_INDIAN_OR_ALASKA_NATIVE` - AMERICAN_INDIAN_OR_ALASKA_NATIVE
+    /// * `ASIAN_OR_INDIAN_SUBCONTINENT` - ASIAN_OR_INDIAN_SUBCONTINENT
+    /// * `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN
+    /// * `HISPANIC_OR_LATINO` - HISPANIC_OR_LATINO
+    /// * `NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER
+    /// * `TWO_OR_MORE_RACES` - TWO_OR_MORE_RACES
+    /// * `WHITE` - WHITE
+    /// * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
     /// </summary>
     [JsonPropertyName("ethnicity")]
     public EthnicityEnum? Ethnicity { get; set; }
@@ -162,11 +174,11 @@ public record Employee
     /// <summary>
     /// The employee's filing status as related to marital status.
     ///
-    /// - `SINGLE` - SINGLE
-    /// - `MARRIED_FILING_JOINTLY` - MARRIED_FILING_JOINTLY
-    /// - `MARRIED_FILING_SEPARATELY` - MARRIED_FILING_SEPARATELY
-    /// - `HEAD_OF_HOUSEHOLD` - HEAD_OF_HOUSEHOLD
-    /// - `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD
+    /// * `SINGLE` - SINGLE
+    /// * `MARRIED_FILING_JOINTLY` - MARRIED_FILING_JOINTLY
+    /// * `MARRIED_FILING_SEPARATELY` - MARRIED_FILING_SEPARATELY
+    /// * `HEAD_OF_HOUSEHOLD` - HEAD_OF_HOUSEHOLD
+    /// * `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD
     /// </summary>
     [JsonPropertyName("marital_status")]
     public MaritalStatusEnum? MaritalStatus { get; set; }
@@ -198,9 +210,9 @@ public record Employee
     /// <summary>
     /// The employment status of the employee.
     ///
-    /// - `ACTIVE` - ACTIVE
-    /// - `PENDING` - PENDING
-    /// - `INACTIVE` - INACTIVE
+    /// * `ACTIVE` - ACTIVE
+    /// * `PENDING` - PENDING
+    /// * `INACTIVE` - INACTIVE
     /// </summary>
     [JsonPropertyName("employment_status")]
     public EmploymentStatusEnum? EmploymentStatus { get; set; }
@@ -226,15 +238,29 @@ public record Employee
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("field_mappings")]
     public Dictionary<string, object?>? FieldMappings { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("remote_data")]
     public IEnumerable<RemoteData>? RemoteData { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
