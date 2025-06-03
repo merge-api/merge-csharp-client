@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: actions/checkout@master
 
@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: actions/checkout@master
 
@@ -54,7 +54,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
@@ -66,4 +66,4 @@ jobs:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
           dotnet pack src -c Release
-          dotnet nuget push src/Merge.Client/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
+          dotnet nuget push src/Merge/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"

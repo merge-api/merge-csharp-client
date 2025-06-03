@@ -1,0 +1,51 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Merge.Core;
+
+namespace Merge.Crm;
+
+/// <summary>
+/// # The PhoneNumber Object
+/// ### Description
+/// The `PhoneNumber` object is used to represent an entity's phone number.
+/// ### Usage Example
+/// Fetch from the `GET Contact` endpoint and view their phone numbers.
+/// </summary>
+public record PhoneNumberRequest
+{
+    /// <summary>
+    /// The phone number.
+    /// </summary>
+    [JsonPropertyName("phone_number")]
+    public string? PhoneNumber { get; set; }
+
+    /// <summary>
+    /// The phone number's type.
+    /// </summary>
+    [JsonPropertyName("phone_number_type")]
+    public string? PhoneNumberType { get; set; }
+
+    [JsonAccess(JsonAccessType.WriteOnly)]
+    [JsonPropertyName("integration_params")]
+    public object? IntegrationParams { get; set; }
+
+    [JsonAccess(JsonAccessType.WriteOnly)]
+    [JsonPropertyName("linked_account_params")]
+    public object? LinkedAccountParams { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
