@@ -17,18 +17,18 @@ public partial class TrackingCategoriesClient
     /// <summary>
     /// Returns a list of `TrackingCategory` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.TrackingCategories.ListAsync(new TrackingCategoriesListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedTrackingCategoryList> ListAsync(
+    private async Task<PaginatedTrackingCategoryList> ListInternalAsync(
         TrackingCategoriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        if (request.CategoryType != null)
+        {
+            _query["category_type"] = request.CategoryType;
+        }
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -46,10 +46,6 @@ public partial class TrackingCategoriesClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -75,6 +71,10 @@ public partial class TrackingCategoriesClient
                 Constants.DateTimeFormat
             );
         }
+        if (request.Name != null)
+        {
+            _query["name"] = request.Name;
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.Value.ToString();
@@ -91,11 +91,15 @@ public partial class TrackingCategoriesClient
         {
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
+        if (request.Status != null)
+        {
+            _query["status"] = request.Status;
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/tracking-categories",
                     Query = _query,
@@ -104,9 +108,9 @@ public partial class TrackingCategoriesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedTrackingCategoryList>(responseBody)!;
@@ -117,25 +121,65 @@ public partial class TrackingCategoriesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `TrackingCategory` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.TrackingCategories.ListAsync(new TrackingCategoriesListRequest());
+    /// </code></example>
+    public async Task<Pager<TrackingCategory>> ListAsync(
+        TrackingCategoriesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            TrackingCategoriesListRequest,
+            RequestOptions?,
+            PaginatedTrackingCategoryList,
+            string?,
+            TrackingCategory
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Returns a `TrackingCategory` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Accounting.TrackingCategories.RetrieveAsync(
     ///     "id",
     ///     new TrackingCategoriesRetrieveRequest()
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<TrackingCategory> RetrieveAsync(
+    /// </code></example>
+    public async Task<TrackingCategory> RetrieveAsync(
         string id,
         TrackingCategoriesRetrieveRequest request,
         RequestOptions? options = null,
@@ -143,13 +187,14 @@ public partial class TrackingCategoriesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.ToString();
-        }
+        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.RemoteFields != null)
         {
@@ -160,21 +205,24 @@ public partial class TrackingCategoriesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"accounting/v1/tracking-categories/{id}",
+                    Path = string.Format(
+                        "accounting/v1/tracking-categories/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<TrackingCategory>(responseBody)!;
@@ -185,10 +233,13 @@ public partial class TrackingCategoriesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

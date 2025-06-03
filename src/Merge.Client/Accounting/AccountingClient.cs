@@ -41,6 +41,8 @@ public partial class AccountingClient
         LinkToken = new LinkTokenClient(_client);
         LinkedAccounts = new LinkedAccountsClient(_client);
         Passthrough = new PassthroughClient(_client);
+        PaymentMethods = new PaymentMethodsClient(_client);
+        PaymentTerms = new PaymentTermsClient(_client);
         Payments = new PaymentsClient(_client);
         PhoneNumbers = new PhoneNumbersClient(_client);
         PurchaseOrders = new PurchaseOrdersClient(_client);
@@ -117,6 +119,10 @@ public partial class AccountingClient
     public LinkedAccountsClient LinkedAccounts { get; }
 
     public PassthroughClient Passthrough { get; }
+
+    public PaymentMethodsClient PaymentMethods { get; }
+
+    public PaymentTermsClient PaymentTerms { get; }
 
     public PaymentsClient Payments { get; }
 

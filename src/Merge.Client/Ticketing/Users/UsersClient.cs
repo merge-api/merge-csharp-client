@@ -17,18 +17,14 @@ public partial class UsersClient
     /// <summary>
     /// Returns a list of `User` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Ticketing.Users.ListAsync(new UsersListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedUserList> ListAsync(
+    private async Task<PaginatedUserList> ListInternalAsync(
         UsersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -46,10 +42,6 @@ public partial class UsersClient
         if (request.EmailAddress != null)
         {
             _query["email_address"] = request.EmailAddress;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -83,11 +75,15 @@ public partial class UsersClient
         {
             _query["remote_id"] = request.RemoteId;
         }
+        if (request.Team != null)
+        {
+            _query["team"] = request.Team;
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "ticketing/v1/users",
                     Query = _query,
@@ -96,9 +92,9 @@ public partial class UsersClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedUserList>(responseBody)!;
@@ -109,22 +105,62 @@ public partial class UsersClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `User` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Ticketing.Users.ListAsync(new UsersListRequest());
+    /// </code></example>
+    public async Task<Pager<User>> ListAsync(
+        UsersListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            UsersListRequest,
+            RequestOptions?,
+            PaginatedUserList,
+            string?,
+            User
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Returns a `User` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Ticketing.Users.RetrieveAsync("id", new UsersRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<User> RetrieveAsync(
+    /// </code></example>
+    public async Task<User> RetrieveAsync(
         string id,
         UsersRetrieveRequest request,
         RequestOptions? options = null,
@@ -132,30 +168,34 @@ public partial class UsersClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
-        }
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"ticketing/v1/users/{id}",
+                    Path = string.Format(
+                        "ticketing/v1/users/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<User>(responseBody)!;
@@ -166,10 +206,13 @@ public partial class UsersClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

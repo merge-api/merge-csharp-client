@@ -17,12 +17,10 @@ public partial class PhoneNumbersClient
     /// <summary>
     /// Returns an `AccountingPhoneNumber` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Accounting.PhoneNumbers.RetrieveAsync("id", new PhoneNumbersRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<AccountingPhoneNumber> RetrieveAsync(
+    /// </code></example>
+    public async Task<AccountingPhoneNumber> RetrieveAsync(
         string id,
         PhoneNumbersRetrieveRequest request,
         RequestOptions? options = null,
@@ -34,22 +32,29 @@ public partial class PhoneNumbersClient
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"accounting/v1/phone-numbers/{id}",
+                    Path = string.Format(
+                        "accounting/v1/phone-numbers/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<AccountingPhoneNumber>(responseBody)!;
@@ -60,10 +65,13 @@ public partial class PhoneNumbersClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

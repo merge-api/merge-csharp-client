@@ -17,18 +17,14 @@ public partial class AttachmentsClient
     /// <summary>
     /// Returns a list of `Attachment` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Ats.Attachments.ListAsync(new AttachmentsListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedAttachmentList> ListAsync(
+    private async Task<PaginatedAttachmentList> ListInternalAsync(
         AttachmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
         if (request.CandidateId != null)
         {
             _query["candidate_id"] = request.CandidateId;
@@ -46,10 +42,6 @@ public partial class AttachmentsClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -92,10 +84,10 @@ public partial class AttachmentsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "ats/v1/attachments",
                     Query = _query,
@@ -104,9 +96,9 @@ public partial class AttachmentsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedAttachmentList>(responseBody)!;
@@ -117,18 +109,59 @@ public partial class AttachmentsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `Attachment` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Ats.Attachments.ListAsync(new AttachmentsListRequest());
+    /// </code></example>
+    public async Task<Pager<Attachment>> ListAsync(
+        AttachmentsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            AttachmentsListRequest,
+            RequestOptions?,
+            PaginatedAttachmentList,
+            string?,
+            Attachment
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Creates an `Attachment` object with the given values.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Ats.Attachments.CreateAsync(
     ///     new AttachmentEndpointRequest
     ///     {
@@ -136,9 +169,8 @@ public partial class AttachmentsClient
     ///         RemoteUserId = "remote_user_id",
     ///     }
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<AttachmentResponse> CreateAsync(
+    /// </code></example>
+    public async Task<AttachmentResponse> CreateAsync(
         AttachmentEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -153,19 +185,14 @@ public partial class AttachmentsClient
         {
             _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
         }
-        var requestBody = new Dictionary<string, object>()
-        {
-            { "model", request.Model },
-            { "remote_user_id", request.RemoteUserId },
-        };
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Post,
                     Path = "ats/v1/attachments",
-                    Body = requestBody,
+                    Body = request,
                     Query = _query,
                     ContentType = "application/json",
                     Options = options,
@@ -173,9 +200,9 @@ public partial class AttachmentsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<AttachmentResponse>(responseBody)!;
@@ -186,22 +213,23 @@ public partial class AttachmentsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns an `Attachment` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Ats.Attachments.RetrieveAsync("id", new AttachmentsRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<Attachment> RetrieveAsync(
+    /// </code></example>
+    public async Task<Attachment> RetrieveAsync(
         string id,
         AttachmentsRetrieveRequest request,
         RequestOptions? options = null,
@@ -209,13 +237,14 @@ public partial class AttachmentsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.ToString();
-        }
+        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.RemoteFields != null)
         {
@@ -226,21 +255,24 @@ public partial class AttachmentsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"ats/v1/attachments/{id}",
+                    Path = string.Format(
+                        "ats/v1/attachments/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Attachment>(responseBody)!;
@@ -251,31 +283,32 @@ public partial class AttachmentsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns metadata for `Attachment` POSTs.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Ats.Attachments.MetaPostRetrieveAsync();
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
+    /// </code></example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "ats/v1/attachments/meta/post",
                     Options = options,
@@ -283,9 +316,9 @@ public partial class AttachmentsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
@@ -296,10 +329,13 @@ public partial class AttachmentsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

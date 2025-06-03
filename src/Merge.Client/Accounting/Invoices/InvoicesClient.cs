@@ -17,18 +17,14 @@ public partial class InvoicesClient
     /// <summary>
     /// Returns a list of `Invoice` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Invoices.ListAsync(new InvoicesListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedInvoiceList> ListAsync(
+    private async Task<PaginatedInvoiceList> ListInternalAsync(
         InvoicesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -50,10 +46,6 @@ public partial class InvoicesClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -126,10 +118,10 @@ public partial class InvoicesClient
             _query["type"] = request.Type.Value.Stringify();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/invoices",
                     Query = _query,
@@ -138,9 +130,9 @@ public partial class InvoicesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedInvoiceList>(responseBody)!;
@@ -151,220 +143,20 @@ public partial class InvoicesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Creates an `Invoice` object with the given values.
-    /// Including a `PurchaseOrder` id in the `purchase_orders` property will generate an Accounts Payable Invoice from the specified Purchase Order(s).
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Invoices.CreateAsync(
-    ///     new InvoiceEndpointRequest { Model = new InvoiceRequest() }
-    /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<InvoiceResponse> CreateAsync(
-        InvoiceEndpointRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var _query = new Dictionary<string, object>();
-        if (request.IsDebugMode != null)
         {
-            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
-        }
-        if (request.RunAsync != null)
-        {
-            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
-        }
-        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "accounting/v1/invoices",
-                    Body = requestBody,
-                    Query = _query,
-                    ContentType = "application/json",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<InvoiceResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Returns an `Invoice` object with the given `id`.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Invoices.RetrieveAsync("id", new InvoicesRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<Invoice> RetrieveAsync(
-        string id,
-        InvoicesRetrieveRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
-        }
-        if (request.IncludeRemoteData != null)
-        {
-            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
-        }
-        if (request.IncludeRemoteFields != null)
-        {
-            _query["include_remote_fields"] = JsonUtils.Serialize(
-                request.IncludeRemoteFields.Value
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
             );
         }
-        if (request.RemoteFields != null)
-        {
-            _query["remote_fields"] = request.RemoteFields.ToString();
-        }
-        if (request.ShowEnumOrigins != null)
-        {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
-        }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = $"accounting/v1/invoices/{id}",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<Invoice>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Updates an `Invoice` object with the given `id`.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Invoices.PartialUpdateAsync(
-    ///     "id",
-    ///     new PatchedInvoiceEndpointRequest { Model = new InvoiceRequest() }
-    /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<InvoiceResponse> PartialUpdateAsync(
-        string id,
-        PatchedInvoiceEndpointRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var _query = new Dictionary<string, object>();
-        if (request.IsDebugMode != null)
-        {
-            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
-        }
-        if (request.RunAsync != null)
-        {
-            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
-        }
-        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethodExtensions.Patch,
-                    Path = $"accounting/v1/invoices/{id}",
-                    Body = requestBody,
-                    Query = _query,
-                    ContentType = "application/json",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<InvoiceResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Invoices.LineItemsRemoteFieldClassesListAsync(
-    ///     new InvoicesLineItemsRemoteFieldClassesListRequest()
-    /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListAsync(
+    private async Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListInternalAsync(
         InvoicesLineItemsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -396,10 +188,10 @@ public partial class InvoicesClient
             _query["page_size"] = request.PageSize.Value.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/invoices/line-items/remote-field-classes",
                     Query = _query,
@@ -408,9 +200,9 @@ public partial class InvoicesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
@@ -421,115 +213,20 @@ public partial class InvoicesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Returns metadata for `Invoice` PATCHs.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Invoices.MetaPatchRetrieveAsync("id");
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
-        string id,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = $"accounting/v1/invoices/meta/patch/{id}",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
         {
-            try
-            {
-                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Returns metadata for `Invoice` POSTs.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Invoices.MetaPostRetrieveAsync();
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "accounting/v1/invoices/meta/post",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Invoices.RemoteFieldClassesListAsync(
-    ///     new InvoicesRemoteFieldClassesListRequest()
-    /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
+    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         InvoicesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -561,10 +258,10 @@ public partial class InvoicesClient
             _query["page_size"] = request.PageSize.Value.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/invoices/remote-field-classes",
                     Query = _query,
@@ -573,9 +270,9 @@ public partial class InvoicesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
@@ -586,10 +283,434 @@ public partial class InvoicesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `Invoice` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Invoices.ListAsync(new InvoicesListRequest());
+    /// </code></example>
+    public async Task<Pager<Invoice>> ListAsync(
+        InvoicesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            InvoicesListRequest,
+            RequestOptions?,
+            PaginatedInvoiceList,
+            string?,
+            Invoice
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
+    }
+
+    /// <summary>
+    /// Creates an `Invoice` object with the given values.
+    ///             Including a `PurchaseOrder` id in the `purchase_orders` property will generate an Accounts Payable Invoice from the specified Purchase Order(s).
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Invoices.CreateAsync(
+    ///     new InvoiceEndpointRequest { Model = new InvoiceRequest() }
+    /// );
+    /// </code></example>
+    public async Task<InvoiceResponse> CreateAsync(
+        InvoiceEndpointRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.IsDebugMode != null)
+        {
+            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
+        }
+        if (request.RunAsync != null)
+        {
+            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Post,
+                    Path = "accounting/v1/invoices",
+                    Body = request,
+                    Query = _query,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<InvoiceResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns an `Invoice` object with the given `id`.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Invoices.RetrieveAsync("id", new InvoicesRetrieveRequest());
+    /// </code></example>
+    public async Task<Invoice> RetrieveAsync(
+        string id,
+        InvoicesRetrieveRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeRemoteFields != null)
+        {
+            _query["include_remote_fields"] = JsonUtils.Serialize(
+                request.IncludeRemoteFields.Value
+            );
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
+        if (request.RemoteFields != null)
+        {
+            _query["remote_fields"] = request.RemoteFields.ToString();
+        }
+        if (request.ShowEnumOrigins != null)
+        {
+            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "accounting/v1/invoices/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<Invoice>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Updates an `Invoice` object with the given `id`.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Invoices.PartialUpdateAsync(
+    ///     "id",
+    ///     new PatchedInvoiceEndpointRequest { Model = new InvoiceRequest() }
+    /// );
+    /// </code></example>
+    public async Task<InvoiceResponse> PartialUpdateAsync(
+        string id,
+        PatchedInvoiceEndpointRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.IsDebugMode != null)
+        {
+            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
+        }
+        if (request.RunAsync != null)
+        {
+            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethodExtensions.Patch,
+                    Path = string.Format(
+                        "accounting/v1/invoices/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Body = request,
+                    Query = _query,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<InvoiceResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `RemoteFieldClass` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Invoices.LineItemsRemoteFieldClassesListAsync(
+    ///     new InvoicesLineItemsRemoteFieldClassesListRequest()
+    /// );
+    /// </code></example>
+    public async Task<Pager<RemoteFieldClass>> LineItemsRemoteFieldClassesListAsync(
+        InvoicesLineItemsRemoteFieldClassesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            InvoicesLineItemsRemoteFieldClassesListRequest,
+            RequestOptions?,
+            PaginatedRemoteFieldClassList,
+            string?,
+            RemoteFieldClass
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                LineItemsRemoteFieldClassesListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
+    }
+
+    /// <summary>
+    /// Returns metadata for `Invoice` PATCHs.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Invoices.MetaPatchRetrieveAsync("id");
+    /// </code></example>
+    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "accounting/v1/invoices/meta/patch/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns metadata for `Invoice` POSTs.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Invoices.MetaPostRetrieveAsync();
+    /// </code></example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Get,
+                    Path = "accounting/v1/invoices/meta/post",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `RemoteFieldClass` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Invoices.RemoteFieldClassesListAsync(
+    ///     new InvoicesRemoteFieldClassesListRequest()
+    /// );
+    /// </code></example>
+    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+        InvoicesRemoteFieldClassesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            InvoicesRemoteFieldClassesListRequest,
+            RequestOptions?,
+            PaginatedRemoteFieldClassList,
+            string?,
+            RemoteFieldClass
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                RemoteFieldClassesListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 }

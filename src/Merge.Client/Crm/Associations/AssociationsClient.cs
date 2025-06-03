@@ -17,16 +17,7 @@ public partial class AssociationsClient
     /// <summary>
     /// Returns a list of `Association` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Crm.Associations.CustomObjectClassesCustomObjectsAssociationsListAsync(
-    ///     "custom_object_class_id",
-    ///     "object_id",
-    ///     new CustomObjectClassesCustomObjectsAssociationsListRequest()
-    /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedAssociationList> CustomObjectClassesCustomObjectsAssociationsListAsync(
+    private async Task<PaginatedAssociationList> CustomObjectClassesCustomObjectsAssociationsListInternalAsync(
         string customObjectClassId,
         string objectId,
         CustomObjectClassesCustomObjectsAssociationsListRequest request,
@@ -35,6 +26,7 @@ public partial class AssociationsClient
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
         if (request.AssociationTypeId != null)
         {
             _query["association_type_id"] = request.AssociationTypeId;
@@ -52,10 +44,6 @@ public partial class AssociationsClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -90,22 +78,25 @@ public partial class AssociationsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path =
-                        $"crm/v1/custom-object-classes/{customObjectClassId}/custom-objects/{objectId}/associations",
+                    Path = string.Format(
+                        "crm/v1/custom-object-classes/{0}/custom-objects/{1}/associations",
+                        ValueConvert.ToPathParameterString(customObjectClassId),
+                        ValueConvert.ToPathParameterString(objectId)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedAssociationList>(responseBody)!;
@@ -116,18 +107,65 @@ public partial class AssociationsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `Association` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Crm.Associations.CustomObjectClassesCustomObjectsAssociationsListAsync(
+    ///     "custom_object_class_id",
+    ///     "object_id",
+    ///     new CustomObjectClassesCustomObjectsAssociationsListRequest()
+    /// );
+    /// </code></example>
+    public async Task<Pager<Association>> CustomObjectClassesCustomObjectsAssociationsListAsync(
+        string customObjectClassId,
+        string objectId,
+        CustomObjectClassesCustomObjectsAssociationsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            CustomObjectClassesCustomObjectsAssociationsListRequest,
+            RequestOptions?,
+            PaginatedAssociationList,
+            string?,
+            Association
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                CustomObjectClassesCustomObjectsAssociationsListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Creates an Association between `source_object_id` and `target_object_id` of type `association_type_id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Crm.Associations.CustomObjectClassesCustomObjectsAssociationsUpdateAsync(
     ///     "association_type_id",
     ///     "source_class_id",
@@ -136,9 +174,8 @@ public partial class AssociationsClient
     ///     "target_object_id",
     ///     new CustomObjectClassesCustomObjectsAssociationsUpdateRequest()
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<Association> CustomObjectClassesCustomObjectsAssociationsUpdateAsync(
+    /// </code></example>
+    public async Task<Association> CustomObjectClassesCustomObjectsAssociationsUpdateAsync(
         string associationTypeId,
         string sourceClassId,
         string sourceObjectId,
@@ -159,22 +196,28 @@ public partial class AssociationsClient
             _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Put,
-                    Path =
-                        $"crm/v1/custom-object-classes/{sourceClassId}/custom-objects/{sourceObjectId}/associations/{targetClassId}/{targetObjectId}/{associationTypeId}",
+                    Path = string.Format(
+                        "crm/v1/custom-object-classes/{0}/custom-objects/{1}/associations/{2}/{3}/{4}",
+                        ValueConvert.ToPathParameterString(sourceClassId),
+                        ValueConvert.ToPathParameterString(sourceObjectId),
+                        ValueConvert.ToPathParameterString(targetClassId),
+                        ValueConvert.ToPathParameterString(targetObjectId),
+                        ValueConvert.ToPathParameterString(associationTypeId)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Association>(responseBody)!;
@@ -185,10 +228,13 @@ public partial class AssociationsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

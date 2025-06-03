@@ -17,12 +17,7 @@ public partial class CompaniesClient
     /// <summary>
     /// Returns a list of `Company` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Hris.Companies.ListAsync(new CompaniesListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedCompanyList> ListAsync(
+    private async Task<PaginatedCompanyList> ListInternalAsync(
         CompaniesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,10 +71,10 @@ public partial class CompaniesClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/companies",
                     Query = _query,
@@ -88,9 +83,9 @@ public partial class CompaniesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedCompanyList>(responseBody)!;
@@ -101,22 +96,62 @@ public partial class CompaniesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `Company` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Hris.Companies.ListAsync(new CompaniesListRequest());
+    /// </code></example>
+    public async Task<Pager<Company>> ListAsync(
+        CompaniesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            CompaniesListRequest,
+            RequestOptions?,
+            PaginatedCompanyList,
+            string?,
+            Company
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Returns a `Company` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.Companies.RetrieveAsync("id", new CompaniesRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<Company> RetrieveAsync(
+    /// </code></example>
+    public async Task<Company> RetrieveAsync(
         string id,
         CompaniesRetrieveRequest request,
         RequestOptions? options = null,
@@ -128,22 +163,29 @@ public partial class CompaniesClient
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"hris/v1/companies/{id}",
+                    Path = string.Format(
+                        "hris/v1/companies/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Company>(responseBody)!;
@@ -154,10 +196,13 @@ public partial class CompaniesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -17,12 +17,7 @@ public partial class ProjectsClient
     /// <summary>
     /// Returns a list of `Project` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Ticketing.Projects.ListAsync(new ProjectsListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedProjectList> ListAsync(
+    private async Task<PaginatedProjectList> ListInternalAsync(
         ProjectsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,10 +71,10 @@ public partial class ProjectsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "ticketing/v1/projects",
                     Query = _query,
@@ -88,9 +83,9 @@ public partial class ProjectsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedProjectList>(responseBody)!;
@@ -101,75 +96,20 @@ public partial class ProjectsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Returns a `Project` object with the given `id`.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Ticketing.Projects.RetrieveAsync("id", new ProjectsRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<Project> RetrieveAsync(
-        string id,
-        ProjectsRetrieveRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var _query = new Dictionary<string, object>();
-        if (request.IncludeRemoteData != null)
         {
-            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = $"ticketing/v1/projects/{id}",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<Project>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 
     /// <summary>
     /// Returns a list of `User` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Ticketing.Projects.UsersListAsync("parent_id", new ProjectsUsersListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedUserList> UsersListAsync(
+    private async Task<PaginatedUserList> UsersListInternalAsync(
         string parentId,
         ProjectsUsersListRequest request,
         RequestOptions? options = null,
@@ -177,13 +117,10 @@ public partial class ProjectsClient
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -202,21 +139,24 @@ public partial class ProjectsClient
             _query["page_size"] = request.PageSize.Value.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"ticketing/v1/projects/{parentId}/users",
+                    Path = string.Format(
+                        "ticketing/v1/projects/{0}/users",
+                        ValueConvert.ToPathParameterString(parentId)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedUserList>(responseBody)!;
@@ -227,10 +167,153 @@ public partial class ProjectsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `Project` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Ticketing.Projects.ListAsync(new ProjectsListRequest());
+    /// </code></example>
+    public async Task<Pager<Project>> ListAsync(
+        ProjectsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            ProjectsListRequest,
+            RequestOptions?,
+            PaginatedProjectList,
+            string?,
+            Project
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
+    }
+
+    /// <summary>
+    /// Returns a `Project` object with the given `id`.
+    /// </summary>
+    /// <example><code>
+    /// await client.Ticketing.Projects.RetrieveAsync("id", new ProjectsRetrieveRequest());
+    /// </code></example>
+    public async Task<Project> RetrieveAsync(
+        string id,
+        ProjectsRetrieveRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "ticketing/v1/projects/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<Project>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `User` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Ticketing.Projects.UsersListAsync("parent_id", new ProjectsUsersListRequest());
+    /// </code></example>
+    public async Task<Pager<User>> UsersListAsync(
+        string parentId,
+        ProjectsUsersListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            ProjectsUsersListRequest,
+            RequestOptions?,
+            PaginatedUserList,
+            string?,
+            User
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                UsersListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 }

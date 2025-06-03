@@ -17,18 +17,14 @@ public partial class BankInfoClient
     /// <summary>
     /// Returns a list of `BankInfo` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Hris.BankInfo.ListAsync(new BankInfoListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedBankInfoList> ListAsync(
+    private async Task<PaginatedBankInfoList> ListInternalAsync(
         BankInfoListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
         if (request.AccountType != null)
         {
             _query["account_type"] = request.AccountType.Value.Stringify();
@@ -54,10 +50,6 @@ public partial class BankInfoClient
         if (request.EmployeeId != null)
         {
             _query["employee_id"] = request.EmployeeId;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -104,10 +96,10 @@ public partial class BankInfoClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/bank-info",
                     Query = _query,
@@ -116,9 +108,9 @@ public partial class BankInfoClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedBankInfoList>(responseBody)!;
@@ -129,22 +121,62 @@ public partial class BankInfoClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `BankInfo` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Hris.BankInfo.ListAsync(new BankInfoListRequest());
+    /// </code></example>
+    public async Task<Pager<BankInfo>> ListAsync(
+        BankInfoListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            BankInfoListRequest,
+            RequestOptions?,
+            PaginatedBankInfoList,
+            string?,
+            BankInfo
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Returns a `BankInfo` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.BankInfo.RetrieveAsync("id", new BankInfoRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<BankInfo> RetrieveAsync(
+    /// </code></example>
+    public async Task<BankInfo> RetrieveAsync(
         string id,
         BankInfoRetrieveRequest request,
         RequestOptions? options = null,
@@ -152,13 +184,14 @@ public partial class BankInfoClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.ToString();
-        }
+        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.RemoteFields != null)
         {
@@ -169,21 +202,24 @@ public partial class BankInfoClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"hris/v1/bank-info/{id}",
+                    Path = string.Format(
+                        "hris/v1/bank-info/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<BankInfo>(responseBody)!;
@@ -194,10 +230,13 @@ public partial class BankInfoClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

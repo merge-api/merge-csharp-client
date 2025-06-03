@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,18 +18,14 @@ public partial class EmployeesClient
     /// <summary>
     /// Returns a list of `Employee` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Hris.Employees.ListAsync(new EmployeesListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedEmployeeList> ListAsync(
+    private async Task<PaginatedEmployeeList> ListInternalAsync(
         EmployeesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -58,10 +55,6 @@ public partial class EmployeesClient
         if (request.EmploymentType != null)
         {
             _query["employment_type"] = request.EmploymentType;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.FirstName != null)
         {
@@ -176,10 +169,10 @@ public partial class EmployeesClient
             _query["work_location_id"] = request.WorkLocationId;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/employees",
                     Query = _query,
@@ -188,9 +181,9 @@ public partial class EmployeesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedEmployeeList>(responseBody)!;
@@ -201,24 +194,64 @@ public partial class EmployeesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `Employee` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Hris.Employees.ListAsync(new EmployeesListRequest());
+    /// </code></example>
+    public async Task<Pager<Employee>> ListAsync(
+        EmployeesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            EmployeesListRequest,
+            RequestOptions?,
+            PaginatedEmployeeList,
+            string?,
+            Employee
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Creates an `Employee` object with the given values.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.Employees.CreateAsync(
     ///     new EmployeeEndpointRequest { Model = new EmployeeRequest() }
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<EmployeeResponse> CreateAsync(
+    /// </code></example>
+    public async Task<EmployeeResponse> CreateAsync(
         EmployeeEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -233,15 +266,14 @@ public partial class EmployeesClient
         {
             _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
         }
-        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Post,
                     Path = "hris/v1/employees",
-                    Body = requestBody,
+                    Body = request,
                     Query = _query,
                     ContentType = "application/json",
                     Options = options,
@@ -249,9 +281,9 @@ public partial class EmployeesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<EmployeeResponse>(responseBody)!;
@@ -262,22 +294,23 @@ public partial class EmployeesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns an `Employee` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.Employees.RetrieveAsync("id", new EmployeesRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<Employee> RetrieveAsync(
+    /// </code></example>
+    public async Task<Employee> RetrieveAsync(
         string id,
         EmployeesRetrieveRequest request,
         RequestOptions? options = null,
@@ -285,10 +318,7 @@ public partial class EmployeesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
-        }
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -299,6 +329,10 @@ public partial class EmployeesClient
                 request.IncludeSensitiveFields.Value
             );
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         if (request.RemoteFields != null)
         {
             _query["remote_fields"] = request.RemoteFields.Value.Stringify();
@@ -308,21 +342,24 @@ public partial class EmployeesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"hris/v1/employees/{id}",
+                    Path = string.Format(
+                        "hris/v1/employees/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Employee>(responseBody)!;
@@ -333,18 +370,20 @@ public partial class EmployeesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.Employees.IgnoreCreateAsync(
     ///     "model_id",
     ///     new Merge.Client.Hris.IgnoreCommonModelRequest
@@ -352,9 +391,8 @@ public partial class EmployeesClient
     ///         Reason = Merge.Client.Hris.ReasonEnum.GeneralCustomerRequest,
     ///     }
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task IgnoreCreateAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task IgnoreCreateAsync(
         string modelId,
         IgnoreCommonModelRequest request,
         RequestOptions? options = null,
@@ -362,12 +400,15 @@ public partial class EmployeesClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Post,
-                    Path = $"hris/v1/employees/ignore/{modelId}",
+                    Path = string.Format(
+                        "hris/v1/employees/ignore/{0}",
+                        ValueConvert.ToPathParameterString(modelId)
+                    ),
                     Body = request,
                     ContentType = "application/json",
                     Options = options,
@@ -379,32 +420,32 @@ public partial class EmployeesClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns metadata for `Employee` POSTs.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.Employees.MetaPostRetrieveAsync();
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
+    /// </code></example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/employees/meta/post",
                     Options = options,
@@ -412,9 +453,9 @@ public partial class EmployeesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
@@ -425,10 +466,13 @@ public partial class EmployeesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

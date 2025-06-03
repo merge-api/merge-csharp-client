@@ -17,18 +17,14 @@ public partial class TimesheetEntriesClient
     /// <summary>
     /// Returns a list of `TimesheetEntry` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Hris.TimesheetEntries.ListAsync(new TimesheetEntriesListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedTimesheetEntryList> ListAsync(
+    private async Task<PaginatedTimesheetEntryList> ListInternalAsync(
         TimesheetEntriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -54,10 +50,6 @@ public partial class TimesheetEntriesClient
         if (request.EndedBefore != null)
         {
             _query["ended_before"] = request.EndedBefore.Value.ToString(Constants.DateTimeFormat);
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -106,10 +98,10 @@ public partial class TimesheetEntriesClient
             );
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/timesheet-entries",
                     Query = _query,
@@ -118,9 +110,9 @@ public partial class TimesheetEntriesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedTimesheetEntryList>(responseBody)!;
@@ -131,24 +123,64 @@ public partial class TimesheetEntriesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `TimesheetEntry` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Hris.TimesheetEntries.ListAsync(new TimesheetEntriesListRequest());
+    /// </code></example>
+    public async Task<Pager<TimesheetEntry>> ListAsync(
+        TimesheetEntriesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            TimesheetEntriesListRequest,
+            RequestOptions?,
+            PaginatedTimesheetEntryList,
+            string?,
+            TimesheetEntry
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Creates a `TimesheetEntry` object with the given values.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.TimesheetEntries.CreateAsync(
     ///     new TimesheetEntryEndpointRequest { Model = new TimesheetEntryRequest() }
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<TimesheetEntryResponse> CreateAsync(
+    /// </code></example>
+    public async Task<TimesheetEntryResponse> CreateAsync(
         TimesheetEntryEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -163,15 +195,14 @@ public partial class TimesheetEntriesClient
         {
             _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
         }
-        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Post,
                     Path = "hris/v1/timesheet-entries",
-                    Body = requestBody,
+                    Body = request,
                     Query = _query,
                     ContentType = "application/json",
                     Options = options,
@@ -179,9 +210,9 @@ public partial class TimesheetEntriesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<TimesheetEntryResponse>(responseBody)!;
@@ -192,22 +223,23 @@ public partial class TimesheetEntriesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns a `TimesheetEntry` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.TimesheetEntries.RetrieveAsync("id", new TimesheetEntriesRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<TimesheetEntry> RetrieveAsync(
+    /// </code></example>
+    public async Task<TimesheetEntry> RetrieveAsync(
         string id,
         TimesheetEntriesRetrieveRequest request,
         RequestOptions? options = null,
@@ -215,30 +247,34 @@ public partial class TimesheetEntriesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.ToString();
-        }
+        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"hris/v1/timesheet-entries/{id}",
+                    Path = string.Format(
+                        "hris/v1/timesheet-entries/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<TimesheetEntry>(responseBody)!;
@@ -249,31 +285,32 @@ public partial class TimesheetEntriesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns metadata for `TimesheetEntry` POSTs.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.TimesheetEntries.MetaPostRetrieveAsync();
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
+    /// </code></example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/timesheet-entries/meta/post",
                     Options = options,
@@ -281,9 +318,9 @@ public partial class TimesheetEntriesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
@@ -294,10 +331,13 @@ public partial class TimesheetEntriesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

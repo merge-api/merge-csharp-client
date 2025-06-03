@@ -1,8 +1,17 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
 
+/// <summary>
+/// # The ReportItem Object
+/// ### Description
+/// The `ReportItem` object is used to represent a report item for a Balance Sheet, Cash Flow Statement or Profit and Loss Report.
+///
+/// ### Usage Example
+/// Fetch from the `GET BalanceSheet` endpoint and view the balance sheet's report items.
+/// </summary>
 public record ReportItem
 {
     /// <summary>
@@ -14,12 +23,14 @@ public record ReportItem
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; set; }
 
@@ -35,6 +46,7 @@ public record ReportItem
     [JsonPropertyName("value")]
     public double? Value { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("sub_items")]
     public IEnumerable<Dictionary<string, object?>>? SubItems { get; set; }
 
@@ -50,6 +62,17 @@ public record ReportItem
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

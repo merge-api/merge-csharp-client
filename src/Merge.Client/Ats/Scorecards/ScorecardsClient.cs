@@ -17,18 +17,14 @@ public partial class ScorecardsClient
     /// <summary>
     /// Returns a list of `Scorecard` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Ats.Scorecards.ListAsync(new ScorecardsListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedScorecardList> ListAsync(
+    private async Task<PaginatedScorecardList> ListInternalAsync(
         ScorecardsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.ApplicationId != null)
         {
             _query["application_id"] = request.ApplicationId;
@@ -46,10 +42,6 @@ public partial class ScorecardsClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -100,10 +92,10 @@ public partial class ScorecardsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "ats/v1/scorecards",
                     Query = _query,
@@ -112,9 +104,9 @@ public partial class ScorecardsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedScorecardList>(responseBody)!;
@@ -125,22 +117,62 @@ public partial class ScorecardsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `Scorecard` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Ats.Scorecards.ListAsync(new ScorecardsListRequest());
+    /// </code></example>
+    public async Task<Pager<Scorecard>> ListAsync(
+        ScorecardsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            ScorecardsListRequest,
+            RequestOptions?,
+            PaginatedScorecardList,
+            string?,
+            Scorecard
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Returns a `Scorecard` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Ats.Scorecards.RetrieveAsync("id", new ScorecardsRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<Scorecard> RetrieveAsync(
+    /// </code></example>
+    public async Task<Scorecard> RetrieveAsync(
         string id,
         ScorecardsRetrieveRequest request,
         RequestOptions? options = null,
@@ -148,13 +180,14 @@ public partial class ScorecardsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
-        }
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.RemoteFields != null)
         {
@@ -165,21 +198,24 @@ public partial class ScorecardsClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"ats/v1/scorecards/{id}",
+                    Path = string.Format(
+                        "ats/v1/scorecards/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Scorecard>(responseBody)!;
@@ -190,10 +226,13 @@ public partial class ScorecardsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

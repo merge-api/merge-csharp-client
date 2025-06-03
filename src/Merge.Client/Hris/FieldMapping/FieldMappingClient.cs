@@ -17,12 +17,10 @@ public partial class FieldMappingClient
     /// <summary>
     /// Get all Field Mappings for this Linked Account. Field Mappings are mappings between third-party Remote Fields and user defined Merge fields. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.FieldMapping.FieldMappingsRetrieveAsync(new FieldMappingsRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync(
+    /// </code></example>
+    public async Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync(
         FieldMappingsRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -36,10 +34,10 @@ public partial class FieldMappingClient
             );
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/field-mappings",
                     Query = _query,
@@ -48,9 +46,9 @@ public partial class FieldMappingClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<FieldMappingApiInstanceResponse>(responseBody)!;
@@ -61,18 +59,20 @@ public partial class FieldMappingClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Create new Field Mappings that will be available after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.FieldMapping.FieldMappingsCreateAsync(
     ///     new CreateFieldMappingRequest
     ///     {
@@ -84,9 +84,8 @@ public partial class FieldMappingClient
     ///         CommonModelName = "ExampleCommonModel",
     ///     }
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsCreateAsync(
+    /// </code></example>
+    public async Task<FieldMappingInstanceResponse> FieldMappingsCreateAsync(
         CreateFieldMappingRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -99,23 +98,14 @@ public partial class FieldMappingClient
                 request.ExcludeRemoteFieldMetadata.Value
             );
         }
-        var requestBody = new Dictionary<string, object>()
-        {
-            { "target_field_name", request.TargetFieldName },
-            { "target_field_description", request.TargetFieldDescription },
-            { "remote_field_traversal_path", request.RemoteFieldTraversalPath },
-            { "remote_method", request.RemoteMethod },
-            { "remote_url_path", request.RemoteUrlPath },
-            { "common_model_name", request.CommonModelName },
-        };
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Post,
                     Path = "hris/v1/field-mappings",
-                    Body = requestBody,
+                    Body = request,
                     Query = _query,
                     ContentType = "application/json",
                     Options = options,
@@ -123,9 +113,9 @@ public partial class FieldMappingClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<FieldMappingInstanceResponse>(responseBody)!;
@@ -136,42 +126,46 @@ public partial class FieldMappingClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Deletes Field Mappings for a Linked Account. All data related to this Field Mapping will be deleted and these changes will be reflected after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.FieldMapping.FieldMappingsDestroyAsync("field_mapping_id");
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsDestroyAsync(
+    /// </code></example>
+    public async Task<FieldMappingInstanceResponse> FieldMappingsDestroyAsync(
         string fieldMappingId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Delete,
-                    Path = $"hris/v1/field-mappings/{fieldMappingId}",
+                    Path = string.Format(
+                        "hris/v1/field-mappings/{0}",
+                        ValueConvert.ToPathParameterString(fieldMappingId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<FieldMappingInstanceResponse>(responseBody)!;
@@ -182,25 +176,26 @@ public partial class FieldMappingClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Create or update existing Field Mappings for a Linked Account. Changes will be reflected after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.FieldMapping.FieldMappingsPartialUpdateAsync(
     ///     "field_mapping_id",
     ///     new PatchedEditFieldMappingRequest()
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsPartialUpdateAsync(
+    /// </code></example>
+    public async Task<FieldMappingInstanceResponse> FieldMappingsPartialUpdateAsync(
         string fieldMappingId,
         PatchedEditFieldMappingRequest request,
         RequestOptions? options = null,
@@ -208,12 +203,15 @@ public partial class FieldMappingClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethodExtensions.Patch,
-                    Path = $"hris/v1/field-mappings/{fieldMappingId}",
+                    Path = string.Format(
+                        "hris/v1/field-mappings/{0}",
+                        ValueConvert.ToPathParameterString(fieldMappingId)
+                    ),
                     Body = request,
                     ContentType = "application/json",
                     Options = options,
@@ -221,9 +219,9 @@ public partial class FieldMappingClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<FieldMappingInstanceResponse>(responseBody)!;
@@ -234,22 +232,23 @@ public partial class FieldMappingClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Get all remote fields for a Linked Account. Remote fields are third-party fields that are accessible after initial sync if remote_data is enabled. You can use remote fields to override existing Merge fields or map a new Merge field. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.FieldMapping.RemoteFieldsRetrieveAsync(new RemoteFieldsRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<RemoteFieldApiResponse> RemoteFieldsRetrieveAsync(
+    /// </code></example>
+    public async Task<RemoteFieldApiResponse> RemoteFieldsRetrieveAsync(
         RemoteFieldsRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -265,10 +264,10 @@ public partial class FieldMappingClient
             _query["include_example_values"] = request.IncludeExampleValues;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/remote-fields",
                     Query = _query,
@@ -277,9 +276,9 @@ public partial class FieldMappingClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<RemoteFieldApiResponse>(responseBody)!;
@@ -290,31 +289,32 @@ public partial class FieldMappingClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Get all organization-wide Target Fields, this will not include any Linked Account specific Target Fields. Organization-wide Target Fields are additional fields appended to the Merge Common Model for all Linked Accounts in a category. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/target-fields/).
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.FieldMapping.TargetFieldsRetrieveAsync();
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<ExternalTargetFieldApiResponse> TargetFieldsRetrieveAsync(
+    /// </code></example>
+    public async Task<ExternalTargetFieldApiResponse> TargetFieldsRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/target-fields",
                     Options = options,
@@ -322,9 +322,9 @@ public partial class FieldMappingClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<ExternalTargetFieldApiResponse>(responseBody)!;
@@ -335,10 +335,13 @@ public partial class FieldMappingClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

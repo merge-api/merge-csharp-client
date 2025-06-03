@@ -17,18 +17,14 @@ public partial class BalanceSheetsClient
     /// <summary>
     /// Returns a list of `BalanceSheet` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.BalanceSheets.ListAsync(new BalanceSheetsListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedBalanceSheetList> ListAsync(
+    private async Task<PaginatedBalanceSheetList> ListInternalAsync(
         BalanceSheetsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -46,10 +42,6 @@ public partial class BalanceSheetsClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -84,10 +76,10 @@ public partial class BalanceSheetsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/balance-sheets",
                     Query = _query,
@@ -96,9 +88,9 @@ public partial class BalanceSheetsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedBalanceSheetList>(responseBody)!;
@@ -109,22 +101,62 @@ public partial class BalanceSheetsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `BalanceSheet` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.BalanceSheets.ListAsync(new BalanceSheetsListRequest());
+    /// </code></example>
+    public async Task<Pager<BalanceSheet>> ListAsync(
+        BalanceSheetsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            BalanceSheetsListRequest,
+            RequestOptions?,
+            PaginatedBalanceSheetList,
+            string?,
+            BalanceSheet
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Returns a `BalanceSheet` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Accounting.BalanceSheets.RetrieveAsync("id", new BalanceSheetsRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<BalanceSheet> RetrieveAsync(
+    /// </code></example>
+    public async Task<BalanceSheet> RetrieveAsync(
         string id,
         BalanceSheetsRetrieveRequest request,
         RequestOptions? options = null,
@@ -132,30 +164,34 @@ public partial class BalanceSheetsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.ToString();
-        }
+        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"accounting/v1/balance-sheets/{id}",
+                    Path = string.Format(
+                        "accounting/v1/balance-sheets/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<BalanceSheet>(responseBody)!;
@@ -166,10 +202,13 @@ public partial class BalanceSheetsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

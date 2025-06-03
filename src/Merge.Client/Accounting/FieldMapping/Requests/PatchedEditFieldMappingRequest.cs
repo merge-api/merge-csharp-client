@@ -23,6 +23,7 @@ public record PatchedEditFieldMappingRequest
     [JsonPropertyName("remote_url_path")]
     public string? RemoteUrlPath { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

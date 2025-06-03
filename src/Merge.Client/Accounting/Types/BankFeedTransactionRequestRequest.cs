@@ -1,9 +1,18 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using OneOf;
 
 namespace Merge.Client.Accounting;
 
+/// <summary>
+/// # The BankFeedTransaction Object
+/// ### Description
+/// The `BankFeedTransaction` object is used to represent transactions linked to a bank feed account. This includes details about the transaction such as the date, amount, description, and type.
+///
+/// ### Usage Example
+/// Fetch from the `GET BankFeedTransaction` endpoint to view details of a transaction associated with a bank feed account.
+/// </summary>
 public record BankFeedTransactionRequestRequest
 {
     /// <summary>
@@ -51,8 +60,8 @@ public record BankFeedTransactionRequestRequest
     /// <summary>
     /// If the transaction is of type debit or credit.
     ///
-    /// - `CREDIT` - CREDIT
-    /// - `DEBIT` - DEBIT
+    /// * `CREDIT` - CREDIT
+    /// * `DEBIT` - DEBIT
     /// </summary>
     [JsonPropertyName("credit_or_debit")]
     public CreditOrDebitEnum? CreditOrDebit { get; set; }
@@ -63,12 +72,25 @@ public record BankFeedTransactionRequestRequest
     [JsonPropertyName("source_transaction_id")]
     public string? SourceTransactionId { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object?>? IntegrationParams { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

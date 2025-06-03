@@ -17,12 +17,7 @@ public partial class LinkedAccountsClient
     /// <summary>
     /// List linked accounts for your organization.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Ticketing.LinkedAccounts.ListAsync(new LinkedAccountsListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedAccountDetailsAndActionsList> ListAsync(
+    private async Task<PaginatedAccountDetailsAndActionsList> ListInternalAsync(
         LinkedAccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -82,10 +77,10 @@ public partial class LinkedAccountsClient
             _query["status"] = request.Status;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "ticketing/v1/linked-accounts",
                     Query = _query,
@@ -94,9 +89,9 @@ public partial class LinkedAccountsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedAccountDetailsAndActionsList>(responseBody)!;
@@ -107,10 +102,52 @@ public partial class LinkedAccountsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// List linked accounts for your organization.
+    /// </summary>
+    /// <example><code>
+    /// await client.Ticketing.LinkedAccounts.ListAsync(new LinkedAccountsListRequest());
+    /// </code></example>
+    public async Task<Pager<AccountDetailsAndActions>> ListAsync(
+        LinkedAccountsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            LinkedAccountsListRequest,
+            RequestOptions?,
+            PaginatedAccountDetailsAndActionsList,
+            string?,
+            AccountDetailsAndActions
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 }

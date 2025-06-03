@@ -17,18 +17,14 @@ public partial class CreditNotesClient
     /// <summary>
     /// Returns a list of `CreditNote` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.CreditNotes.ListAsync(new CreditNotesListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedCreditNoteList> ListAsync(
+    private async Task<PaginatedCreditNoteList> ListInternalAsync(
         CreditNotesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -46,10 +42,6 @@ public partial class CreditNotesClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -104,10 +96,10 @@ public partial class CreditNotesClient
             );
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/credit-notes",
                     Query = _query,
@@ -116,9 +108,9 @@ public partial class CreditNotesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedCreditNoteList>(responseBody)!;
@@ -129,24 +121,64 @@ public partial class CreditNotesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `CreditNote` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.CreditNotes.ListAsync(new CreditNotesListRequest());
+    /// </code></example>
+    public async Task<Pager<CreditNote>> ListAsync(
+        CreditNotesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            CreditNotesListRequest,
+            RequestOptions?,
+            PaginatedCreditNoteList,
+            string?,
+            CreditNote
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Creates a `CreditNote` object with the given values.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Accounting.CreditNotes.CreateAsync(
     ///     new CreditNoteEndpointRequest { Model = new CreditNoteRequest() }
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<CreditNoteResponse> CreateAsync(
+    /// </code></example>
+    public async Task<CreditNoteResponse> CreateAsync(
         CreditNoteEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -161,15 +193,14 @@ public partial class CreditNotesClient
         {
             _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
         }
-        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Post,
                     Path = "accounting/v1/credit-notes",
-                    Body = requestBody,
+                    Body = request,
                     Query = _query,
                     ContentType = "application/json",
                     Options = options,
@@ -177,9 +208,9 @@ public partial class CreditNotesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<CreditNoteResponse>(responseBody)!;
@@ -190,22 +221,23 @@ public partial class CreditNotesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns a `CreditNote` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Accounting.CreditNotes.RetrieveAsync("id", new CreditNotesRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<CreditNote> RetrieveAsync(
+    /// </code></example>
+    public async Task<CreditNote> RetrieveAsync(
         string id,
         CreditNotesRetrieveRequest request,
         RequestOptions? options = null,
@@ -213,13 +245,14 @@ public partial class CreditNotesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
-        }
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
         }
         if (request.RemoteFields != null)
         {
@@ -230,21 +263,24 @@ public partial class CreditNotesClient
             _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"accounting/v1/credit-notes/{id}",
+                    Path = string.Format(
+                        "accounting/v1/credit-notes/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<CreditNote>(responseBody)!;
@@ -255,31 +291,32 @@ public partial class CreditNotesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns metadata for `CreditNote` POSTs.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Accounting.CreditNotes.MetaPostRetrieveAsync();
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
+    /// </code></example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/credit-notes/meta/post",
                     Options = options,
@@ -287,9 +324,9 @@ public partial class CreditNotesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
@@ -300,10 +337,13 @@ public partial class CreditNotesClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }
