@@ -1,0 +1,145 @@
+using Merge.Ats.AccountDetails;
+using Merge.Ats.AccountToken;
+using Merge.Ats.Activities;
+using Merge.Ats.Applications;
+using Merge.Ats.AsyncPassthrough;
+using Merge.Ats.Attachments;
+using Merge.Ats.AuditTrail;
+using Merge.Ats.AvailableActions;
+using Merge.Ats.Candidates;
+using Merge.Ats.DeleteAccount;
+using Merge.Ats.Departments;
+using Merge.Ats.Eeocs;
+using Merge.Ats.FieldMapping;
+using Merge.Ats.ForceResync;
+using Merge.Ats.GenerateKey;
+using Merge.Ats.Interviews;
+using Merge.Ats.Issues;
+using Merge.Ats.JobInterviewStages;
+using Merge.Ats.JobPostings;
+using Merge.Ats.Jobs;
+using Merge.Ats.LinkedAccounts;
+using Merge.Ats.LinkToken;
+using Merge.Ats.Offers;
+using Merge.Ats.Offices;
+using Merge.Ats.Passthrough;
+using Merge.Ats.RegenerateKey;
+using Merge.Ats.RejectReasons;
+using Merge.Ats.Scopes;
+using Merge.Ats.Scorecards;
+using Merge.Ats.SyncStatus;
+using Merge.Ats.Tags;
+using Merge.Ats.Users;
+using Merge.Ats.WebhookReceivers;
+using Merge.Core;
+
+namespace Merge.Ats;
+
+public partial class AtsClient
+{
+    private RawClient _client;
+
+    internal AtsClient(RawClient client)
+    {
+        _client = client;
+        AccountDetails = new AccountDetailsClient(_client);
+        AccountToken = new AccountTokenClient(_client);
+        Activities = new ActivitiesClient(_client);
+        Applications = new ApplicationsClient(_client);
+        AsyncPassthrough = new AsyncPassthroughClient(_client);
+        Attachments = new AttachmentsClient(_client);
+        AuditTrail = new AuditTrailClient(_client);
+        AvailableActions = new AvailableActionsClient(_client);
+        Candidates = new CandidatesClient(_client);
+        Scopes = new ScopesClient(_client);
+        DeleteAccount = new DeleteAccountClient(_client);
+        Departments = new DepartmentsClient(_client);
+        Eeocs = new EeocsClient(_client);
+        FieldMapping = new FieldMappingClient(_client);
+        GenerateKey = new GenerateKeyClient(_client);
+        Interviews = new InterviewsClient(_client);
+        Issues = new IssuesClient(_client);
+        JobInterviewStages = new JobInterviewStagesClient(_client);
+        JobPostings = new JobPostingsClient(_client);
+        Jobs = new JobsClient(_client);
+        LinkToken = new LinkTokenClient(_client);
+        LinkedAccounts = new LinkedAccountsClient(_client);
+        Offers = new OffersClient(_client);
+        Offices = new OfficesClient(_client);
+        Passthrough = new PassthroughClient(_client);
+        RegenerateKey = new RegenerateKeyClient(_client);
+        RejectReasons = new RejectReasonsClient(_client);
+        Scorecards = new ScorecardsClient(_client);
+        SyncStatus = new SyncStatusClient(_client);
+        ForceResync = new ForceResyncClient(_client);
+        Tags = new TagsClient(_client);
+        Users = new UsersClient(_client);
+        WebhookReceivers = new WebhookReceiversClient(_client);
+    }
+
+    public AccountDetailsClient AccountDetails { get; }
+
+    public AccountTokenClient AccountToken { get; }
+
+    public ActivitiesClient Activities { get; }
+
+    public ApplicationsClient Applications { get; }
+
+    public AsyncPassthroughClient AsyncPassthrough { get; }
+
+    public AttachmentsClient Attachments { get; }
+
+    public AuditTrailClient AuditTrail { get; }
+
+    public AvailableActionsClient AvailableActions { get; }
+
+    public CandidatesClient Candidates { get; }
+
+    public ScopesClient Scopes { get; }
+
+    public DeleteAccountClient DeleteAccount { get; }
+
+    public DepartmentsClient Departments { get; }
+
+    public EeocsClient Eeocs { get; }
+
+    public FieldMappingClient FieldMapping { get; }
+
+    public GenerateKeyClient GenerateKey { get; }
+
+    public InterviewsClient Interviews { get; }
+
+    public IssuesClient Issues { get; }
+
+    public JobInterviewStagesClient JobInterviewStages { get; }
+
+    public JobPostingsClient JobPostings { get; }
+
+    public JobsClient Jobs { get; }
+
+    public LinkTokenClient LinkToken { get; }
+
+    public LinkedAccountsClient LinkedAccounts { get; }
+
+    public OffersClient Offers { get; }
+
+    public OfficesClient Offices { get; }
+
+    public PassthroughClient Passthrough { get; }
+
+    public RegenerateKeyClient RegenerateKey { get; }
+
+    public RejectReasonsClient RejectReasons { get; }
+
+    public ScorecardsClient Scorecards { get; }
+
+    public SyncStatusClient SyncStatus { get; }
+
+    public ForceResyncClient ForceResync { get; }
+
+    public TagsClient Tags { get; }
+
+    public UsersClient Users { get; }
+
+    public WebhookReceiversClient WebhookReceivers { get; }
+}
