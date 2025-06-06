@@ -304,7 +304,7 @@ public partial class ProjectsClient
             .CreateInstanceAsync(
                 request,
                 options,
-                UsersListInternalAsync,
+                (request, options, cancellationToken) => UsersListInternalAsync(parentId, request, options, cancellationToken),
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;

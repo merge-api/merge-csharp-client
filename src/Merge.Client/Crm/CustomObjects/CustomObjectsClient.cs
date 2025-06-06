@@ -222,7 +222,7 @@ public partial class CustomObjectsClient
             .CreateInstanceAsync(
                 request,
                 options,
-                CustomObjectClassesCustomObjectsListInternalAsync,
+                (request, options, cancellationToken) => CustomObjectClassesCustomObjectsListInternalAsync(customObjectClassId, request, options, cancellationToken),
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;

@@ -263,7 +263,7 @@ public partial class CollectionsClient
             .CreateInstanceAsync(
                 request,
                 options,
-                ViewersListInternalAsync,
+                (request, options, cancellationToken) => ViewersListInternalAsync(collectionId, request, options, cancellationToken),
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;

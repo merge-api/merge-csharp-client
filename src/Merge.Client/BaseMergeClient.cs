@@ -8,7 +8,7 @@ using Merge.Client.Ticketing;
 
 namespace Merge.Client;
 
-internal partial class BaseMergeClient
+public partial class BaseMergeClient
 {
     private readonly RawClient _client;
 

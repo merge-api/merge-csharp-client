@@ -141,7 +141,7 @@ public partial class AssociationTypesClient
             .CreateInstanceAsync(
                 request,
                 options,
-                CustomObjectClassesAssociationTypesListInternalAsync,
+                (request, options, cancellationToken) => CustomObjectClassesAssociationTypesListInternalAsync(customObjectClassId, request, options, cancellationToken),
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;

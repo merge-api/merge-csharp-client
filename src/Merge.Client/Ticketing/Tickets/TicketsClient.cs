@@ -619,7 +619,7 @@ public partial class TicketsClient
             .CreateInstanceAsync(
                 request,
                 options,
-                ViewersListInternalAsync,
+                (request, options, cancellationToken) => ViewersListInternalAsync(ticketId, request, options, cancellationToken),
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;
