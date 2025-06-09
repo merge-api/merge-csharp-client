@@ -17,24 +17,22 @@ public partial class RegenerateKeyClient
     /// <summary>
     /// Exchange remote keys.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Ats.RegenerateKey.CreateAsync(
     ///     new RemoteKeyForRegenerationRequest { Name = "Remote Deployment Key 1" }
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<RemoteKey> CreateAsync(
+    /// </code></example>
+    public async Task<RemoteKey> CreateAsync(
         RemoteKeyForRegenerationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Post,
                     Path = "ats/v1/regenerate-key",
                     Body = request,
@@ -44,9 +42,9 @@ public partial class RegenerateKeyClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<RemoteKey>(responseBody)!;
@@ -57,10 +55,13 @@ public partial class RegenerateKeyClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

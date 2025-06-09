@@ -1,11 +1,21 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using OneOf;
 
 namespace Merge.Client.Accounting;
 
+/// <summary>
+/// # The BankFeedTransaction Object
+/// ### Description
+/// The `BankFeedTransaction` object is used to represent transactions linked to a bank feed account. This includes details about the transaction such as the date, amount, description, and type.
+///
+/// ### Usage Example
+/// Fetch from the `GET BankFeedTransaction` endpoint to view details of a transaction associated with a bank feed account.
+/// </summary>
 public record BankFeedTransaction
 {
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
@@ -18,12 +28,14 @@ public record BankFeedTransaction
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; set; }
 
@@ -72,8 +84,8 @@ public record BankFeedTransaction
     /// <summary>
     /// If the transaction is of type debit or credit.
     ///
-    /// - `CREDIT` - CREDIT
-    /// - `DEBIT` - DEBIT
+    /// * `CREDIT` - CREDIT
+    /// * `DEBIT` - DEBIT
     /// </summary>
     [JsonPropertyName("credit_or_debit")]
     public CreditOrDebitEnum? CreditOrDebit { get; set; }
@@ -87,15 +99,28 @@ public record BankFeedTransaction
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 
     /// <summary>
     /// Whether or not this transaction has been processed by the external system. For example, NetSuite writes this field as True when the SuiteApp has processed the transaction.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("is_processed")]
     public bool? IsProcessed { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

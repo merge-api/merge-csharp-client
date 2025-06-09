@@ -17,18 +17,14 @@ public partial class EmployeePayrollRunsClient
     /// <summary>
     /// Returns a list of `EmployeePayrollRun` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Hris.EmployeePayrollRuns.ListAsync(new EmployeePayrollRunsListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedEmployeePayrollRunList> ListAsync(
+    private async Task<PaginatedEmployeePayrollRunList> ListInternalAsync(
         EmployeePayrollRunsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -54,10 +50,6 @@ public partial class EmployeePayrollRunsClient
         if (request.EndedBefore != null)
         {
             _query["ended_before"] = request.EndedBefore.Value.ToString(Constants.DateTimeFormat);
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -106,10 +98,10 @@ public partial class EmployeePayrollRunsClient
             );
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/employee-payroll-runs",
                     Query = _query,
@@ -118,9 +110,9 @@ public partial class EmployeePayrollRunsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedEmployeePayrollRunList>(responseBody)!;
@@ -131,22 +123,62 @@ public partial class EmployeePayrollRunsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `EmployeePayrollRun` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Hris.EmployeePayrollRuns.ListAsync(new EmployeePayrollRunsListRequest());
+    /// </code></example>
+    public async Task<Pager<EmployeePayrollRun>> ListAsync(
+        EmployeePayrollRunsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            EmployeePayrollRunsListRequest,
+            RequestOptions?,
+            PaginatedEmployeePayrollRunList,
+            string?,
+            EmployeePayrollRun
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Returns an `EmployeePayrollRun` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.EmployeePayrollRuns.RetrieveAsync("id", new EmployeePayrollRunsRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<EmployeePayrollRun> RetrieveAsync(
+    /// </code></example>
+    public async Task<EmployeePayrollRun> RetrieveAsync(
         string id,
         EmployeePayrollRunsRetrieveRequest request,
         RequestOptions? options = null,
@@ -154,30 +186,34 @@ public partial class EmployeePayrollRunsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
-        }
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"hris/v1/employee-payroll-runs/{id}",
+                    Path = string.Format(
+                        "hris/v1/employee-payroll-runs/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<EmployeePayrollRun>(responseBody)!;
@@ -188,10 +224,13 @@ public partial class EmployeePayrollRunsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

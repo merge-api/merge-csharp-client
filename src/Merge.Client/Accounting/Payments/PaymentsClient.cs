@@ -17,18 +17,14 @@ public partial class PaymentsClient
     /// <summary>
     /// Returns a list of `Payment` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Payments.ListAsync(new PaymentsListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedPaymentList> ListAsync(
+    private async Task<PaginatedPaymentList> ListInternalAsync(
         PaymentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.AccountId != null)
         {
             _query["account_id"] = request.AccountId;
@@ -54,10 +50,6 @@ public partial class PaymentsClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -110,10 +102,10 @@ public partial class PaymentsClient
             );
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/payments",
                     Query = _query,
@@ -122,9 +114,9 @@ public partial class PaymentsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedPaymentList>(responseBody)!;
@@ -135,211 +127,20 @@ public partial class PaymentsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Creates a `Payment` object with the given values.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Payments.CreateAsync(
-    ///     new PaymentEndpointRequest { Model = new PaymentRequest() }
-    /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaymentResponse> CreateAsync(
-        PaymentEndpointRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var _query = new Dictionary<string, object>();
-        if (request.IsDebugMode != null)
         {
-            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
-        }
-        if (request.RunAsync != null)
-        {
-            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
-        }
-        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "accounting/v1/payments",
-                    Body = requestBody,
-                    Query = _query,
-                    ContentType = "application/json",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<PaymentResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Returns a `Payment` object with the given `id`.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Payments.RetrieveAsync("id", new PaymentsRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<Payment> RetrieveAsync(
-        string id,
-        PaymentsRetrieveRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
-        }
-        if (request.IncludeRemoteData != null)
-        {
-            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
-        }
-        if (request.IncludeRemoteFields != null)
-        {
-            _query["include_remote_fields"] = JsonUtils.Serialize(
-                request.IncludeRemoteFields.Value
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
             );
         }
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = $"accounting/v1/payments/{id}",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<Payment>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Updates a `Payment` object with the given `id`.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Payments.PartialUpdateAsync(
-    ///     "id",
-    ///     new PatchedPaymentEndpointRequest { Model = new PatchedPaymentRequest() }
-    /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaymentResponse> PartialUpdateAsync(
-        string id,
-        PatchedPaymentEndpointRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var _query = new Dictionary<string, object>();
-        if (request.IsDebugMode != null)
-        {
-            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
-        }
-        if (request.RunAsync != null)
-        {
-            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
-        }
-        var requestBody = new Dictionary<string, object>() { { "model", request.Model } };
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethodExtensions.Patch,
-                    Path = $"accounting/v1/payments/{id}",
-                    Body = requestBody,
-                    Query = _query,
-                    ContentType = "application/json",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<PaymentResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Payments.LineItemsRemoteFieldClassesListAsync(
-    ///     new PaymentsLineItemsRemoteFieldClassesListRequest()
-    /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListAsync(
+    private async Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListInternalAsync(
         PaymentsLineItemsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -371,10 +172,10 @@ public partial class PaymentsClient
             _query["page_size"] = request.PageSize.Value.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/payments/line-items/remote-field-classes",
                     Query = _query,
@@ -383,9 +184,9 @@ public partial class PaymentsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
@@ -396,115 +197,20 @@ public partial class PaymentsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Returns metadata for `Payment` PATCHs.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Payments.MetaPatchRetrieveAsync("id");
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
-        string id,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = $"accounting/v1/payments/meta/patch/{id}",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
         {
-            try
-            {
-                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    /// <summary>
-    /// Returns metadata for `Payment` POSTs.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Payments.MetaPostRetrieveAsync();
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "accounting/v1/payments/meta/post",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new MergeException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.Payments.RemoteFieldClassesListAsync(
-    ///     new PaymentsRemoteFieldClassesListRequest()
-    /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListAsync(
+    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         PaymentsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -536,10 +242,10 @@ public partial class PaymentsClient
             _query["page_size"] = request.PageSize.Value.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/payments/remote-field-classes",
                     Query = _query,
@@ -548,9 +254,9 @@ public partial class PaymentsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedRemoteFieldClassList>(responseBody)!;
@@ -561,10 +267,425 @@ public partial class PaymentsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `Payment` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Payments.ListAsync(new PaymentsListRequest());
+    /// </code></example>
+    public async Task<Pager<Payment>> ListAsync(
+        PaymentsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            PaymentsListRequest,
+            RequestOptions?,
+            PaginatedPaymentList,
+            string?,
+            Payment
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
+    }
+
+    /// <summary>
+    /// Creates a `Payment` object with the given values.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Payments.CreateAsync(
+    ///     new PaymentEndpointRequest { Model = new PaymentRequest() }
+    /// );
+    /// </code></example>
+    public async Task<PaymentResponse> CreateAsync(
+        PaymentEndpointRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.IsDebugMode != null)
+        {
+            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
+        }
+        if (request.RunAsync != null)
+        {
+            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Post,
+                    Path = "accounting/v1/payments",
+                    Body = request,
+                    Query = _query,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<PaymentResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a `Payment` object with the given `id`.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Payments.RetrieveAsync("id", new PaymentsRetrieveRequest());
+    /// </code></example>
+    public async Task<Payment> RetrieveAsync(
+        string id,
+        PaymentsRetrieveRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeRemoteFields != null)
+        {
+            _query["include_remote_fields"] = JsonUtils.Serialize(
+                request.IncludeRemoteFields.Value
+            );
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "accounting/v1/payments/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<Payment>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Updates a `Payment` object with the given `id`.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Payments.PartialUpdateAsync(
+    ///     "id",
+    ///     new PatchedPaymentEndpointRequest { Model = new PatchedPaymentRequest() }
+    /// );
+    /// </code></example>
+    public async Task<PaymentResponse> PartialUpdateAsync(
+        string id,
+        PatchedPaymentEndpointRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.IsDebugMode != null)
+        {
+            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
+        }
+        if (request.RunAsync != null)
+        {
+            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethodExtensions.Patch,
+                    Path = string.Format(
+                        "accounting/v1/payments/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Body = request,
+                    Query = _query,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<PaymentResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `RemoteFieldClass` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Payments.LineItemsRemoteFieldClassesListAsync(
+    ///     new PaymentsLineItemsRemoteFieldClassesListRequest()
+    /// );
+    /// </code></example>
+    public async Task<Pager<RemoteFieldClass>> LineItemsRemoteFieldClassesListAsync(
+        PaymentsLineItemsRemoteFieldClassesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            PaymentsLineItemsRemoteFieldClassesListRequest,
+            RequestOptions?,
+            PaginatedRemoteFieldClassList,
+            string?,
+            RemoteFieldClass
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                LineItemsRemoteFieldClassesListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
+    }
+
+    /// <summary>
+    /// Returns metadata for `Payment` PATCHs.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Payments.MetaPatchRetrieveAsync("id");
+    /// </code></example>
+    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "accounting/v1/payments/meta/patch/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns metadata for `Payment` POSTs.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Payments.MetaPostRetrieveAsync();
+    /// </code></example>
+    public async Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Get,
+                    Path = "accounting/v1/payments/meta/post",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `RemoteFieldClass` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.Payments.RemoteFieldClassesListAsync(
+    ///     new PaymentsRemoteFieldClassesListRequest()
+    /// );
+    /// </code></example>
+    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+        PaymentsRemoteFieldClassesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            PaymentsRemoteFieldClassesListRequest,
+            RequestOptions?,
+            PaginatedRemoteFieldClassList,
+            string?,
+            RemoteFieldClass
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                RemoteFieldClassesListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 }

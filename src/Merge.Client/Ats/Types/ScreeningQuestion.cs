@@ -1,11 +1,21 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using OneOf;
 
 namespace Merge.Client.Ats;
 
+/// <summary>
+/// # The ScreeningQuestion Object
+/// ### Description
+/// The `ScreeningQuestion` object is used to represent questions asked to screen candidates for a job.
+///
+/// ### Usage Example
+/// TODO
+/// </summary>
 public record ScreeningQuestion
 {
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
@@ -18,12 +28,14 @@ public record ScreeningQuestion
     /// <summary>
     /// The datetime that this object was created by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("created_at")]
     public DateTime? CreatedAt { get; set; }
 
     /// <summary>
     /// The datetime that this object was modified by Merge.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("modified_at")]
     public DateTime? ModifiedAt { get; set; }
 
@@ -48,14 +60,14 @@ public record ScreeningQuestion
     /// <summary>
     /// The data type for the screening question.
     ///
-    /// - `DATE` - DATE
-    /// - `FILE` - FILE
-    /// - `SINGLE_SELECT` - SINGLE_SELECT
-    /// - `MULTI_SELECT` - MULTI_SELECT
-    /// - `SINGLE_LINE_TEXT` - SINGLE_LINE_TEXT
-    /// - `MULTI_LINE_TEXT` - MULTI_LINE_TEXT
-    /// - `NUMERIC` - NUMERIC
-    /// - `BOOLEAN` - BOOLEAN
+    /// * `DATE` - DATE
+    /// * `FILE` - FILE
+    /// * `SINGLE_SELECT` - SINGLE_SELECT
+    /// * `MULTI_SELECT` - MULTI_SELECT
+    /// * `SINGLE_LINE_TEXT` - SINGLE_LINE_TEXT
+    /// * `MULTI_LINE_TEXT` - MULTI_LINE_TEXT
+    /// * `NUMERIC` - NUMERIC
+    /// * `BOOLEAN` - BOOLEAN
     /// </summary>
     [JsonPropertyName("type")]
     public ScreeningQuestionTypeEnum? Type { get; set; }
@@ -75,6 +87,17 @@ public record ScreeningQuestion
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

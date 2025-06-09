@@ -17,21 +17,19 @@ public partial class WebhookReceiversClient
     /// <summary>
     /// Returns a list of `WebhookReceiver` objects.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.WebhookReceivers.ListAsync();
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<IEnumerable<WebhookReceiver>> ListAsync(
+    /// </code></example>
+    public async Task<IEnumerable<WebhookReceiver>> ListAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/webhook-receivers",
                     Options = options,
@@ -39,9 +37,9 @@ public partial class WebhookReceiversClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<IEnumerable<WebhookReceiver>>(responseBody)!;
@@ -52,34 +50,35 @@ public partial class WebhookReceiversClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Creates a `WebhookReceiver` object with the given values.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.WebhookReceivers.CreateAsync(
     ///     new WebhookReceiverRequest { Event = "event", IsActive = true }
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<WebhookReceiver> CreateAsync(
+    /// </code></example>
+    public async Task<WebhookReceiver> CreateAsync(
         WebhookReceiverRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Post,
                     Path = "hris/v1/webhook-receivers",
                     Body = request,
@@ -89,9 +88,9 @@ public partial class WebhookReceiversClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<WebhookReceiver>(responseBody)!;
@@ -102,10 +101,13 @@ public partial class WebhookReceiversClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

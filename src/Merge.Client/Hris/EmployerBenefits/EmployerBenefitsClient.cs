@@ -17,12 +17,7 @@ public partial class EmployerBenefitsClient
     /// <summary>
     /// Returns a list of `EmployerBenefit` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Hris.EmployerBenefits.ListAsync(new EmployerBenefitsListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedEmployerBenefitList> ListAsync(
+    private async Task<PaginatedEmployerBenefitList> ListInternalAsync(
         EmployerBenefitsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,10 +71,10 @@ public partial class EmployerBenefitsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/employer-benefits",
                     Query = _query,
@@ -88,9 +83,9 @@ public partial class EmployerBenefitsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedEmployerBenefitList>(responseBody)!;
@@ -101,22 +96,62 @@ public partial class EmployerBenefitsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `EmployerBenefit` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Hris.EmployerBenefits.ListAsync(new EmployerBenefitsListRequest());
+    /// </code></example>
+    public async Task<Pager<EmployerBenefit>> ListAsync(
+        EmployerBenefitsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            EmployerBenefitsListRequest,
+            RequestOptions?,
+            PaginatedEmployerBenefitList,
+            string?,
+            EmployerBenefit
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Returns an `EmployerBenefit` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Hris.EmployerBenefits.RetrieveAsync("id", new EmployerBenefitsRetrieveRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<EmployerBenefit> RetrieveAsync(
+    /// </code></example>
+    public async Task<EmployerBenefit> RetrieveAsync(
         string id,
         EmployerBenefitsRetrieveRequest request,
         RequestOptions? options = null,
@@ -128,22 +163,29 @@ public partial class EmployerBenefitsClient
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"hris/v1/employer-benefits/{id}",
+                    Path = string.Format(
+                        "hris/v1/employer-benefits/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<EmployerBenefit>(responseBody)!;
@@ -154,10 +196,13 @@ public partial class EmployerBenefitsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

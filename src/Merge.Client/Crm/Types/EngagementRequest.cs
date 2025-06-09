@@ -1,9 +1,17 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 using OneOf;
 
 namespace Merge.Client.Crm;
 
+/// <summary>
+/// # The Engagement Object
+/// ### Description
+/// The `Engagement` object is used to represent an interaction noted in a CRM system.
+/// ### Usage Example
+/// TODO
+/// </summary>
 public record EngagementRequest
 {
     /// <summary>
@@ -27,8 +35,8 @@ public record EngagementRequest
     /// <summary>
     /// The engagement's direction.
     ///
-    /// - `INBOUND` - INBOUND
-    /// - `OUTBOUND` - OUTBOUND
+    /// * `INBOUND` - INBOUND
+    /// * `OUTBOUND` - OUTBOUND
     /// </summary>
     [JsonPropertyName("direction")]
     public DirectionEnum? Direction { get; set; }
@@ -60,15 +68,29 @@ public record EngagementRequest
     [JsonPropertyName("contacts")]
     public IEnumerable<OneOf<string, Contact>>? Contacts { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object?>? IntegrationParams { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("linked_account_params")]
     public Dictionary<string, object?>? LinkedAccountParams { get; set; }
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("remote_fields")]
     public IEnumerable<RemoteFieldRequest>? RemoteFields { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

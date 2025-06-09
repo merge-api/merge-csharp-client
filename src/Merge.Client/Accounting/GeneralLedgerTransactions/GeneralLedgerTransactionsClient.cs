@@ -17,20 +17,14 @@ public partial class GeneralLedgerTransactionsClient
     /// <summary>
     /// Returns a list of `GeneralLedgerTransaction` objects.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Accounting.GeneralLedgerTransactions.ListAsync(
-    ///     new GeneralLedgerTransactionsListRequest()
-    /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedGeneralLedgerTransactionList> ListAsync(
+    private async Task<PaginatedGeneralLedgerTransactionList> ListInternalAsync(
         GeneralLedgerTransactionsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -48,10 +42,6 @@ public partial class GeneralLedgerTransactionsClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
-        }
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -98,10 +88,10 @@ public partial class GeneralLedgerTransactionsClient
             _query["remote_id"] = request.RemoteId;
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/general-ledger-transactions",
                     Query = _query,
@@ -110,9 +100,9 @@ public partial class GeneralLedgerTransactionsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedGeneralLedgerTransactionList>(responseBody)!;
@@ -123,25 +113,67 @@ public partial class GeneralLedgerTransactionsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `GeneralLedgerTransaction` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Accounting.GeneralLedgerTransactions.ListAsync(
+    ///     new GeneralLedgerTransactionsListRequest()
+    /// );
+    /// </code></example>
+    public async Task<Pager<GeneralLedgerTransaction>> ListAsync(
+        GeneralLedgerTransactionsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            GeneralLedgerTransactionsListRequest,
+            RequestOptions?,
+            PaginatedGeneralLedgerTransactionList,
+            string?,
+            GeneralLedgerTransaction
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 
     /// <summary>
     /// Returns a `GeneralLedgerTransaction` object with the given `id`.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Accounting.GeneralLedgerTransactions.RetrieveAsync(
     ///     "id",
     ///     new GeneralLedgerTransactionsRetrieveRequest()
     /// );
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<GeneralLedgerTransaction> RetrieveAsync(
+    /// </code></example>
+    public async Task<GeneralLedgerTransaction> RetrieveAsync(
         string id,
         GeneralLedgerTransactionsRetrieveRequest request,
         RequestOptions? options = null,
@@ -149,30 +181,34 @@ public partial class GeneralLedgerTransactionsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.Expand != null)
-        {
-            _query["expand"] = request.Expand.Value.Stringify();
-        }
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
         }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
-                    Path = $"accounting/v1/general-ledger-transactions/{id}",
+                    Path = string.Format(
+                        "accounting/v1/general-ledger-transactions/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Query = _query,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<GeneralLedgerTransaction>(responseBody)!;
@@ -183,10 +219,13 @@ public partial class GeneralLedgerTransactionsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

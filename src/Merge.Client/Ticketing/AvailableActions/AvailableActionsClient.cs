@@ -17,21 +17,19 @@ public partial class AvailableActionsClient
     /// <summary>
     /// Returns a list of models and actions available for an account.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Ticketing.AvailableActions.RetrieveAsync();
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<AvailableActions> RetrieveAsync(
+    /// </code></example>
+    public async Task<AvailableActions> RetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "ticketing/v1/available-actions",
                     Options = options,
@@ -39,9 +37,9 @@ public partial class AvailableActionsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<AvailableActions>(responseBody)!;
@@ -52,10 +50,13 @@ public partial class AvailableActionsClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

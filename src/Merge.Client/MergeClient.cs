@@ -6,4 +6,4 @@ public class MergeClient(
     string apiKey,
     string? accountToken = null,
     ClientOptions? clientOptions = null)
-    : Merge(apiKey, accountToken, clientOptions);
+    : BaseMergeClient(apiKey, accountToken, clientOptions);

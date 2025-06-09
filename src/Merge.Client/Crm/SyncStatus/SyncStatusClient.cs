@@ -17,12 +17,7 @@ public partial class SyncStatusClient
     /// <summary>
     /// Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`. Learn more about sync status in our [Help Center](https://help.merge.dev/en/articles/8184193-merge-sync-statuses).
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Crm.SyncStatus.ListAsync(new SyncStatusListRequest());
-    /// </code>
-    /// </example>
-    public async System.Threading.Tasks.Task<PaginatedSyncStatusList> ListAsync(
+    private async Task<PaginatedSyncStatusList> ListInternalAsync(
         SyncStatusListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -38,10 +33,10 @@ public partial class SyncStatusClient
             _query["page_size"] = request.PageSize.Value.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "crm/v1/sync-status",
                     Query = _query,
@@ -50,9 +45,9 @@ public partial class SyncStatusClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<PaginatedSyncStatusList>(responseBody)!;
@@ -63,10 +58,52 @@ public partial class SyncStatusClient
             }
         }
 
-        throw new MergeApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`. Learn more about sync status in our [Help Center](https://help.merge.dev/en/articles/8184193-merge-sync-statuses).
+    /// </summary>
+    /// <example><code>
+    /// await client.Crm.SyncStatus.ListAsync(new SyncStatusListRequest());
+    /// </code></example>
+    public async Task<Pager<SyncStatus>> ListAsync(
+        SyncStatusListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            SyncStatusListRequest,
+            RequestOptions?,
+            PaginatedSyncStatusList,
+            string?,
+            SyncStatus
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response?.Next,
+                response => response?.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
     }
 }
