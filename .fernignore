@@ -2,9 +2,7 @@
 
 README.md
 
-src/Merge.Client/MergeClient.cs
 src/Merge.Client/Ats/Jobs/JobsClient.cs
-src/Merge.Client/BaseMergeClient.cs
 src/Merge.Client/Crm/AssociationTypes/AssociationTypesClient.cs
 src/Merge.Client/Crm/Associations/AssociationsClient.cs
 src/Merge.Client/Crm/CustomObjects/CustomObjectsClient.cs
