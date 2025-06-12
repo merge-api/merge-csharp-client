@@ -1,12 +1,3 @@
 # Specify files that shouldn't be modified by Fern
 
 README.md
-
-src/Merge.Client/Ats/Jobs/JobsClient.cs
-src/Merge.Client/Crm/AssociationTypes/AssociationTypesClient.cs
-src/Merge.Client/Crm/Associations/AssociationsClient.cs
-src/Merge.Client/Crm/CustomObjects/CustomObjectsClient.cs
-src/Merge.Client/Ticketing/Collections/CollectionsClient.cs
-src/Merge.Client/Ticketing/Projects/ProjectsClient.cs
-src/Merge.Client/Ticketing/Tickets/TicketsClient.cs
-src/Merge.Client/Core/RawClient.cs
