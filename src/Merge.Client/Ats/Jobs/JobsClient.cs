@@ -334,7 +334,7 @@ public partial class JobsClient
             .CreateInstanceAsync(
                 request,
                 options,
-                ScreeningQuestionsListInternalAsync,
+                (request, options, cancellationToken) => ScreeningQuestionsListInternalAsync(jobId, request, options, cancellationToken),
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;
