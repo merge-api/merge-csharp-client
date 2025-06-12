@@ -36,7 +36,7 @@ public partial class PassthroughClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "ticketing/v1/passthrough",
                     Body = request,

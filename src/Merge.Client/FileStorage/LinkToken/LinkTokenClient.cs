@@ -42,7 +42,7 @@ public partial class LinkTokenClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "filestorage/v1/link-token",
                     Body = request,

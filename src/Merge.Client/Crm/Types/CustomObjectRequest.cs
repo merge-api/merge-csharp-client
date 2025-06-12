@@ -9,6 +9,14 @@ public record CustomObjectRequest
     [JsonPropertyName("fields")]
     public Dictionary<string, object?> Fields { get; set; } = new Dictionary<string, object?>();
 
+    [JsonAccess(JsonAccessType.WriteOnly)]
+    [JsonPropertyName("integration_params")]
+    public Dictionary<string, object?>? IntegrationParams { get; set; }
+
+    [JsonAccess(JsonAccessType.WriteOnly)]
+    [JsonPropertyName("linked_account_params")]
+    public Dictionary<string, object?>? LinkedAccountParams { get; set; }
+
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>

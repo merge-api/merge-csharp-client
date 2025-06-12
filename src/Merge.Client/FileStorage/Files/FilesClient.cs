@@ -80,6 +80,10 @@ public partial class FilesClient
         {
             _query["name"] = request.Name;
         }
+        if (request.OrderBy != null)
+        {
+            _query["order_by"] = request.OrderBy.Value.Stringify();
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.Value.ToString();
@@ -92,7 +96,7 @@ public partial class FilesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "filestorage/v1/files",
                     Query = _query,
@@ -134,6 +138,14 @@ public partial class FilesClient
     )
     {
         var _query = new Dictionary<string, object>();
+        if (request.CreatedAfter != null)
+        {
+            _query["created_after"] = request.CreatedAfter;
+        }
+        if (request.CreatedBefore != null)
+        {
+            _query["created_before"] = request.CreatedBefore;
+        }
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -142,9 +154,21 @@ public partial class FilesClient
         {
             _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
         }
-        if (request.MimeType != null)
+        if (request.MimeTypes != null)
         {
-            _query["mime_type"] = request.MimeType;
+            _query["mime_types"] = request.MimeTypes;
+        }
+        if (request.ModifiedAfter != null)
+        {
+            _query["modified_after"] = request.ModifiedAfter;
+        }
+        if (request.ModifiedBefore != null)
+        {
+            _query["modified_before"] = request.ModifiedBefore;
+        }
+        if (request.OrderBy != null)
+        {
+            _query["order_by"] = request.OrderBy.Value.Stringify();
         }
         if (request.PageSize != null)
         {
@@ -154,7 +178,7 @@ public partial class FilesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "filestorage/v1/files/download/request-meta",
                     Query = _query,
@@ -252,7 +276,7 @@ public partial class FilesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "filestorage/v1/files",
                     Body = request,
@@ -313,7 +337,7 @@ public partial class FilesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "filestorage/v1/files/{0}",
@@ -371,7 +395,7 @@ public partial class FilesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "filestorage/v1/files/{0}/download",
@@ -418,7 +442,7 @@ public partial class FilesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "filestorage/v1/files/{0}/download/request-meta",
@@ -509,7 +533,7 @@ public partial class FilesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "filestorage/v1/files/meta/post",
                     Options = options,

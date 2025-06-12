@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
@@ -379,7 +380,7 @@ public record BankFeedAccount
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// The status of the bank feed.
@@ -388,7 +389,7 @@ public record BankFeedAccount
     /// * `INACTIVE` - INACTIVE
     /// </summary>
     [JsonPropertyName("feed_status")]
-    public FeedStatusEnum? FeedStatus { get; set; }
+    public OneOf<FeedStatusEnum, string>? FeedStatus { get; set; }
 
     /// <summary>
     /// The start date of the bank feed’s transactions.
@@ -409,7 +410,7 @@ public record BankFeedAccount
     /// * `CREDIT_CARD` - CREDIT_CARD
     /// </summary>
     [JsonPropertyName("account_type")]
-    public BankFeedAccountAccountTypeEnum? AccountType { get; set; }
+    public OneOf<BankFeedAccountAccountTypeEnum, string>? AccountType { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).

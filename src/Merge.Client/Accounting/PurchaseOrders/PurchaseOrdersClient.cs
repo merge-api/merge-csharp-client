@@ -105,7 +105,7 @@ public partial class PurchaseOrdersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/purchase-orders",
                     Query = _query,
@@ -167,6 +167,10 @@ public partial class PurchaseOrdersClient
         {
             _query["is_common_model_field"] = JsonUtils.Serialize(request.IsCommonModelField.Value);
         }
+        if (request.IsCustom != null)
+        {
+            _query["is_custom"] = JsonUtils.Serialize(request.IsCustom.Value);
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.Value.ToString();
@@ -175,7 +179,7 @@ public partial class PurchaseOrdersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/purchase-orders/line-items/remote-field-classes",
                     Query = _query,
@@ -237,6 +241,10 @@ public partial class PurchaseOrdersClient
         {
             _query["is_common_model_field"] = JsonUtils.Serialize(request.IsCommonModelField.Value);
         }
+        if (request.IsCustom != null)
+        {
+            _query["is_custom"] = JsonUtils.Serialize(request.IsCustom.Value);
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.Value.ToString();
@@ -245,7 +253,7 @@ public partial class PurchaseOrdersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/purchase-orders/remote-field-classes",
                     Query = _query,
@@ -343,7 +351,7 @@ public partial class PurchaseOrdersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "accounting/v1/purchase-orders",
                     Body = request,
@@ -418,7 +426,7 @@ public partial class PurchaseOrdersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "accounting/v1/purchase-orders/{0}",
@@ -509,7 +517,7 @@ public partial class PurchaseOrdersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/purchase-orders/meta/post",
                     Options = options,

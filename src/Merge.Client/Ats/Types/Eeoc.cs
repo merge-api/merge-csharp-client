@@ -63,7 +63,7 @@ public record Eeoc
     /// * `DECLINE_TO_SELF_IDENTIFY` - DECLINE_TO_SELF_IDENTIFY
     /// </summary>
     [JsonPropertyName("race")]
-    public RaceEnum? Race { get; set; }
+    public OneOf<RaceEnum, string>? Race { get; set; }
 
     /// <summary>
     /// The candidate's gender.
@@ -75,7 +75,7 @@ public record Eeoc
     /// * `DECLINE_TO_SELF_IDENTIFY` - DECLINE_TO_SELF_IDENTIFY
     /// </summary>
     [JsonPropertyName("gender")]
-    public GenderEnum? Gender { get; set; }
+    public OneOf<GenderEnum, string>? Gender { get; set; }
 
     /// <summary>
     /// The candidate's veteran status.
@@ -85,7 +85,7 @@ public record Eeoc
     /// * `I_DONT_WISH_TO_ANSWER` - I_DONT_WISH_TO_ANSWER
     /// </summary>
     [JsonPropertyName("veteran_status")]
-    public VeteranStatusEnum? VeteranStatus { get; set; }
+    public OneOf<VeteranStatusEnum, string>? VeteranStatus { get; set; }
 
     /// <summary>
     /// The candidate's disability status.
@@ -95,7 +95,7 @@ public record Eeoc
     /// * `I_DONT_WISH_TO_ANSWER` - I_DONT_WISH_TO_ANSWER
     /// </summary>
     [JsonPropertyName("disability_status")]
-    public DisabilityStatusEnum? DisabilityStatus { get; set; }
+    public OneOf<DisabilityStatusEnum, string>? DisabilityStatus { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).

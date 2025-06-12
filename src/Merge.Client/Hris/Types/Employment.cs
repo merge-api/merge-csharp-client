@@ -73,7 +73,7 @@ public record Employment
     /// * `YEAR` - YEAR
     /// </summary>
     [JsonPropertyName("pay_period")]
-    public PayPeriodEnum? PayPeriod { get; set; }
+    public OneOf<PayPeriodEnum, string>? PayPeriod { get; set; }
 
     /// <summary>
     /// The position's pay frequency.
@@ -89,7 +89,7 @@ public record Employment
     /// * `SEMIMONTHLY` - SEMIMONTHLY
     /// </summary>
     [JsonPropertyName("pay_frequency")]
-    public PayFrequencyEnum? PayFrequency { get; set; }
+    public OneOf<PayFrequencyEnum, string>? PayFrequency { get; set; }
 
     /// <summary>
     /// The position's currency code.
@@ -402,7 +402,7 @@ public record Employment
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("pay_currency")]
-    public PayCurrencyEnum? PayCurrency { get; set; }
+    public OneOf<PayCurrencyEnum, string>? PayCurrency { get; set; }
 
     /// <summary>
     /// The employment's pay group
@@ -419,7 +419,7 @@ public record Employment
     /// * `OWNER` - OWNER
     /// </summary>
     [JsonPropertyName("flsa_status")]
-    public FlsaStatusEnum? FlsaStatus { get; set; }
+    public OneOf<FlsaStatusEnum, string>? FlsaStatus { get; set; }
 
     /// <summary>
     /// The position's effective date.
@@ -437,7 +437,7 @@ public record Employment
     /// * `FREELANCE` - FREELANCE
     /// </summary>
     [JsonPropertyName("employment_type")]
-    public EmploymentTypeEnum? EmploymentType { get; set; }
+    public OneOf<EmploymentTypeEnum, string>? EmploymentType { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).

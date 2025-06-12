@@ -80,7 +80,7 @@ public partial class LinkedAccountsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "crm/v1/linked-accounts",
                     Query = _query,

@@ -18,9 +18,6 @@ public record DownloadRequestMeta
     [JsonPropertyName("headers")]
     public Dictionary<string, object?> Headers { get; set; } = new Dictionary<string, object?>();
 
-    [JsonPropertyName("body")]
-    public Dictionary<string, object?> Body { get; set; } = new Dictionary<string, object?>();
-
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>

@@ -52,7 +52,7 @@ public partial class AuditTrailClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "ticketing/v1/audit-trail",
                     Query = _query,

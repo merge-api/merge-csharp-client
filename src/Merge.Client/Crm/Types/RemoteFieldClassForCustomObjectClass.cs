@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -32,11 +33,13 @@ public record RemoteFieldClassForCustomObjectClass
     [JsonPropertyName("is_required")]
     public bool? IsRequired { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("field_type")]
-    public FieldTypeEnum? FieldType { get; set; }
+    public OneOf<FieldTypeEnum, string>? FieldType { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("field_format")]
-    public FieldFormatEnum? FieldFormat { get; set; }
+    public OneOf<FieldFormatEnum, string>? FieldFormat { get; set; }
 
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("field_choices")]

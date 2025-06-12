@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Hris;
 
@@ -48,7 +49,7 @@ public record PayrollRun
     /// * `CLOSED` - CLOSED
     /// </summary>
     [JsonPropertyName("run_state")]
-    public RunStateEnum? RunState { get; set; }
+    public OneOf<RunStateEnum, string>? RunState { get; set; }
 
     /// <summary>
     /// The type of the payroll run
@@ -60,7 +61,7 @@ public record PayrollRun
     /// * `SIGN_ON_BONUS` - SIGN_ON_BONUS
     /// </summary>
     [JsonPropertyName("run_type")]
-    public RunTypeEnum? RunType { get; set; }
+    public OneOf<RunTypeEnum, string>? RunType { get; set; }
 
     /// <summary>
     /// The day and time the payroll run started.

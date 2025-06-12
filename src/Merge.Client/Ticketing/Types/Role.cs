@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ticketing;
 
@@ -48,7 +49,7 @@ public record Role
     /// The set of actions that a User with this Role can perform. Possible enum values include: `VIEW`, `CREATE`, `EDIT`, `DELETE`, `CLOSE`, and `ASSIGN`.
     /// </summary>
     [JsonPropertyName("ticket_actions")]
-    public IEnumerable<TicketActionsEnum>? TicketActions { get; set; }
+    public IEnumerable<OneOf<TicketActionsEnum, string>>? TicketActions { get; set; }
 
     /// <summary>
     /// The level of Ticket access that a User with this Role can perform.
@@ -58,7 +59,7 @@ public record Role
     /// * `TEAM_ONLY` - TEAM_ONLY
     /// </summary>
     [JsonPropertyName("ticket_access")]
-    public TicketAccessEnum? TicketAccess { get; set; }
+    public OneOf<TicketAccessEnum, string>? TicketAccess { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).

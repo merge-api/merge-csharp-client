@@ -32,7 +32,7 @@ public partial class GenerateKeyClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "ticketing/v1/generate-key",
                     Body = request,

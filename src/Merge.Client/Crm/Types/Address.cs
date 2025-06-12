@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -311,7 +312,7 @@ public record Address
     /// * `ZW` - Zimbabwe
     /// </summary>
     [JsonPropertyName("country")]
-    public CountryEnum? Country { get; set; }
+    public OneOf<CountryEnum, string>? Country { get; set; }
 
     /// <summary>
     /// The address type.
@@ -320,7 +321,7 @@ public record Address
     /// * `SHIPPING` - SHIPPING
     /// </summary>
     [JsonPropertyName("address_type")]
-    public AddressTypeEnum? AddressType { get; set; }
+    public OneOf<AddressTypeEnum, string>? AddressType { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

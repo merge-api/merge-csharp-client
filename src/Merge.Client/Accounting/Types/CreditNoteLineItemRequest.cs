@@ -90,6 +90,15 @@ public record CreditNoteLineItemRequest
     [JsonPropertyName("company")]
     public OneOf<string, CompanyInfo>? Company { get; set; }
 
+    /// <summary>
+    /// The credit note's contact.
+    /// </summary>
+    [JsonPropertyName("contact")]
+    public OneOf<string, Contact>? Contact { get; set; }
+
+    [JsonPropertyName("project")]
+    public OneOf<string, Project>? Project { get; set; }
+
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]
     public Dictionary<string, object?>? IntegrationParams { get; set; }

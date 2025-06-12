@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Hris;
 
@@ -64,7 +65,7 @@ public record Dependent
     /// * `DOMESTIC_PARTNER` - DOMESTIC_PARTNER
     /// </summary>
     [JsonPropertyName("relationship")]
-    public RelationshipEnum? Relationship { get; set; }
+    public OneOf<RelationshipEnum, string>? Relationship { get; set; }
 
     /// <summary>
     /// The employee this person is a dependent of.
@@ -88,7 +89,7 @@ public record Dependent
     /// * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
     /// </summary>
     [JsonPropertyName("gender")]
-    public GenderEnum? Gender { get; set; }
+    public OneOf<GenderEnum, string>? Gender { get; set; }
 
     /// <summary>
     /// The dependent's phone number.

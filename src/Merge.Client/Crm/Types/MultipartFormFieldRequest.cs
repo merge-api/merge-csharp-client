@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -34,7 +35,7 @@ public record MultipartFormFieldRequest
     /// * `GZIP_BASE64` - GZIP_BASE64
     /// </summary>
     [JsonPropertyName("encoding")]
-    public EncodingEnum? Encoding { get; set; }
+    public OneOf<EncodingEnum, string>? Encoding { get; set; }
 
     /// <summary>
     /// The file name of the form field, if the field is for a file.

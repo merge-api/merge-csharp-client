@@ -4,15 +4,18 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
 
-[JsonConverter(typeof(EnumSerializer<AccessLevelEnum>))]
-public enum AccessLevelEnum
+[JsonConverter(typeof(EnumSerializer<TicketAccessLevelEnum>))]
+public enum TicketAccessLevelEnum
 {
-    [EnumMember(Value = "PRIVATE")]
-    Private,
-
     [EnumMember(Value = "COMPANY")]
     Company,
 
     [EnumMember(Value = "PUBLIC")]
     Public,
+
+    [EnumMember(Value = "PRIVATE")]
+    Private,
+
+    [EnumMember(Value = "COLLECTION")]
+    Collection,
 }

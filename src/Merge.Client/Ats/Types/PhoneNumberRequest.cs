@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -29,7 +30,7 @@ public record PhoneNumberRequest
     /// * `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("phone_number_type")]
-    public PhoneNumberTypeEnum? PhoneNumberType { get; set; }
+    public OneOf<PhoneNumberTypeEnum, string>? PhoneNumberType { get; set; }
 
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]

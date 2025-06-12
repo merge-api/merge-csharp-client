@@ -54,7 +54,7 @@ public record ContactRequest
     /// * `ARCHIVED` - ARCHIVED
     /// </summary>
     [JsonPropertyName("status")]
-    public Status7D1Enum? Status { get; set; }
+    public OneOf<Status7D1Enum, string>? Status { get; set; }
 
     /// <summary>
     /// The currency the contact's transactions are in.

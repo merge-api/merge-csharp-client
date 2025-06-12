@@ -29,7 +29,7 @@ public partial class WebhookReceiversClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "filestorage/v1/webhook-receivers",
                     Options = options,
@@ -78,7 +78,7 @@ public partial class WebhookReceiversClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "filestorage/v1/webhook-receivers",
                     Body = request,

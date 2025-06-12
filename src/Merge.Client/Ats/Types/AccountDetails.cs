@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -19,7 +20,7 @@ public record AccountDetails
     public string? IntegrationSlug { get; set; }
 
     [JsonPropertyName("category")]
-    public CategoryEnum? Category { get; set; }
+    public OneOf<CategoryEnum, string>? Category { get; set; }
 
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("end_user_origin_id")]

@@ -397,6 +397,9 @@ public record ExpenseLine
     [JsonPropertyName("contact")]
     public OneOf<string, Contact>? Contact { get; set; }
 
+    [JsonPropertyName("project")]
+    public OneOf<string, Project>? Project { get; set; }
+
     /// <summary>
     /// The description of the item that was purchased by the company.
     /// </summary>

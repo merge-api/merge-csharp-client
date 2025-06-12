@@ -32,7 +32,7 @@ public partial class RegenerateKeyClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "crm/v1/regenerate-key",
                     Body = request,

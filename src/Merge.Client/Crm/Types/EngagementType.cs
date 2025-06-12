@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -45,7 +46,7 @@ public record EngagementType
     /// * `EMAIL` - EMAIL
     /// </summary>
     [JsonPropertyName("activity_type")]
-    public ActivityTypeEnum? ActivityType { get; set; }
+    public OneOf<ActivityTypeEnum, string>? ActivityType { get; set; }
 
     /// <summary>
     /// The engagement type's name.
