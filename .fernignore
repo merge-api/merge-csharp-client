@@ -9,3 +9,4 @@ src/Merge.Client/Crm/CustomObjects/CustomObjectsClient.cs
 src/Merge.Client/Ticketing/Collections/CollectionsClient.cs
 src/Merge.Client/Ticketing/Projects/ProjectsClient.cs
 src/Merge.Client/Ticketing/Tickets/TicketsClient.cs
+src/Merge.Client/MergeClient.cs
