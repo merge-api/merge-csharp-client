@@ -81,7 +81,7 @@ public partial class AssociationsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "crm/v1/custom-object-classes/{0}/custom-objects/{1}/associations",
@@ -149,7 +149,7 @@ public partial class AssociationsClient
             .CreateInstanceAsync(
                 request,
                 options,
-                (request, options, cancellationToken) => CustomObjectClassesCustomObjectsAssociationsListInternalAsync(customObjectClassId, objectId, request, options, cancellationToken),
+                CustomObjectClassesCustomObjectsAssociationsListInternalAsync,
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;
@@ -199,7 +199,7 @@ public partial class AssociationsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
                     Path = string.Format(
                         "crm/v1/custom-object-classes/{0}/custom-objects/{1}/associations/{2}/{3}/{4}",

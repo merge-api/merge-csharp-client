@@ -36,6 +36,12 @@ public record ContactsRemoteFieldClassesListRequest
     public bool? IsCommonModelField { get; set; }
 
     /// <summary>
+    /// If provided, will only return remote fields classes with this is_custom value
+    /// </summary>
+    [JsonIgnore]
+    public bool? IsCustom { get; set; }
+
+    /// <summary>
     /// Number of results to return per page.
     /// </summary>
     [JsonIgnore]

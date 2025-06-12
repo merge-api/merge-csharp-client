@@ -52,7 +52,18 @@ public record Item
     /// * `ARCHIVED` - ARCHIVED
     /// </summary>
     [JsonPropertyName("status")]
-    public Status7D1Enum? Status { get; set; }
+    public OneOf<Status7D1Enum, string>? Status { get; set; }
+
+    /// <summary>
+    /// The item's type.
+    ///
+    /// * `INVENTORY` - INVENTORY
+    /// * `NON_INVENTORY` - NON_INVENTORY
+    /// * `SERVICE` - SERVICE
+    /// * `UNKNOWN` - UNKNOWN
+    /// </summary>
+    [JsonPropertyName("type")]
+    public OneOf<Type2BbEnum, string>? Type { get; set; }
 
     /// <summary>
     /// The item's unit price.

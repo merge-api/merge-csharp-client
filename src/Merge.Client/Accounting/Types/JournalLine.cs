@@ -368,7 +368,7 @@ public record JournalLine
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// The company the journal entry belongs to.
@@ -378,6 +378,9 @@ public record JournalLine
 
     [JsonPropertyName("employee")]
     public string? Employee { get; set; }
+
+    [JsonPropertyName("project")]
+    public OneOf<string, Project>? Project { get; set; }
 
     [JsonPropertyName("contact")]
     public string? Contact { get; set; }

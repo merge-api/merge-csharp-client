@@ -266,17 +266,9 @@ internal partial class RawClient(ClientOptions clientOptions)
                     break;
                 case IEnumerable<string> strList:
                 {
-                    if (kvp.Key == "expand")
-                    {
-                        result.Add(new KeyValuePair<string, string>(kvp.Key, string.Join(",", strList)));
-                    }
-                    else
-                    {
-                        
                     foreach (var value in strList)
                     {
                         result.Add(new KeyValuePair<string, string>(kvp.Key, value));
-                    }
                     }
 
                     break;

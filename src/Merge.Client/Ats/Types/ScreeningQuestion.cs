@@ -70,7 +70,7 @@ public record ScreeningQuestion
     /// * `BOOLEAN` - BOOLEAN
     /// </summary>
     [JsonPropertyName("type")]
-    public ScreeningQuestionTypeEnum? Type { get; set; }
+    public OneOf<ScreeningQuestionTypeEnum, string>? Type { get; set; }
 
     /// <summary>
     /// Whether or not the screening question is required.

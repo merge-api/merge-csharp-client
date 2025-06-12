@@ -54,6 +54,12 @@ public record TicketsListRequest
     public DateTime? CreatedBefore { get; set; }
 
     /// <summary>
+    /// If provided, will only return tickets created by this creator_id.
+    /// </summary>
+    [JsonIgnore]
+    public string? CreatorId { get; set; }
+
+    /// <summary>
     /// The pagination cursor value.
     /// </summary>
     [JsonIgnore]

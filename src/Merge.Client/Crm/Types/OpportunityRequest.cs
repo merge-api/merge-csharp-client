@@ -58,7 +58,7 @@ public record OpportunityRequest
     /// * `LOST` - LOST
     /// </summary>
     [JsonPropertyName("status")]
-    public OpportunityStatusEnum? Status { get; set; }
+    public OneOf<OpportunityStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// When the opportunity's last activity occurred.

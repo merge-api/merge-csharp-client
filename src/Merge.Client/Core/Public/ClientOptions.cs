@@ -12,9 +12,9 @@ public partial class ClientOptions
     internal Headers Headers { get; init; } = new();
 
     /// <summary>
-    /// The Environment for the API.
+    /// The Base URL for the API.
     /// </summary>
-    public MergeEnvironment Environment { get;
+    public string BaseUrl { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -74,7 +74,7 @@ public partial class ClientOptions
     {
         return new ClientOptions
         {
-            Environment = Environment,
+            BaseUrl = BaseUrl,
             HttpClient = HttpClient,
             MaxRetries = MaxRetries,
             Timeout = Timeout,

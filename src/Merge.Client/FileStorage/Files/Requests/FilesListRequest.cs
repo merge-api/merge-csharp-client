@@ -85,6 +85,12 @@ public record FilesListRequest
     public string? Name { get; set; }
 
     /// <summary>
+    /// Overrides the default ordering for this endpoint. Possible values include: created_at, -created_at, modified_at, -modified_at.
+    /// </summary>
+    [JsonIgnore]
+    public FilesListRequestOrderBy? OrderBy { get; set; }
+
+    /// <summary>
     /// Number of results to return per page.
     /// </summary>
     [JsonIgnore]

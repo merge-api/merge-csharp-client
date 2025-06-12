@@ -410,7 +410,7 @@ public record Invoice
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// The invoice's exchange rate.
@@ -447,7 +447,7 @@ public record Invoice
     /// * `VOID` - VOID
     /// </summary>
     [JsonPropertyName("status")]
-    public InvoiceStatusEnum? Status { get; set; }
+    public OneOf<InvoiceStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// The total amount being paid in taxes.

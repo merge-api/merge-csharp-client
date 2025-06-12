@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -43,7 +44,7 @@ public record PhoneNumber
     /// * `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("phone_number_type")]
-    public PhoneNumberTypeEnum? PhoneNumberType { get; set; }
+    public OneOf<PhoneNumberTypeEnum, string>? PhoneNumberType { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).

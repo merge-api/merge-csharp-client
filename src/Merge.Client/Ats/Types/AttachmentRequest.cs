@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -37,7 +38,7 @@ public record AttachmentRequest
     /// * `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("attachment_type")]
-    public AttachmentTypeEnum? AttachmentType { get; set; }
+    public OneOf<AttachmentTypeEnum, string>? AttachmentType { get; set; }
 
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]

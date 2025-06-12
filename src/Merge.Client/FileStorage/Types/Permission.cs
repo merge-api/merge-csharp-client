@@ -60,13 +60,13 @@ public record Permission
     /// * `ANYONE` - ANYONE
     /// </summary>
     [JsonPropertyName("type")]
-    public TypeEnum? Type { get; set; }
+    public OneOf<TypeEnum, string>? Type { get; set; }
 
     /// <summary>
     /// The permissions that the user or group has for the File or Folder. It is possible for a user or group to have multiple roles, such as viewing & uploading. Possible values include: `READ`, `WRITE`, `OWNER`. In cases where there is no clear mapping, the original value passed through will be returned.
     /// </summary>
     [JsonPropertyName("roles")]
-    public IEnumerable<RolesEnum>? Roles { get; set; }
+    public IEnumerable<OneOf<RolesEnum, string>>? Roles { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

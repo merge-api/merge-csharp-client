@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Hris;
 
@@ -60,7 +61,7 @@ public record Group
     /// * `GROUP` - GROUP
     /// </summary>
     [JsonPropertyName("type")]
-    public GroupTypeEnum? Type { get; set; }
+    public OneOf<GroupTypeEnum, string>? Type { get; set; }
 
     /// <summary>
     /// Indicates whether the Group refers to a team in the third party platform. Note that this is an opinionated view based on how Merge observes most organizations representing teams in each third party platform. If your customer uses a platform different from most, there is a chance this will not be correct.

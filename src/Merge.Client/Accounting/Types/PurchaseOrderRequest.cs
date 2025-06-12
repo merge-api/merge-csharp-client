@@ -25,7 +25,7 @@ public record PurchaseOrderRequest
     /// * `DELETED` - DELETED
     /// </summary>
     [JsonPropertyName("status")]
-    public PurchaseOrderStatusEnum? Status { get; set; }
+    public OneOf<PurchaseOrderStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// The purchase order's issue date.
@@ -392,7 +392,7 @@ public record PurchaseOrderRequest
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// If the transaction is inclusive or exclusive of tax. `True` if inclusive, `False` if exclusive.

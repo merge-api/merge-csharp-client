@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -27,13 +28,13 @@ public record SyncStatus
     public DateTime? NextSyncStart { get; set; }
 
     [JsonPropertyName("last_sync_result")]
-    public LastSyncResultEnum? LastSyncResult { get; set; }
+    public OneOf<LastSyncResultEnum, string>? LastSyncResult { get; set; }
 
     [JsonPropertyName("last_sync_finished")]
     public DateTime? LastSyncFinished { get; set; }
 
     [JsonPropertyName("status")]
-    public required StatusFd5Enum Status { get; set; }
+    public required OneOf<StatusFd5Enum, string> Status { get; set; }
 
     [JsonPropertyName("is_initial_sync")]
     public required bool IsInitialSync { get; set; }

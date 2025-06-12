@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
@@ -45,7 +46,7 @@ public record AccountingPeriod
     public string? Name { get; set; }
 
     [JsonPropertyName("status")]
-    public Status895Enum? Status { get; set; }
+    public OneOf<Status895Enum, string>? Status { get; set; }
 
     /// <summary>
     /// Beginning date of the period

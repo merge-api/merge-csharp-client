@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -30,7 +31,7 @@ public record RemoteResponse
     public Dictionary<string, object?>? ResponseHeaders { get; set; }
 
     [JsonPropertyName("response_type")]
-    public ResponseTypeEnum? ResponseType { get; set; }
+    public OneOf<ResponseTypeEnum, string>? ResponseType { get; set; }
 
     [JsonPropertyName("headers")]
     public Dictionary<string, object?>? Headers { get; set; }

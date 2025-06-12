@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -45,7 +46,7 @@ public record Url
     /// * `JOB_POSTING` - JOB_POSTING
     /// </summary>
     [JsonPropertyName("url_type")]
-    public UrlTypeEnum? UrlType { get; set; }
+    public OneOf<UrlTypeEnum, string>? UrlType { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).

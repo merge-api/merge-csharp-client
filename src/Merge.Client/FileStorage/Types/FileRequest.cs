@@ -57,6 +57,12 @@ public record FileRequest
     public OneOf<string, Folder>? Folder { get; set; }
 
     /// <summary>
+    /// This field stores file checksum data. 'type' indicates the algorithm (e.g. crc_32, sha1, sha256, quickXor, or md5), and 'content_hash' is the unique hash used to verify file integrity and detect alterations.
+    /// </summary>
+    [JsonPropertyName("checksum")]
+    public Dictionary<string, object?>? Checksum { get; set; }
+
+    /// <summary>
     /// The Permission object is used to represent a user's or group's access to a File or Folder. Permissions are unexpanded by default. Use the query param `expand=permissions` to see more details under `GET /files`.
     /// </summary>
     [JsonPropertyName("permissions")]

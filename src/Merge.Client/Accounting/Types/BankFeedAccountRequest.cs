@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
@@ -355,7 +356,7 @@ public record BankFeedAccountRequest
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// The status of the bank feed.
@@ -364,7 +365,7 @@ public record BankFeedAccountRequest
     /// * `INACTIVE` - INACTIVE
     /// </summary>
     [JsonPropertyName("feed_status")]
-    public FeedStatusEnum? FeedStatus { get; set; }
+    public OneOf<FeedStatusEnum, string>? FeedStatus { get; set; }
 
     /// <summary>
     /// The start date of the bank feed’s transactions.
@@ -385,7 +386,7 @@ public record BankFeedAccountRequest
     /// * `CREDIT_CARD` - CREDIT_CARD
     /// </summary>
     [JsonPropertyName("account_type")]
-    public BankFeedAccountAccountTypeEnum? AccountType { get; set; }
+    public OneOf<BankFeedAccountAccountTypeEnum, string>? AccountType { get; set; }
 
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]

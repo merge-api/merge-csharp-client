@@ -63,7 +63,7 @@ public record TaskRequest
     /// * `CLOSED` - CLOSED
     /// </summary>
     [JsonPropertyName("status")]
-    public TaskStatusEnum? Status { get; set; }
+    public OneOf<TaskStatusEnum, string>? Status { get; set; }
 
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]

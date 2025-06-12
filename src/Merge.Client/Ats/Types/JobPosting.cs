@@ -66,7 +66,7 @@ public record JobPosting
     /// * `PENDING` - PENDING
     /// </summary>
     [JsonPropertyName("status")]
-    public JobPostingStatusEnum? Status { get; set; }
+    public OneOf<JobPostingStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// The job posting’s content.

@@ -48,7 +48,7 @@ public partial class BankFeedAccountsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/bank-feed-accounts",
                     Query = _query,
@@ -146,7 +146,7 @@ public partial class BankFeedAccountsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "accounting/v1/bank-feed-accounts",
                     Body = request,
@@ -206,7 +206,7 @@ public partial class BankFeedAccountsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "accounting/v1/bank-feed-accounts/{0}",
@@ -256,7 +256,7 @@ public partial class BankFeedAccountsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/bank-feed-accounts/meta/post",
                     Options = options,

@@ -81,7 +81,7 @@ public partial class CustomObjectsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "crm/v1/custom-object-classes/{0}/custom-objects",
@@ -152,6 +152,10 @@ public partial class CustomObjectsClient
         {
             _query["is_common_model_field"] = JsonUtils.Serialize(request.IsCommonModelField.Value);
         }
+        if (request.IsCustom != null)
+        {
+            _query["is_custom"] = JsonUtils.Serialize(request.IsCustom.Value);
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.Value.ToString();
@@ -160,7 +164,7 @@ public partial class CustomObjectsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "crm/v1/custom-object-classes/custom-objects/remote-field-classes",
                     Query = _query,
@@ -222,7 +226,7 @@ public partial class CustomObjectsClient
             .CreateInstanceAsync(
                 request,
                 options,
-                (request, options, cancellationToken) => CustomObjectClassesCustomObjectsListInternalAsync(customObjectClassId, request, options, cancellationToken),
+                CustomObjectClassesCustomObjectsListInternalAsync,
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;
@@ -270,7 +274,7 @@ public partial class CustomObjectsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "crm/v1/custom-object-classes/{0}/custom-objects",
@@ -344,7 +348,7 @@ public partial class CustomObjectsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "crm/v1/custom-object-classes/{0}/custom-objects/{1}",
@@ -398,7 +402,7 @@ public partial class CustomObjectsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "crm/v1/custom-object-classes/{0}/custom-objects/meta/post",

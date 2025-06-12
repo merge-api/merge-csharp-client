@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -31,7 +32,7 @@ public record UrlRequest
     /// * `JOB_POSTING` - JOB_POSTING
     /// </summary>
     [JsonPropertyName("url_type")]
-    public UrlTypeEnum? UrlType { get; set; }
+    public OneOf<UrlTypeEnum, string>? UrlType { get; set; }
 
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]

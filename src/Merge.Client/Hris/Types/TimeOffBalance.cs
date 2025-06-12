@@ -68,7 +68,7 @@ public record TimeOffBalance
     /// * `BEREAVEMENT` - BEREAVEMENT
     /// </summary>
     [JsonPropertyName("policy_type")]
-    public PolicyTypeEnum? PolicyType { get; set; }
+    public OneOf<PolicyTypeEnum, string>? PolicyType { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
