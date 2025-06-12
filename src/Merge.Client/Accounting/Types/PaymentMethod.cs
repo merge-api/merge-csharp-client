@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
@@ -48,7 +49,7 @@ public record PaymentMethod
     /// * `CHECK` - CHECK
     /// </summary>
     [JsonPropertyName("method_type")]
-    public required MethodTypeEnum MethodType { get; set; }
+    public required OneOf<MethodTypeEnum, string> MethodType { get; set; }
 
     /// <summary>
     /// The payment method’s name

@@ -75,6 +75,9 @@ public record RemoteFieldApiResponse
     [JsonPropertyName("PaymentMethod")]
     public IEnumerable<RemoteFieldApi>? PaymentMethod { get; set; }
 
+    [JsonPropertyName("Project")]
+    public IEnumerable<RemoteFieldApi>? Project { get; set; }
+
     [JsonPropertyName("PaymentTerm")]
     public IEnumerable<RemoteFieldApi>? PaymentTerm { get; set; }
 

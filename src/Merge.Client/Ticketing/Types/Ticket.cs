@@ -77,7 +77,7 @@ public record Ticket
     /// * `ON_HOLD` - ON_HOLD
     /// </summary>
     [JsonPropertyName("status")]
-    public TicketStatusEnum? Status { get; set; }
+    public OneOf<TicketStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// The ticket’s description. HTML version of description is mapped if supported by the third-party platform.
@@ -118,11 +118,39 @@ public record Ticket
     [JsonPropertyName("attachments")]
     public IEnumerable<OneOf<string, Attachment>>? Attachments { get; set; }
 
+    /// <summary>
+    /// The description of who is able to access a given ticket, or where access is inherited from.
+    ///
+    /// * `COMPANY` - COMPANY
+    /// * `PUBLIC` - PUBLIC
+    /// * `PRIVATE` - PRIVATE
+    /// * `COLLECTION` - COLLECTION
+    /// </summary>
+    [JsonPropertyName("access_level")]
+    public OneOf<TicketAccessLevelEnum, string>? AccessLevel { get; set; }
+
     [JsonPropertyName("tags")]
     public IEnumerable<string>? Tags { get; set; }
 
     [JsonPropertyName("roles")]
     public IEnumerable<string>? Roles { get; set; }
+
+    /// <summary>
+    /// The 3rd party url of the Ticket.
+    /// </summary>
+    [JsonPropertyName("ticket_url")]
+    public string? TicketUrl { get; set; }
+
+    /// <summary>
+    /// The priority or urgency of the Ticket.
+    ///
+    /// * `URGENT` - URGENT
+    /// * `HIGH` - HIGH
+    /// * `NORMAL` - NORMAL
+    /// * `LOW` - LOW
+    /// </summary>
+    [JsonPropertyName("priority")]
+    public OneOf<PriorityEnum, string>? Priority { get; set; }
 
     /// <summary>
     /// When the third party's ticket was created.
@@ -148,23 +176,6 @@ public record Ticket
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
-
-    /// <summary>
-    /// The 3rd party url of the Ticket.
-    /// </summary>
-    [JsonPropertyName("ticket_url")]
-    public string? TicketUrl { get; set; }
-
-    /// <summary>
-    /// The priority or urgency of the Ticket.
-    ///
-    /// * `URGENT` - URGENT
-    /// * `HIGH` - HIGH
-    /// * `NORMAL` - NORMAL
-    /// * `LOW` - LOW
-    /// </summary>
-    [JsonPropertyName("priority")]
-    public PriorityEnum? Priority { get; set; }
 
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("field_mappings")]

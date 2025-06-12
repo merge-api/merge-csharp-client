@@ -63,6 +63,10 @@ public partial class TicketsClient
                 Constants.DateTimeFormat
             );
         }
+        if (request.CreatorId != null)
+        {
+            _query["creator_id"] = request.CreatorId;
+        }
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -173,7 +177,7 @@ public partial class TicketsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "ticketing/v1/tickets",
                     Query = _query,
@@ -241,7 +245,7 @@ public partial class TicketsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "ticketing/v1/tickets/{0}/viewers",
@@ -310,6 +314,10 @@ public partial class TicketsClient
         {
             _query["is_common_model_field"] = JsonUtils.Serialize(request.IsCommonModelField.Value);
         }
+        if (request.IsCustom != null)
+        {
+            _query["is_custom"] = JsonUtils.Serialize(request.IsCustom.Value);
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.Value.ToString();
@@ -318,7 +326,7 @@ public partial class TicketsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "ticketing/v1/tickets/remote-field-classes",
                     Query = _query,
@@ -416,7 +424,7 @@ public partial class TicketsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "ticketing/v1/tickets",
                     Body = request,
@@ -491,7 +499,7 @@ public partial class TicketsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "ticketing/v1/tickets/{0}",
@@ -555,7 +563,7 @@ public partial class TicketsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format(
                         "ticketing/v1/tickets/{0}",
@@ -648,7 +656,7 @@ public partial class TicketsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "ticketing/v1/tickets/meta/patch/{0}",
@@ -686,20 +694,31 @@ public partial class TicketsClient
     /// Returns metadata for `Ticket` POSTs.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Tickets.MetaPostRetrieveAsync();
+    /// await client.Ticketing.Tickets.MetaPostRetrieveAsync(new TicketsMetaPostRetrieveRequest());
     /// </code></example>
     public async Task<MetaResponse> MetaPostRetrieveAsync(
+        TicketsMetaPostRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _query = new Dictionary<string, object>();
+        if (request.CollectionId != null)
+        {
+            _query["collection_id"] = request.CollectionId;
+        }
+        if (request.TicketType != null)
+        {
+            _query["ticket_type"] = request.TicketType;
+        }
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "ticketing/v1/tickets/meta/post",
+                    Query = _query,
                     Options = options,
                 },
                 cancellationToken

@@ -101,7 +101,7 @@ public partial class EmployeePayrollRunsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/employee-payroll-runs",
                     Query = _query,
@@ -199,7 +199,7 @@ public partial class EmployeePayrollRunsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "hris/v1/employee-payroll-runs/{0}",

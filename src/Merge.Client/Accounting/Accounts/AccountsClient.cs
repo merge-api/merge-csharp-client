@@ -29,6 +29,10 @@ public partial class AccountsClient
         {
             _query["account_type"] = request.AccountType;
         }
+        if (request.Classification != null)
+        {
+            _query["classification"] = request.Classification;
+        }
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -99,7 +103,7 @@ public partial class AccountsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/accounts",
                     Query = _query,
@@ -197,7 +201,7 @@ public partial class AccountsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "accounting/v1/accounts",
                     Body = request,
@@ -266,7 +270,7 @@ public partial class AccountsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "accounting/v1/accounts/{0}",
@@ -316,7 +320,7 @@ public partial class AccountsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/accounts/meta/post",
                     Options = options,

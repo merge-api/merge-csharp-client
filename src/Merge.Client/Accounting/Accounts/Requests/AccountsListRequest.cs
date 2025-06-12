@@ -6,10 +6,16 @@ namespace Merge.Client.Accounting;
 public record AccountsListRequest
 {
     /// <summary>
-    /// If provided, will only provide accounts with the passed in enum.
+    /// If provided, will only return accounts with the passed in enum.
     /// </summary>
     [JsonIgnore]
     public string? AccountType { get; set; }
+
+    /// <summary>
+    /// If provided, will only return accounts with this classification.
+    /// </summary>
+    [JsonIgnore]
+    public string? Classification { get; set; }
 
     /// <summary>
     /// If provided, will only return accounts for this company.

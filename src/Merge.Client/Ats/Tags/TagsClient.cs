@@ -74,7 +74,7 @@ public partial class TagsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "ats/v1/tags",
                     Query = _query,

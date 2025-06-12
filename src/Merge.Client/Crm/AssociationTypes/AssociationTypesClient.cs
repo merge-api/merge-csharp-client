@@ -76,7 +76,7 @@ public partial class AssociationTypesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "crm/v1/custom-object-classes/{0}/association-types",
@@ -202,7 +202,7 @@ public partial class AssociationTypesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "crm/v1/custom-object-classes/{0}/association-types",
@@ -271,7 +271,7 @@ public partial class AssociationTypesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "crm/v1/custom-object-classes/{0}/association-types/{1}",
@@ -325,7 +325,7 @@ public partial class AssociationTypesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "crm/v1/custom-object-classes/{0}/association-types/meta/post",

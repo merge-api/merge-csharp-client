@@ -29,7 +29,7 @@ public record CreditNoteRequest
     /// * `PAID` - PAID
     /// </summary>
     [JsonPropertyName("status")]
-    public CreditNoteStatusEnum? Status { get; set; }
+    public OneOf<CreditNoteStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// The credit note's number.
@@ -390,7 +390,7 @@ public record CreditNoteRequest
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// Array of `Payment` object IDs

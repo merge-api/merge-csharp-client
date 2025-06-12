@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Hris;
 
@@ -334,7 +335,7 @@ public record Location
     /// * `ZW` - Zimbabwe
     /// </summary>
     [JsonPropertyName("country")]
-    public CountryEnum? Country { get; set; }
+    public OneOf<CountryEnum, string>? Country { get; set; }
 
     /// <summary>
     /// The location's type. Can be either WORK or HOME
@@ -343,7 +344,7 @@ public record Location
     /// * `WORK` - WORK
     /// </summary>
     [JsonPropertyName("location_type")]
-    public LocationTypeEnum? LocationType { get; set; }
+    public OneOf<LocationTypeEnum, string>? LocationType { get; set; }
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).

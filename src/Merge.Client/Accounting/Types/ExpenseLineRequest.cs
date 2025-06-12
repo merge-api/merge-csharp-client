@@ -365,7 +365,7 @@ public record ExpenseLineRequest
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// The expense's payment account.
@@ -378,6 +378,9 @@ public record ExpenseLineRequest
     /// </summary>
     [JsonPropertyName("contact")]
     public OneOf<string, Contact>? Contact { get; set; }
+
+    [JsonPropertyName("project")]
+    public OneOf<string, Project>? Project { get; set; }
 
     /// <summary>
     /// The description of the item that was purchased by the company.

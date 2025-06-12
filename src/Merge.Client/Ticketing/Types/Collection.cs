@@ -52,6 +52,17 @@ public record Collection
     public string? Description { get; set; }
 
     /// <summary>
+    /// The level of access a User has to the Collection and its sub-objects.
+    ///
+    /// * `PRIVATE` - PRIVATE
+    /// * `COMPANY` - COMPANY
+    /// * `PUBLIC` - PUBLIC
+    /// * `PARENT_COLLECTION` - PARENT_COLLECTION
+    /// </summary>
+    [JsonPropertyName("access_level")]
+    public OneOf<CollectionAccessLevelEnum, string>? AccessLevel { get; set; }
+
+    /// <summary>
     /// The collection's type.
     ///
     /// * `LIST` - LIST
@@ -71,16 +82,6 @@ public record Collection
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]
     public bool? RemoteWasDeleted { get; set; }
-
-    /// <summary>
-    /// The level of access a User has to the Collection and its sub-objects.
-    ///
-    /// * `PRIVATE` - PRIVATE
-    /// * `COMPANY` - COMPANY
-    /// * `PUBLIC` - PUBLIC
-    /// </summary>
-    [JsonPropertyName("access_level")]
-    public AccessLevelEnum? AccessLevel { get; set; }
 
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("field_mappings")]

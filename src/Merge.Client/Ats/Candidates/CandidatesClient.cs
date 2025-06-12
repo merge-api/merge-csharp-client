@@ -92,7 +92,7 @@ public partial class CandidatesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "ats/v1/candidates",
                     Query = _query,
@@ -190,7 +190,7 @@ public partial class CandidatesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "ats/v1/candidates",
                     Body = request,
@@ -251,7 +251,7 @@ public partial class CandidatesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "ats/v1/candidates/{0}",
@@ -319,7 +319,7 @@ public partial class CandidatesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format(
                         "ats/v1/candidates/{0}",
@@ -379,7 +379,7 @@ public partial class CandidatesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "ats/v1/candidates/ignore/{0}",
@@ -422,7 +422,7 @@ public partial class CandidatesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "ats/v1/candidates/meta/patch/{0}",
@@ -471,7 +471,7 @@ public partial class CandidatesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "ats/v1/candidates/meta/post",
                     Options = options,

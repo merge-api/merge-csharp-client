@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ticketing;
 
@@ -52,7 +53,7 @@ public record PatchedTicketRequest
     /// * `ON_HOLD` - ON_HOLD
     /// </summary>
     [JsonPropertyName("status")]
-    public TicketStatusEnum? Status { get; set; }
+    public OneOf<TicketStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// The ticket’s description. HTML version of description is mapped if supported by the third-party platform.
@@ -89,6 +90,17 @@ public record PatchedTicketRequest
     /// </summary>
     [JsonPropertyName("parent_ticket")]
     public string? ParentTicket { get; set; }
+
+    /// <summary>
+    /// The description of who is able to access a given ticket, or where access is inherited from.
+    ///
+    /// * `COMPANY` - COMPANY
+    /// * `PUBLIC` - PUBLIC
+    /// * `PRIVATE` - PRIVATE
+    /// * `COLLECTION` - COLLECTION
+    /// </summary>
+    [JsonPropertyName("access_level")]
+    public OneOf<TicketAccessLevelEnum, string>? AccessLevel { get; set; }
 
     [JsonPropertyName("tags")]
     public IEnumerable<string>? Tags { get; set; }

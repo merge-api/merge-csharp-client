@@ -57,6 +57,12 @@ public record VendorCreditLineRequest
     [JsonPropertyName("company")]
     public string? Company { get; set; }
 
+    [JsonPropertyName("project")]
+    public OneOf<string, Project>? Project { get; set; }
+
+    [JsonPropertyName("contact")]
+    public OneOf<string, Contact>? Contact { get; set; }
+
     /// <summary>
     /// The tax rate that applies to this line item.
     /// </summary>

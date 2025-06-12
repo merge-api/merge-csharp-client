@@ -39,7 +39,7 @@ public record EngagementRequest
     /// * `OUTBOUND` - OUTBOUND
     /// </summary>
     [JsonPropertyName("direction")]
-    public DirectionEnum? Direction { get; set; }
+    public OneOf<DirectionEnum, string>? Direction { get; set; }
 
     /// <summary>
     /// The engagement type of the engagement.

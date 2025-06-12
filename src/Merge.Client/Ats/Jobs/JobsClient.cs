@@ -95,7 +95,7 @@ public partial class JobsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "ats/v1/jobs",
                     Query = _query,
@@ -163,7 +163,7 @@ public partial class JobsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "ats/v1/jobs/{0}/screening-questions",
@@ -272,7 +272,7 @@ public partial class JobsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format("ats/v1/jobs/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,

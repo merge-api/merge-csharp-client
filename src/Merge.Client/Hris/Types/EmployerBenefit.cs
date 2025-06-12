@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Hris;
 
@@ -48,7 +49,7 @@ public record EmployerBenefit
     /// * `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("benefit_plan_type")]
-    public BenefitPlanTypeEnum? BenefitPlanType { get; set; }
+    public OneOf<BenefitPlanTypeEnum, string>? BenefitPlanType { get; set; }
 
     /// <summary>
     /// The employer benefit's name - typically the carrier or network name.

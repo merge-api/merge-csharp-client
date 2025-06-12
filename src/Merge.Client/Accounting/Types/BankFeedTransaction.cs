@@ -88,7 +88,7 @@ public record BankFeedTransaction
     /// * `DEBIT` - DEBIT
     /// </summary>
     [JsonPropertyName("credit_or_debit")]
-    public CreditOrDebitEnum? CreditOrDebit { get; set; }
+    public OneOf<CreditOrDebitEnum, string>? CreditOrDebit { get; set; }
 
     /// <summary>
     /// The customer’s identifier for the transaction.

@@ -350,7 +350,7 @@ public record PatchedPaymentRequest
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// The payment's exchange rate.
@@ -377,7 +377,7 @@ public record PatchedPaymentRequest
     /// * `ACCOUNTS_RECEIVABLE` - ACCOUNTS_RECEIVABLE
     /// </summary>
     [JsonPropertyName("type")]
-    public PaymentTypeEnum? Type { get; set; }
+    public OneOf<PaymentTypeEnum, string>? Type { get; set; }
 
     [JsonPropertyName("tracking_categories")]
     public IEnumerable<OneOf<string, TrackingCategory>>? TrackingCategories { get; set; }

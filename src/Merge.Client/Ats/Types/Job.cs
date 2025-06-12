@@ -66,7 +66,7 @@ public record Job
     /// * `PENDING` - PENDING
     /// </summary>
     [JsonPropertyName("status")]
-    public JobStatusEnum? Status { get; set; }
+    public OneOf<JobStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// The job's type.
@@ -76,7 +76,7 @@ public record Job
     /// * `PROFILE` - PROFILE
     /// </summary>
     [JsonPropertyName("type")]
-    public JobTypeEnum? Type { get; set; }
+    public OneOf<JobTypeEnum, string>? Type { get; set; }
 
     /// <summary>
     /// IDs of `JobPosting` objects that serve as job postings for this `Job`.

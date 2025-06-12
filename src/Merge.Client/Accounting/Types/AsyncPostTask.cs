@@ -1,13 +1,14 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
 public record AsyncPostTask
 {
     [JsonPropertyName("status")]
-    public required AsyncPostTaskStatusEnum Status { get; set; }
+    public required OneOf<AsyncPostTaskStatusEnum, string> Status { get; set; }
 
     [JsonPropertyName("result")]
     public required AsyncPostTaskResult Result { get; set; }

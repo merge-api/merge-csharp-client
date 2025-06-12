@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ticketing;
 
@@ -18,10 +19,10 @@ public record AccountDetailsAndActions
     public required string Id { get; set; }
 
     [JsonPropertyName("category")]
-    public CategoryEnum? Category { get; set; }
+    public OneOf<CategoryEnum, string>? Category { get; set; }
 
     [JsonPropertyName("status")]
-    public required AccountDetailsAndActionsStatusEnum Status { get; set; }
+    public required OneOf<AccountDetailsAndActionsStatusEnum, string> Status { get; set; }
 
     [JsonPropertyName("status_detail")]
     public string? StatusDetail { get; set; }

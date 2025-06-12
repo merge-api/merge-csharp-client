@@ -54,6 +54,9 @@ public record GeneralLedgerTransactionLine
     [JsonPropertyName("contact")]
     public OneOf<string, Contact>? Contact { get; set; }
 
+    [JsonPropertyName("project")]
+    public OneOf<string, Project>? Project { get; set; }
+
     /// <summary>
     /// The base currency of the transaction
     ///
@@ -678,7 +681,7 @@ public record GeneralLedgerTransactionLine
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("transaction_currency")]
-    public TransactionCurrencyEnum? TransactionCurrency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? TransactionCurrency { get; set; }
 
     /// <summary>
     /// The exchange rate between the base currency and the transaction currency.

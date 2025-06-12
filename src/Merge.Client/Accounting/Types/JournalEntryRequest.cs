@@ -344,7 +344,7 @@ public record JournalEntryRequest
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// The journal entry's exchange rate.
@@ -383,7 +383,7 @@ public record JournalEntryRequest
     /// * `POSTED` - POSTED
     /// </summary>
     [JsonPropertyName("posting_status")]
-    public PostingStatusEnum? PostingStatus { get; set; }
+    public OneOf<PostingStatusEnum, string>? PostingStatus { get; set; }
 
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]

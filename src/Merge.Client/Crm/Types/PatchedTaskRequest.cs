@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -62,7 +63,7 @@ public record PatchedTaskRequest
     /// * `CLOSED` - CLOSED
     /// </summary>
     [JsonPropertyName("status")]
-    public TaskStatusEnum? Status { get; set; }
+    public OneOf<TaskStatusEnum, string>? Status { get; set; }
 
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]

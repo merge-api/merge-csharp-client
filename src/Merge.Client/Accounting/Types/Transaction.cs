@@ -399,7 +399,7 @@ public record Transaction
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// The transaction's exchange rate.

@@ -79,7 +79,7 @@ public partial class CashFlowStatementsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/cash-flow-statements",
                     Query = _query,
@@ -180,7 +180,7 @@ public partial class CashFlowStatementsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "accounting/v1/cash-flow-statements/{0}",

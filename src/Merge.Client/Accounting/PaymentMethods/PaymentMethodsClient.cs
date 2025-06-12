@@ -48,7 +48,7 @@ public partial class PaymentMethodsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/payment-methods",
                     Query = _query,
@@ -145,7 +145,7 @@ public partial class PaymentMethodsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "accounting/v1/payment-methods/{0}",

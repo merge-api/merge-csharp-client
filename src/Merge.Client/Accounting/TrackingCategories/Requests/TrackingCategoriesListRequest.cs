@@ -72,7 +72,7 @@ public record TrackingCategoriesListRequest
     public DateTime? ModifiedBefore { get; set; }
 
     /// <summary>
-    /// If provided, will only return TrackingCategories with this name.
+    /// If provided, will only return tracking categories with this name.
     /// </summary>
     [JsonIgnore]
     public string? Name { get; set; }

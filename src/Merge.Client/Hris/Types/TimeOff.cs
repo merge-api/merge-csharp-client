@@ -61,7 +61,7 @@ public record TimeOff
     /// * `DELETED` - DELETED
     /// </summary>
     [JsonPropertyName("status")]
-    public TimeOffStatusEnum? Status { get; set; }
+    public OneOf<TimeOffStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// The employee note for this time off request.
@@ -76,7 +76,7 @@ public record TimeOff
     /// * `DAYS` - DAYS
     /// </summary>
     [JsonPropertyName("units")]
-    public UnitsEnum? Units { get; set; }
+    public OneOf<UnitsEnum, string>? Units { get; set; }
 
     /// <summary>
     /// The time off quantity measured by the prescribed “units”.
@@ -95,7 +95,7 @@ public record TimeOff
     /// * `BEREAVEMENT` - BEREAVEMENT
     /// </summary>
     [JsonPropertyName("request_type")]
-    public RequestTypeEnum? RequestType { get; set; }
+    public OneOf<RequestTypeEnum, string>? RequestType { get; set; }
 
     /// <summary>
     /// The day and time of the start of the time requested off.

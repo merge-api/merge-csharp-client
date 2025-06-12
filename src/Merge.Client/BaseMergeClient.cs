@@ -26,7 +26,7 @@ public partial class BaseMergeClient
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Merge.Client" },
                 { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Merge.Client/2.0.0" },
+                { "User-Agent", "Merge.Client/3.0.0" },
             }
         );
         clientOptions ??= new ClientOptions();

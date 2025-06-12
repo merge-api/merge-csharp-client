@@ -75,7 +75,7 @@ public partial class CompanyInfoClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/company-info",
                     Query = _query,
@@ -173,7 +173,7 @@ public partial class CompanyInfoClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "accounting/v1/company-info/{0}",

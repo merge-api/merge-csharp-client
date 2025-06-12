@@ -64,7 +64,7 @@ public record ScheduledInterviewRequest
     /// * `COMPLETE` - COMPLETE
     /// </summary>
     [JsonPropertyName("status")]
-    public ScheduledInterviewStatusEnum? Status { get; set; }
+    public OneOf<ScheduledInterviewStatusEnum, string>? Status { get; set; }
 
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]

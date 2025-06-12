@@ -70,7 +70,7 @@ public record TaxRate
     /// * `ARCHIVED` - ARCHIVED
     /// </summary>
     [JsonPropertyName("status")]
-    public Status7D1Enum? Status { get; set; }
+    public OneOf<Status7D1Enum, string>? Status { get; set; }
 
     /// <summary>
     /// The country the tax rate is associated with.

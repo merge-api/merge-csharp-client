@@ -70,7 +70,7 @@ public record BankInfo
     /// * `CHECKING` - CHECKING
     /// </summary>
     [JsonPropertyName("account_type")]
-    public AccountTypeEnum? AccountType { get; set; }
+    public OneOf<AccountTypeEnum, string>? AccountType { get; set; }
 
     /// <summary>
     /// When the matching bank object was created in the third party system.

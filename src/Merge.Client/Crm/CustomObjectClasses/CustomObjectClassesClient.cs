@@ -75,7 +75,7 @@ public partial class CustomObjectClassesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "crm/v1/custom-object-classes",
                     Query = _query,
@@ -173,7 +173,7 @@ public partial class CustomObjectClassesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "crm/v1/custom-object-classes/{0}",
