@@ -113,7 +113,7 @@ public partial class ContactsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/contacts",
                     Query = _query,
@@ -175,6 +175,10 @@ public partial class ContactsClient
         {
             _query["is_common_model_field"] = JsonUtils.Serialize(request.IsCommonModelField.Value);
         }
+        if (request.IsCustom != null)
+        {
+            _query["is_custom"] = JsonUtils.Serialize(request.IsCustom.Value);
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.Value.ToString();
@@ -183,7 +187,7 @@ public partial class ContactsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/contacts/remote-field-classes",
                     Query = _query,
@@ -281,7 +285,7 @@ public partial class ContactsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "accounting/v1/contacts",
                     Body = request,
@@ -356,7 +360,7 @@ public partial class ContactsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "accounting/v1/contacts/{0}",
@@ -406,7 +410,7 @@ public partial class ContactsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/contacts/meta/post",
                     Options = options,

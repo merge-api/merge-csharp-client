@@ -22,6 +22,9 @@ public enum EventTypeEnum
     [EnumMember(Value = "REGENERATED_PRODUCTION_API_KEY")]
     RegeneratedProductionApiKey,
 
+    [EnumMember(Value = "REGENERATED_WEBHOOK_SIGNATURE")]
+    RegeneratedWebhookSignature,
+
     [EnumMember(Value = "INVITED_USER")]
     InvitedUser,
 

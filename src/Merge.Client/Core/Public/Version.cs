@@ -2,5 +2,5 @@ namespace Merge.Client;
 
 internal class Version
 {
-    public const string Current = "2.0.0";
+    public const string Current = "3.0.0";
 }

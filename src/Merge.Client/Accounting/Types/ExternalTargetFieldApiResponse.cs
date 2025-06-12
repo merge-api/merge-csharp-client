@@ -75,6 +75,9 @@ public record ExternalTargetFieldApiResponse
     [JsonPropertyName("PaymentMethod")]
     public IEnumerable<ExternalTargetFieldApi>? PaymentMethod { get; set; }
 
+    [JsonPropertyName("Project")]
+    public IEnumerable<ExternalTargetFieldApi>? Project { get; set; }
+
     [JsonPropertyName("PaymentTerm")]
     public IEnumerable<ExternalTargetFieldApi>? PaymentTerm { get; set; }
 

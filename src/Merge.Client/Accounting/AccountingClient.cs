@@ -45,6 +45,7 @@ public partial class AccountingClient
         PaymentTerms = new PaymentTermsClient(_client);
         Payments = new PaymentsClient(_client);
         PhoneNumbers = new PhoneNumbersClient(_client);
+        Projects = new ProjectsClient(_client);
         PurchaseOrders = new PurchaseOrdersClient(_client);
         RegenerateKey = new RegenerateKeyClient(_client);
         SyncStatus = new SyncStatusClient(_client);
@@ -127,6 +128,8 @@ public partial class AccountingClient
     public PaymentsClient Payments { get; }
 
     public PhoneNumbersClient PhoneNumbers { get; }
+
+    public ProjectsClient Projects { get; }
 
     public PurchaseOrdersClient PurchaseOrders { get; }
 

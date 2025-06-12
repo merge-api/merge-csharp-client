@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -27,7 +28,7 @@ public record EmailAddressRequest
     /// * `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("email_address_type")]
-    public EmailAddressTypeEnum? EmailAddressType { get; set; }
+    public OneOf<EmailAddressTypeEnum, string>? EmailAddressType { get; set; }
 
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]

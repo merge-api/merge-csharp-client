@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.FileStorage;
 
@@ -75,7 +76,7 @@ public record EndUserDetailsRequest
     /// * `de` - de
     /// </summary>
     [JsonPropertyName("language")]
-    public LanguageEnum? Language { get; set; }
+    public OneOf<LanguageEnum, string>? Language { get; set; }
 
     /// <summary>
     /// The boolean that indicates whether initial, periodic, and force syncs will be disabled.

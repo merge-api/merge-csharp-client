@@ -52,7 +52,7 @@ public record TrackingCategory
     /// * `ARCHIVED` - ARCHIVED
     /// </summary>
     [JsonPropertyName("status")]
-    public Status7D1Enum? Status { get; set; }
+    public OneOf<Status7D1Enum, string>? Status { get; set; }
 
     /// <summary>
     /// The tracking category’s type.
@@ -61,7 +61,7 @@ public record TrackingCategory
     /// * `DEPARTMENT` - DEPARTMENT
     /// </summary>
     [JsonPropertyName("category_type")]
-    public CategoryTypeEnum? CategoryType { get; set; }
+    public OneOf<CategoryTypeEnum, string>? CategoryType { get; set; }
 
     [JsonPropertyName("parent_category")]
     public string? ParentCategory { get; set; }

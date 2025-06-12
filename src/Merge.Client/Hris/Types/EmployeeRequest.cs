@@ -130,7 +130,7 @@ public record EmployeeRequest
     /// * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
     /// </summary>
     [JsonPropertyName("gender")]
-    public GenderEnum? Gender { get; set; }
+    public OneOf<GenderEnum, string>? Gender { get; set; }
 
     /// <summary>
     /// The employee's ethnicity.
@@ -145,7 +145,7 @@ public record EmployeeRequest
     /// * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
     /// </summary>
     [JsonPropertyName("ethnicity")]
-    public EthnicityEnum? Ethnicity { get; set; }
+    public OneOf<EthnicityEnum, string>? Ethnicity { get; set; }
 
     /// <summary>
     /// The employee's filing status as related to marital status.
@@ -157,7 +157,7 @@ public record EmployeeRequest
     /// * `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD
     /// </summary>
     [JsonPropertyName("marital_status")]
-    public MaritalStatusEnum? MaritalStatus { get; set; }
+    public OneOf<MaritalStatusEnum, string>? MaritalStatus { get; set; }
 
     /// <summary>
     /// The employee's date of birth.
@@ -185,7 +185,7 @@ public record EmployeeRequest
     /// * `INACTIVE` - INACTIVE
     /// </summary>
     [JsonPropertyName("employment_status")]
-    public EmploymentStatusEnum? EmploymentStatus { get; set; }
+    public OneOf<EmploymentStatusEnum, string>? EmploymentStatus { get; set; }
 
     /// <summary>
     /// The employee's termination date.

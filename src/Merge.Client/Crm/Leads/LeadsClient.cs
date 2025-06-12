@@ -101,7 +101,7 @@ public partial class LeadsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "crm/v1/leads",
                     Query = _query,
@@ -169,6 +169,10 @@ public partial class LeadsClient
         {
             _query["is_common_model_field"] = JsonUtils.Serialize(request.IsCommonModelField.Value);
         }
+        if (request.IsCustom != null)
+        {
+            _query["is_custom"] = JsonUtils.Serialize(request.IsCustom.Value);
+        }
         if (request.PageSize != null)
         {
             _query["page_size"] = request.PageSize.Value.ToString();
@@ -177,7 +181,7 @@ public partial class LeadsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "crm/v1/leads/remote-field-classes",
                     Query = _query,
@@ -273,7 +277,7 @@ public partial class LeadsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "crm/v1/leads",
                     Body = request,
@@ -340,7 +344,7 @@ public partial class LeadsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "crm/v1/leads/{0}",
@@ -390,7 +394,7 @@ public partial class LeadsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "crm/v1/leads/meta/post",
                     Options = options,

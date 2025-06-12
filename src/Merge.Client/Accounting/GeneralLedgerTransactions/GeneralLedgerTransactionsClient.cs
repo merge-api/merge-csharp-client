@@ -91,7 +91,7 @@ public partial class GeneralLedgerTransactionsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "accounting/v1/general-ledger-transactions",
                     Query = _query,
@@ -194,7 +194,7 @@ public partial class GeneralLedgerTransactionsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "accounting/v1/general-ledger-transactions/{0}",

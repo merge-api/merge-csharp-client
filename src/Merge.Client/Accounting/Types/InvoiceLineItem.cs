@@ -69,6 +69,15 @@ public record InvoiceLineItem
     [JsonPropertyName("employee")]
     public OneOf<string, Employee>? Employee { get; set; }
 
+    [JsonPropertyName("project")]
+    public OneOf<string, Project>? Project { get; set; }
+
+    /// <summary>
+    /// The invoice's contact.
+    /// </summary>
+    [JsonPropertyName("contact")]
+    public OneOf<string, Contact>? Contact { get; set; }
+
     /// <summary>
     /// The line item's currency.
     ///
@@ -380,7 +389,7 @@ public record InvoiceLineItem
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// The line item's exchange rate.

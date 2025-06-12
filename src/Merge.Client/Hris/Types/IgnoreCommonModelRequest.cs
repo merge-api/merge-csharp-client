@@ -1,13 +1,14 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Hris;
 
 public record IgnoreCommonModelRequest
 {
     [JsonPropertyName("reason")]
-    public required ReasonEnum Reason { get; set; }
+    public required OneOf<ReasonEnum, string> Reason { get; set; }
 
     [JsonPropertyName("message")]
     public string? Message { get; set; }

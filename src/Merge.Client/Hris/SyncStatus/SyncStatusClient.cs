@@ -36,7 +36,7 @@ public partial class SyncStatusClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "hris/v1/sync-status",
                     Query = _query,

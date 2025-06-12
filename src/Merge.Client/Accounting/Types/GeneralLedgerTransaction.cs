@@ -61,7 +61,7 @@ public record GeneralLedgerTransaction
     /// * `CREDIT_NOTE` - CREDIT_NOTE
     /// </summary>
     [JsonPropertyName("underlying_transaction_type")]
-    public UnderlyingTransactionTypeEnum? UnderlyingTransactionType { get; set; }
+    public OneOf<UnderlyingTransactionTypeEnum, string>? UnderlyingTransactionType { get; set; }
 
     /// <summary>
     /// The accounting period that the GeneralLedgerTransaction was generated in.

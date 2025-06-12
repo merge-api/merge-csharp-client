@@ -53,7 +53,7 @@ public record TicketRequest
     /// * `ON_HOLD` - ON_HOLD
     /// </summary>
     [JsonPropertyName("status")]
-    public TicketStatusEnum? Status { get; set; }
+    public OneOf<TicketStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// The ticket’s description. HTML version of description is mapped if supported by the third-party platform.
@@ -94,6 +94,17 @@ public record TicketRequest
     [JsonPropertyName("attachments")]
     public IEnumerable<OneOf<string, Attachment>>? Attachments { get; set; }
 
+    /// <summary>
+    /// The description of who is able to access a given ticket, or where access is inherited from.
+    ///
+    /// * `COMPANY` - COMPANY
+    /// * `PUBLIC` - PUBLIC
+    /// * `PRIVATE` - PRIVATE
+    /// * `COLLECTION` - COLLECTION
+    /// </summary>
+    [JsonPropertyName("access_level")]
+    public OneOf<TicketAccessLevelEnum, string>? AccessLevel { get; set; }
+
     [JsonPropertyName("tags")]
     public IEnumerable<string>? Tags { get; set; }
 
@@ -121,7 +132,7 @@ public record TicketRequest
     /// * `LOW` - LOW
     /// </summary>
     [JsonPropertyName("priority")]
-    public PriorityEnum? Priority { get; set; }
+    public OneOf<PriorityEnum, string>? Priority { get; set; }
 
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("integration_params")]

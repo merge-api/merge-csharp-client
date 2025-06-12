@@ -58,7 +58,7 @@ public record Activity
     /// * `OTHER` - OTHER
     /// </summary>
     [JsonPropertyName("activity_type")]
-    public ActivityTypeEnum? ActivityType { get; set; }
+    public OneOf<ActivityTypeEnum, string>? ActivityType { get; set; }
 
     /// <summary>
     /// The activity's subject.
@@ -80,7 +80,7 @@ public record Activity
     /// * `PRIVATE` - PRIVATE
     /// </summary>
     [JsonPropertyName("visibility")]
-    public VisibilityEnum? Visibility { get; set; }
+    public OneOf<VisibilityEnum, string>? Visibility { get; set; }
 
     [JsonPropertyName("candidate")]
     public string? Candidate { get; set; }

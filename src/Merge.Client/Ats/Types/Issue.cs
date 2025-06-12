@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Ats;
 
@@ -17,7 +18,7 @@ public record Issue
     /// * `RESOLVED` - RESOLVED
     /// </summary>
     [JsonPropertyName("status")]
-    public IssueStatusEnum? Status { get; set; }
+    public OneOf<IssueStatusEnum, string>? Status { get; set; }
 
     [JsonPropertyName("error_description")]
     public required string ErrorDescription { get; set; }

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -57,7 +58,7 @@ public record PatchedOpportunityRequest
     /// * `LOST` - LOST
     /// </summary>
     [JsonPropertyName("status")]
-    public OpportunityStatusEnum? Status { get; set; }
+    public OneOf<OpportunityStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// When the opportunity's last activity occurred.

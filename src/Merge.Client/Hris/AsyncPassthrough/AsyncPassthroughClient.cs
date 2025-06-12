@@ -37,7 +37,7 @@ public partial class AsyncPassthroughClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "hris/v1/async-passthrough",
                     Body = request,
@@ -86,7 +86,7 @@ public partial class AsyncPassthroughClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "hris/v1/async-passthrough/{0}",

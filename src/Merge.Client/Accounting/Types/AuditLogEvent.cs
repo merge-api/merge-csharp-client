@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
@@ -33,7 +34,7 @@ public record AuditLogEvent
     /// * `MERGE_TEAM` - MERGE_TEAM
     /// </summary>
     [JsonPropertyName("role")]
-    public required RoleEnum Role { get; set; }
+    public required OneOf<RoleEnum, string> Role { get; set; }
 
     [JsonPropertyName("ip_address")]
     public required string IpAddress { get; set; }
@@ -46,6 +47,7 @@ public record AuditLogEvent
     /// * `CREATED_TEST_API_KEY` - CREATED_TEST_API_KEY
     /// * `DELETED_TEST_API_KEY` - DELETED_TEST_API_KEY
     /// * `REGENERATED_PRODUCTION_API_KEY` - REGENERATED_PRODUCTION_API_KEY
+    /// * `REGENERATED_WEBHOOK_SIGNATURE` - REGENERATED_WEBHOOK_SIGNATURE
     /// * `INVITED_USER` - INVITED_USER
     /// * `TWO_FACTOR_AUTH_ENABLED` - TWO_FACTOR_AUTH_ENABLED
     /// * `TWO_FACTOR_AUTH_DISABLED` - TWO_FACTOR_AUTH_DISABLED
@@ -85,7 +87,7 @@ public record AuditLogEvent
     /// * `END_USER_CREDENTIALS_ACCESSED` - END_USER_CREDENTIALS_ACCESSED
     /// </summary>
     [JsonPropertyName("event_type")]
-    public required EventTypeEnum EventType { get; set; }
+    public required OneOf<EventTypeEnum, string> EventType { get; set; }
 
     [JsonPropertyName("event_description")]
     public required string EventDescription { get; set; }

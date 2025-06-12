@@ -87,7 +87,7 @@ public partial class FoldersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "filestorage/v1/folders",
                     Query = _query,
@@ -185,7 +185,7 @@ public partial class FoldersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "filestorage/v1/folders",
                     Body = request,
@@ -246,7 +246,7 @@ public partial class FoldersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "filestorage/v1/folders/{0}",
@@ -296,7 +296,7 @@ public partial class FoldersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "filestorage/v1/folders/meta/post",
                     Options = options,

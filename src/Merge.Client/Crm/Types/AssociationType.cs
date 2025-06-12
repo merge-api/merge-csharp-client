@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Crm;
 
@@ -55,7 +56,7 @@ public record AssociationType
     public string? DisplayName { get; set; }
 
     [JsonPropertyName("cardinality")]
-    public CardinalityEnum? Cardinality { get; set; }
+    public OneOf<CardinalityEnum, string>? Cardinality { get; set; }
 
     [JsonPropertyName("is_required")]
     public bool? IsRequired { get; set; }

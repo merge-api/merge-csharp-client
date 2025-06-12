@@ -75,6 +75,9 @@ public record FieldMappingApiInstanceResponse
     [JsonPropertyName("PaymentMethod")]
     public IEnumerable<FieldMappingApiInstance>? PaymentMethod { get; set; }
 
+    [JsonPropertyName("Project")]
+    public IEnumerable<FieldMappingApiInstance>? Project { get; set; }
+
     [JsonPropertyName("PaymentTerm")]
     public IEnumerable<FieldMappingApiInstance>? PaymentTerm { get; set; }
 

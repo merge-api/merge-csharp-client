@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
+using OneOf;
 
 namespace Merge.Client.Accounting;
 
@@ -43,7 +44,7 @@ public record AccountRequest
     /// * `REVENUE` - REVENUE
     /// </summary>
     [JsonPropertyName("classification")]
-    public ClassificationEnum? Classification { get; set; }
+    public OneOf<ClassificationEnum, string>? Classification { get; set; }
 
     /// <summary>
     /// The account's type is a narrower and more specific grouping within the account's classification.
@@ -69,7 +70,7 @@ public record AccountRequest
     /// * `NON_POSTING` - NON_POSTING
     /// </summary>
     [JsonPropertyName("account_type")]
-    public AccountAccountTypeEnum? AccountType { get; set; }
+    public OneOf<AccountAccountTypeEnum, string>? AccountType { get; set; }
 
     /// <summary>
     /// The account's status.
@@ -79,7 +80,7 @@ public record AccountRequest
     /// * `INACTIVE` - INACTIVE
     /// </summary>
     [JsonPropertyName("status")]
-    public AccountStatusEnum? Status { get; set; }
+    public OneOf<AccountStatusEnum, string>? Status { get; set; }
 
     /// <summary>
     /// The account's current balance.
@@ -398,7 +399,7 @@ public record AccountRequest
     /// * `ZWL` - Zimbabwean Dollar (2009)
     /// </summary>
     [JsonPropertyName("currency")]
-    public TransactionCurrencyEnum? Currency { get; set; }
+    public OneOf<TransactionCurrencyEnum, string>? Currency { get; set; }
 
     /// <summary>
     /// The account's number.
