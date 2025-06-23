@@ -1,30 +1,83 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
 
-[JsonConverter(typeof(EnumSerializer<LinkedAccountsListRequestCategory>))]
-public enum LinkedAccountsListRequestCategory
+[JsonConverter(typeof(StringEnumSerializer<LinkedAccountsListRequestCategory>))]
+public readonly record struct LinkedAccountsListRequestCategory : IStringEnum
 {
-    [EnumMember(Value = "accounting")]
-    Accounting,
+    public static readonly LinkedAccountsListRequestCategory Accounting = new(Values.Accounting);
 
-    [EnumMember(Value = "ats")]
-    Ats,
+    public static readonly LinkedAccountsListRequestCategory Ats = new(Values.Ats);
 
-    [EnumMember(Value = "crm")]
-    Crm,
+    public static readonly LinkedAccountsListRequestCategory Crm = new(Values.Crm);
 
-    [EnumMember(Value = "filestorage")]
-    Filestorage,
+    public static readonly LinkedAccountsListRequestCategory Filestorage = new(Values.Filestorage);
 
-    [EnumMember(Value = "hris")]
-    Hris,
+    public static readonly LinkedAccountsListRequestCategory Hris = new(Values.Hris);
 
-    [EnumMember(Value = "mktg")]
-    Mktg,
+    public static readonly LinkedAccountsListRequestCategory Mktg = new(Values.Mktg);
 
-    [EnumMember(Value = "ticketing")]
-    Ticketing,
+    public static readonly LinkedAccountsListRequestCategory Ticketing = new(Values.Ticketing);
+
+    public LinkedAccountsListRequestCategory(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static LinkedAccountsListRequestCategory FromCustom(string value)
+    {
+        return new LinkedAccountsListRequestCategory(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(LinkedAccountsListRequestCategory value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(LinkedAccountsListRequestCategory value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(LinkedAccountsListRequestCategory value) => value.Value;
+
+    public static explicit operator LinkedAccountsListRequestCategory(string value) => new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    public static class Values
+    {
+        public const string Accounting = "accounting";
+
+        public const string Ats = "ats";
+
+        public const string Crm = "crm";
+
+        public const string Filestorage = "filestorage";
+
+        public const string Hris = "hris";
+
+        public const string Mktg = "mktg";
+
+        public const string Ticketing = "ticketing";
+    }
 }

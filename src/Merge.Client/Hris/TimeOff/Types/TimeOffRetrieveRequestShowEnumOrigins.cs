@@ -1,30 +1,95 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(EnumSerializer<TimeOffRetrieveRequestShowEnumOrigins>))]
-public enum TimeOffRetrieveRequestShowEnumOrigins
+[JsonConverter(typeof(StringEnumSerializer<TimeOffRetrieveRequestShowEnumOrigins>))]
+public readonly record struct TimeOffRetrieveRequestShowEnumOrigins : IStringEnum
 {
-    [EnumMember(Value = "request_type")]
-    RequestType,
+    public static readonly TimeOffRetrieveRequestShowEnumOrigins RequestType = new(
+        Values.RequestType
+    );
 
-    [EnumMember(Value = "request_type,status")]
-    RequestTypeStatus,
+    public static readonly TimeOffRetrieveRequestShowEnumOrigins RequestTypeStatus = new(
+        Values.RequestTypeStatus
+    );
 
-    [EnumMember(Value = "request_type,status,units")]
-    RequestTypeStatusUnits,
+    public static readonly TimeOffRetrieveRequestShowEnumOrigins RequestTypeStatusUnits = new(
+        Values.RequestTypeStatusUnits
+    );
 
-    [EnumMember(Value = "request_type,units")]
-    RequestTypeUnits,
+    public static readonly TimeOffRetrieveRequestShowEnumOrigins RequestTypeUnits = new(
+        Values.RequestTypeUnits
+    );
 
-    [EnumMember(Value = "status")]
-    Status,
+    public static readonly TimeOffRetrieveRequestShowEnumOrigins Status = new(Values.Status);
 
-    [EnumMember(Value = "status,units")]
-    StatusUnits,
+    public static readonly TimeOffRetrieveRequestShowEnumOrigins StatusUnits = new(
+        Values.StatusUnits
+    );
 
-    [EnumMember(Value = "units")]
-    Units,
+    public static readonly TimeOffRetrieveRequestShowEnumOrigins Units = new(Values.Units);
+
+    public TimeOffRetrieveRequestShowEnumOrigins(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static TimeOffRetrieveRequestShowEnumOrigins FromCustom(string value)
+    {
+        return new TimeOffRetrieveRequestShowEnumOrigins(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(TimeOffRetrieveRequestShowEnumOrigins value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(TimeOffRetrieveRequestShowEnumOrigins value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(TimeOffRetrieveRequestShowEnumOrigins value) =>
+        value.Value;
+
+    public static explicit operator TimeOffRetrieveRequestShowEnumOrigins(string value) =>
+        new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    public static class Values
+    {
+        public const string RequestType = "request_type";
+
+        public const string RequestTypeStatus = "request_type,status";
+
+        public const string RequestTypeStatusUnits = "request_type,status,units";
+
+        public const string RequestTypeUnits = "request_type,units";
+
+        public const string Status = "status";
+
+        public const string StatusUnits = "status,units";
+
+        public const string Units = "units";
+    }
 }

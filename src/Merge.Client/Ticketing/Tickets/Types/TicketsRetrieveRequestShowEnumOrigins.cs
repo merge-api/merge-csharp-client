@@ -1,30 +1,95 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
 
-[JsonConverter(typeof(EnumSerializer<TicketsRetrieveRequestShowEnumOrigins>))]
-public enum TicketsRetrieveRequestShowEnumOrigins
+[JsonConverter(typeof(StringEnumSerializer<TicketsRetrieveRequestShowEnumOrigins>))]
+public readonly record struct TicketsRetrieveRequestShowEnumOrigins : IStringEnum
 {
-    [EnumMember(Value = "priority")]
-    Priority,
+    public static readonly TicketsRetrieveRequestShowEnumOrigins Priority = new(Values.Priority);
 
-    [EnumMember(Value = "priority,status")]
-    PriorityStatus,
+    public static readonly TicketsRetrieveRequestShowEnumOrigins PriorityStatus = new(
+        Values.PriorityStatus
+    );
 
-    [EnumMember(Value = "priority,status,ticket_type")]
-    PriorityStatusTicketType,
+    public static readonly TicketsRetrieveRequestShowEnumOrigins PriorityStatusTicketType = new(
+        Values.PriorityStatusTicketType
+    );
 
-    [EnumMember(Value = "priority,ticket_type")]
-    PriorityTicketType,
+    public static readonly TicketsRetrieveRequestShowEnumOrigins PriorityTicketType = new(
+        Values.PriorityTicketType
+    );
 
-    [EnumMember(Value = "status")]
-    Status,
+    public static readonly TicketsRetrieveRequestShowEnumOrigins Status = new(Values.Status);
 
-    [EnumMember(Value = "status,ticket_type")]
-    StatusTicketType,
+    public static readonly TicketsRetrieveRequestShowEnumOrigins StatusTicketType = new(
+        Values.StatusTicketType
+    );
 
-    [EnumMember(Value = "ticket_type")]
-    TicketType,
+    public static readonly TicketsRetrieveRequestShowEnumOrigins TicketType = new(
+        Values.TicketType
+    );
+
+    public TicketsRetrieveRequestShowEnumOrigins(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static TicketsRetrieveRequestShowEnumOrigins FromCustom(string value)
+    {
+        return new TicketsRetrieveRequestShowEnumOrigins(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(TicketsRetrieveRequestShowEnumOrigins value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(TicketsRetrieveRequestShowEnumOrigins value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(TicketsRetrieveRequestShowEnumOrigins value) =>
+        value.Value;
+
+    public static explicit operator TicketsRetrieveRequestShowEnumOrigins(string value) =>
+        new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    public static class Values
+    {
+        public const string Priority = "priority";
+
+        public const string PriorityStatus = "priority,status";
+
+        public const string PriorityStatusTicketType = "priority,status,ticket_type";
+
+        public const string PriorityTicketType = "priority,ticket_type";
+
+        public const string Status = "status";
+
+        public const string StatusTicketType = "status,ticket_type";
+
+        public const string TicketType = "ticket_type";
+    }
 }

@@ -1,54 +1,142 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(EnumSerializer<EmploymentsListRequestRemoteFields>))]
-public enum EmploymentsListRequestRemoteFields
+[JsonConverter(typeof(StringEnumSerializer<EmploymentsListRequestRemoteFields>))]
+public readonly record struct EmploymentsListRequestRemoteFields : IStringEnum
 {
-    [EnumMember(Value = "employment_type")]
-    EmploymentType,
+    public static readonly EmploymentsListRequestRemoteFields EmploymentType = new(
+        Values.EmploymentType
+    );
 
-    [EnumMember(Value = "employment_type,flsa_status")]
-    EmploymentTypeFlsaStatus,
+    public static readonly EmploymentsListRequestRemoteFields EmploymentTypeFlsaStatus = new(
+        Values.EmploymentTypeFlsaStatus
+    );
 
-    [EnumMember(Value = "employment_type,flsa_status,pay_frequency")]
-    EmploymentTypeFlsaStatusPayFrequency,
+    public static readonly EmploymentsListRequestRemoteFields EmploymentTypeFlsaStatusPayFrequency =
+        new(Values.EmploymentTypeFlsaStatusPayFrequency);
 
-    [EnumMember(Value = "employment_type,flsa_status,pay_frequency,pay_period")]
-    EmploymentTypeFlsaStatusPayFrequencyPayPeriod,
+    public static readonly EmploymentsListRequestRemoteFields EmploymentTypeFlsaStatusPayFrequencyPayPeriod =
+        new(Values.EmploymentTypeFlsaStatusPayFrequencyPayPeriod);
 
-    [EnumMember(Value = "employment_type,flsa_status,pay_period")]
-    EmploymentTypeFlsaStatusPayPeriod,
+    public static readonly EmploymentsListRequestRemoteFields EmploymentTypeFlsaStatusPayPeriod =
+        new(Values.EmploymentTypeFlsaStatusPayPeriod);
 
-    [EnumMember(Value = "employment_type,pay_frequency")]
-    EmploymentTypePayFrequency,
+    public static readonly EmploymentsListRequestRemoteFields EmploymentTypePayFrequency = new(
+        Values.EmploymentTypePayFrequency
+    );
 
-    [EnumMember(Value = "employment_type,pay_frequency,pay_period")]
-    EmploymentTypePayFrequencyPayPeriod,
+    public static readonly EmploymentsListRequestRemoteFields EmploymentTypePayFrequencyPayPeriod =
+        new(Values.EmploymentTypePayFrequencyPayPeriod);
 
-    [EnumMember(Value = "employment_type,pay_period")]
-    EmploymentTypePayPeriod,
+    public static readonly EmploymentsListRequestRemoteFields EmploymentTypePayPeriod = new(
+        Values.EmploymentTypePayPeriod
+    );
 
-    [EnumMember(Value = "flsa_status")]
-    FlsaStatus,
+    public static readonly EmploymentsListRequestRemoteFields FlsaStatus = new(Values.FlsaStatus);
 
-    [EnumMember(Value = "flsa_status,pay_frequency")]
-    FlsaStatusPayFrequency,
+    public static readonly EmploymentsListRequestRemoteFields FlsaStatusPayFrequency = new(
+        Values.FlsaStatusPayFrequency
+    );
 
-    [EnumMember(Value = "flsa_status,pay_frequency,pay_period")]
-    FlsaStatusPayFrequencyPayPeriod,
+    public static readonly EmploymentsListRequestRemoteFields FlsaStatusPayFrequencyPayPeriod = new(
+        Values.FlsaStatusPayFrequencyPayPeriod
+    );
 
-    [EnumMember(Value = "flsa_status,pay_period")]
-    FlsaStatusPayPeriod,
+    public static readonly EmploymentsListRequestRemoteFields FlsaStatusPayPeriod = new(
+        Values.FlsaStatusPayPeriod
+    );
 
-    [EnumMember(Value = "pay_frequency")]
-    PayFrequency,
+    public static readonly EmploymentsListRequestRemoteFields PayFrequency = new(
+        Values.PayFrequency
+    );
 
-    [EnumMember(Value = "pay_frequency,pay_period")]
-    PayFrequencyPayPeriod,
+    public static readonly EmploymentsListRequestRemoteFields PayFrequencyPayPeriod = new(
+        Values.PayFrequencyPayPeriod
+    );
 
-    [EnumMember(Value = "pay_period")]
-    PayPeriod,
+    public static readonly EmploymentsListRequestRemoteFields PayPeriod = new(Values.PayPeriod);
+
+    public EmploymentsListRequestRemoteFields(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static EmploymentsListRequestRemoteFields FromCustom(string value)
+    {
+        return new EmploymentsListRequestRemoteFields(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(EmploymentsListRequestRemoteFields value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(EmploymentsListRequestRemoteFields value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(EmploymentsListRequestRemoteFields value) => value.Value;
+
+    public static explicit operator EmploymentsListRequestRemoteFields(string value) => new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    public static class Values
+    {
+        public const string EmploymentType = "employment_type";
+
+        public const string EmploymentTypeFlsaStatus = "employment_type,flsa_status";
+
+        public const string EmploymentTypeFlsaStatusPayFrequency =
+            "employment_type,flsa_status,pay_frequency";
+
+        public const string EmploymentTypeFlsaStatusPayFrequencyPayPeriod =
+            "employment_type,flsa_status,pay_frequency,pay_period";
+
+        public const string EmploymentTypeFlsaStatusPayPeriod =
+            "employment_type,flsa_status,pay_period";
+
+        public const string EmploymentTypePayFrequency = "employment_type,pay_frequency";
+
+        public const string EmploymentTypePayFrequencyPayPeriod =
+            "employment_type,pay_frequency,pay_period";
+
+        public const string EmploymentTypePayPeriod = "employment_type,pay_period";
+
+        public const string FlsaStatus = "flsa_status";
+
+        public const string FlsaStatusPayFrequency = "flsa_status,pay_frequency";
+
+        public const string FlsaStatusPayFrequencyPayPeriod =
+            "flsa_status,pay_frequency,pay_period";
+
+        public const string FlsaStatusPayPeriod = "flsa_status,pay_period";
+
+        public const string PayFrequency = "pay_frequency";
+
+        public const string PayFrequencyPayPeriod = "pay_frequency,pay_period";
+
+        public const string PayPeriod = "pay_period";
+    }
 }

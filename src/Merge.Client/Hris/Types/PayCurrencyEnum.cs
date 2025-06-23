@@ -1,927 +1,1279 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(EnumSerializer<PayCurrencyEnum>))]
-public enum PayCurrencyEnum
+[JsonConverter(typeof(StringEnumSerializer<PayCurrencyEnum>))]
+public readonly record struct PayCurrencyEnum : IStringEnum
 {
-    [EnumMember(Value = "XUA")]
-    Xua,
+    public static readonly PayCurrencyEnum Xua = new(Values.Xua);
 
-    [EnumMember(Value = "AFN")]
-    Afn,
+    public static readonly PayCurrencyEnum Afn = new(Values.Afn);
 
-    [EnumMember(Value = "AFA")]
-    Afa,
+    public static readonly PayCurrencyEnum Afa = new(Values.Afa);
 
-    [EnumMember(Value = "ALL")]
-    All,
+    public static readonly PayCurrencyEnum All = new(Values.All);
 
-    [EnumMember(Value = "ALK")]
-    Alk,
+    public static readonly PayCurrencyEnum Alk = new(Values.Alk);
 
-    [EnumMember(Value = "DZD")]
-    Dzd,
+    public static readonly PayCurrencyEnum Dzd = new(Values.Dzd);
 
-    [EnumMember(Value = "ADP")]
-    Adp,
+    public static readonly PayCurrencyEnum Adp = new(Values.Adp);
 
-    [EnumMember(Value = "AOA")]
-    Aoa,
+    public static readonly PayCurrencyEnum Aoa = new(Values.Aoa);
 
-    [EnumMember(Value = "AOK")]
-    Aok,
+    public static readonly PayCurrencyEnum Aok = new(Values.Aok);
 
-    [EnumMember(Value = "AON")]
-    Aon,
+    public static readonly PayCurrencyEnum Aon = new(Values.Aon);
 
-    [EnumMember(Value = "AOR")]
-    Aor,
+    public static readonly PayCurrencyEnum Aor = new(Values.Aor);
 
-    [EnumMember(Value = "ARA")]
-    Ara,
+    public static readonly PayCurrencyEnum Ara = new(Values.Ara);
 
-    [EnumMember(Value = "ARS")]
-    Ars,
+    public static readonly PayCurrencyEnum Ars = new(Values.Ars);
 
-    [EnumMember(Value = "ARM")]
-    Arm,
+    public static readonly PayCurrencyEnum Arm = new(Values.Arm);
 
-    [EnumMember(Value = "ARP")]
-    Arp,
+    public static readonly PayCurrencyEnum Arp = new(Values.Arp);
 
-    [EnumMember(Value = "ARL")]
-    Arl,
+    public static readonly PayCurrencyEnum Arl = new(Values.Arl);
 
-    [EnumMember(Value = "AMD")]
-    Amd,
+    public static readonly PayCurrencyEnum Amd = new(Values.Amd);
 
-    [EnumMember(Value = "AWG")]
-    Awg,
+    public static readonly PayCurrencyEnum Awg = new(Values.Awg);
 
-    [EnumMember(Value = "AUD")]
-    Aud,
+    public static readonly PayCurrencyEnum Aud = new(Values.Aud);
 
-    [EnumMember(Value = "ATS")]
-    Ats,
+    public static readonly PayCurrencyEnum Ats = new(Values.Ats);
 
-    [EnumMember(Value = "AZN")]
-    Azn,
+    public static readonly PayCurrencyEnum Azn = new(Values.Azn);
 
-    [EnumMember(Value = "AZM")]
-    Azm,
+    public static readonly PayCurrencyEnum Azm = new(Values.Azm);
 
-    [EnumMember(Value = "BSD")]
-    Bsd,
+    public static readonly PayCurrencyEnum Bsd = new(Values.Bsd);
 
-    [EnumMember(Value = "BHD")]
-    Bhd,
+    public static readonly PayCurrencyEnum Bhd = new(Values.Bhd);
 
-    [EnumMember(Value = "BDT")]
-    Bdt,
+    public static readonly PayCurrencyEnum Bdt = new(Values.Bdt);
 
-    [EnumMember(Value = "BBD")]
-    Bbd,
+    public static readonly PayCurrencyEnum Bbd = new(Values.Bbd);
 
-    [EnumMember(Value = "BYN")]
-    Byn,
+    public static readonly PayCurrencyEnum Byn = new(Values.Byn);
 
-    [EnumMember(Value = "BYB")]
-    Byb,
+    public static readonly PayCurrencyEnum Byb = new(Values.Byb);
 
-    [EnumMember(Value = "BYR")]
-    Byr,
+    public static readonly PayCurrencyEnum Byr = new(Values.Byr);
 
-    [EnumMember(Value = "BEF")]
-    Bef,
+    public static readonly PayCurrencyEnum Bef = new(Values.Bef);
 
-    [EnumMember(Value = "BEC")]
-    Bec,
+    public static readonly PayCurrencyEnum Bec = new(Values.Bec);
 
-    [EnumMember(Value = "BEL")]
-    Bel,
+    public static readonly PayCurrencyEnum Bel = new(Values.Bel);
 
-    [EnumMember(Value = "BZD")]
-    Bzd,
+    public static readonly PayCurrencyEnum Bzd = new(Values.Bzd);
 
-    [EnumMember(Value = "BMD")]
-    Bmd,
+    public static readonly PayCurrencyEnum Bmd = new(Values.Bmd);
 
-    [EnumMember(Value = "BTN")]
-    Btn,
+    public static readonly PayCurrencyEnum Btn = new(Values.Btn);
 
-    [EnumMember(Value = "BOB")]
-    Bob,
+    public static readonly PayCurrencyEnum Bob = new(Values.Bob);
 
-    [EnumMember(Value = "BOL")]
-    Bol,
+    public static readonly PayCurrencyEnum Bol = new(Values.Bol);
 
-    [EnumMember(Value = "BOV")]
-    Bov,
+    public static readonly PayCurrencyEnum Bov = new(Values.Bov);
 
-    [EnumMember(Value = "BOP")]
-    Bop,
+    public static readonly PayCurrencyEnum Bop = new(Values.Bop);
 
-    [EnumMember(Value = "BAM")]
-    Bam,
+    public static readonly PayCurrencyEnum Bam = new(Values.Bam);
 
-    [EnumMember(Value = "BAD")]
-    Bad,
+    public static readonly PayCurrencyEnum Bad = new(Values.Bad);
 
-    [EnumMember(Value = "BAN")]
-    Ban,
+    public static readonly PayCurrencyEnum Ban = new(Values.Ban);
 
-    [EnumMember(Value = "BWP")]
-    Bwp,
+    public static readonly PayCurrencyEnum Bwp = new(Values.Bwp);
 
-    [EnumMember(Value = "BRC")]
-    Brc,
+    public static readonly PayCurrencyEnum Brc = new(Values.Brc);
 
-    [EnumMember(Value = "BRZ")]
-    Brz,
+    public static readonly PayCurrencyEnum Brz = new(Values.Brz);
 
-    [EnumMember(Value = "BRE")]
-    Bre,
+    public static readonly PayCurrencyEnum Bre = new(Values.Bre);
 
-    [EnumMember(Value = "BRR")]
-    Brr,
+    public static readonly PayCurrencyEnum Brr = new(Values.Brr);
 
-    [EnumMember(Value = "BRN")]
-    Brn,
+    public static readonly PayCurrencyEnum Brn = new(Values.Brn);
 
-    [EnumMember(Value = "BRB")]
-    Brb,
+    public static readonly PayCurrencyEnum Brb = new(Values.Brb);
 
-    [EnumMember(Value = "BRL")]
-    Brl,
+    public static readonly PayCurrencyEnum Brl = new(Values.Brl);
 
-    [EnumMember(Value = "GBP")]
-    Gbp,
+    public static readonly PayCurrencyEnum Gbp = new(Values.Gbp);
 
-    [EnumMember(Value = "BND")]
-    Bnd,
+    public static readonly PayCurrencyEnum Bnd = new(Values.Bnd);
 
-    [EnumMember(Value = "BGL")]
-    Bgl,
+    public static readonly PayCurrencyEnum Bgl = new(Values.Bgl);
 
-    [EnumMember(Value = "BGN")]
-    Bgn,
+    public static readonly PayCurrencyEnum Bgn = new(Values.Bgn);
 
-    [EnumMember(Value = "BGO")]
-    Bgo,
+    public static readonly PayCurrencyEnum Bgo = new(Values.Bgo);
 
-    [EnumMember(Value = "BGM")]
-    Bgm,
+    public static readonly PayCurrencyEnum Bgm = new(Values.Bgm);
 
-    [EnumMember(Value = "BUK")]
-    Buk,
+    public static readonly PayCurrencyEnum Buk = new(Values.Buk);
 
-    [EnumMember(Value = "BIF")]
-    Bif,
+    public static readonly PayCurrencyEnum Bif = new(Values.Bif);
 
-    [EnumMember(Value = "XPF")]
-    Xpf,
+    public static readonly PayCurrencyEnum Xpf = new(Values.Xpf);
 
-    [EnumMember(Value = "KHR")]
-    Khr,
+    public static readonly PayCurrencyEnum Khr = new(Values.Khr);
 
-    [EnumMember(Value = "CAD")]
-    Cad,
+    public static readonly PayCurrencyEnum Cad = new(Values.Cad);
 
-    [EnumMember(Value = "CVE")]
-    Cve,
+    public static readonly PayCurrencyEnum Cve = new(Values.Cve);
 
-    [EnumMember(Value = "KYD")]
-    Kyd,
+    public static readonly PayCurrencyEnum Kyd = new(Values.Kyd);
 
-    [EnumMember(Value = "XAF")]
-    Xaf,
+    public static readonly PayCurrencyEnum Xaf = new(Values.Xaf);
 
-    [EnumMember(Value = "CLE")]
-    Cle,
+    public static readonly PayCurrencyEnum Cle = new(Values.Cle);
 
-    [EnumMember(Value = "CLP")]
-    Clp,
+    public static readonly PayCurrencyEnum Clp = new(Values.Clp);
 
-    [EnumMember(Value = "CLF")]
-    Clf,
+    public static readonly PayCurrencyEnum Clf = new(Values.Clf);
 
-    [EnumMember(Value = "CNX")]
-    Cnx,
+    public static readonly PayCurrencyEnum Cnx = new(Values.Cnx);
 
-    [EnumMember(Value = "CNY")]
-    Cny,
+    public static readonly PayCurrencyEnum Cny = new(Values.Cny);
 
-    [EnumMember(Value = "CNH")]
-    Cnh,
+    public static readonly PayCurrencyEnum Cnh = new(Values.Cnh);
 
-    [EnumMember(Value = "COP")]
-    Cop,
+    public static readonly PayCurrencyEnum Cop = new(Values.Cop);
 
-    [EnumMember(Value = "COU")]
-    Cou,
+    public static readonly PayCurrencyEnum Cou = new(Values.Cou);
 
-    [EnumMember(Value = "KMF")]
-    Kmf,
+    public static readonly PayCurrencyEnum Kmf = new(Values.Kmf);
 
-    [EnumMember(Value = "CDF")]
-    Cdf,
+    public static readonly PayCurrencyEnum Cdf = new(Values.Cdf);
 
-    [EnumMember(Value = "CRC")]
-    Crc,
+    public static readonly PayCurrencyEnum Crc = new(Values.Crc);
 
-    [EnumMember(Value = "HRD")]
-    Hrd,
+    public static readonly PayCurrencyEnum Hrd = new(Values.Hrd);
 
-    [EnumMember(Value = "HRK")]
-    Hrk,
+    public static readonly PayCurrencyEnum Hrk = new(Values.Hrk);
 
-    [EnumMember(Value = "CUC")]
-    Cuc,
+    public static readonly PayCurrencyEnum Cuc = new(Values.Cuc);
 
-    [EnumMember(Value = "CUP")]
-    Cup,
+    public static readonly PayCurrencyEnum Cup = new(Values.Cup);
 
-    [EnumMember(Value = "CYP")]
-    Cyp,
+    public static readonly PayCurrencyEnum Cyp = new(Values.Cyp);
 
-    [EnumMember(Value = "CZK")]
-    Czk,
+    public static readonly PayCurrencyEnum Czk = new(Values.Czk);
 
-    [EnumMember(Value = "CSK")]
-    Csk,
+    public static readonly PayCurrencyEnum Csk = new(Values.Csk);
 
-    [EnumMember(Value = "DKK")]
-    Dkk,
+    public static readonly PayCurrencyEnum Dkk = new(Values.Dkk);
 
-    [EnumMember(Value = "DJF")]
-    Djf,
+    public static readonly PayCurrencyEnum Djf = new(Values.Djf);
 
-    [EnumMember(Value = "DOP")]
-    Dop,
+    public static readonly PayCurrencyEnum Dop = new(Values.Dop);
 
-    [EnumMember(Value = "NLG")]
-    Nlg,
+    public static readonly PayCurrencyEnum Nlg = new(Values.Nlg);
 
-    [EnumMember(Value = "XCD")]
-    Xcd,
+    public static readonly PayCurrencyEnum Xcd = new(Values.Xcd);
 
-    [EnumMember(Value = "DDM")]
-    Ddm,
+    public static readonly PayCurrencyEnum Ddm = new(Values.Ddm);
 
-    [EnumMember(Value = "ECS")]
-    Ecs,
+    public static readonly PayCurrencyEnum Ecs = new(Values.Ecs);
 
-    [EnumMember(Value = "ECV")]
-    Ecv,
+    public static readonly PayCurrencyEnum Ecv = new(Values.Ecv);
 
-    [EnumMember(Value = "EGP")]
-    Egp,
+    public static readonly PayCurrencyEnum Egp = new(Values.Egp);
 
-    [EnumMember(Value = "GQE")]
-    Gqe,
+    public static readonly PayCurrencyEnum Gqe = new(Values.Gqe);
 
-    [EnumMember(Value = "ERN")]
-    Ern,
+    public static readonly PayCurrencyEnum Ern = new(Values.Ern);
 
-    [EnumMember(Value = "EEK")]
-    Eek,
+    public static readonly PayCurrencyEnum Eek = new(Values.Eek);
 
-    [EnumMember(Value = "ETB")]
-    Etb,
+    public static readonly PayCurrencyEnum Etb = new(Values.Etb);
 
-    [EnumMember(Value = "EUR")]
-    Eur,
+    public static readonly PayCurrencyEnum Eur = new(Values.Eur);
 
-    [EnumMember(Value = "XBA")]
-    Xba,
+    public static readonly PayCurrencyEnum Xba = new(Values.Xba);
 
-    [EnumMember(Value = "XEU")]
-    Xeu,
+    public static readonly PayCurrencyEnum Xeu = new(Values.Xeu);
 
-    [EnumMember(Value = "XBB")]
-    Xbb,
+    public static readonly PayCurrencyEnum Xbb = new(Values.Xbb);
 
-    [EnumMember(Value = "XBC")]
-    Xbc,
+    public static readonly PayCurrencyEnum Xbc = new(Values.Xbc);
 
-    [EnumMember(Value = "XBD")]
-    Xbd,
+    public static readonly PayCurrencyEnum Xbd = new(Values.Xbd);
 
-    [EnumMember(Value = "FKP")]
-    Fkp,
+    public static readonly PayCurrencyEnum Fkp = new(Values.Fkp);
 
-    [EnumMember(Value = "FJD")]
-    Fjd,
+    public static readonly PayCurrencyEnum Fjd = new(Values.Fjd);
 
-    [EnumMember(Value = "FIM")]
-    Fim,
+    public static readonly PayCurrencyEnum Fim = new(Values.Fim);
 
-    [EnumMember(Value = "FRF")]
-    Frf,
+    public static readonly PayCurrencyEnum Frf = new(Values.Frf);
 
-    [EnumMember(Value = "XFO")]
-    Xfo,
+    public static readonly PayCurrencyEnum Xfo = new(Values.Xfo);
 
-    [EnumMember(Value = "XFU")]
-    Xfu,
+    public static readonly PayCurrencyEnum Xfu = new(Values.Xfu);
 
-    [EnumMember(Value = "GMD")]
-    Gmd,
+    public static readonly PayCurrencyEnum Gmd = new(Values.Gmd);
 
-    [EnumMember(Value = "GEK")]
-    Gek,
+    public static readonly PayCurrencyEnum Gek = new(Values.Gek);
 
-    [EnumMember(Value = "GEL")]
-    Gel,
+    public static readonly PayCurrencyEnum Gel = new(Values.Gel);
 
-    [EnumMember(Value = "DEM")]
-    Dem,
+    public static readonly PayCurrencyEnum Dem = new(Values.Dem);
 
-    [EnumMember(Value = "GHS")]
-    Ghs,
+    public static readonly PayCurrencyEnum Ghs = new(Values.Ghs);
 
-    [EnumMember(Value = "GHC")]
-    Ghc,
+    public static readonly PayCurrencyEnum Ghc = new(Values.Ghc);
 
-    [EnumMember(Value = "GIP")]
-    Gip,
+    public static readonly PayCurrencyEnum Gip = new(Values.Gip);
 
-    [EnumMember(Value = "XAU")]
-    Xau,
+    public static readonly PayCurrencyEnum Xau = new(Values.Xau);
 
-    [EnumMember(Value = "GRD")]
-    Grd,
+    public static readonly PayCurrencyEnum Grd = new(Values.Grd);
 
-    [EnumMember(Value = "GTQ")]
-    Gtq,
+    public static readonly PayCurrencyEnum Gtq = new(Values.Gtq);
 
-    [EnumMember(Value = "GWP")]
-    Gwp,
+    public static readonly PayCurrencyEnum Gwp = new(Values.Gwp);
 
-    [EnumMember(Value = "GNF")]
-    Gnf,
+    public static readonly PayCurrencyEnum Gnf = new(Values.Gnf);
 
-    [EnumMember(Value = "GNS")]
-    Gns,
+    public static readonly PayCurrencyEnum Gns = new(Values.Gns);
 
-    [EnumMember(Value = "GYD")]
-    Gyd,
+    public static readonly PayCurrencyEnum Gyd = new(Values.Gyd);
 
-    [EnumMember(Value = "HTG")]
-    Htg,
+    public static readonly PayCurrencyEnum Htg = new(Values.Htg);
 
-    [EnumMember(Value = "HNL")]
-    Hnl,
+    public static readonly PayCurrencyEnum Hnl = new(Values.Hnl);
 
-    [EnumMember(Value = "HKD")]
-    Hkd,
+    public static readonly PayCurrencyEnum Hkd = new(Values.Hkd);
 
-    [EnumMember(Value = "HUF")]
-    Huf,
+    public static readonly PayCurrencyEnum Huf = new(Values.Huf);
 
-    [EnumMember(Value = "IMP")]
-    Imp,
+    public static readonly PayCurrencyEnum Imp = new(Values.Imp);
 
-    [EnumMember(Value = "ISK")]
-    Isk,
+    public static readonly PayCurrencyEnum Isk = new(Values.Isk);
 
-    [EnumMember(Value = "ISJ")]
-    Isj,
+    public static readonly PayCurrencyEnum Isj = new(Values.Isj);
 
-    [EnumMember(Value = "INR")]
-    Inr,
+    public static readonly PayCurrencyEnum Inr = new(Values.Inr);
 
-    [EnumMember(Value = "IDR")]
-    Idr,
+    public static readonly PayCurrencyEnum Idr = new(Values.Idr);
 
-    [EnumMember(Value = "IRR")]
-    Irr,
+    public static readonly PayCurrencyEnum Irr = new(Values.Irr);
 
-    [EnumMember(Value = "IQD")]
-    Iqd,
+    public static readonly PayCurrencyEnum Iqd = new(Values.Iqd);
 
-    [EnumMember(Value = "IEP")]
-    Iep,
+    public static readonly PayCurrencyEnum Iep = new(Values.Iep);
 
-    [EnumMember(Value = "ILS")]
-    Ils,
+    public static readonly PayCurrencyEnum Ils = new(Values.Ils);
 
-    [EnumMember(Value = "ILP")]
-    Ilp,
+    public static readonly PayCurrencyEnum Ilp = new(Values.Ilp);
 
-    [EnumMember(Value = "ILR")]
-    Ilr,
+    public static readonly PayCurrencyEnum Ilr = new(Values.Ilr);
 
-    [EnumMember(Value = "ITL")]
-    Itl,
+    public static readonly PayCurrencyEnum Itl = new(Values.Itl);
 
-    [EnumMember(Value = "JMD")]
-    Jmd,
+    public static readonly PayCurrencyEnum Jmd = new(Values.Jmd);
 
-    [EnumMember(Value = "JPY")]
-    Jpy,
+    public static readonly PayCurrencyEnum Jpy = new(Values.Jpy);
 
-    [EnumMember(Value = "JOD")]
-    Jod,
+    public static readonly PayCurrencyEnum Jod = new(Values.Jod);
 
-    [EnumMember(Value = "KZT")]
-    Kzt,
+    public static readonly PayCurrencyEnum Kzt = new(Values.Kzt);
 
-    [EnumMember(Value = "KES")]
-    Kes,
+    public static readonly PayCurrencyEnum Kes = new(Values.Kes);
 
-    [EnumMember(Value = "KWD")]
-    Kwd,
+    public static readonly PayCurrencyEnum Kwd = new(Values.Kwd);
 
-    [EnumMember(Value = "KGS")]
-    Kgs,
+    public static readonly PayCurrencyEnum Kgs = new(Values.Kgs);
 
-    [EnumMember(Value = "LAK")]
-    Lak,
+    public static readonly PayCurrencyEnum Lak = new(Values.Lak);
 
-    [EnumMember(Value = "LVL")]
-    Lvl,
+    public static readonly PayCurrencyEnum Lvl = new(Values.Lvl);
 
-    [EnumMember(Value = "LVR")]
-    Lvr,
+    public static readonly PayCurrencyEnum Lvr = new(Values.Lvr);
 
-    [EnumMember(Value = "LBP")]
-    Lbp,
+    public static readonly PayCurrencyEnum Lbp = new(Values.Lbp);
 
-    [EnumMember(Value = "LSL")]
-    Lsl,
+    public static readonly PayCurrencyEnum Lsl = new(Values.Lsl);
 
-    [EnumMember(Value = "LRD")]
-    Lrd,
+    public static readonly PayCurrencyEnum Lrd = new(Values.Lrd);
 
-    [EnumMember(Value = "LYD")]
-    Lyd,
+    public static readonly PayCurrencyEnum Lyd = new(Values.Lyd);
 
-    [EnumMember(Value = "LTL")]
-    Ltl,
+    public static readonly PayCurrencyEnum Ltl = new(Values.Ltl);
 
-    [EnumMember(Value = "LTT")]
-    Ltt,
+    public static readonly PayCurrencyEnum Ltt = new(Values.Ltt);
 
-    [EnumMember(Value = "LUL")]
-    Lul,
+    public static readonly PayCurrencyEnum Lul = new(Values.Lul);
 
-    [EnumMember(Value = "LUC")]
-    Luc,
+    public static readonly PayCurrencyEnum Luc = new(Values.Luc);
 
-    [EnumMember(Value = "LUF")]
-    Luf,
+    public static readonly PayCurrencyEnum Luf = new(Values.Luf);
 
-    [EnumMember(Value = "MOP")]
-    Mop,
+    public static readonly PayCurrencyEnum Mop = new(Values.Mop);
 
-    [EnumMember(Value = "MKD")]
-    Mkd,
+    public static readonly PayCurrencyEnum Mkd = new(Values.Mkd);
 
-    [EnumMember(Value = "MKN")]
-    Mkn,
+    public static readonly PayCurrencyEnum Mkn = new(Values.Mkn);
 
-    [EnumMember(Value = "MGA")]
-    Mga,
+    public static readonly PayCurrencyEnum Mga = new(Values.Mga);
 
-    [EnumMember(Value = "MGF")]
-    Mgf,
+    public static readonly PayCurrencyEnum Mgf = new(Values.Mgf);
 
-    [EnumMember(Value = "MWK")]
-    Mwk,
+    public static readonly PayCurrencyEnum Mwk = new(Values.Mwk);
 
-    [EnumMember(Value = "MYR")]
-    Myr,
+    public static readonly PayCurrencyEnum Myr = new(Values.Myr);
 
-    [EnumMember(Value = "MVR")]
-    Mvr,
+    public static readonly PayCurrencyEnum Mvr = new(Values.Mvr);
 
-    [EnumMember(Value = "MVP")]
-    Mvp,
+    public static readonly PayCurrencyEnum Mvp = new(Values.Mvp);
 
-    [EnumMember(Value = "MLF")]
-    Mlf,
+    public static readonly PayCurrencyEnum Mlf = new(Values.Mlf);
 
-    [EnumMember(Value = "MTL")]
-    Mtl,
+    public static readonly PayCurrencyEnum Mtl = new(Values.Mtl);
 
-    [EnumMember(Value = "MTP")]
-    Mtp,
+    public static readonly PayCurrencyEnum Mtp = new(Values.Mtp);
 
-    [EnumMember(Value = "MRU")]
-    Mru,
+    public static readonly PayCurrencyEnum Mru = new(Values.Mru);
 
-    [EnumMember(Value = "MRO")]
-    Mro,
+    public static readonly PayCurrencyEnum Mro = new(Values.Mro);
 
-    [EnumMember(Value = "MUR")]
-    Mur,
+    public static readonly PayCurrencyEnum Mur = new(Values.Mur);
 
-    [EnumMember(Value = "MXV")]
-    Mxv,
+    public static readonly PayCurrencyEnum Mxv = new(Values.Mxv);
 
-    [EnumMember(Value = "MXN")]
-    Mxn,
+    public static readonly PayCurrencyEnum Mxn = new(Values.Mxn);
 
-    [EnumMember(Value = "MXP")]
-    Mxp,
+    public static readonly PayCurrencyEnum Mxp = new(Values.Mxp);
 
-    [EnumMember(Value = "MDC")]
-    Mdc,
+    public static readonly PayCurrencyEnum Mdc = new(Values.Mdc);
 
-    [EnumMember(Value = "MDL")]
-    Mdl,
+    public static readonly PayCurrencyEnum Mdl = new(Values.Mdl);
 
-    [EnumMember(Value = "MCF")]
-    Mcf,
+    public static readonly PayCurrencyEnum Mcf = new(Values.Mcf);
 
-    [EnumMember(Value = "MNT")]
-    Mnt,
+    public static readonly PayCurrencyEnum Mnt = new(Values.Mnt);
 
-    [EnumMember(Value = "MAD")]
-    Mad,
+    public static readonly PayCurrencyEnum Mad = new(Values.Mad);
 
-    [EnumMember(Value = "MAF")]
-    Maf,
+    public static readonly PayCurrencyEnum Maf = new(Values.Maf);
 
-    [EnumMember(Value = "MZE")]
-    Mze,
+    public static readonly PayCurrencyEnum Mze = new(Values.Mze);
 
-    [EnumMember(Value = "MZN")]
-    Mzn,
+    public static readonly PayCurrencyEnum Mzn = new(Values.Mzn);
 
-    [EnumMember(Value = "MZM")]
-    Mzm,
+    public static readonly PayCurrencyEnum Mzm = new(Values.Mzm);
 
-    [EnumMember(Value = "MMK")]
-    Mmk,
+    public static readonly PayCurrencyEnum Mmk = new(Values.Mmk);
 
-    [EnumMember(Value = "NAD")]
-    Nad,
+    public static readonly PayCurrencyEnum Nad = new(Values.Nad);
 
-    [EnumMember(Value = "NPR")]
-    Npr,
+    public static readonly PayCurrencyEnum Npr = new(Values.Npr);
 
-    [EnumMember(Value = "ANG")]
-    Ang,
+    public static readonly PayCurrencyEnum Ang = new(Values.Ang);
 
-    [EnumMember(Value = "TWD")]
-    Twd,
+    public static readonly PayCurrencyEnum Twd = new(Values.Twd);
 
-    [EnumMember(Value = "NZD")]
-    Nzd,
+    public static readonly PayCurrencyEnum Nzd = new(Values.Nzd);
 
-    [EnumMember(Value = "NIO")]
-    Nio,
+    public static readonly PayCurrencyEnum Nio = new(Values.Nio);
 
-    [EnumMember(Value = "NIC")]
-    Nic,
+    public static readonly PayCurrencyEnum Nic = new(Values.Nic);
 
-    [EnumMember(Value = "NGN")]
-    Ngn,
+    public static readonly PayCurrencyEnum Ngn = new(Values.Ngn);
 
-    [EnumMember(Value = "KPW")]
-    Kpw,
+    public static readonly PayCurrencyEnum Kpw = new(Values.Kpw);
 
-    [EnumMember(Value = "NOK")]
-    Nok,
+    public static readonly PayCurrencyEnum Nok = new(Values.Nok);
 
-    [EnumMember(Value = "OMR")]
-    Omr,
+    public static readonly PayCurrencyEnum Omr = new(Values.Omr);
 
-    [EnumMember(Value = "PKR")]
-    Pkr,
+    public static readonly PayCurrencyEnum Pkr = new(Values.Pkr);
 
-    [EnumMember(Value = "XPD")]
-    Xpd,
+    public static readonly PayCurrencyEnum Xpd = new(Values.Xpd);
 
-    [EnumMember(Value = "PAB")]
-    Pab,
+    public static readonly PayCurrencyEnum Pab = new(Values.Pab);
 
-    [EnumMember(Value = "PGK")]
-    Pgk,
+    public static readonly PayCurrencyEnum Pgk = new(Values.Pgk);
 
-    [EnumMember(Value = "PYG")]
-    Pyg,
+    public static readonly PayCurrencyEnum Pyg = new(Values.Pyg);
 
-    [EnumMember(Value = "PEI")]
-    Pei,
+    public static readonly PayCurrencyEnum Pei = new(Values.Pei);
 
-    [EnumMember(Value = "PEN")]
-    Pen,
+    public static readonly PayCurrencyEnum Pen = new(Values.Pen);
 
-    [EnumMember(Value = "PES")]
-    Pes,
+    public static readonly PayCurrencyEnum Pes = new(Values.Pes);
 
-    [EnumMember(Value = "PHP")]
-    Php,
+    public static readonly PayCurrencyEnum Php = new(Values.Php);
 
-    [EnumMember(Value = "XPT")]
-    Xpt,
+    public static readonly PayCurrencyEnum Xpt = new(Values.Xpt);
 
-    [EnumMember(Value = "PLN")]
-    Pln,
+    public static readonly PayCurrencyEnum Pln = new(Values.Pln);
 
-    [EnumMember(Value = "PLZ")]
-    Plz,
+    public static readonly PayCurrencyEnum Plz = new(Values.Plz);
 
-    [EnumMember(Value = "PTE")]
-    Pte,
+    public static readonly PayCurrencyEnum Pte = new(Values.Pte);
 
-    [EnumMember(Value = "GWE")]
-    Gwe,
+    public static readonly PayCurrencyEnum Gwe = new(Values.Gwe);
 
-    [EnumMember(Value = "QAR")]
-    Qar,
+    public static readonly PayCurrencyEnum Qar = new(Values.Qar);
 
-    [EnumMember(Value = "XRE")]
-    Xre,
+    public static readonly PayCurrencyEnum Xre = new(Values.Xre);
 
-    [EnumMember(Value = "RHD")]
-    Rhd,
+    public static readonly PayCurrencyEnum Rhd = new(Values.Rhd);
 
-    [EnumMember(Value = "RON")]
-    Ron,
+    public static readonly PayCurrencyEnum Ron = new(Values.Ron);
 
-    [EnumMember(Value = "ROL")]
-    Rol,
+    public static readonly PayCurrencyEnum Rol = new(Values.Rol);
 
-    [EnumMember(Value = "RUB")]
-    Rub,
+    public static readonly PayCurrencyEnum Rub = new(Values.Rub);
 
-    [EnumMember(Value = "RUR")]
-    Rur,
+    public static readonly PayCurrencyEnum Rur = new(Values.Rur);
 
-    [EnumMember(Value = "RWF")]
-    Rwf,
+    public static readonly PayCurrencyEnum Rwf = new(Values.Rwf);
 
-    [EnumMember(Value = "SVC")]
-    Svc,
+    public static readonly PayCurrencyEnum Svc = new(Values.Svc);
 
-    [EnumMember(Value = "WST")]
-    Wst,
+    public static readonly PayCurrencyEnum Wst = new(Values.Wst);
 
-    [EnumMember(Value = "SAR")]
-    Sar,
+    public static readonly PayCurrencyEnum Sar = new(Values.Sar);
 
-    [EnumMember(Value = "RSD")]
-    Rsd,
+    public static readonly PayCurrencyEnum Rsd = new(Values.Rsd);
 
-    [EnumMember(Value = "CSD")]
-    Csd,
+    public static readonly PayCurrencyEnum Csd = new(Values.Csd);
 
-    [EnumMember(Value = "SCR")]
-    Scr,
+    public static readonly PayCurrencyEnum Scr = new(Values.Scr);
 
-    [EnumMember(Value = "SLL")]
-    Sll,
+    public static readonly PayCurrencyEnum Sll = new(Values.Sll);
 
-    [EnumMember(Value = "XAG")]
-    Xag,
+    public static readonly PayCurrencyEnum Xag = new(Values.Xag);
 
-    [EnumMember(Value = "SGD")]
-    Sgd,
+    public static readonly PayCurrencyEnum Sgd = new(Values.Sgd);
 
-    [EnumMember(Value = "SKK")]
-    Skk,
+    public static readonly PayCurrencyEnum Skk = new(Values.Skk);
 
-    [EnumMember(Value = "SIT")]
-    Sit,
+    public static readonly PayCurrencyEnum Sit = new(Values.Sit);
 
-    [EnumMember(Value = "SBD")]
-    Sbd,
+    public static readonly PayCurrencyEnum Sbd = new(Values.Sbd);
 
-    [EnumMember(Value = "SOS")]
-    Sos,
+    public static readonly PayCurrencyEnum Sos = new(Values.Sos);
 
-    [EnumMember(Value = "ZAR")]
-    Zar,
+    public static readonly PayCurrencyEnum Zar = new(Values.Zar);
 
-    [EnumMember(Value = "ZAL")]
-    Zal,
+    public static readonly PayCurrencyEnum Zal = new(Values.Zal);
 
-    [EnumMember(Value = "KRH")]
-    Krh,
+    public static readonly PayCurrencyEnum Krh = new(Values.Krh);
 
-    [EnumMember(Value = "KRW")]
-    Krw,
+    public static readonly PayCurrencyEnum Krw = new(Values.Krw);
 
-    [EnumMember(Value = "KRO")]
-    Kro,
+    public static readonly PayCurrencyEnum Kro = new(Values.Kro);
 
-    [EnumMember(Value = "SSP")]
-    Ssp,
+    public static readonly PayCurrencyEnum Ssp = new(Values.Ssp);
 
-    [EnumMember(Value = "SUR")]
-    Sur,
+    public static readonly PayCurrencyEnum Sur = new(Values.Sur);
 
-    [EnumMember(Value = "ESP")]
-    Esp,
+    public static readonly PayCurrencyEnum Esp = new(Values.Esp);
 
-    [EnumMember(Value = "ESA")]
-    Esa,
+    public static readonly PayCurrencyEnum Esa = new(Values.Esa);
 
-    [EnumMember(Value = "ESB")]
-    Esb,
+    public static readonly PayCurrencyEnum Esb = new(Values.Esb);
 
-    [EnumMember(Value = "XDR")]
-    Xdr,
+    public static readonly PayCurrencyEnum Xdr = new(Values.Xdr);
 
-    [EnumMember(Value = "LKR")]
-    Lkr,
+    public static readonly PayCurrencyEnum Lkr = new(Values.Lkr);
 
-    [EnumMember(Value = "SHP")]
-    Shp,
+    public static readonly PayCurrencyEnum Shp = new(Values.Shp);
 
-    [EnumMember(Value = "XSU")]
-    Xsu,
+    public static readonly PayCurrencyEnum Xsu = new(Values.Xsu);
 
-    [EnumMember(Value = "SDD")]
-    Sdd,
+    public static readonly PayCurrencyEnum Sdd = new(Values.Sdd);
 
-    [EnumMember(Value = "SDG")]
-    Sdg,
+    public static readonly PayCurrencyEnum Sdg = new(Values.Sdg);
 
-    [EnumMember(Value = "SDP")]
-    Sdp,
+    public static readonly PayCurrencyEnum Sdp = new(Values.Sdp);
 
-    [EnumMember(Value = "SRD")]
-    Srd,
+    public static readonly PayCurrencyEnum Srd = new(Values.Srd);
 
-    [EnumMember(Value = "SRG")]
-    Srg,
+    public static readonly PayCurrencyEnum Srg = new(Values.Srg);
 
-    [EnumMember(Value = "SZL")]
-    Szl,
+    public static readonly PayCurrencyEnum Szl = new(Values.Szl);
 
-    [EnumMember(Value = "SEK")]
-    Sek,
+    public static readonly PayCurrencyEnum Sek = new(Values.Sek);
 
-    [EnumMember(Value = "CHF")]
-    Chf,
+    public static readonly PayCurrencyEnum Chf = new(Values.Chf);
 
-    [EnumMember(Value = "SYP")]
-    Syp,
+    public static readonly PayCurrencyEnum Syp = new(Values.Syp);
 
-    [EnumMember(Value = "STN")]
-    Stn,
+    public static readonly PayCurrencyEnum Stn = new(Values.Stn);
 
-    [EnumMember(Value = "STD")]
-    Std,
+    public static readonly PayCurrencyEnum Std = new(Values.Std);
 
-    [EnumMember(Value = "TVD")]
-    Tvd,
+    public static readonly PayCurrencyEnum Tvd = new(Values.Tvd);
 
-    [EnumMember(Value = "TJR")]
-    Tjr,
+    public static readonly PayCurrencyEnum Tjr = new(Values.Tjr);
 
-    [EnumMember(Value = "TJS")]
-    Tjs,
+    public static readonly PayCurrencyEnum Tjs = new(Values.Tjs);
 
-    [EnumMember(Value = "TZS")]
-    Tzs,
+    public static readonly PayCurrencyEnum Tzs = new(Values.Tzs);
 
-    [EnumMember(Value = "XTS")]
-    Xts,
+    public static readonly PayCurrencyEnum Xts = new(Values.Xts);
 
-    [EnumMember(Value = "THB")]
-    Thb,
+    public static readonly PayCurrencyEnum Thb = new(Values.Thb);
 
-    [EnumMember(Value = "XXX")]
-    Xxx,
+    public static readonly PayCurrencyEnum Xxx = new(Values.Xxx);
 
-    [EnumMember(Value = "TPE")]
-    Tpe,
+    public static readonly PayCurrencyEnum Tpe = new(Values.Tpe);
 
-    [EnumMember(Value = "TOP")]
-    Top,
+    public static readonly PayCurrencyEnum Top = new(Values.Top);
 
-    [EnumMember(Value = "TTD")]
-    Ttd,
+    public static readonly PayCurrencyEnum Ttd = new(Values.Ttd);
 
-    [EnumMember(Value = "TND")]
-    Tnd,
+    public static readonly PayCurrencyEnum Tnd = new(Values.Tnd);
 
-    [EnumMember(Value = "TRY")]
-    Try,
+    public static readonly PayCurrencyEnum Try = new(Values.Try);
 
-    [EnumMember(Value = "TRL")]
-    Trl,
+    public static readonly PayCurrencyEnum Trl = new(Values.Trl);
 
-    [EnumMember(Value = "TMT")]
-    Tmt,
+    public static readonly PayCurrencyEnum Tmt = new(Values.Tmt);
 
-    [EnumMember(Value = "TMM")]
-    Tmm,
+    public static readonly PayCurrencyEnum Tmm = new(Values.Tmm);
 
-    [EnumMember(Value = "USD")]
-    Usd,
+    public static readonly PayCurrencyEnum Usd = new(Values.Usd);
 
-    [EnumMember(Value = "USN")]
-    Usn,
+    public static readonly PayCurrencyEnum Usn = new(Values.Usn);
 
-    [EnumMember(Value = "USS")]
-    Uss,
+    public static readonly PayCurrencyEnum Uss = new(Values.Uss);
 
-    [EnumMember(Value = "UGX")]
-    Ugx,
+    public static readonly PayCurrencyEnum Ugx = new(Values.Ugx);
 
-    [EnumMember(Value = "UGS")]
-    Ugs,
+    public static readonly PayCurrencyEnum Ugs = new(Values.Ugs);
 
-    [EnumMember(Value = "UAH")]
-    Uah,
+    public static readonly PayCurrencyEnum Uah = new(Values.Uah);
 
-    [EnumMember(Value = "UAK")]
-    Uak,
+    public static readonly PayCurrencyEnum Uak = new(Values.Uak);
 
-    [EnumMember(Value = "AED")]
-    Aed,
+    public static readonly PayCurrencyEnum Aed = new(Values.Aed);
 
-    [EnumMember(Value = "UYW")]
-    Uyw,
+    public static readonly PayCurrencyEnum Uyw = new(Values.Uyw);
 
-    [EnumMember(Value = "UYU")]
-    Uyu,
+    public static readonly PayCurrencyEnum Uyu = new(Values.Uyu);
 
-    [EnumMember(Value = "UYP")]
-    Uyp,
+    public static readonly PayCurrencyEnum Uyp = new(Values.Uyp);
 
-    [EnumMember(Value = "UYI")]
-    Uyi,
+    public static readonly PayCurrencyEnum Uyi = new(Values.Uyi);
 
-    [EnumMember(Value = "UZS")]
-    Uzs,
+    public static readonly PayCurrencyEnum Uzs = new(Values.Uzs);
 
-    [EnumMember(Value = "VUV")]
-    Vuv,
+    public static readonly PayCurrencyEnum Vuv = new(Values.Vuv);
 
-    [EnumMember(Value = "VES")]
-    Ves,
+    public static readonly PayCurrencyEnum Ves = new(Values.Ves);
 
-    [EnumMember(Value = "VEB")]
-    Veb,
+    public static readonly PayCurrencyEnum Veb = new(Values.Veb);
 
-    [EnumMember(Value = "VEF")]
-    Vef,
+    public static readonly PayCurrencyEnum Vef = new(Values.Vef);
 
-    [EnumMember(Value = "VND")]
-    Vnd,
+    public static readonly PayCurrencyEnum Vnd = new(Values.Vnd);
 
-    [EnumMember(Value = "VNN")]
-    Vnn,
+    public static readonly PayCurrencyEnum Vnn = new(Values.Vnn);
 
-    [EnumMember(Value = "CHE")]
-    Che,
+    public static readonly PayCurrencyEnum Che = new(Values.Che);
 
-    [EnumMember(Value = "CHW")]
-    Chw,
+    public static readonly PayCurrencyEnum Chw = new(Values.Chw);
 
-    [EnumMember(Value = "XOF")]
-    Xof,
+    public static readonly PayCurrencyEnum Xof = new(Values.Xof);
 
-    [EnumMember(Value = "YDD")]
-    Ydd,
+    public static readonly PayCurrencyEnum Ydd = new(Values.Ydd);
 
-    [EnumMember(Value = "YER")]
-    Yer,
+    public static readonly PayCurrencyEnum Yer = new(Values.Yer);
 
-    [EnumMember(Value = "YUN")]
-    Yun,
+    public static readonly PayCurrencyEnum Yun = new(Values.Yun);
 
-    [EnumMember(Value = "YUD")]
-    Yud,
+    public static readonly PayCurrencyEnum Yud = new(Values.Yud);
 
-    [EnumMember(Value = "YUM")]
-    Yum,
+    public static readonly PayCurrencyEnum Yum = new(Values.Yum);
 
-    [EnumMember(Value = "YUR")]
-    Yur,
+    public static readonly PayCurrencyEnum Yur = new(Values.Yur);
 
-    [EnumMember(Value = "ZWN")]
-    Zwn,
+    public static readonly PayCurrencyEnum Zwn = new(Values.Zwn);
 
-    [EnumMember(Value = "ZRN")]
-    Zrn,
+    public static readonly PayCurrencyEnum Zrn = new(Values.Zrn);
 
-    [EnumMember(Value = "ZRZ")]
-    Zrz,
+    public static readonly PayCurrencyEnum Zrz = new(Values.Zrz);
 
-    [EnumMember(Value = "ZMW")]
-    Zmw,
+    public static readonly PayCurrencyEnum Zmw = new(Values.Zmw);
 
-    [EnumMember(Value = "ZMK")]
-    Zmk,
+    public static readonly PayCurrencyEnum Zmk = new(Values.Zmk);
 
-    [EnumMember(Value = "ZWD")]
-    Zwd,
+    public static readonly PayCurrencyEnum Zwd = new(Values.Zwd);
 
-    [EnumMember(Value = "ZWR")]
-    Zwr,
+    public static readonly PayCurrencyEnum Zwr = new(Values.Zwr);
 
-    [EnumMember(Value = "ZWL")]
-    Zwl,
+    public static readonly PayCurrencyEnum Zwl = new(Values.Zwl);
+
+    public PayCurrencyEnum(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static PayCurrencyEnum FromCustom(string value)
+    {
+        return new PayCurrencyEnum(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(PayCurrencyEnum value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(PayCurrencyEnum value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(PayCurrencyEnum value) => value.Value;
+
+    public static explicit operator PayCurrencyEnum(string value) => new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    public static class Values
+    {
+        public const string Xua = "XUA";
+
+        public const string Afn = "AFN";
+
+        public const string Afa = "AFA";
+
+        public const string All = "ALL";
+
+        public const string Alk = "ALK";
+
+        public const string Dzd = "DZD";
+
+        public const string Adp = "ADP";
+
+        public const string Aoa = "AOA";
+
+        public const string Aok = "AOK";
+
+        public const string Aon = "AON";
+
+        public const string Aor = "AOR";
+
+        public const string Ara = "ARA";
+
+        public const string Ars = "ARS";
+
+        public const string Arm = "ARM";
+
+        public const string Arp = "ARP";
+
+        public const string Arl = "ARL";
+
+        public const string Amd = "AMD";
+
+        public const string Awg = "AWG";
+
+        public const string Aud = "AUD";
+
+        public const string Ats = "ATS";
+
+        public const string Azn = "AZN";
+
+        public const string Azm = "AZM";
+
+        public const string Bsd = "BSD";
+
+        public const string Bhd = "BHD";
+
+        public const string Bdt = "BDT";
+
+        public const string Bbd = "BBD";
+
+        public const string Byn = "BYN";
+
+        public const string Byb = "BYB";
+
+        public const string Byr = "BYR";
+
+        public const string Bef = "BEF";
+
+        public const string Bec = "BEC";
+
+        public const string Bel = "BEL";
+
+        public const string Bzd = "BZD";
+
+        public const string Bmd = "BMD";
+
+        public const string Btn = "BTN";
+
+        public const string Bob = "BOB";
+
+        public const string Bol = "BOL";
+
+        public const string Bov = "BOV";
+
+        public const string Bop = "BOP";
+
+        public const string Bam = "BAM";
+
+        public const string Bad = "BAD";
+
+        public const string Ban = "BAN";
+
+        public const string Bwp = "BWP";
+
+        public const string Brc = "BRC";
+
+        public const string Brz = "BRZ";
+
+        public const string Bre = "BRE";
+
+        public const string Brr = "BRR";
+
+        public const string Brn = "BRN";
+
+        public const string Brb = "BRB";
+
+        public const string Brl = "BRL";
+
+        public const string Gbp = "GBP";
+
+        public const string Bnd = "BND";
+
+        public const string Bgl = "BGL";
+
+        public const string Bgn = "BGN";
+
+        public const string Bgo = "BGO";
+
+        public const string Bgm = "BGM";
+
+        public const string Buk = "BUK";
+
+        public const string Bif = "BIF";
+
+        public const string Xpf = "XPF";
+
+        public const string Khr = "KHR";
+
+        public const string Cad = "CAD";
+
+        public const string Cve = "CVE";
+
+        public const string Kyd = "KYD";
+
+        public const string Xaf = "XAF";
+
+        public const string Cle = "CLE";
+
+        public const string Clp = "CLP";
+
+        public const string Clf = "CLF";
+
+        public const string Cnx = "CNX";
+
+        public const string Cny = "CNY";
+
+        public const string Cnh = "CNH";
+
+        public const string Cop = "COP";
+
+        public const string Cou = "COU";
+
+        public const string Kmf = "KMF";
+
+        public const string Cdf = "CDF";
+
+        public const string Crc = "CRC";
+
+        public const string Hrd = "HRD";
+
+        public const string Hrk = "HRK";
+
+        public const string Cuc = "CUC";
+
+        public const string Cup = "CUP";
+
+        public const string Cyp = "CYP";
+
+        public const string Czk = "CZK";
+
+        public const string Csk = "CSK";
+
+        public const string Dkk = "DKK";
+
+        public const string Djf = "DJF";
+
+        public const string Dop = "DOP";
+
+        public const string Nlg = "NLG";
+
+        public const string Xcd = "XCD";
+
+        public const string Ddm = "DDM";
+
+        public const string Ecs = "ECS";
+
+        public const string Ecv = "ECV";
+
+        public const string Egp = "EGP";
+
+        public const string Gqe = "GQE";
+
+        public const string Ern = "ERN";
+
+        public const string Eek = "EEK";
+
+        public const string Etb = "ETB";
+
+        public const string Eur = "EUR";
+
+        public const string Xba = "XBA";
+
+        public const string Xeu = "XEU";
+
+        public const string Xbb = "XBB";
+
+        public const string Xbc = "XBC";
+
+        public const string Xbd = "XBD";
+
+        public const string Fkp = "FKP";
+
+        public const string Fjd = "FJD";
+
+        public const string Fim = "FIM";
+
+        public const string Frf = "FRF";
+
+        public const string Xfo = "XFO";
+
+        public const string Xfu = "XFU";
+
+        public const string Gmd = "GMD";
+
+        public const string Gek = "GEK";
+
+        public const string Gel = "GEL";
+
+        public const string Dem = "DEM";
+
+        public const string Ghs = "GHS";
+
+        public const string Ghc = "GHC";
+
+        public const string Gip = "GIP";
+
+        public const string Xau = "XAU";
+
+        public const string Grd = "GRD";
+
+        public const string Gtq = "GTQ";
+
+        public const string Gwp = "GWP";
+
+        public const string Gnf = "GNF";
+
+        public const string Gns = "GNS";
+
+        public const string Gyd = "GYD";
+
+        public const string Htg = "HTG";
+
+        public const string Hnl = "HNL";
+
+        public const string Hkd = "HKD";
+
+        public const string Huf = "HUF";
+
+        public const string Imp = "IMP";
+
+        public const string Isk = "ISK";
+
+        public const string Isj = "ISJ";
+
+        public const string Inr = "INR";
+
+        public const string Idr = "IDR";
+
+        public const string Irr = "IRR";
+
+        public const string Iqd = "IQD";
+
+        public const string Iep = "IEP";
+
+        public const string Ils = "ILS";
+
+        public const string Ilp = "ILP";
+
+        public const string Ilr = "ILR";
+
+        public const string Itl = "ITL";
+
+        public const string Jmd = "JMD";
+
+        public const string Jpy = "JPY";
+
+        public const string Jod = "JOD";
+
+        public const string Kzt = "KZT";
+
+        public const string Kes = "KES";
+
+        public const string Kwd = "KWD";
+
+        public const string Kgs = "KGS";
+
+        public const string Lak = "LAK";
+
+        public const string Lvl = "LVL";
+
+        public const string Lvr = "LVR";
+
+        public const string Lbp = "LBP";
+
+        public const string Lsl = "LSL";
+
+        public const string Lrd = "LRD";
+
+        public const string Lyd = "LYD";
+
+        public const string Ltl = "LTL";
+
+        public const string Ltt = "LTT";
+
+        public const string Lul = "LUL";
+
+        public const string Luc = "LUC";
+
+        public const string Luf = "LUF";
+
+        public const string Mop = "MOP";
+
+        public const string Mkd = "MKD";
+
+        public const string Mkn = "MKN";
+
+        public const string Mga = "MGA";
+
+        public const string Mgf = "MGF";
+
+        public const string Mwk = "MWK";
+
+        public const string Myr = "MYR";
+
+        public const string Mvr = "MVR";
+
+        public const string Mvp = "MVP";
+
+        public const string Mlf = "MLF";
+
+        public const string Mtl = "MTL";
+
+        public const string Mtp = "MTP";
+
+        public const string Mru = "MRU";
+
+        public const string Mro = "MRO";
+
+        public const string Mur = "MUR";
+
+        public const string Mxv = "MXV";
+
+        public const string Mxn = "MXN";
+
+        public const string Mxp = "MXP";
+
+        public const string Mdc = "MDC";
+
+        public const string Mdl = "MDL";
+
+        public const string Mcf = "MCF";
+
+        public const string Mnt = "MNT";
+
+        public const string Mad = "MAD";
+
+        public const string Maf = "MAF";
+
+        public const string Mze = "MZE";
+
+        public const string Mzn = "MZN";
+
+        public const string Mzm = "MZM";
+
+        public const string Mmk = "MMK";
+
+        public const string Nad = "NAD";
+
+        public const string Npr = "NPR";
+
+        public const string Ang = "ANG";
+
+        public const string Twd = "TWD";
+
+        public const string Nzd = "NZD";
+
+        public const string Nio = "NIO";
+
+        public const string Nic = "NIC";
+
+        public const string Ngn = "NGN";
+
+        public const string Kpw = "KPW";
+
+        public const string Nok = "NOK";
+
+        public const string Omr = "OMR";
+
+        public const string Pkr = "PKR";
+
+        public const string Xpd = "XPD";
+
+        public const string Pab = "PAB";
+
+        public const string Pgk = "PGK";
+
+        public const string Pyg = "PYG";
+
+        public const string Pei = "PEI";
+
+        public const string Pen = "PEN";
+
+        public const string Pes = "PES";
+
+        public const string Php = "PHP";
+
+        public const string Xpt = "XPT";
+
+        public const string Pln = "PLN";
+
+        public const string Plz = "PLZ";
+
+        public const string Pte = "PTE";
+
+        public const string Gwe = "GWE";
+
+        public const string Qar = "QAR";
+
+        public const string Xre = "XRE";
+
+        public const string Rhd = "RHD";
+
+        public const string Ron = "RON";
+
+        public const string Rol = "ROL";
+
+        public const string Rub = "RUB";
+
+        public const string Rur = "RUR";
+
+        public const string Rwf = "RWF";
+
+        public const string Svc = "SVC";
+
+        public const string Wst = "WST";
+
+        public const string Sar = "SAR";
+
+        public const string Rsd = "RSD";
+
+        public const string Csd = "CSD";
+
+        public const string Scr = "SCR";
+
+        public const string Sll = "SLL";
+
+        public const string Xag = "XAG";
+
+        public const string Sgd = "SGD";
+
+        public const string Skk = "SKK";
+
+        public const string Sit = "SIT";
+
+        public const string Sbd = "SBD";
+
+        public const string Sos = "SOS";
+
+        public const string Zar = "ZAR";
+
+        public const string Zal = "ZAL";
+
+        public const string Krh = "KRH";
+
+        public const string Krw = "KRW";
+
+        public const string Kro = "KRO";
+
+        public const string Ssp = "SSP";
+
+        public const string Sur = "SUR";
+
+        public const string Esp = "ESP";
+
+        public const string Esa = "ESA";
+
+        public const string Esb = "ESB";
+
+        public const string Xdr = "XDR";
+
+        public const string Lkr = "LKR";
+
+        public const string Shp = "SHP";
+
+        public const string Xsu = "XSU";
+
+        public const string Sdd = "SDD";
+
+        public const string Sdg = "SDG";
+
+        public const string Sdp = "SDP";
+
+        public const string Srd = "SRD";
+
+        public const string Srg = "SRG";
+
+        public const string Szl = "SZL";
+
+        public const string Sek = "SEK";
+
+        public const string Chf = "CHF";
+
+        public const string Syp = "SYP";
+
+        public const string Stn = "STN";
+
+        public const string Std = "STD";
+
+        public const string Tvd = "TVD";
+
+        public const string Tjr = "TJR";
+
+        public const string Tjs = "TJS";
+
+        public const string Tzs = "TZS";
+
+        public const string Xts = "XTS";
+
+        public const string Thb = "THB";
+
+        public const string Xxx = "XXX";
+
+        public const string Tpe = "TPE";
+
+        public const string Top = "TOP";
+
+        public const string Ttd = "TTD";
+
+        public const string Tnd = "TND";
+
+        public const string Try = "TRY";
+
+        public const string Trl = "TRL";
+
+        public const string Tmt = "TMT";
+
+        public const string Tmm = "TMM";
+
+        public const string Usd = "USD";
+
+        public const string Usn = "USN";
+
+        public const string Uss = "USS";
+
+        public const string Ugx = "UGX";
+
+        public const string Ugs = "UGS";
+
+        public const string Uah = "UAH";
+
+        public const string Uak = "UAK";
+
+        public const string Aed = "AED";
+
+        public const string Uyw = "UYW";
+
+        public const string Uyu = "UYU";
+
+        public const string Uyp = "UYP";
+
+        public const string Uyi = "UYI";
+
+        public const string Uzs = "UZS";
+
+        public const string Vuv = "VUV";
+
+        public const string Ves = "VES";
+
+        public const string Veb = "VEB";
+
+        public const string Vef = "VEF";
+
+        public const string Vnd = "VND";
+
+        public const string Vnn = "VNN";
+
+        public const string Che = "CHE";
+
+        public const string Chw = "CHW";
+
+        public const string Xof = "XOF";
+
+        public const string Ydd = "YDD";
+
+        public const string Yer = "YER";
+
+        public const string Yun = "YUN";
+
+        public const string Yud = "YUD";
+
+        public const string Yum = "YUM";
+
+        public const string Yur = "YUR";
+
+        public const string Zwn = "ZWN";
+
+        public const string Zrn = "ZRN";
+
+        public const string Zrz = "ZRZ";
+
+        public const string Zmw = "ZMW";
+
+        public const string Zmk = "ZMK";
+
+        public const string Zwd = "ZWD";
+
+        public const string Zwr = "ZWR";
+
+        public const string Zwl = "ZWL";
+    }
 }

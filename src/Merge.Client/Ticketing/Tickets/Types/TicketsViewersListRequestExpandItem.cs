@@ -1,15 +1,64 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
 
-[JsonConverter(typeof(EnumSerializer<TicketsViewersListRequestExpandItem>))]
-public enum TicketsViewersListRequestExpandItem
+[JsonConverter(typeof(StringEnumSerializer<TicketsViewersListRequestExpandItem>))]
+public readonly record struct TicketsViewersListRequestExpandItem : IStringEnum
 {
-    [EnumMember(Value = "team")]
-    Team,
+    public static readonly TicketsViewersListRequestExpandItem Team = new(Values.Team);
 
-    [EnumMember(Value = "user")]
-    User,
+    public static readonly TicketsViewersListRequestExpandItem User = new(Values.User);
+
+    public TicketsViewersListRequestExpandItem(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static TicketsViewersListRequestExpandItem FromCustom(string value)
+    {
+        return new TicketsViewersListRequestExpandItem(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(TicketsViewersListRequestExpandItem value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(TicketsViewersListRequestExpandItem value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(TicketsViewersListRequestExpandItem value) =>
+        value.Value;
+
+    public static explicit operator TicketsViewersListRequestExpandItem(string value) => new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    public static class Values
+    {
+        public const string Team = "team";
+
+        public const string User = "user";
+    }
 }
