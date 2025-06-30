@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET CompanyInfo` endpoint and view the company's addresses.
 /// </summary>
+[Serializable]
 public record AddressRequest
 {
     /// <summary>

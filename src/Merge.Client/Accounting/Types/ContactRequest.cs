@@ -15,6 +15,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `LIST Contacts` endpoint and view a company's contacts.
 /// </summary>
+[Serializable]
 public record ContactRequest
 {
     /// <summary>

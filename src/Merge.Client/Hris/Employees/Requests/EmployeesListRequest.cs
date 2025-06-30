@@ -3,6 +3,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
 
+[Serializable]
 public record EmployeesListRequest
 {
     /// <summary>

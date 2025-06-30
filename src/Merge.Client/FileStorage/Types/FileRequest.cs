@@ -12,6 +12,7 @@ namespace Merge.Client.FileStorage;
 /// ### Usage Example
 /// Fetch from the `GET /api/filestorage/v1/files` endpoint and view their files.
 /// </summary>
+[Serializable]
 public record FileRequest
 {
     /// <summary>

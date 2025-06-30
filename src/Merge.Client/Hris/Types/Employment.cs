@@ -15,6 +15,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employees.
 /// </summary>
+[Serializable]
 public record Employment
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

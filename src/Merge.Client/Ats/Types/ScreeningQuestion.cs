@@ -13,6 +13,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// TODO
 /// </summary>
+[Serializable]
 public record ScreeningQuestion
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `LIST BalanceSheets` endpoint and view a company's balance sheets.
 /// </summary>
+[Serializable]
 public record BalanceSheet
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

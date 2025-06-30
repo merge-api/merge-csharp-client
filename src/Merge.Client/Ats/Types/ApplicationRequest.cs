@@ -13,6 +13,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST Applications` endpoint and filter by `ID` to show all applications.
 /// </summary>
+[Serializable]
 public record ApplicationRequest
 {
     /// <summary>

@@ -13,6 +13,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST Dependents` endpoint and filter by `ID` to show all dependents.
 /// </summary>
+[Serializable]
 public record Dependent
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

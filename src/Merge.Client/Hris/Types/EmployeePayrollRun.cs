@@ -13,6 +13,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all employee payroll runs.
 /// </summary>
+[Serializable]
 public record EmployeePayrollRun
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

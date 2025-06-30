@@ -12,6 +12,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Create a `MultipartFormField` to define a multipart form entry.
 /// </summary>
+[Serializable]
 public record MultipartFormFieldRequest
 {
     /// <summary>

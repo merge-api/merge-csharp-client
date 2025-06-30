@@ -11,6 +11,7 @@ namespace Merge.Client.Crm;
 /// ### Usage Example
 /// Fetch from the `GET Contact` endpoint and view their phone numbers.
 /// </summary>
+[Serializable]
 public record PhoneNumber
 {
     /// <summary>

@@ -12,6 +12,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST Deductions` endpoint and filter by `ID` to show all deductions.
 /// </summary>
+[Serializable]
 public record Deduction
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

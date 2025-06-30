@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
 namespace Merge.Client.Core;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

@@ -4,6 +4,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
 
+[Serializable]
 public record ExternalTargetFieldApi
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

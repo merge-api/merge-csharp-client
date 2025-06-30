@@ -4,6 +4,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
 
+[Serializable]
 public record AsyncPassthroughReciept
 {
     [JsonPropertyName("async_passthrough_receipt_id")]

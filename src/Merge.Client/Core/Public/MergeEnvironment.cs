@@ -1,5 +1,6 @@
 namespace Merge.Client.Core;
 
+[Serializable]
 public class MergeEnvironment
 {
     public const string PRODUCTION = "https://api.merge.dev/api";

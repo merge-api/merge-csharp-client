@@ -12,6 +12,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group information.
 /// </summary>
+[Serializable]
 public record PayGroup
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

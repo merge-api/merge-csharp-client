@@ -12,6 +12,7 @@ namespace Merge.Client.FileStorage;
 /// ### Usage Example
 /// TODO
 /// </summary>
+[Serializable]
 public record RemoteData
 {
     /// <summary>

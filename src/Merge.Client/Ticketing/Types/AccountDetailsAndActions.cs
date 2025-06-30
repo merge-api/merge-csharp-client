@@ -13,6 +13,7 @@ namespace Merge.Client.Ticketing;
 /// ### Usage Example
 /// View a list of your organization's `LinkedAccount` objects.
 /// </summary>
+[Serializable]
 public record AccountDetailsAndActions
 {
     [JsonPropertyName("id")]

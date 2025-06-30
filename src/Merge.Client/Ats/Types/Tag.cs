@@ -11,6 +11,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST Tags` endpoint and view the tags used within a company.
 /// </summary>
+[Serializable]
 public record Tag
 {
     /// <summary>

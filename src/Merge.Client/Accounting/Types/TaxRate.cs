@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `LIST TaxRates` endpoint and view tax rates relevant to a company.
 /// </summary>
+[Serializable]
 public record TaxRate
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

@@ -13,6 +13,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off requests.
 /// </summary>
+[Serializable]
 public record TimeOff
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

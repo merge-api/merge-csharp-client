@@ -12,6 +12,7 @@ namespace Merge.Client.Ticketing;
 /// ### Usage Example
 /// Post a `GenerateRemoteKey` to receive a new `RemoteKey`.
 /// </summary>
+[Serializable]
 public record RemoteKey
 {
     [JsonPropertyName("name")]

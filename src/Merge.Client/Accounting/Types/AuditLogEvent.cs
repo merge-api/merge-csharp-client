@@ -5,6 +5,7 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
+[Serializable]
 public record AuditLogEvent
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

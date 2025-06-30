@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST ScheduledInterviews` endpoint and filter by `interviewers` to show all office locations.
 /// </summary>
+[Serializable]
 public record ScheduledInterviewRequest
 {
     /// <summary>

@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST EEOCs` endpoint and filter by `candidate` to show all EEOC information for a candidate.
 /// </summary>
+[Serializable]
 public record Eeoc
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

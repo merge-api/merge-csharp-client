@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET JournalEntry` endpoint and view the journal entry's line items.
 /// </summary>
+[Serializable]
 public record JournalLine
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

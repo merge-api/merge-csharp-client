@@ -1,54 +1,143 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(EnumSerializer<EmployeesListRequestRemoteFields>))]
-public enum EmployeesListRequestRemoteFields
+[JsonConverter(typeof(StringEnumSerializer<EmployeesListRequestRemoteFields>))]
+[Serializable]
+public readonly record struct EmployeesListRequestRemoteFields : IStringEnum
 {
-    [EnumMember(Value = "employment_status")]
-    EmploymentStatus,
+    public static readonly EmployeesListRequestRemoteFields EmploymentStatus = new(
+        Values.EmploymentStatus
+    );
 
-    [EnumMember(Value = "employment_status,ethnicity")]
-    EmploymentStatusEthnicity,
+    public static readonly EmployeesListRequestRemoteFields EmploymentStatusEthnicity = new(
+        Values.EmploymentStatusEthnicity
+    );
 
-    [EnumMember(Value = "employment_status,ethnicity,gender")]
-    EmploymentStatusEthnicityGender,
+    public static readonly EmployeesListRequestRemoteFields EmploymentStatusEthnicityGender = new(
+        Values.EmploymentStatusEthnicityGender
+    );
 
-    [EnumMember(Value = "employment_status,ethnicity,gender,marital_status")]
-    EmploymentStatusEthnicityGenderMaritalStatus,
+    public static readonly EmployeesListRequestRemoteFields EmploymentStatusEthnicityGenderMaritalStatus =
+        new(Values.EmploymentStatusEthnicityGenderMaritalStatus);
 
-    [EnumMember(Value = "employment_status,ethnicity,marital_status")]
-    EmploymentStatusEthnicityMaritalStatus,
+    public static readonly EmployeesListRequestRemoteFields EmploymentStatusEthnicityMaritalStatus =
+        new(Values.EmploymentStatusEthnicityMaritalStatus);
 
-    [EnumMember(Value = "employment_status,gender")]
-    EmploymentStatusGender,
+    public static readonly EmployeesListRequestRemoteFields EmploymentStatusGender = new(
+        Values.EmploymentStatusGender
+    );
 
-    [EnumMember(Value = "employment_status,gender,marital_status")]
-    EmploymentStatusGenderMaritalStatus,
+    public static readonly EmployeesListRequestRemoteFields EmploymentStatusGenderMaritalStatus =
+        new(Values.EmploymentStatusGenderMaritalStatus);
 
-    [EnumMember(Value = "employment_status,marital_status")]
-    EmploymentStatusMaritalStatus,
+    public static readonly EmployeesListRequestRemoteFields EmploymentStatusMaritalStatus = new(
+        Values.EmploymentStatusMaritalStatus
+    );
 
-    [EnumMember(Value = "ethnicity")]
-    Ethnicity,
+    public static readonly EmployeesListRequestRemoteFields Ethnicity = new(Values.Ethnicity);
 
-    [EnumMember(Value = "ethnicity,gender")]
-    EthnicityGender,
+    public static readonly EmployeesListRequestRemoteFields EthnicityGender = new(
+        Values.EthnicityGender
+    );
 
-    [EnumMember(Value = "ethnicity,gender,marital_status")]
-    EthnicityGenderMaritalStatus,
+    public static readonly EmployeesListRequestRemoteFields EthnicityGenderMaritalStatus = new(
+        Values.EthnicityGenderMaritalStatus
+    );
 
-    [EnumMember(Value = "ethnicity,marital_status")]
-    EthnicityMaritalStatus,
+    public static readonly EmployeesListRequestRemoteFields EthnicityMaritalStatus = new(
+        Values.EthnicityMaritalStatus
+    );
 
-    [EnumMember(Value = "gender")]
-    Gender,
+    public static readonly EmployeesListRequestRemoteFields Gender = new(Values.Gender);
 
-    [EnumMember(Value = "gender,marital_status")]
-    GenderMaritalStatus,
+    public static readonly EmployeesListRequestRemoteFields GenderMaritalStatus = new(
+        Values.GenderMaritalStatus
+    );
 
-    [EnumMember(Value = "marital_status")]
-    MaritalStatus,
+    public static readonly EmployeesListRequestRemoteFields MaritalStatus = new(
+        Values.MaritalStatus
+    );
+
+    public EmployeesListRequestRemoteFields(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static EmployeesListRequestRemoteFields FromCustom(string value)
+    {
+        return new EmployeesListRequestRemoteFields(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(EmployeesListRequestRemoteFields value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(EmployeesListRequestRemoteFields value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(EmployeesListRequestRemoteFields value) => value.Value;
+
+    public static explicit operator EmployeesListRequestRemoteFields(string value) => new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    [Serializable]
+    public static class Values
+    {
+        public const string EmploymentStatus = "employment_status";
+
+        public const string EmploymentStatusEthnicity = "employment_status,ethnicity";
+
+        public const string EmploymentStatusEthnicityGender = "employment_status,ethnicity,gender";
+
+        public const string EmploymentStatusEthnicityGenderMaritalStatus =
+            "employment_status,ethnicity,gender,marital_status";
+
+        public const string EmploymentStatusEthnicityMaritalStatus =
+            "employment_status,ethnicity,marital_status";
+
+        public const string EmploymentStatusGender = "employment_status,gender";
+
+        public const string EmploymentStatusGenderMaritalStatus =
+            "employment_status,gender,marital_status";
+
+        public const string EmploymentStatusMaritalStatus = "employment_status,marital_status";
+
+        public const string Ethnicity = "ethnicity";
+
+        public const string EthnicityGender = "ethnicity,gender";
+
+        public const string EthnicityGenderMaritalStatus = "ethnicity,gender,marital_status";
+
+        public const string EthnicityMaritalStatus = "ethnicity,marital_status";
+
+        public const string Gender = "gender";
+
+        public const string GenderMaritalStatus = "gender,marital_status";
+
+        public const string MaritalStatus = "marital_status";
+    }
 }

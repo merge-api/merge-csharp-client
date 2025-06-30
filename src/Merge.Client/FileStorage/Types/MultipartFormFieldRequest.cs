@@ -13,6 +13,7 @@ namespace Merge.Client.FileStorage;
 /// ### Usage Example
 /// Create a `MultipartFormField` to define a multipart form entry.
 /// </summary>
+[Serializable]
 public record MultipartFormFieldRequest
 {
     /// <summary>

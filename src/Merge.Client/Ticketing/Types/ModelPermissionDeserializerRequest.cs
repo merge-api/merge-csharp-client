@@ -4,6 +4,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
 
+[Serializable]
 public record ModelPermissionDeserializerRequest
 {
     [JsonPropertyName("is_enabled")]

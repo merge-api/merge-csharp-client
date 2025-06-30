@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET VendorCredit` endpoint and view the vendor credit's line items.
 /// </summary>
+[Serializable]
 public record VendorCreditLine
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

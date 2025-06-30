@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 
 namespace Merge.Client.Core;
 
+[Serializable]
 public partial class RequestOptions : IRequestOptions
 {
     /// <summary>

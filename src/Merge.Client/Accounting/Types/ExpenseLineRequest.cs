@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET Expense` endpoint and view the expense's line items.
 /// </summary>
+[Serializable]
 public record ExpenseLineRequest
 {
     /// <summary>

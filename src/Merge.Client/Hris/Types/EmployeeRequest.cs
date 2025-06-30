@@ -13,6 +13,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees.
 /// </summary>
+[Serializable]
 public record EmployeeRequest
 {
     /// <summary>

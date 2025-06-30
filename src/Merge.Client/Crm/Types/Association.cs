@@ -12,6 +12,7 @@ namespace Merge.Client.Crm;
 /// ### Usage Example
 /// TODO
 /// </summary>
+[Serializable]
 public record Association
 {
     /// <summary>

@@ -12,6 +12,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST Taxes` endpoint and filter by `ID` to show all taxes.
 /// </summary>
+[Serializable]
 public record Tax
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

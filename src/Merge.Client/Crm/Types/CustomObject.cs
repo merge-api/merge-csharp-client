@@ -11,6 +11,7 @@ namespace Merge.Client.Crm;
 /// ### Usage Example
 /// TODO
 /// </summary>
+[Serializable]
 public record CustomObject
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

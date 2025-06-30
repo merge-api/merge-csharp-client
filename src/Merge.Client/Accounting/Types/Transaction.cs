@@ -20,6 +20,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET Transaction` endpoint and view a company's transactions.
 /// </summary>
+[Serializable]
 public record Transaction
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

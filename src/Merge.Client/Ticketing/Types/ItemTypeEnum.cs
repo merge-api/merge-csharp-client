@@ -1,27 +1,81 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
 
-[JsonConverter(typeof(EnumSerializer<ItemTypeEnum>))]
-public enum ItemTypeEnum
+[JsonConverter(typeof(StringEnumSerializer<ItemTypeEnum>))]
+[Serializable]
+public readonly record struct ItemTypeEnum : IStringEnum
 {
-    [EnumMember(Value = "string")]
-    String,
+    public static readonly ItemTypeEnum String = new(Values.String);
 
-    [EnumMember(Value = "number")]
-    Number,
+    public static readonly ItemTypeEnum Number = new(Values.Number);
 
-    [EnumMember(Value = "date")]
-    Date,
+    public static readonly ItemTypeEnum Date = new(Values.Date);
 
-    [EnumMember(Value = "datetime")]
-    Datetime,
+    public static readonly ItemTypeEnum Datetime = new(Values.Datetime);
 
-    [EnumMember(Value = "bool")]
-    Bool,
+    public static readonly ItemTypeEnum Bool = new(Values.Bool);
 
-    [EnumMember(Value = "list")]
-    List,
+    public static readonly ItemTypeEnum List = new(Values.List);
+
+    public ItemTypeEnum(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static ItemTypeEnum FromCustom(string value)
+    {
+        return new ItemTypeEnum(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(ItemTypeEnum value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(ItemTypeEnum value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(ItemTypeEnum value) => value.Value;
+
+    public static explicit operator ItemTypeEnum(string value) => new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    [Serializable]
+    public static class Values
+    {
+        public const string String = "string";
+
+        public const string Number = "number";
+
+        public const string Date = "date";
+
+        public const string Datetime = "datetime";
+
+        public const string Bool = "bool";
+
+        public const string List = "list";
+    }
 }

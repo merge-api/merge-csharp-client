@@ -3,6 +3,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
 
+[Serializable]
 public record PatchedInvoiceEndpointRequest
 {
     /// <summary>

@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET TrackingCategory` endpoint and view a company's tracking category.
 /// </summary>
+[Serializable]
 public record TrackingCategory
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

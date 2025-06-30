@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `GET Candidate` endpoint and view their phone numbers.
 /// </summary>
+[Serializable]
 public record PhoneNumberRequest
 {
     /// <summary>

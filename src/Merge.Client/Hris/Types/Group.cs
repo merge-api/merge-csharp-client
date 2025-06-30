@@ -13,6 +13,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST Employee` endpoint and expand groups to view an employee's groups.
 /// </summary>
+[Serializable]
 public record Group
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

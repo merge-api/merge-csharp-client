@@ -12,6 +12,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET BalanceSheet` endpoint and view the balance sheet's report items.
 /// </summary>
+[Serializable]
 public record ReportItem
 {
     /// <summary>

@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST Scorecards` endpoint and filter by `application` to show all scorecard for an applicant.
 /// </summary>
+[Serializable]
 public record Scorecard
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

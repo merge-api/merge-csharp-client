@@ -11,6 +11,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST Offices` endpoint and view the offices within a company.
 /// </summary>
+[Serializable]
 public record Office
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

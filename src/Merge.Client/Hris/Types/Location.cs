@@ -13,6 +13,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST Locations` endpoint and filter by `ID` to show all office locations.
 /// </summary>
+[Serializable]
 public record Location
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

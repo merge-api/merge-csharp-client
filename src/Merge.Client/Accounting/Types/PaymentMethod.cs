@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET PaymentMethod` endpoint and view payment method information.
 /// </summary>
+[Serializable]
 public record PaymentMethod
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

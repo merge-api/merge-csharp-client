@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `LIST CashFlowStatements` endpoint and view a company's cash flow statements.
 /// </summary>
+[Serializable]
 public record CashFlowStatement
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

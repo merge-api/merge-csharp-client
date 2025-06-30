@@ -1,15 +1,65 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(EnumSerializer<InvoiceTypeEnum>))]
-public enum InvoiceTypeEnum
+[JsonConverter(typeof(StringEnumSerializer<InvoiceTypeEnum>))]
+[Serializable]
+public readonly record struct InvoiceTypeEnum : IStringEnum
 {
-    [EnumMember(Value = "ACCOUNTS_RECEIVABLE")]
-    AccountsReceivable,
+    public static readonly InvoiceTypeEnum AccountsReceivable = new(Values.AccountsReceivable);
 
-    [EnumMember(Value = "ACCOUNTS_PAYABLE")]
-    AccountsPayable,
+    public static readonly InvoiceTypeEnum AccountsPayable = new(Values.AccountsPayable);
+
+    public InvoiceTypeEnum(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static InvoiceTypeEnum FromCustom(string value)
+    {
+        return new InvoiceTypeEnum(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(InvoiceTypeEnum value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(InvoiceTypeEnum value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(InvoiceTypeEnum value) => value.Value;
+
+    public static explicit operator InvoiceTypeEnum(string value) => new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    [Serializable]
+    public static class Values
+    {
+        public const string AccountsReceivable = "ACCOUNTS_RECEIVABLE";
+
+        public const string AccountsPayable = "ACCOUNTS_PAYABLE";
+    }
 }

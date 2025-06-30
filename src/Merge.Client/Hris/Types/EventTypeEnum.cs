@@ -1,138 +1,289 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(EnumSerializer<EventTypeEnum>))]
-public enum EventTypeEnum
+[JsonConverter(typeof(StringEnumSerializer<EventTypeEnum>))]
+[Serializable]
+public readonly record struct EventTypeEnum : IStringEnum
 {
-    [EnumMember(Value = "CREATED_REMOTE_PRODUCTION_API_KEY")]
-    CreatedRemoteProductionApiKey,
+    public static readonly EventTypeEnum CreatedRemoteProductionApiKey = new(
+        Values.CreatedRemoteProductionApiKey
+    );
 
-    [EnumMember(Value = "DELETED_REMOTE_PRODUCTION_API_KEY")]
-    DeletedRemoteProductionApiKey,
+    public static readonly EventTypeEnum DeletedRemoteProductionApiKey = new(
+        Values.DeletedRemoteProductionApiKey
+    );
 
-    [EnumMember(Value = "CREATED_TEST_API_KEY")]
-    CreatedTestApiKey,
+    public static readonly EventTypeEnum CreatedTestApiKey = new(Values.CreatedTestApiKey);
 
-    [EnumMember(Value = "DELETED_TEST_API_KEY")]
-    DeletedTestApiKey,
+    public static readonly EventTypeEnum DeletedTestApiKey = new(Values.DeletedTestApiKey);
 
-    [EnumMember(Value = "REGENERATED_PRODUCTION_API_KEY")]
-    RegeneratedProductionApiKey,
+    public static readonly EventTypeEnum RegeneratedProductionApiKey = new(
+        Values.RegeneratedProductionApiKey
+    );
 
-    [EnumMember(Value = "REGENERATED_WEBHOOK_SIGNATURE")]
-    RegeneratedWebhookSignature,
+    public static readonly EventTypeEnum RegeneratedWebhookSignature = new(
+        Values.RegeneratedWebhookSignature
+    );
 
-    [EnumMember(Value = "INVITED_USER")]
-    InvitedUser,
+    public static readonly EventTypeEnum InvitedUser = new(Values.InvitedUser);
 
-    [EnumMember(Value = "TWO_FACTOR_AUTH_ENABLED")]
-    TwoFactorAuthEnabled,
+    public static readonly EventTypeEnum TwoFactorAuthEnabled = new(Values.TwoFactorAuthEnabled);
 
-    [EnumMember(Value = "TWO_FACTOR_AUTH_DISABLED")]
-    TwoFactorAuthDisabled,
+    public static readonly EventTypeEnum TwoFactorAuthDisabled = new(Values.TwoFactorAuthDisabled);
 
-    [EnumMember(Value = "DELETED_LINKED_ACCOUNT")]
-    DeletedLinkedAccount,
+    public static readonly EventTypeEnum DeletedLinkedAccount = new(Values.DeletedLinkedAccount);
 
-    [EnumMember(Value = "DELETED_ALL_COMMON_MODELS_FOR_LINKED_ACCOUNT")]
-    DeletedAllCommonModelsForLinkedAccount,
+    public static readonly EventTypeEnum DeletedAllCommonModelsForLinkedAccount = new(
+        Values.DeletedAllCommonModelsForLinkedAccount
+    );
 
-    [EnumMember(Value = "CREATED_DESTINATION")]
-    CreatedDestination,
+    public static readonly EventTypeEnum CreatedDestination = new(Values.CreatedDestination);
 
-    [EnumMember(Value = "DELETED_DESTINATION")]
-    DeletedDestination,
+    public static readonly EventTypeEnum DeletedDestination = new(Values.DeletedDestination);
 
-    [EnumMember(Value = "CHANGED_DESTINATION")]
-    ChangedDestination,
+    public static readonly EventTypeEnum ChangedDestination = new(Values.ChangedDestination);
 
-    [EnumMember(Value = "CHANGED_SCOPES")]
-    ChangedScopes,
+    public static readonly EventTypeEnum ChangedScopes = new(Values.ChangedScopes);
 
-    [EnumMember(Value = "CHANGED_PERSONAL_INFORMATION")]
-    ChangedPersonalInformation,
+    public static readonly EventTypeEnum ChangedPersonalInformation = new(
+        Values.ChangedPersonalInformation
+    );
 
-    [EnumMember(Value = "CHANGED_ORGANIZATION_SETTINGS")]
-    ChangedOrganizationSettings,
+    public static readonly EventTypeEnum ChangedOrganizationSettings = new(
+        Values.ChangedOrganizationSettings
+    );
 
-    [EnumMember(Value = "ENABLED_INTEGRATION")]
-    EnabledIntegration,
+    public static readonly EventTypeEnum EnabledIntegration = new(Values.EnabledIntegration);
 
-    [EnumMember(Value = "DISABLED_INTEGRATION")]
-    DisabledIntegration,
+    public static readonly EventTypeEnum DisabledIntegration = new(Values.DisabledIntegration);
 
-    [EnumMember(Value = "ENABLED_CATEGORY")]
-    EnabledCategory,
+    public static readonly EventTypeEnum EnabledCategory = new(Values.EnabledCategory);
 
-    [EnumMember(Value = "DISABLED_CATEGORY")]
-    DisabledCategory,
+    public static readonly EventTypeEnum DisabledCategory = new(Values.DisabledCategory);
 
-    [EnumMember(Value = "CHANGED_PASSWORD")]
-    ChangedPassword,
+    public static readonly EventTypeEnum ChangedPassword = new(Values.ChangedPassword);
 
-    [EnumMember(Value = "RESET_PASSWORD")]
-    ResetPassword,
+    public static readonly EventTypeEnum ResetPassword = new(Values.ResetPassword);
 
-    [EnumMember(Value = "ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION")]
-    EnabledRedactUnmappedDataForOrganization,
+    public static readonly EventTypeEnum EnabledRedactUnmappedDataForOrganization = new(
+        Values.EnabledRedactUnmappedDataForOrganization
+    );
 
-    [EnumMember(Value = "ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT")]
-    EnabledRedactUnmappedDataForLinkedAccount,
+    public static readonly EventTypeEnum EnabledRedactUnmappedDataForLinkedAccount = new(
+        Values.EnabledRedactUnmappedDataForLinkedAccount
+    );
 
-    [EnumMember(Value = "DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION")]
-    DisabledRedactUnmappedDataForOrganization,
+    public static readonly EventTypeEnum DisabledRedactUnmappedDataForOrganization = new(
+        Values.DisabledRedactUnmappedDataForOrganization
+    );
 
-    [EnumMember(Value = "DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT")]
-    DisabledRedactUnmappedDataForLinkedAccount,
+    public static readonly EventTypeEnum DisabledRedactUnmappedDataForLinkedAccount = new(
+        Values.DisabledRedactUnmappedDataForLinkedAccount
+    );
 
-    [EnumMember(Value = "CREATED_INTEGRATION_WIDE_FIELD_MAPPING")]
-    CreatedIntegrationWideFieldMapping,
+    public static readonly EventTypeEnum CreatedIntegrationWideFieldMapping = new(
+        Values.CreatedIntegrationWideFieldMapping
+    );
 
-    [EnumMember(Value = "CREATED_LINKED_ACCOUNT_FIELD_MAPPING")]
-    CreatedLinkedAccountFieldMapping,
+    public static readonly EventTypeEnum CreatedLinkedAccountFieldMapping = new(
+        Values.CreatedLinkedAccountFieldMapping
+    );
 
-    [EnumMember(Value = "CHANGED_INTEGRATION_WIDE_FIELD_MAPPING")]
-    ChangedIntegrationWideFieldMapping,
+    public static readonly EventTypeEnum ChangedIntegrationWideFieldMapping = new(
+        Values.ChangedIntegrationWideFieldMapping
+    );
 
-    [EnumMember(Value = "CHANGED_LINKED_ACCOUNT_FIELD_MAPPING")]
-    ChangedLinkedAccountFieldMapping,
+    public static readonly EventTypeEnum ChangedLinkedAccountFieldMapping = new(
+        Values.ChangedLinkedAccountFieldMapping
+    );
 
-    [EnumMember(Value = "DELETED_INTEGRATION_WIDE_FIELD_MAPPING")]
-    DeletedIntegrationWideFieldMapping,
+    public static readonly EventTypeEnum DeletedIntegrationWideFieldMapping = new(
+        Values.DeletedIntegrationWideFieldMapping
+    );
 
-    [EnumMember(Value = "DELETED_LINKED_ACCOUNT_FIELD_MAPPING")]
-    DeletedLinkedAccountFieldMapping,
+    public static readonly EventTypeEnum DeletedLinkedAccountFieldMapping = new(
+        Values.DeletedLinkedAccountFieldMapping
+    );
 
-    [EnumMember(Value = "CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE")]
-    CreatedLinkedAccountCommonModelOverride,
+    public static readonly EventTypeEnum CreatedLinkedAccountCommonModelOverride = new(
+        Values.CreatedLinkedAccountCommonModelOverride
+    );
 
-    [EnumMember(Value = "CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE")]
-    ChangedLinkedAccountCommonModelOverride,
+    public static readonly EventTypeEnum ChangedLinkedAccountCommonModelOverride = new(
+        Values.ChangedLinkedAccountCommonModelOverride
+    );
 
-    [EnumMember(Value = "DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE")]
-    DeletedLinkedAccountCommonModelOverride,
+    public static readonly EventTypeEnum DeletedLinkedAccountCommonModelOverride = new(
+        Values.DeletedLinkedAccountCommonModelOverride
+    );
 
-    [EnumMember(Value = "FORCED_LINKED_ACCOUNT_RESYNC")]
-    ForcedLinkedAccountResync,
+    public static readonly EventTypeEnum ForcedLinkedAccountResync = new(
+        Values.ForcedLinkedAccountResync
+    );
 
-    [EnumMember(Value = "MUTED_ISSUE")]
-    MutedIssue,
+    public static readonly EventTypeEnum MutedIssue = new(Values.MutedIssue);
 
-    [EnumMember(Value = "GENERATED_MAGIC_LINK")]
-    GeneratedMagicLink,
+    public static readonly EventTypeEnum GeneratedMagicLink = new(Values.GeneratedMagicLink);
 
-    [EnumMember(Value = "ENABLED_MERGE_WEBHOOK")]
-    EnabledMergeWebhook,
+    public static readonly EventTypeEnum EnabledMergeWebhook = new(Values.EnabledMergeWebhook);
 
-    [EnumMember(Value = "DISABLED_MERGE_WEBHOOK")]
-    DisabledMergeWebhook,
+    public static readonly EventTypeEnum DisabledMergeWebhook = new(Values.DisabledMergeWebhook);
 
-    [EnumMember(Value = "MERGE_WEBHOOK_TARGET_CHANGED")]
-    MergeWebhookTargetChanged,
+    public static readonly EventTypeEnum MergeWebhookTargetChanged = new(
+        Values.MergeWebhookTargetChanged
+    );
 
-    [EnumMember(Value = "END_USER_CREDENTIALS_ACCESSED")]
-    EndUserCredentialsAccessed,
+    public static readonly EventTypeEnum EndUserCredentialsAccessed = new(
+        Values.EndUserCredentialsAccessed
+    );
+
+    public EventTypeEnum(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static EventTypeEnum FromCustom(string value)
+    {
+        return new EventTypeEnum(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(EventTypeEnum value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(EventTypeEnum value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(EventTypeEnum value) => value.Value;
+
+    public static explicit operator EventTypeEnum(string value) => new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    [Serializable]
+    public static class Values
+    {
+        public const string CreatedRemoteProductionApiKey = "CREATED_REMOTE_PRODUCTION_API_KEY";
+
+        public const string DeletedRemoteProductionApiKey = "DELETED_REMOTE_PRODUCTION_API_KEY";
+
+        public const string CreatedTestApiKey = "CREATED_TEST_API_KEY";
+
+        public const string DeletedTestApiKey = "DELETED_TEST_API_KEY";
+
+        public const string RegeneratedProductionApiKey = "REGENERATED_PRODUCTION_API_KEY";
+
+        public const string RegeneratedWebhookSignature = "REGENERATED_WEBHOOK_SIGNATURE";
+
+        public const string InvitedUser = "INVITED_USER";
+
+        public const string TwoFactorAuthEnabled = "TWO_FACTOR_AUTH_ENABLED";
+
+        public const string TwoFactorAuthDisabled = "TWO_FACTOR_AUTH_DISABLED";
+
+        public const string DeletedLinkedAccount = "DELETED_LINKED_ACCOUNT";
+
+        public const string DeletedAllCommonModelsForLinkedAccount =
+            "DELETED_ALL_COMMON_MODELS_FOR_LINKED_ACCOUNT";
+
+        public const string CreatedDestination = "CREATED_DESTINATION";
+
+        public const string DeletedDestination = "DELETED_DESTINATION";
+
+        public const string ChangedDestination = "CHANGED_DESTINATION";
+
+        public const string ChangedScopes = "CHANGED_SCOPES";
+
+        public const string ChangedPersonalInformation = "CHANGED_PERSONAL_INFORMATION";
+
+        public const string ChangedOrganizationSettings = "CHANGED_ORGANIZATION_SETTINGS";
+
+        public const string EnabledIntegration = "ENABLED_INTEGRATION";
+
+        public const string DisabledIntegration = "DISABLED_INTEGRATION";
+
+        public const string EnabledCategory = "ENABLED_CATEGORY";
+
+        public const string DisabledCategory = "DISABLED_CATEGORY";
+
+        public const string ChangedPassword = "CHANGED_PASSWORD";
+
+        public const string ResetPassword = "RESET_PASSWORD";
+
+        public const string EnabledRedactUnmappedDataForOrganization =
+            "ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION";
+
+        public const string EnabledRedactUnmappedDataForLinkedAccount =
+            "ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT";
+
+        public const string DisabledRedactUnmappedDataForOrganization =
+            "DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION";
+
+        public const string DisabledRedactUnmappedDataForLinkedAccount =
+            "DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT";
+
+        public const string CreatedIntegrationWideFieldMapping =
+            "CREATED_INTEGRATION_WIDE_FIELD_MAPPING";
+
+        public const string CreatedLinkedAccountFieldMapping =
+            "CREATED_LINKED_ACCOUNT_FIELD_MAPPING";
+
+        public const string ChangedIntegrationWideFieldMapping =
+            "CHANGED_INTEGRATION_WIDE_FIELD_MAPPING";
+
+        public const string ChangedLinkedAccountFieldMapping =
+            "CHANGED_LINKED_ACCOUNT_FIELD_MAPPING";
+
+        public const string DeletedIntegrationWideFieldMapping =
+            "DELETED_INTEGRATION_WIDE_FIELD_MAPPING";
+
+        public const string DeletedLinkedAccountFieldMapping =
+            "DELETED_LINKED_ACCOUNT_FIELD_MAPPING";
+
+        public const string CreatedLinkedAccountCommonModelOverride =
+            "CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE";
+
+        public const string ChangedLinkedAccountCommonModelOverride =
+            "CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE";
+
+        public const string DeletedLinkedAccountCommonModelOverride =
+            "DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE";
+
+        public const string ForcedLinkedAccountResync = "FORCED_LINKED_ACCOUNT_RESYNC";
+
+        public const string MutedIssue = "MUTED_ISSUE";
+
+        public const string GeneratedMagicLink = "GENERATED_MAGIC_LINK";
+
+        public const string EnabledMergeWebhook = "ENABLED_MERGE_WEBHOOK";
+
+        public const string DisabledMergeWebhook = "DISABLED_MERGE_WEBHOOK";
+
+        public const string MergeWebhookTargetChanged = "MERGE_WEBHOOK_TARGET_CHANGED";
+
+        public const string EndUserCredentialsAccessed = "END_USER_CREDENTIALS_ACCESSED";
+    }
 }

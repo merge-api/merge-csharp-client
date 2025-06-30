@@ -3,6 +3,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
 
+[Serializable]
 public record ApplicationsRetrieveRequest
 {
     /// <summary>

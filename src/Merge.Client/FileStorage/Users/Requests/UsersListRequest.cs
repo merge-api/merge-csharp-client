@@ -3,6 +3,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.FileStorage;
 
+[Serializable]
 public record UsersListRequest
 {
     /// <summary>

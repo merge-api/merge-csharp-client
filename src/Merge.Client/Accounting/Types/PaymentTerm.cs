@@ -14,6 +14,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET PaymentTerm` endpoint and view payment term information.
 /// </summary>
+[Serializable]
 public record PaymentTerm
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

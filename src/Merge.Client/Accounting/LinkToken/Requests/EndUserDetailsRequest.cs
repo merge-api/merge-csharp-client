@@ -4,6 +4,7 @@ using OneOf;
 
 namespace Merge.Client.Accounting;
 
+[Serializable]
 public record EndUserDetailsRequest
 {
     /// <summary>

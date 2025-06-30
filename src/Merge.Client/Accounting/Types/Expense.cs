@@ -15,6 +15,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET Expense` endpoint and view a company's expense.
 /// </summary>
+[Serializable]
 public record Expense
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

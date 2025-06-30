@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST Candidates` endpoint and filter by `ID` to show all candidates.
 /// </summary>
+[Serializable]
 public record CandidateRequest
 {
     /// <summary>

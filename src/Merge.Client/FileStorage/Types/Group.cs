@@ -12,6 +12,7 @@ namespace Merge.Client.FileStorage;
 /// ### Usage Example
 /// Fetch from the `GET /api/filestorage/v1/groups` endpoint and view their groups.
 /// </summary>
+[Serializable]
 public record Group
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

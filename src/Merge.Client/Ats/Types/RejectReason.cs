@@ -11,6 +11,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST RejectReasons` endpoint and filter by `ID` to show all reasons.
 /// </summary>
+[Serializable]
 public record RejectReason
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

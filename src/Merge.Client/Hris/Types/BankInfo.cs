@@ -13,6 +13,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST BankInfo` endpoint and filter by `ID` to show all bank information.
 /// </summary>
+[Serializable]
 public record BankInfo
 {
     [JsonAccess(JsonAccessType.ReadOnly)]
