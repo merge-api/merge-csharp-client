@@ -12,6 +12,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `LIST AccountingAttachments` endpoint and view a company's attachments.
 /// </summary>
+[Serializable]
 public record AccountingAttachment
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

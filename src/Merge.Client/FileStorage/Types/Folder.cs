@@ -12,6 +12,7 @@ namespace Merge.Client.FileStorage;
 /// ### Usage Example
 /// Fetch from the `GET /api/filestorage/v1/folders` endpoint and view their folders.
 /// </summary>
+[Serializable]
 public record Folder
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

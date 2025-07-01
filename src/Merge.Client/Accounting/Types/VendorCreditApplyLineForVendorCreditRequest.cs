@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET VendorCredit` endpoint and view the vendor credit's applied to lines.
 /// </summary>
+[Serializable]
 public record VendorCreditApplyLineForVendorCreditRequest
 {
     /// <summary>

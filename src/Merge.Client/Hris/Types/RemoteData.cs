@@ -12,6 +12,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// TODO
 /// </summary>
+[Serializable]
 public record RemoteData
 {
     /// <summary>

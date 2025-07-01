@@ -13,6 +13,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST Earnings` endpoint and filter by `ID` to show all earnings.
 /// </summary>
+[Serializable]
 public record Earning
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

@@ -12,6 +12,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// TODO
 /// </summary>
+[Serializable]
 public record RemoteData
 {
     /// <summary>

@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST Offers` endpoint and filter by `ID` to show all offers.
 /// </summary>
+[Serializable]
 public record Offer
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

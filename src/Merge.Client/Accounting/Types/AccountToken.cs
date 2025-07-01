@@ -4,6 +4,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
 
+[Serializable]
 public record AccountToken
 {
     [JsonPropertyName("account_token")]

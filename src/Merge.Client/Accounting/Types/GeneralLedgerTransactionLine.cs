@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example Fetch from the `GET GeneralLedgerTransactionLineSerializer` endpoint and view an
 /// `GeneralLedgerTransaction` line item.
 /// </summary>
+[Serializable]
 public record GeneralLedgerTransactionLine
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

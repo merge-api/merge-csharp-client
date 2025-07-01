@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST JobInterviewStages` endpoint and view the job interview stages used by a company.
 /// </summary>
+[Serializable]
 public record JobInterviewStage
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

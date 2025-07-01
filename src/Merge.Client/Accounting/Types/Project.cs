@@ -14,6 +14,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET Project` endpoint and view project information.
 /// </summary>
+[Serializable]
 public record Project
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

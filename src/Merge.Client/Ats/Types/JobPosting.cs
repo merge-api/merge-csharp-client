@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST JobPostings` endpoint to show all job postings.
 /// </summary>
+[Serializable]
 public record JobPosting
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

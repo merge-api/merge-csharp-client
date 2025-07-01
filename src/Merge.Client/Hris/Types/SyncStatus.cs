@@ -13,6 +13,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// View the `SyncStatus` for an account to see how recently its models were synced.
 /// </summary>
+[Serializable]
 public record SyncStatus
 {
     [JsonPropertyName("model_name")]

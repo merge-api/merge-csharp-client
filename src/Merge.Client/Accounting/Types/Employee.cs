@@ -15,6 +15,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `LIST Employees` endpoint and view a company's employees.
 /// </summary>
+[Serializable]
 public record Employee
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

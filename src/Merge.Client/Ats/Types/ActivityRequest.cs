@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST Activities` endpoint and filter by `ID` to show all activities.
 /// </summary>
+[Serializable]
 public record ActivityRequest
 {
     /// <summary>

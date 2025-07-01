@@ -12,6 +12,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// View what operations are supported for the `Candidate` endpoint.
 /// </summary>
+[Serializable]
 public record ModelOperation
 {
     [JsonPropertyName("model_name")]

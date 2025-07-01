@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET IncomeStatement` endpoint and view a company's income statement for a given period.
 /// </summary>
+[Serializable]
 public record IncomeStatement
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

@@ -5,6 +5,7 @@ using OneOf;
 
 namespace Merge.Client.Hris;
 
+[Serializable]
 public record RemoteFieldApi
 {
     [JsonPropertyName("schema")]

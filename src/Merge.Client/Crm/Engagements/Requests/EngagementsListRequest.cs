@@ -3,6 +3,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
 
+[Serializable]
 public record EngagementsListRequest
 {
     /// <summary>

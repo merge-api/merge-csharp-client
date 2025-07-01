@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Common models like `Invoice` and `Transaction` will have `AccountingPeriod` objects which will denote when they occurred.
 /// </summary>
+[Serializable]
 public record AccountingPeriod
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

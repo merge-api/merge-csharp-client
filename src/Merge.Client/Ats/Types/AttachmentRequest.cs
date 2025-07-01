@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST Attachments` endpoint and view attachments accessible by a company.
 /// </summary>
+[Serializable]
 public record AttachmentRequest
 {
     /// <summary>

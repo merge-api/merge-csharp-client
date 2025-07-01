@@ -12,6 +12,7 @@ namespace Merge.Client.Ticketing;
 /// ### Usage Example
 /// TODO
 /// </summary>
+[Serializable]
 public record Ticket
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

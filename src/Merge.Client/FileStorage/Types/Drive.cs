@@ -11,6 +11,7 @@ namespace Merge.Client.FileStorage;
 /// ### Usage Example
 /// Fetch from the `GET /api/filestorage/v1/drives` endpoint and view their drives.
 /// </summary>
+[Serializable]
 public record Drive
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

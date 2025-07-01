@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// TODO
 /// </summary>
+[Serializable]
 public record RemoteData
 {
     /// <summary>

@@ -4,6 +4,7 @@ using OneOf;
 
 namespace Merge.Client.Hris;
 
+[Serializable]
 public record EndUserDetailsRequest
 {
     /// <summary>

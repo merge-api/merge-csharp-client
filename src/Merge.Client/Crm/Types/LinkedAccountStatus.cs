@@ -4,6 +4,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
 
+[Serializable]
 public record LinkedAccountStatus
 {
     [JsonPropertyName("linked_account_status")]

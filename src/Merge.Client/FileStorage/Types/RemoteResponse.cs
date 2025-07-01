@@ -13,6 +13,7 @@ namespace Merge.Client.FileStorage;
 /// ### Usage Example
 /// View the `RemoteResponse` returned from your `DataPassthrough`.
 /// </summary>
+[Serializable]
 public record RemoteResponse
 {
     [JsonPropertyName("method")]

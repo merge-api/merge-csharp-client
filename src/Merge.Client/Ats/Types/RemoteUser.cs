@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `LIST RemoteUsers` endpoint to show all users for a third party.
 /// </summary>
+[Serializable]
 public record RemoteUser
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

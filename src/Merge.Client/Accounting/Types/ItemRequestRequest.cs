@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `LIST Items` endpoint and view a company's items.
 /// </summary>
+[Serializable]
 public record ItemRequestRequest
 {
     /// <summary>

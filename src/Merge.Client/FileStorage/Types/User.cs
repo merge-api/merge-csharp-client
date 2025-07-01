@@ -11,6 +11,7 @@ namespace Merge.Client.FileStorage;
 /// ### Usage Example
 /// Fetch from the `GET /api/filestorage/v1/users` endpoint and view their users.
 /// </summary>
+[Serializable]
 public record User
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

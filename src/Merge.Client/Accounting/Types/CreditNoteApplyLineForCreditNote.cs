@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET CreditNote` endpoint and view the invoice's applied to lines.
 /// </summary>
+[Serializable]
 public record CreditNoteApplyLineForCreditNote
 {
     /// <summary>

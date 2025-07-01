@@ -13,6 +13,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST Benefits` endpoint and filter by `ID` to show all benefits.
 /// </summary>
+[Serializable]
 public record Benefit
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

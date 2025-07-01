@@ -12,6 +12,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET CompanyInfo` endpoint and view a company's information.
 /// </summary>
+[Serializable]
 public record CompanyInfo
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

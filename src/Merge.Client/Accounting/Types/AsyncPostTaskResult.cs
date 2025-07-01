@@ -4,6 +4,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
 
+[Serializable]
 public record AsyncPostTaskResult
 {
     [JsonPropertyName("status_code")]

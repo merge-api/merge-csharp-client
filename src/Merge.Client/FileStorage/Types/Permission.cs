@@ -13,6 +13,7 @@ namespace Merge.Client.FileStorage;
 /// ### Usage Example
 /// Fetch from the `GET Files` or `GET Folders` endpoint. Permissions are unexpanded by default. Use the query param `expand=permissions` to see more details.
 /// </summary>
+[Serializable]
 public record Permission
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

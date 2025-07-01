@@ -12,6 +12,7 @@ namespace Merge.Client.FileStorage;
 /// ### Usage Example
 /// Create a `DataPassthrough` to get team hierarchies from your Rippling integration.
 /// </summary>
+[Serializable]
 public record DataPassthroughRequest
 {
     [JsonPropertyName("method")]

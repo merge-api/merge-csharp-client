@@ -1,33 +1,98 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
 
-[JsonConverter(typeof(EnumSerializer<EthnicityEnum>))]
-public enum EthnicityEnum
+[JsonConverter(typeof(StringEnumSerializer<EthnicityEnum>))]
+[Serializable]
+public readonly record struct EthnicityEnum : IStringEnum
 {
-    [EnumMember(Value = "AMERICAN_INDIAN_OR_ALASKA_NATIVE")]
-    AmericanIndianOrAlaskaNative,
+    public static readonly EthnicityEnum AmericanIndianOrAlaskaNative = new(
+        Values.AmericanIndianOrAlaskaNative
+    );
 
-    [EnumMember(Value = "ASIAN_OR_INDIAN_SUBCONTINENT")]
-    AsianOrIndianSubcontinent,
+    public static readonly EthnicityEnum AsianOrIndianSubcontinent = new(
+        Values.AsianOrIndianSubcontinent
+    );
 
-    [EnumMember(Value = "BLACK_OR_AFRICAN_AMERICAN")]
-    BlackOrAfricanAmerican,
+    public static readonly EthnicityEnum BlackOrAfricanAmerican = new(
+        Values.BlackOrAfricanAmerican
+    );
 
-    [EnumMember(Value = "HISPANIC_OR_LATINO")]
-    HispanicOrLatino,
+    public static readonly EthnicityEnum HispanicOrLatino = new(Values.HispanicOrLatino);
 
-    [EnumMember(Value = "NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER")]
-    NativeHawaiianOrOtherPacificIslander,
+    public static readonly EthnicityEnum NativeHawaiianOrOtherPacificIslander = new(
+        Values.NativeHawaiianOrOtherPacificIslander
+    );
 
-    [EnumMember(Value = "TWO_OR_MORE_RACES")]
-    TwoOrMoreRaces,
+    public static readonly EthnicityEnum TwoOrMoreRaces = new(Values.TwoOrMoreRaces);
 
-    [EnumMember(Value = "WHITE")]
-    White,
+    public static readonly EthnicityEnum White = new(Values.White);
 
-    [EnumMember(Value = "PREFER_NOT_TO_DISCLOSE")]
-    PreferNotToDisclose,
+    public static readonly EthnicityEnum PreferNotToDisclose = new(Values.PreferNotToDisclose);
+
+    public EthnicityEnum(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static EthnicityEnum FromCustom(string value)
+    {
+        return new EthnicityEnum(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(EthnicityEnum value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(EthnicityEnum value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(EthnicityEnum value) => value.Value;
+
+    public static explicit operator EthnicityEnum(string value) => new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    [Serializable]
+    public static class Values
+    {
+        public const string AmericanIndianOrAlaskaNative = "AMERICAN_INDIAN_OR_ALASKA_NATIVE";
+
+        public const string AsianOrIndianSubcontinent = "ASIAN_OR_INDIAN_SUBCONTINENT";
+
+        public const string BlackOrAfricanAmerican = "BLACK_OR_AFRICAN_AMERICAN";
+
+        public const string HispanicOrLatino = "HISPANIC_OR_LATINO";
+
+        public const string NativeHawaiianOrOtherPacificIslander =
+            "NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER";
+
+        public const string TwoOrMoreRaces = "TWO_OR_MORE_RACES";
+
+        public const string White = "WHITE";
+
+        public const string PreferNotToDisclose = "PREFER_NOT_TO_DISCLOSE";
+    }
 }

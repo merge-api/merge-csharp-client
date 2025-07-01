@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET BankFeedAccount` endpoint to view details of a bank feed account.
 /// </summary>
+[Serializable]
 public record BankFeedAccount
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

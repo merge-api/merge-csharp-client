@@ -4,6 +4,7 @@ using OneOf;
 
 namespace Merge.Client.Ticketing;
 
+[Serializable]
 public record EndUserDetailsRequest
 {
     /// <summary>

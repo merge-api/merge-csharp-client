@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `LIST PurchaseOrders` endpoint and view a company's purchase orders.
 /// </summary>
+[Serializable]
 public record PurchaseOrderRequest
 {
     /// <summary>

@@ -5,6 +5,7 @@ using OneOf;
 
 namespace Merge.Client.Hris;
 
+[Serializable]
 public record IgnoreCommonModelRequest
 {
     [JsonPropertyName("reason")]

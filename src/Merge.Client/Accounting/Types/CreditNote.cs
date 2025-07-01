@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `LIST CreditNotes` endpoint and view a company's credit notes.
 /// </summary>
+[Serializable]
 public record CreditNote
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

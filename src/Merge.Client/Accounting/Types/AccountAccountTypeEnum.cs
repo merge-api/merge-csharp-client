@@ -1,48 +1,113 @@
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
 
-[JsonConverter(typeof(EnumSerializer<AccountAccountTypeEnum>))]
-public enum AccountAccountTypeEnum
+[JsonConverter(typeof(StringEnumSerializer<AccountAccountTypeEnum>))]
+[Serializable]
+public readonly record struct AccountAccountTypeEnum : IStringEnum
 {
-    [EnumMember(Value = "BANK")]
-    Bank,
+    public static readonly AccountAccountTypeEnum Bank = new(Values.Bank);
 
-    [EnumMember(Value = "CREDIT_CARD")]
-    CreditCard,
+    public static readonly AccountAccountTypeEnum CreditCard = new(Values.CreditCard);
 
-    [EnumMember(Value = "ACCOUNTS_PAYABLE")]
-    AccountsPayable,
+    public static readonly AccountAccountTypeEnum AccountsPayable = new(Values.AccountsPayable);
 
-    [EnumMember(Value = "ACCOUNTS_RECEIVABLE")]
-    AccountsReceivable,
+    public static readonly AccountAccountTypeEnum AccountsReceivable = new(
+        Values.AccountsReceivable
+    );
 
-    [EnumMember(Value = "FIXED_ASSET")]
-    FixedAsset,
+    public static readonly AccountAccountTypeEnum FixedAsset = new(Values.FixedAsset);
 
-    [EnumMember(Value = "OTHER_ASSET")]
-    OtherAsset,
+    public static readonly AccountAccountTypeEnum OtherAsset = new(Values.OtherAsset);
 
-    [EnumMember(Value = "OTHER_CURRENT_ASSET")]
-    OtherCurrentAsset,
+    public static readonly AccountAccountTypeEnum OtherCurrentAsset = new(Values.OtherCurrentAsset);
 
-    [EnumMember(Value = "OTHER_EXPENSE")]
-    OtherExpense,
+    public static readonly AccountAccountTypeEnum OtherExpense = new(Values.OtherExpense);
 
-    [EnumMember(Value = "OTHER_INCOME")]
-    OtherIncome,
+    public static readonly AccountAccountTypeEnum OtherIncome = new(Values.OtherIncome);
 
-    [EnumMember(Value = "COST_OF_GOODS_SOLD")]
-    CostOfGoodsSold,
+    public static readonly AccountAccountTypeEnum CostOfGoodsSold = new(Values.CostOfGoodsSold);
 
-    [EnumMember(Value = "OTHER_CURRENT_LIABILITY")]
-    OtherCurrentLiability,
+    public static readonly AccountAccountTypeEnum OtherCurrentLiability = new(
+        Values.OtherCurrentLiability
+    );
 
-    [EnumMember(Value = "LONG_TERM_LIABILITY")]
-    LongTermLiability,
+    public static readonly AccountAccountTypeEnum LongTermLiability = new(Values.LongTermLiability);
 
-    [EnumMember(Value = "NON_POSTING")]
-    NonPosting,
+    public static readonly AccountAccountTypeEnum NonPosting = new(Values.NonPosting);
+
+    public AccountAccountTypeEnum(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static AccountAccountTypeEnum FromCustom(string value)
+    {
+        return new AccountAccountTypeEnum(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(AccountAccountTypeEnum value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(AccountAccountTypeEnum value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(AccountAccountTypeEnum value) => value.Value;
+
+    public static explicit operator AccountAccountTypeEnum(string value) => new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    [Serializable]
+    public static class Values
+    {
+        public const string Bank = "BANK";
+
+        public const string CreditCard = "CREDIT_CARD";
+
+        public const string AccountsPayable = "ACCOUNTS_PAYABLE";
+
+        public const string AccountsReceivable = "ACCOUNTS_RECEIVABLE";
+
+        public const string FixedAsset = "FIXED_ASSET";
+
+        public const string OtherAsset = "OTHER_ASSET";
+
+        public const string OtherCurrentAsset = "OTHER_CURRENT_ASSET";
+
+        public const string OtherExpense = "OTHER_EXPENSE";
+
+        public const string OtherIncome = "OTHER_INCOME";
+
+        public const string CostOfGoodsSold = "COST_OF_GOODS_SOLD";
+
+        public const string OtherCurrentLiability = "OTHER_CURRENT_LIABILITY";
+
+        public const string LongTermLiability = "LONG_TERM_LIABILITY";
+
+        public const string NonPosting = "NON_POSTING";
+    }
 }

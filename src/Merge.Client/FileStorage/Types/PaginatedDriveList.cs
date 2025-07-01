@@ -4,6 +4,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.FileStorage;
 
+[Serializable]
 public record PaginatedDriveList
 {
     [JsonPropertyName("next")]

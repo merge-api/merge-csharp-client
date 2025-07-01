@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET JournalEntry` endpoint and view a company's journey entry.
 /// </summary>
+[Serializable]
 public record JournalEntryRequest
 {
     /// <summary>

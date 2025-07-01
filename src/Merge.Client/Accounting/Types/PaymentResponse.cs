@@ -4,6 +4,7 @@ using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
 
+[Serializable]
 public record PaymentResponse
 {
     [JsonPropertyName("model")]

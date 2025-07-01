@@ -12,6 +12,7 @@ namespace Merge.Client.FileStorage;
 /// ### Usage Example
 /// Fetch all the actions available for the `Zenefits` integration.
 /// </summary>
+[Serializable]
 public record AvailableActions
 {
     [JsonPropertyName("integration")]

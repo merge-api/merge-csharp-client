@@ -14,6 +14,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// GET and POST Timesheet Entries
 /// </summary>
+[Serializable]
 public record TimesheetEntryRequest
 {
     /// <summary>

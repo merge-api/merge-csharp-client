@@ -5,6 +5,7 @@ using OneOf;
 
 namespace Merge.Client.Hris;
 
+[Serializable]
 public record AccountDetails
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

@@ -12,6 +12,7 @@ namespace Merge.Client.Ats;
 /// ### Usage Example
 /// Fetch from the `GET Candidate` endpoint and view their email addresses.
 /// </summary>
+[Serializable]
 public record EmailAddress
 {
     /// <summary>

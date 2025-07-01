@@ -12,6 +12,7 @@ namespace Merge.Client.Hris;
 /// ### Usage Example
 /// Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companies.
 /// </summary>
+[Serializable]
 public record Company
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

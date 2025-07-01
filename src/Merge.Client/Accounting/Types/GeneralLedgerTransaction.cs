@@ -17,6 +17,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET GeneralLedgerTransaction` endpoint and view a general ledger transaction.
 /// </summary>
+[Serializable]
 public record GeneralLedgerTransaction
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

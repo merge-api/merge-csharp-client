@@ -13,6 +13,7 @@ namespace Merge.Client.Accounting;
 /// ### Usage Example
 /// Fetch from the `GET Payment` endpoint and view an invoice's payment.
 /// </summary>
+[Serializable]
 public record PaymentRequest
 {
     /// <summary>
