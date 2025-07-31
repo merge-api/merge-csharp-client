@@ -250,7 +250,7 @@ public partial class ContactsClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.Contacts.CreateAsync(
-    ///     new CrmContactEndpointRequest { Model = new Merge.Client.Crm.ContactRequest() }
+    ///     new CrmContactEndpointRequest { Model = new ContactRequest() }
     /// );
     /// </code></example>
     public async Task<CrmContactResponse> CreateAsync(
@@ -446,10 +446,7 @@ public partial class ContactsClient
     /// <example><code>
     /// await client.Crm.Contacts.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new Merge.Client.Crm.IgnoreCommonModelRequest
-    ///     {
-    ///         Reason = Merge.Client.Crm.ReasonEnum.GeneralCustomerRequest,
-    ///     }
+    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task IgnoreCreateAsync(

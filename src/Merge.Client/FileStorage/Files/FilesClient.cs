@@ -1,7 +1,7 @@
+using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.FileStorage;
@@ -375,7 +375,7 @@ public partial class FilesClient
     /// <summary>
     /// Returns the `File` content with the given `id` as a stream of bytes.
     /// </summary>
-    public async global::System.Threading.Tasks.Task DownloadRetrieveAsync(
+    public async Task<System.IO.Stream> DownloadRetrieveAsync(
         string id,
         FilesDownloadRetrieveRequest request,
         RequestOptions? options = null,
@@ -407,6 +407,10 @@ public partial class FilesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return await response.Raw.Content.ReadAsStreamAsync();
+        }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new MergeApiException(

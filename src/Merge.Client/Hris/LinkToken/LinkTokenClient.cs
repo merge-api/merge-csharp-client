@@ -24,11 +24,7 @@ public partial class LinkTokenClient
     ///         EndUserEmailAddress = "example@gmail.com",
     ///         EndUserOrganizationName = "Test Organization",
     ///         EndUserOriginId = "12345",
-    ///         Categories = new List&lt;Merge.Client.Hris.CategoriesEnum&gt;()
-    ///         {
-    ///             Merge.Client.Hris.CategoriesEnum.Hris,
-    ///             Merge.Client.Hris.CategoriesEnum.Ats,
-    ///         },
+    ///         Categories = new List&lt;CategoriesEnum&gt;() { CategoriesEnum.Hris, CategoriesEnum.Ats },
     ///     }
     /// );
     /// </code></example>

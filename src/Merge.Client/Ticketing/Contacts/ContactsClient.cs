@@ -151,7 +151,7 @@ public partial class ContactsClient
     /// </summary>
     /// <example><code>
     /// await client.Ticketing.Contacts.CreateAsync(
-    ///     new TicketingContactEndpointRequest { Model = new Merge.Client.Ticketing.ContactRequest() }
+    ///     new TicketingContactEndpointRequest { Model = new ContactRequest() }
     /// );
     /// </code></example>
     public async Task<TicketingContactResponse> CreateAsync(

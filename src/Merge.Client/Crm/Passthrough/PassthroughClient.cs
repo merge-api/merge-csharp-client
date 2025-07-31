@@ -19,11 +19,7 @@ public partial class PassthroughClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.Passthrough.CreateAsync(
-    ///     new Merge.Client.Crm.DataPassthroughRequest
-    ///     {
-    ///         Method = Merge.Client.Crm.MethodEnum.Get,
-    ///         Path = "/scooters",
-    ///     }
+    ///     new DataPassthroughRequest { Method = MethodEnum.Get, Path = "/scooters" }
     /// );
     /// </code></example>
     public async Task<RemoteResponse> CreateAsync(

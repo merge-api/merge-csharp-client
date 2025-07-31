@@ -245,7 +245,7 @@ public partial class AccountsClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.Accounts.CreateAsync(
-    ///     new CrmAccountEndpointRequest { Model = new Merge.Client.Crm.AccountRequest() }
+    ///     new CrmAccountEndpointRequest { Model = new AccountRequest() }
     /// );
     /// </code></example>
     public async Task<CrmAccountResponse> CreateAsync(

@@ -386,10 +386,7 @@ public partial class EmployeesClient
     /// <example><code>
     /// await client.Hris.Employees.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new Merge.Client.Hris.IgnoreCommonModelRequest
-    ///     {
-    ///         Reason = Merge.Client.Hris.ReasonEnum.GeneralCustomerRequest,
-    ///     }
+    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task IgnoreCreateAsync(

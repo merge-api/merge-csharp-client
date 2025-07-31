@@ -19,11 +19,7 @@ public partial class PassthroughClient
     /// </summary>
     /// <example><code>
     /// await client.Hris.Passthrough.CreateAsync(
-    ///     new Merge.Client.Hris.DataPassthroughRequest
-    ///     {
-    ///         Method = Merge.Client.Hris.MethodEnum.Get,
-    ///         Path = "/scooters",
-    ///     }
+    ///     new DataPassthroughRequest { Method = MethodEnum.Get, Path = "/scooters" }
     /// );
     /// </code></example>
     public async Task<RemoteResponse> CreateAsync(

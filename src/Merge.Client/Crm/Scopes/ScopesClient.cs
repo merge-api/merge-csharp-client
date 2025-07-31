@@ -113,48 +113,36 @@ public partial class ScopesClient
     /// await client.Crm.Scopes.LinkedAccountScopesCreateAsync(
     ///     new LinkedAccountCommonModelScopeDeserializerRequest
     ///     {
-    ///         CommonModels = new List&lt;Merge.Client.Crm.IndividualCommonModelScopeDeserializerRequest&gt;()
+    ///         CommonModels = new List&lt;IndividualCommonModelScopeDeserializerRequest&gt;()
     ///         {
-    ///             new Merge.Client.Crm.IndividualCommonModelScopeDeserializerRequest
+    ///             new IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Employee",
-    ///                 ModelPermissions = new Dictionary&lt;
-    ///                     string,
-    ///                     Merge.Client.Crm.ModelPermissionDeserializerRequest
-    ///                 &gt;()
+    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
     ///                 {
     ///                     {
     ///                         "READ",
-    ///                         new Merge.Client.Crm.ModelPermissionDeserializerRequest { IsEnabled = true }
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = true }
     ///                     },
     ///                     {
     ///                         "WRITE",
-    ///                         new Merge.Client.Crm.ModelPermissionDeserializerRequest
-    ///                         {
-    ///                             IsEnabled = false,
-    ///                         }
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
     ///                     },
     ///                 },
-    ///                 FieldPermissions = new Merge.Client.Crm.FieldPermissionDeserializerRequest
+    ///                 FieldPermissions = new FieldPermissionDeserializerRequest
     ///                 {
     ///                     EnabledFields = new List&lt;object&gt;() { "avatar", "home_location" },
     ///                     DisabledFields = new List&lt;object&gt;() { "work_location" },
     ///                 },
     ///             },
-    ///             new Merge.Client.Crm.IndividualCommonModelScopeDeserializerRequest
+    ///             new IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Benefit",
-    ///                 ModelPermissions = new Dictionary&lt;
-    ///                     string,
-    ///                     Merge.Client.Crm.ModelPermissionDeserializerRequest
-    ///                 &gt;()
+    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
     ///                 {
     ///                     {
     ///                         "WRITE",
-    ///                         new Merge.Client.Crm.ModelPermissionDeserializerRequest
-    ///                         {
-    ///                             IsEnabled = false,
-    ///                         }
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
     ///                     },
     ///                 },
     ///             },

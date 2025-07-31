@@ -179,7 +179,7 @@ public partial class AccountsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Accounts.CreateAsync(
-    ///     new AccountEndpointRequest { Model = new Merge.Client.Accounting.AccountRequest() }
+    ///     new AccountEndpointRequest { Model = new AccountRequest() }
     /// );
     /// </code></example>
     public async Task<AccountResponse> CreateAsync(
