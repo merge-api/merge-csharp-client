@@ -113,57 +113,40 @@ public partial class ScopesClient
     /// await client.FileStorage.Scopes.LinkedAccountScopesCreateAsync(
     ///     new LinkedAccountCommonModelScopeDeserializerRequest
     ///     {
-    ///         CommonModels =
-    ///             new List&lt;Merge.Client.FileStorage.IndividualCommonModelScopeDeserializerRequest&gt;()
+    ///         CommonModels = new List&lt;IndividualCommonModelScopeDeserializerRequest&gt;()
+    ///         {
+    ///             new IndividualCommonModelScopeDeserializerRequest
     ///             {
-    ///                 new Merge.Client.FileStorage.IndividualCommonModelScopeDeserializerRequest
+    ///                 ModelName = "Employee",
+    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
     ///                 {
-    ///                     ModelName = "Employee",
-    ///                     ModelPermissions = new Dictionary&lt;
-    ///                         string,
-    ///                         Merge.Client.FileStorage.ModelPermissionDeserializerRequest
-    ///                     &gt;()
     ///                     {
-    ///                         {
-    ///                             "READ",
-    ///                             new Merge.Client.FileStorage.ModelPermissionDeserializerRequest
-    ///                             {
-    ///                                 IsEnabled = true,
-    ///                             }
-    ///                         },
-    ///                         {
-    ///                             "WRITE",
-    ///                             new Merge.Client.FileStorage.ModelPermissionDeserializerRequest
-    ///                             {
-    ///                                 IsEnabled = false,
-    ///                             }
-    ///                         },
+    ///                         "READ",
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = true }
     ///                     },
-    ///                     FieldPermissions =
-    ///                         new Merge.Client.FileStorage.FieldPermissionDeserializerRequest
-    ///                         {
-    ///                             EnabledFields = new List&lt;object&gt;() { "avatar", "home_location" },
-    ///                             DisabledFields = new List&lt;object&gt;() { "work_location" },
-    ///                         },
-    ///                 },
-    ///                 new Merge.Client.FileStorage.IndividualCommonModelScopeDeserializerRequest
-    ///                 {
-    ///                     ModelName = "Benefit",
-    ///                     ModelPermissions = new Dictionary&lt;
-    ///                         string,
-    ///                         Merge.Client.FileStorage.ModelPermissionDeserializerRequest
-    ///                     &gt;()
     ///                     {
-    ///                         {
-    ///                             "WRITE",
-    ///                             new Merge.Client.FileStorage.ModelPermissionDeserializerRequest
-    ///                             {
-    ///                                 IsEnabled = false,
-    ///                             }
-    ///                         },
+    ///                         "WRITE",
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
+    ///                     },
+    ///                 },
+    ///                 FieldPermissions = new FieldPermissionDeserializerRequest
+    ///                 {
+    ///                     EnabledFields = new List&lt;object&gt;() { "avatar", "home_location" },
+    ///                     DisabledFields = new List&lt;object&gt;() { "work_location" },
+    ///                 },
+    ///             },
+    ///             new IndividualCommonModelScopeDeserializerRequest
+    ///             {
+    ///                 ModelName = "Benefit",
+    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
+    ///                 {
+    ///                     {
+    ///                         "WRITE",
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
     ///                     },
     ///                 },
     ///             },
+    ///         },
     ///     }
     /// );
     /// </code></example>

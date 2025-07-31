@@ -113,56 +113,40 @@ public partial class ScopesClient
     /// await client.Ticketing.Scopes.LinkedAccountScopesCreateAsync(
     ///     new LinkedAccountCommonModelScopeDeserializerRequest
     ///     {
-    ///         CommonModels =
-    ///             new List&lt;Merge.Client.Ticketing.IndividualCommonModelScopeDeserializerRequest&gt;()
+    ///         CommonModels = new List&lt;IndividualCommonModelScopeDeserializerRequest&gt;()
+    ///         {
+    ///             new IndividualCommonModelScopeDeserializerRequest
     ///             {
-    ///                 new Merge.Client.Ticketing.IndividualCommonModelScopeDeserializerRequest
+    ///                 ModelName = "Employee",
+    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
     ///                 {
-    ///                     ModelName = "Employee",
-    ///                     ModelPermissions = new Dictionary&lt;
-    ///                         string,
-    ///                         Merge.Client.Ticketing.ModelPermissionDeserializerRequest
-    ///                     &gt;()
     ///                     {
-    ///                         {
-    ///                             "READ",
-    ///                             new Merge.Client.Ticketing.ModelPermissionDeserializerRequest
-    ///                             {
-    ///                                 IsEnabled = true,
-    ///                             }
-    ///                         },
-    ///                         {
-    ///                             "WRITE",
-    ///                             new Merge.Client.Ticketing.ModelPermissionDeserializerRequest
-    ///                             {
-    ///                                 IsEnabled = false,
-    ///                             }
-    ///                         },
+    ///                         "READ",
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = true }
     ///                     },
-    ///                     FieldPermissions = new Merge.Client.Ticketing.FieldPermissionDeserializerRequest
     ///                     {
-    ///                         EnabledFields = new List&lt;object&gt;() { "avatar", "home_location" },
-    ///                         DisabledFields = new List&lt;object&gt;() { "work_location" },
+    ///                         "WRITE",
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
     ///                     },
     ///                 },
-    ///                 new Merge.Client.Ticketing.IndividualCommonModelScopeDeserializerRequest
+    ///                 FieldPermissions = new FieldPermissionDeserializerRequest
     ///                 {
-    ///                     ModelName = "Benefit",
-    ///                     ModelPermissions = new Dictionary&lt;
-    ///                         string,
-    ///                         Merge.Client.Ticketing.ModelPermissionDeserializerRequest
-    ///                     &gt;()
+    ///                     EnabledFields = new List&lt;object&gt;() { "avatar", "home_location" },
+    ///                     DisabledFields = new List&lt;object&gt;() { "work_location" },
+    ///                 },
+    ///             },
+    ///             new IndividualCommonModelScopeDeserializerRequest
+    ///             {
+    ///                 ModelName = "Benefit",
+    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
+    ///                 {
     ///                     {
-    ///                         {
-    ///                             "WRITE",
-    ///                             new Merge.Client.Ticketing.ModelPermissionDeserializerRequest
-    ///                             {
-    ///                                 IsEnabled = false,
-    ///                             }
-    ///                         },
+    ///                         "WRITE",
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
     ///                     },
     ///                 },
     ///             },
+    ///         },
     ///     }
     /// );
     /// </code></example>

@@ -113,51 +113,36 @@ public partial class ScopesClient
     /// await client.Hris.Scopes.LinkedAccountScopesCreateAsync(
     ///     new LinkedAccountCommonModelScopeDeserializerRequest
     ///     {
-    ///         CommonModels = new List&lt;Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest&gt;()
+    ///         CommonModels = new List&lt;IndividualCommonModelScopeDeserializerRequest&gt;()
     ///         {
-    ///             new Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest
+    ///             new IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Employee",
-    ///                 ModelPermissions = new Dictionary&lt;
-    ///                     string,
-    ///                     Merge.Client.Hris.ModelPermissionDeserializerRequest
-    ///                 &gt;()
+    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
     ///                 {
     ///                     {
     ///                         "READ",
-    ///                         new Merge.Client.Hris.ModelPermissionDeserializerRequest
-    ///                         {
-    ///                             IsEnabled = true,
-    ///                         }
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = true }
     ///                     },
     ///                     {
     ///                         "WRITE",
-    ///                         new Merge.Client.Hris.ModelPermissionDeserializerRequest
-    ///                         {
-    ///                             IsEnabled = false,
-    ///                         }
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
     ///                     },
     ///                 },
-    ///                 FieldPermissions = new Merge.Client.Hris.FieldPermissionDeserializerRequest
+    ///                 FieldPermissions = new FieldPermissionDeserializerRequest
     ///                 {
     ///                     EnabledFields = new List&lt;object&gt;() { "avatar", "home_location" },
     ///                     DisabledFields = new List&lt;object&gt;() { "work_location" },
     ///                 },
     ///             },
-    ///             new Merge.Client.Hris.IndividualCommonModelScopeDeserializerRequest
+    ///             new IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Benefit",
-    ///                 ModelPermissions = new Dictionary&lt;
-    ///                     string,
-    ///                     Merge.Client.Hris.ModelPermissionDeserializerRequest
-    ///                 &gt;()
+    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
     ///                 {
     ///                     {
     ///                         "WRITE",
-    ///                         new Merge.Client.Hris.ModelPermissionDeserializerRequest
-    ///                         {
-    ///                             IsEnabled = false,
-    ///                         }
+    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
     ///                     },
     ///                 },
     ///             },

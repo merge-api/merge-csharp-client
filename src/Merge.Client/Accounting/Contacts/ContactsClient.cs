@@ -263,7 +263,7 @@ public partial class ContactsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Contacts.CreateAsync(
-    ///     new ContactEndpointRequest { Model = new Merge.Client.Accounting.ContactRequest() }
+    ///     new ContactEndpointRequest { Model = new ContactRequest() }
     /// );
     /// </code></example>
     public async Task<ContactResponse> CreateAsync(

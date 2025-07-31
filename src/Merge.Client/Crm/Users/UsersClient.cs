@@ -309,10 +309,7 @@ public partial class UsersClient
     /// <example><code>
     /// await client.Crm.Users.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new Merge.Client.Crm.IgnoreCommonModelRequest
-    ///     {
-    ///         Reason = Merge.Client.Crm.ReasonEnum.GeneralCustomerRequest,
-    ///     }
+    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task IgnoreCreateAsync(

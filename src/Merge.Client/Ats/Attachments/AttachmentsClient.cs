@@ -165,7 +165,7 @@ public partial class AttachmentsClient
     /// await client.Ats.Attachments.CreateAsync(
     ///     new AttachmentEndpointRequest
     ///     {
-    ///         Model = new Merge.Client.Ats.AttachmentRequest(),
+    ///         Model = new AttachmentRequest(),
     ///         RemoteUserId = "remote_user_id",
     ///     }
     /// );

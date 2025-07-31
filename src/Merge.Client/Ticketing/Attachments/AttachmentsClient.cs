@@ -1,7 +1,7 @@
+using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -162,10 +162,7 @@ public partial class AttachmentsClient
     /// </summary>
     /// <example><code>
     /// await client.Ticketing.Attachments.CreateAsync(
-    ///     new TicketingAttachmentEndpointRequest
-    ///     {
-    ///         Model = new Merge.Client.Ticketing.AttachmentRequest(),
-    ///     }
+    ///     new TicketingAttachmentEndpointRequest { Model = new AttachmentRequest() }
     /// );
     /// </code></example>
     public async Task<TicketingAttachmentResponse> CreateAsync(
@@ -286,7 +283,7 @@ public partial class AttachmentsClient
     /// <summary>
     /// Returns the `File` content with the given `id` as a stream of bytes.
     /// </summary>
-    public async global::System.Threading.Tasks.Task DownloadRetrieveAsync(
+    public async Task<System.IO.Stream> DownloadRetrieveAsync(
         string id,
         AttachmentsDownloadRetrieveRequest request,
         RequestOptions? options = null,
@@ -318,6 +315,10 @@ public partial class AttachmentsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return await response.Raw.Content.ReadAsStreamAsync();
+        }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new MergeApiException(
