@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -18,10 +16,11 @@ public partial class AsyncTasksClient
     /// Returns an `AsyncPostTask` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.AsyncTasks.RetrieveAsync("id");
+    /// await client.Accounting.AsyncTasks.RetrieveAsync("id", new AsyncTasksRetrieveRequest());
     /// </code></example>
-    public async Task<AsyncPostTask> RetrieveAsync(
+    public async System.Threading.Tasks.Task<AsyncPostTask> RetrieveAsync(
         string id,
+        AsyncTasksRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

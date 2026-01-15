@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class EmploymentsClient
     /// <summary>
     /// Returns a list of `Employment` objects.
     /// </summary>
-    private async Task<PaginatedEmploymentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEmploymentList> ListInternalAsync(
         EmploymentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -93,7 +91,7 @@ public partial class EmploymentsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/employments",
+                    Path = "employments",
                     Query = _query,
                     Options = options,
                 },
@@ -127,9 +125,14 @@ public partial class EmploymentsClient
     /// Returns a list of `Employment` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Employments.ListAsync(new EmploymentsListRequest());
+    /// await client.Hris.Employments.ListAsync(
+    ///     new EmploymentsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Employment>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Employment>> ListAsync(
         EmploymentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -154,8 +157,8 @@ public partial class EmploymentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -168,7 +171,7 @@ public partial class EmploymentsClient
     /// <example><code>
     /// await client.Hris.Employments.RetrieveAsync("id", new EmploymentsRetrieveRequest());
     /// </code></example>
-    public async Task<Employment> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Employment> RetrieveAsync(
         string id,
         EmploymentsRetrieveRequest request,
         RequestOptions? options = null,
@@ -199,10 +202,7 @@ public partial class EmploymentsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "hris/v1/employments/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("employments/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,
                     Options = options,
                 },

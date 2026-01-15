@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,14 +15,14 @@ public partial class TeamsClient
     /// <summary>
     /// Returns a list of `Team` objects.
     /// </summary>
-    private async Task<PaginatedTeamList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTeamList> ListInternalAsync(
         TeamsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -81,7 +79,7 @@ public partial class TeamsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/teams",
+                    Path = "teams",
                     Query = _query,
                     Options = options,
                 },
@@ -115,9 +113,14 @@ public partial class TeamsClient
     /// Returns a list of `Team` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Teams.ListAsync(new TeamsListRequest());
+    /// await client.Hris.Teams.ListAsync(
+    ///     new Merge.Client.Hris.TeamsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Team>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Team>> ListAsync(
         TeamsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +145,8 @@ public partial class TeamsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -154,9 +157,9 @@ public partial class TeamsClient
     /// Returns a `Team` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Teams.RetrieveAsync("id", new TeamsRetrieveRequest());
+    /// await client.Hris.Teams.RetrieveAsync("id", new Merge.Client.Hris.TeamsRetrieveRequest());
     /// </code></example>
-    public async Task<Team> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Team> RetrieveAsync(
         string id,
         TeamsRetrieveRequest request,
         RequestOptions? options = null,
@@ -164,7 +167,7 @@ public partial class TeamsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -179,10 +182,7 @@ public partial class TeamsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "hris/v1/teams/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("teams/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,
                     Options = options,
                 },

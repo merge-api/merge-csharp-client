@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class EmployeePayrollRunsClient
     /// <summary>
     /// Returns a list of `EmployeePayrollRun` objects.
     /// </summary>
-    private async Task<PaginatedEmployeePayrollRunList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEmployeePayrollRunList> ListInternalAsync(
         EmployeePayrollRunsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -45,11 +43,11 @@ public partial class EmployeePayrollRunsClient
         }
         if (request.EndedAfter != null)
         {
-            _query["ended_after"] = request.EndedAfter.Value.ToString(Constants.DateTimeFormat);
+            _query["ended_after"] = request.EndedAfter.Value.ToString();
         }
         if (request.EndedBefore != null)
         {
-            _query["ended_before"] = request.EndedBefore.Value.ToString(Constants.DateTimeFormat);
+            _query["ended_before"] = request.EndedBefore.Value.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -89,13 +87,11 @@ public partial class EmployeePayrollRunsClient
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter.Value.ToString(Constants.DateTimeFormat);
+            _query["started_after"] = request.StartedAfter.Value.ToString();
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["started_before"] = request.StartedBefore.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -103,7 +99,7 @@ public partial class EmployeePayrollRunsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/employee-payroll-runs",
+                    Path = "employee-payroll-runs",
                     Query = _query,
                     Options = options,
                 },
@@ -137,9 +133,14 @@ public partial class EmployeePayrollRunsClient
     /// Returns a list of `EmployeePayrollRun` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.EmployeePayrollRuns.ListAsync(new EmployeePayrollRunsListRequest());
+    /// await client.Hris.EmployeePayrollRuns.ListAsync(
+    ///     new EmployeePayrollRunsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<EmployeePayrollRun>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<EmployeePayrollRun>> ListAsync(
         EmployeePayrollRunsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -164,8 +165,8 @@ public partial class EmployeePayrollRunsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -178,7 +179,7 @@ public partial class EmployeePayrollRunsClient
     /// <example><code>
     /// await client.Hris.EmployeePayrollRuns.RetrieveAsync("id", new EmployeePayrollRunsRetrieveRequest());
     /// </code></example>
-    public async Task<EmployeePayrollRun> RetrieveAsync(
+    public async System.Threading.Tasks.Task<EmployeePayrollRun> RetrieveAsync(
         string id,
         EmployeePayrollRunsRetrieveRequest request,
         RequestOptions? options = null,
@@ -202,7 +203,7 @@ public partial class EmployeePayrollRunsClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "hris/v1/employee-payroll-runs/{0}",
+                        "employee-payroll-runs/{0}",
                         ValueConvert.ToPathParameterString(id)
                     ),
                     Query = _query,

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.FileStorage;
@@ -17,7 +15,7 @@ public partial class DrivesClient
     /// <summary>
     /// Returns a list of `Drive` objects.
     /// </summary>
-    private async Task<PaginatedDriveList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedDriveList> ListInternalAsync(
         DrivesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -114,9 +112,11 @@ public partial class DrivesClient
     /// Returns a list of `Drive` objects.
     /// </summary>
     /// <example><code>
-    /// await client.FileStorage.Drives.ListAsync(new DrivesListRequest());
+    /// await client.FileStorage.Drives.ListAsync(
+    ///     new DrivesListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Drive>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Drive>> ListAsync(
         DrivesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -141,8 +141,8 @@ public partial class DrivesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -155,7 +155,7 @@ public partial class DrivesClient
     /// <example><code>
     /// await client.FileStorage.Drives.RetrieveAsync("id", new DrivesRetrieveRequest());
     /// </code></example>
-    public async Task<Drive> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Drive> RetrieveAsync(
         string id,
         DrivesRetrieveRequest request,
         RequestOptions? options = null,

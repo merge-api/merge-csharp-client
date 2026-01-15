@@ -22,6 +22,9 @@ public record RemoteFieldClass
     [JsonPropertyName("is_custom")]
     public bool? IsCustom { get; set; }
 
+    [JsonPropertyName("is_common_model_field")]
+    public bool? IsCommonModelField { get; set; }
+
     [JsonPropertyName("is_required")]
     public bool? IsRequired { get; set; }
 
