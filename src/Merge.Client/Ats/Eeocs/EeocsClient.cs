@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,14 +15,14 @@ public partial class EeocsClient
     /// <summary>
     /// Returns a list of `EEOC` objects.
     /// </summary>
-    private async Task<PaginatedEeocList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEeocList> ListInternalAsync(
         EeocsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CandidateId != null)
         {
             _query["candidate_id"] = request.CandidateId;
@@ -123,9 +121,11 @@ public partial class EeocsClient
     /// Returns a list of `EEOC` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Eeocs.ListAsync(new EeocsListRequest());
+    /// await client.Ats.Eeocs.ListAsync(
+    ///     new EeocsListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Eeoc>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Eeoc>> ListAsync(
         EeocsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -150,8 +150,8 @@ public partial class EeocsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -164,7 +164,7 @@ public partial class EeocsClient
     /// <example><code>
     /// await client.Ats.Eeocs.RetrieveAsync("id", new EeocsRetrieveRequest());
     /// </code></example>
-    public async Task<Eeoc> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Eeoc> RetrieveAsync(
         string id,
         EeocsRetrieveRequest request,
         RequestOptions? options = null,
@@ -172,7 +172,7 @@ public partial class EeocsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);

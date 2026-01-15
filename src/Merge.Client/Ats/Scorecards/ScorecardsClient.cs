@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class ScorecardsClient
     /// <summary>
     /// Returns a list of `Scorecard` objects.
     /// </summary>
-    private async Task<PaginatedScorecardList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedScorecardList> ListInternalAsync(
         ScorecardsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -81,7 +79,7 @@ public partial class ScorecardsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -89,7 +87,7 @@ public partial class ScorecardsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -131,9 +129,14 @@ public partial class ScorecardsClient
     /// Returns a list of `Scorecard` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Scorecards.ListAsync(new ScorecardsListRequest());
+    /// await client.Ats.Scorecards.ListAsync(
+    ///     new ScorecardsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Scorecard>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Scorecard>> ListAsync(
         ScorecardsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -158,8 +161,8 @@ public partial class ScorecardsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -172,7 +175,7 @@ public partial class ScorecardsClient
     /// <example><code>
     /// await client.Ats.Scorecards.RetrieveAsync("id", new ScorecardsRetrieveRequest());
     /// </code></example>
-    public async Task<Scorecard> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Scorecard> RetrieveAsync(
         string id,
         ScorecardsRetrieveRequest request,
         RequestOptions? options = null,
@@ -191,11 +194,11 @@ public partial class ScorecardsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(

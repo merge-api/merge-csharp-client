@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -20,7 +18,7 @@ public partial class AvailableActionsClient
     /// <example><code>
     /// await client.Hris.AvailableActions.RetrieveAsync();
     /// </code></example>
-    public async Task<AvailableActions> RetrieveAsync(
+    public async System.Threading.Tasks.Task<AvailableActions> RetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -31,7 +29,7 @@ public partial class AvailableActionsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/available-actions",
+                    Path = "available-actions",
                     Options = options,
                 },
                 cancellationToken

@@ -16,7 +16,7 @@ public record AccountsListRequest
     /// If provided, will only return accounts with this classification.
     /// </summary>
     [JsonIgnore]
-    public string? Classification { get; set; }
+    public AccountsListRequestClassification? Classification { get; set; }
 
     /// <summary>
     /// If provided, will only return accounts for this company.
@@ -46,7 +46,8 @@ public record AccountsListRequest
     /// Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     /// </summary>
     [JsonIgnore]
-    public IEnumerable<string> Expand { get; set; } = new List<string>();
+    public IEnumerable<AccountsListRequestExpandItem> Expand { get; set; } =
+        new List<AccountsListRequestExpandItem>();
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
@@ -112,7 +113,7 @@ public record AccountsListRequest
     /// If provided, will only return accounts with this status.
     /// </summary>
     [JsonIgnore]
-    public string? Status { get; set; }
+    public AccountsListRequestStatus? Status { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

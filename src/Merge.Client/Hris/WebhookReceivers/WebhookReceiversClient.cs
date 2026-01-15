@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -20,7 +18,7 @@ public partial class WebhookReceiversClient
     /// <example><code>
     /// await client.Hris.WebhookReceivers.ListAsync();
     /// </code></example>
-    public async Task<IEnumerable<WebhookReceiver>> ListAsync(
+    public async System.Threading.Tasks.Task<IEnumerable<WebhookReceiver>> ListAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -31,7 +29,7 @@ public partial class WebhookReceiversClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/webhook-receivers",
+                    Path = "webhook-receivers",
                     Options = options,
                 },
                 cancellationToken
@@ -65,10 +63,10 @@ public partial class WebhookReceiversClient
     /// </summary>
     /// <example><code>
     /// await client.Hris.WebhookReceivers.CreateAsync(
-    ///     new WebhookReceiverRequest { Event = "event", IsActive = true }
+    ///     new Merge.Client.Hris.WebhookReceiverRequest { Event = "event", IsActive = true }
     /// );
     /// </code></example>
-    public async Task<WebhookReceiver> CreateAsync(
+    public async System.Threading.Tasks.Task<WebhookReceiver> CreateAsync(
         WebhookReceiverRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -80,7 +78,7 @@ public partial class WebhookReceiversClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = "hris/v1/webhook-receivers",
+                    Path = "webhook-receivers",
                     Body = request,
                     ContentType = "application/json",
                     Options = options,

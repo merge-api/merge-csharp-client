@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class EmployerBenefitsClient
     /// <summary>
     /// Returns a list of `EmployerBenefit` objects.
     /// </summary>
-    private async Task<PaginatedEmployerBenefitList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEmployerBenefitList> ListInternalAsync(
         EmployerBenefitsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,7 +74,7 @@ public partial class EmployerBenefitsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/employer-benefits",
+                    Path = "employer-benefits",
                     Query = _query,
                     Options = options,
                 },
@@ -110,9 +108,14 @@ public partial class EmployerBenefitsClient
     /// Returns a list of `EmployerBenefit` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.EmployerBenefits.ListAsync(new EmployerBenefitsListRequest());
+    /// await client.Hris.EmployerBenefits.ListAsync(
+    ///     new EmployerBenefitsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<EmployerBenefit>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<EmployerBenefit>> ListAsync(
         EmployerBenefitsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +140,8 @@ public partial class EmployerBenefitsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -151,7 +154,7 @@ public partial class EmployerBenefitsClient
     /// <example><code>
     /// await client.Hris.EmployerBenefits.RetrieveAsync("id", new EmployerBenefitsRetrieveRequest());
     /// </code></example>
-    public async Task<EmployerBenefit> RetrieveAsync(
+    public async System.Threading.Tasks.Task<EmployerBenefit> RetrieveAsync(
         string id,
         EmployerBenefitsRetrieveRequest request,
         RequestOptions? options = null,
@@ -174,7 +177,7 @@ public partial class EmployerBenefitsClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "hris/v1/employer-benefits/{0}",
+                        "employer-benefits/{0}",
                         ValueConvert.ToPathParameterString(id)
                     ),
                     Query = _query,

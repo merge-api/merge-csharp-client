@@ -1,7 +1,4 @@
-using System.IO;
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -18,14 +15,14 @@ public partial class AttachmentsClient
     /// <summary>
     /// Returns a list of `Attachment` objects.
     /// </summary>
-    private async Task<PaginatedAttachmentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAttachmentList> ListInternalAsync(
         AttachmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -70,9 +67,7 @@ public partial class AttachmentsClient
         }
         if (request.RemoteCreatedAfter != null)
         {
-            _query["remote_created_after"] = request.RemoteCreatedAfter.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["remote_created_after"] = request.RemoteCreatedAfter.Value.ToString();
         }
         if (request.RemoteId != null)
         {
@@ -122,9 +117,14 @@ public partial class AttachmentsClient
     /// Returns a list of `Attachment` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Attachments.ListAsync(new AttachmentsListRequest());
+    /// await client.Ticketing.Attachments.ListAsync(
+    ///     new Merge.Client.Ticketing.AttachmentsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Attachment>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Attachment>> ListAsync(
         AttachmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -149,8 +149,8 @@ public partial class AttachmentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -162,10 +162,13 @@ public partial class AttachmentsClient
     /// </summary>
     /// <example><code>
     /// await client.Ticketing.Attachments.CreateAsync(
-    ///     new TicketingAttachmentEndpointRequest { Model = new AttachmentRequest() }
+    ///     new TicketingAttachmentEndpointRequest
+    ///     {
+    ///         Model = new Merge.Client.Ticketing.AttachmentRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<TicketingAttachmentResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<TicketingAttachmentResponse> CreateAsync(
         TicketingAttachmentEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -222,9 +225,12 @@ public partial class AttachmentsClient
     /// Returns an `Attachment` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Attachments.RetrieveAsync("id", new AttachmentsRetrieveRequest());
+    /// await client.Ticketing.Attachments.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Ticketing.AttachmentsRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<Attachment> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Attachment> RetrieveAsync(
         string id,
         AttachmentsRetrieveRequest request,
         RequestOptions? options = null,
@@ -232,7 +238,7 @@ public partial class AttachmentsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -283,7 +289,7 @@ public partial class AttachmentsClient
     /// <summary>
     /// Returns the `File` content with the given `id` as a stream of bytes.
     /// </summary>
-    public async Task<System.IO.Stream> DownloadRetrieveAsync(
+    public async System.Threading.Tasks.Task<System.IO.Stream> DownloadRetrieveAsync(
         string id,
         AttachmentsDownloadRetrieveRequest request,
         RequestOptions? options = null,
@@ -335,7 +341,7 @@ public partial class AttachmentsClient
     /// <example><code>
     /// await client.Ticketing.Attachments.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

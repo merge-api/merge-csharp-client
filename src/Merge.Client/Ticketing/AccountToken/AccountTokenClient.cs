@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -18,10 +16,14 @@ public partial class AccountTokenClient
     /// Returns the account token for the end user with the provided public token.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.AccountToken.RetrieveAsync("public_token");
+    /// await client.Ticketing.AccountToken.RetrieveAsync(
+    ///     "public_token",
+    ///     new Merge.Client.Ticketing.AccountTokenRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<AccountToken> RetrieveAsync(
+    public async System.Threading.Tasks.Task<AccountToken> RetrieveAsync(
         string publicToken,
+        AccountTokenRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
