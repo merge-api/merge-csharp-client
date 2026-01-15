@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class GeneralLedgerTransactionsClient
     /// <summary>
     /// Returns a list of `GeneralLedgerTransaction` objects.
     /// </summary>
-    private async Task<PaginatedGeneralLedgerTransactionList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedGeneralLedgerTransactionList> ListInternalAsync(
         GeneralLedgerTransactionsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -73,15 +71,11 @@ public partial class GeneralLedgerTransactionsClient
         }
         if (request.PostedDateAfter != null)
         {
-            _query["posted_date_after"] = request.PostedDateAfter.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["posted_date_after"] = request.PostedDateAfter.Value.ToString();
         }
         if (request.PostedDateBefore != null)
         {
-            _query["posted_date_before"] = request.PostedDateBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["posted_date_before"] = request.PostedDateBefore.Value.ToString();
         }
         if (request.RemoteId != null)
         {
@@ -128,10 +122,13 @@ public partial class GeneralLedgerTransactionsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.GeneralLedgerTransactions.ListAsync(
-    ///     new GeneralLedgerTransactionsListRequest()
+    ///     new GeneralLedgerTransactionsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<GeneralLedgerTransaction>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<GeneralLedgerTransaction>> ListAsync(
         GeneralLedgerTransactionsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -156,8 +153,8 @@ public partial class GeneralLedgerTransactionsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -173,7 +170,7 @@ public partial class GeneralLedgerTransactionsClient
     ///     new GeneralLedgerTransactionsRetrieveRequest()
     /// );
     /// </code></example>
-    public async Task<GeneralLedgerTransaction> RetrieveAsync(
+    public async System.Threading.Tasks.Task<GeneralLedgerTransaction> RetrieveAsync(
         string id,
         GeneralLedgerTransactionsRetrieveRequest request,
         RequestOptions? options = null,

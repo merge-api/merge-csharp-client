@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,14 +15,14 @@ public partial class JobInterviewStagesClient
     /// <summary>
     /// Returns a list of `JobInterviewStage` objects.
     /// </summary>
-    private async Task<PaginatedJobInterviewStageList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedJobInterviewStageList> ListInternalAsync(
         JobInterviewStagesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -115,9 +113,14 @@ public partial class JobInterviewStagesClient
     /// Returns a list of `JobInterviewStage` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.JobInterviewStages.ListAsync(new JobInterviewStagesListRequest());
+    /// await client.Ats.JobInterviewStages.ListAsync(
+    ///     new JobInterviewStagesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<JobInterviewStage>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<JobInterviewStage>> ListAsync(
         JobInterviewStagesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +145,8 @@ public partial class JobInterviewStagesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -156,7 +159,7 @@ public partial class JobInterviewStagesClient
     /// <example><code>
     /// await client.Ats.JobInterviewStages.RetrieveAsync("id", new JobInterviewStagesRetrieveRequest());
     /// </code></example>
-    public async Task<JobInterviewStage> RetrieveAsync(
+    public async System.Threading.Tasks.Task<JobInterviewStage> RetrieveAsync(
         string id,
         JobInterviewStagesRetrieveRequest request,
         RequestOptions? options = null,
@@ -164,7 +167,7 @@ public partial class JobInterviewStagesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);

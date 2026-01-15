@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class InvoicesClient
     /// <summary>
     /// Returns a list of `Invoice` objects.
     /// </summary>
-    private async Task<PaginatedInvoiceList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedInvoiceList> ListInternalAsync(
         InvoicesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -67,15 +65,11 @@ public partial class InvoicesClient
         }
         if (request.IssueDateAfter != null)
         {
-            _query["issue_date_after"] = request.IssueDateAfter.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["issue_date_after"] = request.IssueDateAfter.Value.ToString();
         }
         if (request.IssueDateBefore != null)
         {
-            _query["issue_date_before"] = request.IssueDateBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["issue_date_before"] = request.IssueDateBefore.Value.ToString();
         }
         if (request.ModifiedAfter != null)
         {
@@ -99,7 +93,7 @@ public partial class InvoicesClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -107,15 +101,15 @@ public partial class InvoicesClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.Value.Stringify();
+            _query["status"] = request.Status.Value.ToString();
         }
         if (request.Type != null)
         {
-            _query["type"] = request.Type.Value.Stringify();
+            _query["type"] = request.Type.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -156,7 +150,7 @@ public partial class InvoicesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListInternalAsync(
         InvoicesLineItemsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -230,7 +224,7 @@ public partial class InvoicesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         InvoicesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -305,9 +299,11 @@ public partial class InvoicesClient
     /// Returns a list of `Invoice` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Invoices.ListAsync(new InvoicesListRequest());
+    /// await client.Accounting.Invoices.ListAsync(
+    ///     new InvoicesListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Invoice>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Invoice>> ListAsync(
         InvoicesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -332,8 +328,8 @@ public partial class InvoicesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -349,7 +345,7 @@ public partial class InvoicesClient
     ///     new InvoiceEndpointRequest { Model = new InvoiceRequest() }
     /// );
     /// </code></example>
-    public async Task<InvoiceResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<InvoiceResponse> CreateAsync(
         InvoiceEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -408,7 +404,7 @@ public partial class InvoicesClient
     /// <example><code>
     /// await client.Accounting.Invoices.RetrieveAsync("id", new InvoicesRetrieveRequest());
     /// </code></example>
-    public async Task<Invoice> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Invoice> RetrieveAsync(
         string id,
         InvoicesRetrieveRequest request,
         RequestOptions? options = null,
@@ -433,11 +429,11 @@ public partial class InvoicesClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -487,7 +483,7 @@ public partial class InvoicesClient
     ///     new PatchedInvoiceEndpointRequest { Model = new InvoiceRequest() }
     /// );
     /// </code></example>
-    public async Task<InvoiceResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<InvoiceResponse> PartialUpdateAsync(
         string id,
         PatchedInvoiceEndpointRequest request,
         RequestOptions? options = null,
@@ -549,10 +545,15 @@ public partial class InvoicesClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Invoices.LineItemsRemoteFieldClassesListAsync(
-    ///     new InvoicesLineItemsRemoteFieldClassesListRequest()
+    ///     new InvoicesLineItemsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> LineItemsRemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<
+        Pager<RemoteFieldClass>
+    > LineItemsRemoteFieldClassesListAsync(
         InvoicesLineItemsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -577,8 +578,8 @@ public partial class InvoicesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -589,10 +590,14 @@ public partial class InvoicesClient
     /// Returns metadata for `Invoice` PATCHs.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Invoices.MetaPatchRetrieveAsync("id");
+    /// await client.Accounting.Invoices.MetaPatchRetrieveAsync(
+    ///     "id",
+    ///     new InvoicesMetaPatchRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
+        InvoicesMetaPatchRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -641,7 +646,7 @@ public partial class InvoicesClient
     /// <example><code>
     /// await client.Accounting.Invoices.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -686,10 +691,13 @@ public partial class InvoicesClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Invoices.RemoteFieldClassesListAsync(
-    ///     new InvoicesRemoteFieldClassesListRequest()
+    ///     new InvoicesRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         InvoicesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -714,8 +722,8 @@ public partial class InvoicesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
