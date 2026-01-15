@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class OffersClient
     /// <summary>
     /// Returns a list of `Offer` objects.
     /// </summary>
-    private async Task<PaginatedOfferList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedOfferList> ListInternalAsync(
         OffersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -77,7 +75,7 @@ public partial class OffersClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -85,7 +83,7 @@ public partial class OffersClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -127,9 +125,11 @@ public partial class OffersClient
     /// Returns a list of `Offer` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Offers.ListAsync(new OffersListRequest());
+    /// await client.Ats.Offers.ListAsync(
+    ///     new OffersListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Offer>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Offer>> ListAsync(
         OffersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -154,8 +154,8 @@ public partial class OffersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -168,7 +168,7 @@ public partial class OffersClient
     /// <example><code>
     /// await client.Ats.Offers.RetrieveAsync("id", new OffersRetrieveRequest());
     /// </code></example>
-    public async Task<Offer> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Offer> RetrieveAsync(
         string id,
         OffersRetrieveRequest request,
         RequestOptions? options = null,
@@ -187,11 +187,11 @@ public partial class OffersClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(

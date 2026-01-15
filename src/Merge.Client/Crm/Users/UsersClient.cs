@@ -1,7 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -18,7 +15,7 @@ public partial class UsersClient
     /// <summary>
     /// Returns a list of `User` objects.
     /// </summary>
-    private async Task<PaginatedUserList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedUserList> ListInternalAsync(
         UsersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -120,7 +117,7 @@ public partial class UsersClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         UsersRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -201,9 +198,14 @@ public partial class UsersClient
     /// Returns a list of `User` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Users.ListAsync(new UsersListRequest());
+    /// await client.Crm.Users.ListAsync(
+    ///     new Merge.Client.Crm.UsersListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<User>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<User>> ListAsync(
         UsersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -228,8 +230,8 @@ public partial class UsersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -240,9 +242,9 @@ public partial class UsersClient
     /// Returns a `User` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Users.RetrieveAsync("id", new UsersRetrieveRequest());
+    /// await client.Crm.Users.RetrieveAsync("id", new Merge.Client.Crm.UsersRetrieveRequest());
     /// </code></example>
-    public async Task<User> RetrieveAsync(
+    public async System.Threading.Tasks.Task<User> RetrieveAsync(
         string id,
         UsersRetrieveRequest request,
         RequestOptions? options = null,
@@ -309,12 +311,18 @@ public partial class UsersClient
     /// <example><code>
     /// await client.Crm.Users.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new UsersIgnoreCreateRequest
+    ///     {
+    ///         Body = new Merge.Client.Crm.IgnoreCommonModelRequest
+    ///         {
+    ///             Reason = Merge.Client.Crm.ReasonEnum.GeneralCustomerRequest,
+    ///         },
+    ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task IgnoreCreateAsync(
+    public async System.Threading.Tasks.Task IgnoreCreateAsync(
         string modelId,
-        IgnoreCommonModelRequest request,
+        UsersIgnoreCreateRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -329,7 +337,7 @@ public partial class UsersClient
                         "crm/v1/users/ignore/{0}",
                         ValueConvert.ToPathParameterString(modelId)
                     ),
-                    Body = request,
+                    Body = request.Body,
                     ContentType = "application/json",
                     Options = options,
                 },
@@ -354,9 +362,14 @@ public partial class UsersClient
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Users.RemoteFieldClassesListAsync(new UsersRemoteFieldClassesListRequest());
+    /// await client.Crm.Users.RemoteFieldClassesListAsync(
+    ///     new UsersRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         UsersRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -381,8 +394,8 @@ public partial class UsersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,14 +15,14 @@ public partial class AttachmentsClient
     /// <summary>
     /// Returns a list of `Attachment` objects.
     /// </summary>
-    private async Task<PaginatedAttachmentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAttachmentList> ListInternalAsync(
         AttachmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CandidateId != null)
         {
             _query["candidate_id"] = request.CandidateId;
@@ -73,7 +71,7 @@ public partial class AttachmentsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -81,7 +79,7 @@ public partial class AttachmentsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -123,9 +121,14 @@ public partial class AttachmentsClient
     /// Returns a list of `Attachment` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Attachments.ListAsync(new AttachmentsListRequest());
+    /// await client.Ats.Attachments.ListAsync(
+    ///     new Merge.Client.Ats.AttachmentsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Attachment>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Attachment>> ListAsync(
         AttachmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -150,8 +153,8 @@ public partial class AttachmentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -165,12 +168,12 @@ public partial class AttachmentsClient
     /// await client.Ats.Attachments.CreateAsync(
     ///     new AttachmentEndpointRequest
     ///     {
-    ///         Model = new AttachmentRequest(),
+    ///         Model = new Merge.Client.Ats.AttachmentRequest(),
     ///         RemoteUserId = "remote_user_id",
     ///     }
     /// );
     /// </code></example>
-    public async Task<AttachmentResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<AttachmentResponse> CreateAsync(
         AttachmentEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -227,9 +230,9 @@ public partial class AttachmentsClient
     /// Returns an `Attachment` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Attachments.RetrieveAsync("id", new AttachmentsRetrieveRequest());
+    /// await client.Ats.Attachments.RetrieveAsync("id", new Merge.Client.Ats.AttachmentsRetrieveRequest());
     /// </code></example>
-    public async Task<Attachment> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Attachment> RetrieveAsync(
         string id,
         AttachmentsRetrieveRequest request,
         RequestOptions? options = null,
@@ -237,7 +240,7 @@ public partial class AttachmentsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -248,11 +251,11 @@ public partial class AttachmentsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -299,7 +302,7 @@ public partial class AttachmentsClient
     /// <example><code>
     /// await client.Ats.Attachments.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

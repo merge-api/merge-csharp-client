@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class TransactionsClient
     /// <summary>
     /// Returns a list of `Transaction` objects.
     /// </summary>
-    private async Task<PaginatedTransactionList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTransactionList> ListInternalAsync(
         TransactionsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -77,15 +75,11 @@ public partial class TransactionsClient
         }
         if (request.TransactionDateAfter != null)
         {
-            _query["transaction_date_after"] = request.TransactionDateAfter.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["transaction_date_after"] = request.TransactionDateAfter.Value.ToString();
         }
         if (request.TransactionDateBefore != null)
         {
-            _query["transaction_date_before"] = request.TransactionDateBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["transaction_date_before"] = request.TransactionDateBefore.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -127,9 +121,14 @@ public partial class TransactionsClient
     /// Returns a list of `Transaction` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Transactions.ListAsync(new TransactionsListRequest());
+    /// await client.Accounting.Transactions.ListAsync(
+    ///     new TransactionsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Transaction>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Transaction>> ListAsync(
         TransactionsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -154,8 +153,8 @@ public partial class TransactionsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -168,7 +167,7 @@ public partial class TransactionsClient
     /// <example><code>
     /// await client.Accounting.Transactions.RetrieveAsync("id", new TransactionsRetrieveRequest());
     /// </code></example>
-    public async Task<Transaction> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Transaction> RetrieveAsync(
         string id,
         TransactionsRetrieveRequest request,
         RequestOptions? options = null,

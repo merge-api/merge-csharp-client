@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -20,7 +18,7 @@ public partial class AvailableActionsClient
     /// <example><code>
     /// await client.Crm.AvailableActions.RetrieveAsync();
     /// </code></example>
-    public async Task<AvailableActions> RetrieveAsync(
+    public async System.Threading.Tasks.Task<AvailableActions> RetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
