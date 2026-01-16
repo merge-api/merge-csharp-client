@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class AttachmentsClient
     /// <summary>
     /// Returns a list of `AccountingAttachment` objects.
     /// </summary>
-    private async Task<PaginatedAccountingAttachmentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAccountingAttachmentList> ListInternalAsync(
         AttachmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -114,9 +112,14 @@ public partial class AttachmentsClient
     /// Returns a list of `AccountingAttachment` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Attachments.ListAsync(new AttachmentsListRequest());
+    /// await client.Accounting.Attachments.ListAsync(
+    ///     new Merge.Client.Accounting.AttachmentsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<AccountingAttachment>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<AccountingAttachment>> ListAsync(
         AttachmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -141,8 +144,8 @@ public partial class AttachmentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -157,7 +160,7 @@ public partial class AttachmentsClient
     ///     new AccountingAttachmentEndpointRequest { Model = new AccountingAttachmentRequest() }
     /// );
     /// </code></example>
-    public async Task<AccountingAttachmentResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<AccountingAttachmentResponse> CreateAsync(
         AccountingAttachmentEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -214,9 +217,12 @@ public partial class AttachmentsClient
     /// Returns an `AccountingAttachment` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Attachments.RetrieveAsync("id", new AttachmentsRetrieveRequest());
+    /// await client.Accounting.Attachments.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Accounting.AttachmentsRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<AccountingAttachment> RetrieveAsync(
+    public async System.Threading.Tasks.Task<AccountingAttachment> RetrieveAsync(
         string id,
         AttachmentsRetrieveRequest request,
         RequestOptions? options = null,
@@ -277,7 +283,7 @@ public partial class AttachmentsClient
     /// <example><code>
     /// await client.Accounting.Attachments.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

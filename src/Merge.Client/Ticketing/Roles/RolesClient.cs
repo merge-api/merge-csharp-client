@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -17,7 +15,7 @@ public partial class RolesClient
     /// <summary>
     /// Returns a list of `Role` objects.
     /// </summary>
-    private async Task<PaginatedRoleList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRoleList> ListInternalAsync(
         RolesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -110,9 +108,11 @@ public partial class RolesClient
     /// Returns a list of `Role` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Roles.ListAsync(new RolesListRequest());
+    /// await client.Ticketing.Roles.ListAsync(
+    ///     new RolesListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Role>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Role>> ListAsync(
         RolesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +137,8 @@ public partial class RolesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -151,7 +151,7 @@ public partial class RolesClient
     /// <example><code>
     /// await client.Ticketing.Roles.RetrieveAsync("id", new RolesRetrieveRequest());
     /// </code></example>
-    public async Task<Role> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Role> RetrieveAsync(
         string id,
         RolesRetrieveRequest request,
         RequestOptions? options = null,

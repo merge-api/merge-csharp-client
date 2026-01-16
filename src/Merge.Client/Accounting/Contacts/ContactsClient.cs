@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class ContactsClient
     /// <summary>
     /// Returns a list of `Contact` objects.
     /// </summary>
-    private async Task<PaginatedContactList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedContactList> ListInternalAsync(
         ContactsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -95,7 +93,7 @@ public partial class ContactsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -103,11 +101,11 @@ public partial class ContactsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status;
+            _query["status"] = request.Status.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -148,7 +146,7 @@ public partial class ContactsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         ContactsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -223,9 +221,14 @@ public partial class ContactsClient
     /// Returns a list of `Contact` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Contacts.ListAsync(new ContactsListRequest());
+    /// await client.Accounting.Contacts.ListAsync(
+    ///     new Merge.Client.Accounting.ContactsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Contact>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Contact>> ListAsync(
         ContactsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -250,8 +253,8 @@ public partial class ContactsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -263,10 +266,10 @@ public partial class ContactsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Contacts.CreateAsync(
-    ///     new ContactEndpointRequest { Model = new ContactRequest() }
+    ///     new ContactEndpointRequest { Model = new Merge.Client.Accounting.ContactRequest() }
     /// );
     /// </code></example>
-    public async Task<ContactResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<ContactResponse> CreateAsync(
         ContactEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -323,9 +326,12 @@ public partial class ContactsClient
     /// Returns a `Contact` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Contacts.RetrieveAsync("id", new ContactsRetrieveRequest());
+    /// await client.Accounting.Contacts.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Accounting.ContactsRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<Contact> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Contact> RetrieveAsync(
         string id,
         ContactsRetrieveRequest request,
         RequestOptions? options = null,
@@ -350,11 +356,11 @@ public partial class ContactsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -401,7 +407,7 @@ public partial class ContactsClient
     /// <example><code>
     /// await client.Accounting.Contacts.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -446,10 +452,13 @@ public partial class ContactsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Contacts.RemoteFieldClassesListAsync(
-    ///     new ContactsRemoteFieldClassesListRequest()
+    ///     new Merge.Client.Accounting.ContactsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         ContactsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -474,8 +483,8 @@ public partial class ContactsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

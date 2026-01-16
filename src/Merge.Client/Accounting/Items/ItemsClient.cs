@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class ItemsClient
     /// <summary>
     /// Returns a list of `Item` objects.
     /// </summary>
-    private async Task<PaginatedItemList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedItemList> ListInternalAsync(
         ItemsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -73,7 +71,7 @@ public partial class ItemsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -81,7 +79,7 @@ public partial class ItemsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -123,9 +121,11 @@ public partial class ItemsClient
     /// Returns a list of `Item` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Items.ListAsync(new ItemsListRequest());
+    /// await client.Accounting.Items.ListAsync(
+    ///     new ItemsListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Item>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Item>> ListAsync(
         ItemsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -150,8 +150,8 @@ public partial class ItemsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -166,7 +166,7 @@ public partial class ItemsClient
     ///     new ItemEndpointRequest { Model = new ItemRequestRequest() }
     /// );
     /// </code></example>
-    public async Task<ItemResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<ItemResponse> CreateAsync(
         ItemEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -225,7 +225,7 @@ public partial class ItemsClient
     /// <example><code>
     /// await client.Accounting.Items.RetrieveAsync("id", new ItemsRetrieveRequest());
     /// </code></example>
-    public async Task<Item> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Item> RetrieveAsync(
         string id,
         ItemsRetrieveRequest request,
         RequestOptions? options = null,
@@ -244,11 +244,11 @@ public partial class ItemsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -298,7 +298,7 @@ public partial class ItemsClient
     ///     new PatchedItemEndpointRequest { Model = new PatchedItemRequestRequest() }
     /// );
     /// </code></example>
-    public async Task<ItemResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<ItemResponse> PartialUpdateAsync(
         string id,
         PatchedItemEndpointRequest request,
         RequestOptions? options = null,
@@ -359,10 +359,11 @@ public partial class ItemsClient
     /// Returns metadata for `Item` PATCHs.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Items.MetaPatchRetrieveAsync("id");
+    /// await client.Accounting.Items.MetaPatchRetrieveAsync("id", new ItemsMetaPatchRetrieveRequest());
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
+        ItemsMetaPatchRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -411,7 +412,7 @@ public partial class ItemsClient
     /// <example><code>
     /// await client.Accounting.Items.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

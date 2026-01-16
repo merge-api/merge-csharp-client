@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class PayGroupsClient
     /// <summary>
     /// Returns a list of `PayGroup` objects.
     /// </summary>
-    private async Task<PaginatedPayGroupList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedPayGroupList> ListInternalAsync(
         PayGroupsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,7 +74,7 @@ public partial class PayGroupsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/pay-groups",
+                    Path = "pay-groups",
                     Query = _query,
                     Options = options,
                 },
@@ -110,9 +108,11 @@ public partial class PayGroupsClient
     /// Returns a list of `PayGroup` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.PayGroups.ListAsync(new PayGroupsListRequest());
+    /// await client.Hris.PayGroups.ListAsync(
+    ///     new PayGroupsListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<PayGroup>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<PayGroup>> ListAsync(
         PayGroupsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +137,8 @@ public partial class PayGroupsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -151,7 +151,7 @@ public partial class PayGroupsClient
     /// <example><code>
     /// await client.Hris.PayGroups.RetrieveAsync("id", new PayGroupsRetrieveRequest());
     /// </code></example>
-    public async Task<PayGroup> RetrieveAsync(
+    public async System.Threading.Tasks.Task<PayGroup> RetrieveAsync(
         string id,
         PayGroupsRetrieveRequest request,
         RequestOptions? options = null,
@@ -173,10 +173,7 @@ public partial class PayGroupsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "hris/v1/pay-groups/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("pay-groups/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,
                     Options = options,
                 },

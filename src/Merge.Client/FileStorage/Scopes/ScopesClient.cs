@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.FileStorage;
@@ -20,7 +18,7 @@ public partial class ScopesClient
     /// <example><code>
     /// await client.FileStorage.Scopes.DefaultScopesRetrieveAsync();
     /// </code></example>
-    public async Task<CommonModelScopeApi> DefaultScopesRetrieveAsync(
+    public async System.Threading.Tasks.Task<CommonModelScopeApi> DefaultScopesRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -66,7 +64,7 @@ public partial class ScopesClient
     /// <example><code>
     /// await client.FileStorage.Scopes.LinkedAccountScopesRetrieveAsync();
     /// </code></example>
-    public async Task<CommonModelScopeApi> LinkedAccountScopesRetrieveAsync(
+    public async System.Threading.Tasks.Task<CommonModelScopeApi> LinkedAccountScopesRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -111,46 +109,63 @@ public partial class ScopesClient
     /// </summary>
     /// <example><code>
     /// await client.FileStorage.Scopes.LinkedAccountScopesCreateAsync(
-    ///     new LinkedAccountCommonModelScopeDeserializerRequest
+    ///     new Merge.Client.FileStorage.LinkedAccountCommonModelScopeDeserializerRequest
     ///     {
-    ///         CommonModels = new List&lt;IndividualCommonModelScopeDeserializerRequest&gt;()
-    ///         {
-    ///             new IndividualCommonModelScopeDeserializerRequest
+    ///         CommonModels =
+    ///             new List&lt;Merge.Client.FileStorage.IndividualCommonModelScopeDeserializerRequest&gt;()
     ///             {
-    ///                 ModelName = "Employee",
-    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
+    ///                 new Merge.Client.FileStorage.IndividualCommonModelScopeDeserializerRequest
     ///                 {
+    ///                     ModelName = "Employee",
+    ///                     ModelPermissions = new Dictionary&lt;
+    ///                         string,
+    ///                         Merge.Client.FileStorage.ModelPermissionDeserializerRequest
+    ///                     &gt;()
     ///                     {
-    ///                         "READ",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = true }
+    ///                         {
+    ///                             "READ",
+    ///                             new Merge.Client.FileStorage.ModelPermissionDeserializerRequest
+    ///                             {
+    ///                                 IsEnabled = true,
+    ///                             }
+    ///                         },
+    ///                         {
+    ///                             "WRITE",
+    ///                             new Merge.Client.FileStorage.ModelPermissionDeserializerRequest
+    ///                             {
+    ///                                 IsEnabled = false,
+    ///                             }
+    ///                         },
     ///                     },
-    ///                     {
-    ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
-    ///                     },
+    ///                     FieldPermissions =
+    ///                         new Merge.Client.FileStorage.FieldPermissionDeserializerRequest
+    ///                         {
+    ///                             EnabledFields = new List&lt;object&gt;() { "avatar", "home_location" },
+    ///                             DisabledFields = new List&lt;object&gt;() { "work_location" },
+    ///                         },
     ///                 },
-    ///                 FieldPermissions = new FieldPermissionDeserializerRequest
+    ///                 new Merge.Client.FileStorage.IndividualCommonModelScopeDeserializerRequest
     ///                 {
-    ///                     EnabledFields = new List&lt;object&gt;() { "avatar", "home_location" },
-    ///                     DisabledFields = new List&lt;object&gt;() { "work_location" },
+    ///                     ModelName = "Benefit",
+    ///                     ModelPermissions = new Dictionary&lt;
+    ///                         string,
+    ///                         Merge.Client.FileStorage.ModelPermissionDeserializerRequest
+    ///                     &gt;()
+    ///                     {
+    ///                         {
+    ///                             "WRITE",
+    ///                             new Merge.Client.FileStorage.ModelPermissionDeserializerRequest
+    ///                             {
+    ///                                 IsEnabled = false,
+    ///                             }
+    ///                         },
+    ///                     },
     ///                 },
     ///             },
-    ///             new IndividualCommonModelScopeDeserializerRequest
-    ///             {
-    ///                 ModelName = "Benefit",
-    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
-    ///                 {
-    ///                     {
-    ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
-    ///                     },
-    ///                 },
-    ///             },
-    ///         },
     ///     }
     /// );
     /// </code></example>
-    public async Task<CommonModelScopeApi> LinkedAccountScopesCreateAsync(
+    public async System.Threading.Tasks.Task<CommonModelScopeApi> LinkedAccountScopesCreateAsync(
         LinkedAccountCommonModelScopeDeserializerRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

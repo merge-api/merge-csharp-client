@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class DepartmentsClient
     /// <summary>
     /// Returns a list of `Department` objects.
     /// </summary>
-    private async Task<PaginatedDepartmentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedDepartmentList> ListInternalAsync(
         DepartmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -110,9 +108,14 @@ public partial class DepartmentsClient
     /// Returns a list of `Department` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Departments.ListAsync(new DepartmentsListRequest());
+    /// await client.Ats.Departments.ListAsync(
+    ///     new DepartmentsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Department>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Department>> ListAsync(
         DepartmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +140,8 @@ public partial class DepartmentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -151,7 +154,7 @@ public partial class DepartmentsClient
     /// <example><code>
     /// await client.Ats.Departments.RetrieveAsync("id", new DepartmentsRetrieveRequest());
     /// </code></example>
-    public async Task<Department> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Department> RetrieveAsync(
         string id,
         DepartmentsRetrieveRequest request,
         RequestOptions? options = null,

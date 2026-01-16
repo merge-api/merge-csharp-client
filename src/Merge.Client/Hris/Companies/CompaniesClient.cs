@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class CompaniesClient
     /// <summary>
     /// Returns a list of `Company` objects.
     /// </summary>
-    private async Task<PaginatedCompanyList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCompanyList> ListInternalAsync(
         CompaniesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,7 +74,7 @@ public partial class CompaniesClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/companies",
+                    Path = "companies",
                     Query = _query,
                     Options = options,
                 },
@@ -110,9 +108,11 @@ public partial class CompaniesClient
     /// Returns a list of `Company` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Companies.ListAsync(new CompaniesListRequest());
+    /// await client.Hris.Companies.ListAsync(
+    ///     new CompaniesListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Company>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Company>> ListAsync(
         CompaniesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +137,8 @@ public partial class CompaniesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -151,7 +151,7 @@ public partial class CompaniesClient
     /// <example><code>
     /// await client.Hris.Companies.RetrieveAsync("id", new CompaniesRetrieveRequest());
     /// </code></example>
-    public async Task<Company> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Company> RetrieveAsync(
         string id,
         CompaniesRetrieveRequest request,
         RequestOptions? options = null,
@@ -173,10 +173,7 @@ public partial class CompaniesClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "hris/v1/companies/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("companies/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,
                     Options = options,
                 },
