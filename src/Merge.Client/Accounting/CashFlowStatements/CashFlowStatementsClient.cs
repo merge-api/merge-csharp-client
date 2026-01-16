@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,14 +15,14 @@ public partial class CashFlowStatementsClient
     /// <summary>
     /// Returns a list of `CashFlowStatement` objects.
     /// </summary>
-    private async Task<PaginatedCashFlowStatementList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCashFlowStatementList> ListInternalAsync(
         CashFlowStatementsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -115,9 +113,14 @@ public partial class CashFlowStatementsClient
     /// Returns a list of `CashFlowStatement` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.CashFlowStatements.ListAsync(new CashFlowStatementsListRequest());
+    /// await client.Accounting.CashFlowStatements.ListAsync(
+    ///     new CashFlowStatementsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<CashFlowStatement>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<CashFlowStatement>> ListAsync(
         CashFlowStatementsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +145,8 @@ public partial class CashFlowStatementsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -159,7 +162,7 @@ public partial class CashFlowStatementsClient
     ///     new CashFlowStatementsRetrieveRequest()
     /// );
     /// </code></example>
-    public async Task<CashFlowStatement> RetrieveAsync(
+    public async System.Threading.Tasks.Task<CashFlowStatement> RetrieveAsync(
         string id,
         CashFlowStatementsRetrieveRequest request,
         RequestOptions? options = null,
@@ -167,7 +170,7 @@ public partial class CashFlowStatementsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);

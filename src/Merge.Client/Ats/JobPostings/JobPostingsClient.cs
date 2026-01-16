@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,14 +15,14 @@ public partial class JobPostingsClient
     /// <summary>
     /// Returns a list of `JobPosting` objects.
     /// </summary>
-    private async Task<PaginatedJobPostingList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedJobPostingList> ListInternalAsync(
         JobPostingsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -73,7 +71,7 @@ public partial class JobPostingsClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.Value.Stringify();
+            _query["status"] = request.Status.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -115,9 +113,14 @@ public partial class JobPostingsClient
     /// Returns a list of `JobPosting` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.JobPostings.ListAsync(new JobPostingsListRequest());
+    /// await client.Ats.JobPostings.ListAsync(
+    ///     new JobPostingsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<JobPosting>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<JobPosting>> ListAsync(
         JobPostingsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +145,8 @@ public partial class JobPostingsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -156,7 +159,7 @@ public partial class JobPostingsClient
     /// <example><code>
     /// await client.Ats.JobPostings.RetrieveAsync("id", new JobPostingsRetrieveRequest());
     /// </code></example>
-    public async Task<JobPosting> RetrieveAsync(
+    public async System.Threading.Tasks.Task<JobPosting> RetrieveAsync(
         string id,
         JobPostingsRetrieveRequest request,
         RequestOptions? options = null,
@@ -164,7 +167,7 @@ public partial class JobPostingsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);

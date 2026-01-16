@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -20,7 +18,7 @@ public partial class ScopesClient
     /// <example><code>
     /// await client.Ats.Scopes.DefaultScopesRetrieveAsync();
     /// </code></example>
-    public async Task<CommonModelScopeApi> DefaultScopesRetrieveAsync(
+    public async System.Threading.Tasks.Task<CommonModelScopeApi> DefaultScopesRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -66,7 +64,7 @@ public partial class ScopesClient
     /// <example><code>
     /// await client.Ats.Scopes.LinkedAccountScopesRetrieveAsync();
     /// </code></example>
-    public async Task<CommonModelScopeApi> LinkedAccountScopesRetrieveAsync(
+    public async System.Threading.Tasks.Task<CommonModelScopeApi> LinkedAccountScopesRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -111,38 +109,50 @@ public partial class ScopesClient
     /// </summary>
     /// <example><code>
     /// await client.Ats.Scopes.LinkedAccountScopesCreateAsync(
-    ///     new LinkedAccountCommonModelScopeDeserializerRequest
+    ///     new Merge.Client.Ats.LinkedAccountCommonModelScopeDeserializerRequest
     ///     {
-    ///         CommonModels = new List&lt;IndividualCommonModelScopeDeserializerRequest&gt;()
+    ///         CommonModels = new List&lt;Merge.Client.Ats.IndividualCommonModelScopeDeserializerRequest&gt;()
     ///         {
-    ///             new IndividualCommonModelScopeDeserializerRequest
+    ///             new Merge.Client.Ats.IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Employee",
-    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
+    ///                 ModelPermissions = new Dictionary&lt;
+    ///                     string,
+    ///                     Merge.Client.Ats.ModelPermissionDeserializerRequest
+    ///                 &gt;()
     ///                 {
     ///                     {
     ///                         "READ",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = true }
+    ///                         new Merge.Client.Ats.ModelPermissionDeserializerRequest { IsEnabled = true }
     ///                     },
     ///                     {
     ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
+    ///                         new Merge.Client.Ats.ModelPermissionDeserializerRequest
+    ///                         {
+    ///                             IsEnabled = false,
+    ///                         }
     ///                     },
     ///                 },
-    ///                 FieldPermissions = new FieldPermissionDeserializerRequest
+    ///                 FieldPermissions = new Merge.Client.Ats.FieldPermissionDeserializerRequest
     ///                 {
     ///                     EnabledFields = new List&lt;object&gt;() { "avatar", "home_location" },
     ///                     DisabledFields = new List&lt;object&gt;() { "work_location" },
     ///                 },
     ///             },
-    ///             new IndividualCommonModelScopeDeserializerRequest
+    ///             new Merge.Client.Ats.IndividualCommonModelScopeDeserializerRequest
     ///             {
     ///                 ModelName = "Benefit",
-    ///                 ModelPermissions = new Dictionary&lt;string, ModelPermissionDeserializerRequest&gt;()
+    ///                 ModelPermissions = new Dictionary&lt;
+    ///                     string,
+    ///                     Merge.Client.Ats.ModelPermissionDeserializerRequest
+    ///                 &gt;()
     ///                 {
     ///                     {
     ///                         "WRITE",
-    ///                         new ModelPermissionDeserializerRequest { IsEnabled = false }
+    ///                         new Merge.Client.Ats.ModelPermissionDeserializerRequest
+    ///                         {
+    ///                             IsEnabled = false,
+    ///                         }
     ///                     },
     ///                 },
     ///             },
@@ -150,7 +160,7 @@ public partial class ScopesClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<CommonModelScopeApi> LinkedAccountScopesCreateAsync(
+    public async System.Threading.Tasks.Task<CommonModelScopeApi> LinkedAccountScopesCreateAsync(
         LinkedAccountCommonModelScopeDeserializerRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
