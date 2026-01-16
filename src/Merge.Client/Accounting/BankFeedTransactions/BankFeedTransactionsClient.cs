@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,14 +15,14 @@ public partial class BankFeedTransactionsClient
     /// <summary>
     /// Returns a list of `BankFeedTransaction` objects.
     /// </summary>
-    private async Task<PaginatedBankFeedTransactionList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedBankFeedTransactionList> ListInternalAsync(
         BankFeedTransactionsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -115,9 +113,14 @@ public partial class BankFeedTransactionsClient
     /// Returns a list of `BankFeedTransaction` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.BankFeedTransactions.ListAsync(new BankFeedTransactionsListRequest());
+    /// await client.Accounting.BankFeedTransactions.ListAsync(
+    ///     new BankFeedTransactionsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<BankFeedTransaction>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<BankFeedTransaction>> ListAsync(
         BankFeedTransactionsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +145,8 @@ public partial class BankFeedTransactionsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -158,7 +161,7 @@ public partial class BankFeedTransactionsClient
     ///     new BankFeedTransactionEndpointRequest { Model = new BankFeedTransactionRequestRequest() }
     /// );
     /// </code></example>
-    public async Task<BankFeedTransactionResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<BankFeedTransactionResponse> CreateAsync(
         BankFeedTransactionEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -220,7 +223,7 @@ public partial class BankFeedTransactionsClient
     ///     new BankFeedTransactionsRetrieveRequest()
     /// );
     /// </code></example>
-    public async Task<BankFeedTransaction> RetrieveAsync(
+    public async System.Threading.Tasks.Task<BankFeedTransaction> RetrieveAsync(
         string id,
         BankFeedTransactionsRetrieveRequest request,
         RequestOptions? options = null,
@@ -228,7 +231,7 @@ public partial class BankFeedTransactionsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -282,7 +285,7 @@ public partial class BankFeedTransactionsClient
     /// <example><code>
     /// await client.Accounting.BankFeedTransactions.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

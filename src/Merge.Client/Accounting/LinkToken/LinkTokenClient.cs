@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -19,16 +17,20 @@ public partial class LinkTokenClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.LinkToken.CreateAsync(
-    ///     new EndUserDetailsRequest
+    ///     new Merge.Client.Accounting.EndUserDetailsRequest
     ///     {
     ///         EndUserEmailAddress = "example@gmail.com",
     ///         EndUserOrganizationName = "Test Organization",
     ///         EndUserOriginId = "12345",
-    ///         Categories = new List&lt;CategoriesEnum&gt;() { CategoriesEnum.Hris, CategoriesEnum.Ats },
+    ///         Categories = new List&lt;Merge.Client.Accounting.CategoriesEnum&gt;()
+    ///         {
+    ///             Merge.Client.Accounting.CategoriesEnum.Hris,
+    ///             Merge.Client.Accounting.CategoriesEnum.Ats,
+    ///         },
     ///     }
     /// );
     /// </code></example>
-    public async Task<LinkToken> CreateAsync(
+    public async System.Threading.Tasks.Task<LinkToken> CreateAsync(
         EndUserDetailsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

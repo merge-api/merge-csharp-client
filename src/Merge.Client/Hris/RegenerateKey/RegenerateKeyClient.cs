@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -19,10 +17,10 @@ public partial class RegenerateKeyClient
     /// </summary>
     /// <example><code>
     /// await client.Hris.RegenerateKey.CreateAsync(
-    ///     new RemoteKeyForRegenerationRequest { Name = "Remote Deployment Key 1" }
+    ///     new Merge.Client.Hris.RemoteKeyForRegenerationRequest { Name = "Remote Deployment Key 1" }
     /// );
     /// </code></example>
-    public async Task<RemoteKey> CreateAsync(
+    public async System.Threading.Tasks.Task<RemoteKey> CreateAsync(
         RemoteKeyForRegenerationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -34,7 +32,7 @@ public partial class RegenerateKeyClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = "hris/v1/regenerate-key",
+                    Path = "regenerate-key",
                     Body = request,
                     ContentType = "application/json",
                     Options = options,

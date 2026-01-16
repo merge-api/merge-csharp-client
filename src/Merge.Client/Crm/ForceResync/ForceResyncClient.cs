@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -20,7 +18,7 @@ public partial class ForceResyncClient
     /// <example><code>
     /// await client.Crm.ForceResync.SyncStatusResyncCreateAsync();
     /// </code></example>
-    public async Task<IEnumerable<SyncStatus>> SyncStatusResyncCreateAsync(
+    public async System.Threading.Tasks.Task<IEnumerable<SyncStatus>> SyncStatusResyncCreateAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

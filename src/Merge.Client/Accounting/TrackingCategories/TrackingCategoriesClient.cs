@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,17 +15,17 @@ public partial class TrackingCategoriesClient
     /// <summary>
     /// Returns a list of `TrackingCategory` objects.
     /// </summary>
-    private async Task<PaginatedTrackingCategoryList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTrackingCategoryList> ListInternalAsync(
         TrackingCategoriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CategoryType != null)
         {
-            _query["category_type"] = request.CategoryType;
+            _query["category_type"] = request.CategoryType.Value.ToString();
         }
         if (request.CompanyId != null)
         {
@@ -81,7 +79,7 @@ public partial class TrackingCategoriesClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -89,11 +87,11 @@ public partial class TrackingCategoriesClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status;
+            _query["status"] = request.Status.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -135,9 +133,14 @@ public partial class TrackingCategoriesClient
     /// Returns a list of `TrackingCategory` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.TrackingCategories.ListAsync(new TrackingCategoriesListRequest());
+    /// await client.Accounting.TrackingCategories.ListAsync(
+    ///     new TrackingCategoriesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<TrackingCategory>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<TrackingCategory>> ListAsync(
         TrackingCategoriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -162,8 +165,8 @@ public partial class TrackingCategoriesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -179,7 +182,7 @@ public partial class TrackingCategoriesClient
     ///     new TrackingCategoriesRetrieveRequest()
     /// );
     /// </code></example>
-    public async Task<TrackingCategory> RetrieveAsync(
+    public async System.Threading.Tasks.Task<TrackingCategory> RetrieveAsync(
         string id,
         TrackingCategoriesRetrieveRequest request,
         RequestOptions? options = null,
@@ -187,7 +190,7 @@ public partial class TrackingCategoriesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -198,11 +201,11 @@ public partial class TrackingCategoriesClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(

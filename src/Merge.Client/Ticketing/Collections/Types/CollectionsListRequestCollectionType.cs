@@ -1,0 +1,71 @@
+using System.Text.Json.Serialization;
+using Merge.Client.Core;
+
+namespace Merge.Client.Ticketing;
+
+[JsonConverter(typeof(StringEnumSerializer<CollectionsListRequestCollectionType>))]
+[Serializable]
+public readonly record struct CollectionsListRequestCollectionType : IStringEnum
+{
+    public static readonly CollectionsListRequestCollectionType Empty = new(Values.Empty);
+
+    public static readonly CollectionsListRequestCollectionType List = new(Values.List);
+
+    public static readonly CollectionsListRequestCollectionType Project = new(Values.Project);
+
+    public CollectionsListRequestCollectionType(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static CollectionsListRequestCollectionType FromCustom(string value)
+    {
+        return new CollectionsListRequestCollectionType(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(CollectionsListRequestCollectionType value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(CollectionsListRequestCollectionType value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    public static explicit operator string(CollectionsListRequestCollectionType value) =>
+        value.Value;
+
+    public static explicit operator CollectionsListRequestCollectionType(string value) =>
+        new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    [Serializable]
+    public static class Values
+    {
+        public const string Empty = "";
+
+        public const string List = "LIST";
+
+        public const string Project = "PROJECT";
+    }
+}
