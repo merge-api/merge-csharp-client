@@ -1,7 +1,4 @@
-using System.IO;
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.FileStorage;
@@ -18,7 +15,7 @@ public partial class FilesClient
     /// <summary>
     /// Returns a list of `File` objects.
     /// </summary>
-    private async Task<PaginatedFileList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedFileList> ListInternalAsync(
         FilesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -131,7 +128,7 @@ public partial class FilesClient
     /// <summary>
     /// Returns metadata to construct authenticated file download requests, allowing you to download files directly from the third-party.
     /// </summary>
-    private async Task<PaginatedDownloadRequestMetaList> DownloadRequestMetaListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedDownloadRequestMetaList> DownloadRequestMetaListInternalAsync(
         FilesDownloadRequestMetaListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -214,9 +211,11 @@ public partial class FilesClient
     /// Returns a list of `File` objects.
     /// </summary>
     /// <example><code>
-    /// await client.FileStorage.Files.ListAsync(new FilesListRequest());
+    /// await client.FileStorage.Files.ListAsync(
+    ///     new FilesListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<File>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<File>> ListAsync(
         FilesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -241,8 +240,8 @@ public partial class FilesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -257,7 +256,7 @@ public partial class FilesClient
     ///     new FileStorageFileEndpointRequest { Model = new FileRequest() }
     /// );
     /// </code></example>
-    public async Task<FileStorageFileResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<FileStorageFileResponse> CreateAsync(
         FileStorageFileEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -316,7 +315,7 @@ public partial class FilesClient
     /// <example><code>
     /// await client.FileStorage.Files.RetrieveAsync("id", new FilesRetrieveRequest());
     /// </code></example>
-    public async Task<File> RetrieveAsync(
+    public async System.Threading.Tasks.Task<File> RetrieveAsync(
         string id,
         FilesRetrieveRequest request,
         RequestOptions? options = null,
@@ -375,7 +374,7 @@ public partial class FilesClient
     /// <summary>
     /// Returns the `File` content with the given `id` as a stream of bytes.
     /// </summary>
-    public async Task<System.IO.Stream> DownloadRetrieveAsync(
+    public async System.Threading.Tasks.Task<System.IO.Stream> DownloadRetrieveAsync(
         string id,
         FilesDownloadRetrieveRequest request,
         RequestOptions? options = null,
@@ -430,7 +429,7 @@ public partial class FilesClient
     ///     new FilesDownloadRequestMetaRetrieveRequest()
     /// );
     /// </code></example>
-    public async Task<DownloadRequestMeta> DownloadRequestMetaRetrieveAsync(
+    public async System.Threading.Tasks.Task<DownloadRequestMeta> DownloadRequestMetaRetrieveAsync(
         string id,
         FilesDownloadRequestMetaRetrieveRequest request,
         RequestOptions? options = null,
@@ -486,10 +485,15 @@ public partial class FilesClient
     /// </summary>
     /// <example><code>
     /// await client.FileStorage.Files.DownloadRequestMetaListAsync(
-    ///     new FilesDownloadRequestMetaListRequest()
+    ///     new FilesDownloadRequestMetaListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<DownloadRequestMeta>> DownloadRequestMetaListAsync(
+    public async System.Threading.Tasks.Task<
+        Pager<DownloadRequestMeta>
+    > DownloadRequestMetaListAsync(
         FilesDownloadRequestMetaListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -514,8 +518,8 @@ public partial class FilesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -528,7 +532,7 @@ public partial class FilesClient
     /// <example><code>
     /// await client.FileStorage.Files.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

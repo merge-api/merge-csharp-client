@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.FileStorage;
@@ -20,7 +18,7 @@ public partial class WebhookReceiversClient
     /// <example><code>
     /// await client.FileStorage.WebhookReceivers.ListAsync();
     /// </code></example>
-    public async Task<IEnumerable<WebhookReceiver>> ListAsync(
+    public async System.Threading.Tasks.Task<IEnumerable<WebhookReceiver>> ListAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -65,10 +63,10 @@ public partial class WebhookReceiversClient
     /// </summary>
     /// <example><code>
     /// await client.FileStorage.WebhookReceivers.CreateAsync(
-    ///     new WebhookReceiverRequest { Event = "event", IsActive = true }
+    ///     new Merge.Client.FileStorage.WebhookReceiverRequest { Event = "event", IsActive = true }
     /// );
     /// </code></example>
-    public async Task<WebhookReceiver> CreateAsync(
+    public async System.Threading.Tasks.Task<WebhookReceiver> CreateAsync(
         WebhookReceiverRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

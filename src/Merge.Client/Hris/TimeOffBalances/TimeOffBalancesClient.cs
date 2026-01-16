@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,14 +15,14 @@ public partial class TimeOffBalancesClient
     /// <summary>
     /// Returns a list of `TimeOffBalance` objects.
     /// </summary>
-    private async Task<PaginatedTimeOffBalanceList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTimeOffBalanceList> ListInternalAsync(
         TimeOffBalancesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -73,11 +71,11 @@ public partial class TimeOffBalancesClient
         }
         if (request.PolicyType != null)
         {
-            _query["policy_type"] = request.PolicyType.Value.Stringify();
+            _query["policy_type"] = request.PolicyType.Value.ToString();
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -85,7 +83,7 @@ public partial class TimeOffBalancesClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -93,7 +91,7 @@ public partial class TimeOffBalancesClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/time-off-balances",
+                    Path = "time-off-balances",
                     Query = _query,
                     Options = options,
                 },
@@ -127,9 +125,14 @@ public partial class TimeOffBalancesClient
     /// Returns a list of `TimeOffBalance` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.TimeOffBalances.ListAsync(new TimeOffBalancesListRequest());
+    /// await client.Hris.TimeOffBalances.ListAsync(
+    ///     new TimeOffBalancesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<TimeOffBalance>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<TimeOffBalance>> ListAsync(
         TimeOffBalancesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -154,8 +157,8 @@ public partial class TimeOffBalancesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -168,7 +171,7 @@ public partial class TimeOffBalancesClient
     /// <example><code>
     /// await client.Hris.TimeOffBalances.RetrieveAsync("id", new TimeOffBalancesRetrieveRequest());
     /// </code></example>
-    public async Task<TimeOffBalance> RetrieveAsync(
+    public async System.Threading.Tasks.Task<TimeOffBalance> RetrieveAsync(
         string id,
         TimeOffBalancesRetrieveRequest request,
         RequestOptions? options = null,
@@ -176,7 +179,7 @@ public partial class TimeOffBalancesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -187,11 +190,11 @@ public partial class TimeOffBalancesClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -200,7 +203,7 @@ public partial class TimeOffBalancesClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "hris/v1/time-off-balances/{0}",
+                        "time-off-balances/{0}",
                         ValueConvert.ToPathParameterString(id)
                     ),
                     Query = _query,

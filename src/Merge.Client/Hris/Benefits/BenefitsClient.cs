@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,14 +15,14 @@ public partial class BenefitsClient
     /// <summary>
     /// Returns a list of `Benefit` objects.
     /// </summary>
-    private async Task<PaginatedBenefitList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedBenefitList> ListInternalAsync(
         BenefitsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -81,7 +79,7 @@ public partial class BenefitsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/benefits",
+                    Path = "benefits",
                     Query = _query,
                     Options = options,
                 },
@@ -115,9 +113,11 @@ public partial class BenefitsClient
     /// Returns a list of `Benefit` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Benefits.ListAsync(new BenefitsListRequest());
+    /// await client.Hris.Benefits.ListAsync(
+    ///     new BenefitsListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Benefit>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Benefit>> ListAsync(
         BenefitsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +142,8 @@ public partial class BenefitsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -156,7 +156,7 @@ public partial class BenefitsClient
     /// <example><code>
     /// await client.Hris.Benefits.RetrieveAsync("id", new BenefitsRetrieveRequest());
     /// </code></example>
-    public async Task<Benefit> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Benefit> RetrieveAsync(
         string id,
         BenefitsRetrieveRequest request,
         RequestOptions? options = null,
@@ -164,7 +164,7 @@ public partial class BenefitsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -179,10 +179,7 @@ public partial class BenefitsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "hris/v1/benefits/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("benefits/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,
                     Options = options,
                 },

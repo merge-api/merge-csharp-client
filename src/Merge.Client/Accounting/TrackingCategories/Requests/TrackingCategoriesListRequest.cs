@@ -10,7 +10,7 @@ public record TrackingCategoriesListRequest
     /// If provided, will only return tracking categories with this type.
     /// </summary>
     [JsonIgnore]
-    public string? CategoryType { get; set; }
+    public TrackingCategoriesListRequestCategoryType? CategoryType { get; set; }
 
     /// <summary>
     /// If provided, will only return tracking categories for this company.
@@ -40,7 +40,8 @@ public record TrackingCategoriesListRequest
     /// Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     /// </summary>
     [JsonIgnore]
-    public IEnumerable<string> Expand { get; set; } = new List<string>();
+    public IEnumerable<TrackingCategoriesListRequestExpandItem> Expand { get; set; } =
+        new List<TrackingCategoriesListRequestExpandItem>();
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
@@ -88,7 +89,7 @@ public record TrackingCategoriesListRequest
     /// Deprecated. Use show_enum_origins.
     /// </summary>
     [JsonIgnore]
-    public string? RemoteFields { get; set; }
+    public TrackingCategoriesListRequestRemoteFields? RemoteFields { get; set; }
 
     /// <summary>
     /// The API provider's ID for the given object.
@@ -100,13 +101,13 @@ public record TrackingCategoriesListRequest
     /// A comma separated list of enum field names for which you'd like the original values to be returned, instead of Merge's normalized enum values. [Learn more](https://help.merge.dev/en/articles/8950958-show_enum_origins-query-parameter)
     /// </summary>
     [JsonIgnore]
-    public string? ShowEnumOrigins { get; set; }
+    public TrackingCategoriesListRequestShowEnumOrigins? ShowEnumOrigins { get; set; }
 
     /// <summary>
     /// If provided, will only return tracking categories with this status.
     /// </summary>
     [JsonIgnore]
-    public string? Status { get; set; }
+    public TrackingCategoriesListRequestStatus? Status { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

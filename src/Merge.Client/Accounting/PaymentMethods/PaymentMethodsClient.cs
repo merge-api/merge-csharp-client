@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class PaymentMethodsClient
     /// <summary>
     /// Returns a list of `PaymentMethod` objects.
     /// </summary>
-    private async Task<PaginatedPaymentMethodList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedPaymentMethodList> ListInternalAsync(
         PaymentMethodsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -84,9 +82,14 @@ public partial class PaymentMethodsClient
     /// Returns a list of `PaymentMethod` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.PaymentMethods.ListAsync(new PaymentMethodsListRequest());
+    /// await client.Accounting.PaymentMethods.ListAsync(
+    ///     new PaymentMethodsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<PaymentMethod>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<PaymentMethod>> ListAsync(
         PaymentMethodsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -111,8 +114,8 @@ public partial class PaymentMethodsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -125,7 +128,7 @@ public partial class PaymentMethodsClient
     /// <example><code>
     /// await client.Accounting.PaymentMethods.RetrieveAsync("id", new PaymentMethodsRetrieveRequest());
     /// </code></example>
-    public async Task<PaymentMethod> RetrieveAsync(
+    public async System.Threading.Tasks.Task<PaymentMethod> RetrieveAsync(
         string id,
         PaymentMethodsRetrieveRequest request,
         RequestOptions? options = null,
