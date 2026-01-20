@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,14 +15,14 @@ public partial class ActivitiesClient
     /// <summary>
     /// Returns a list of `Activity` objects.
     /// </summary>
-    private async Task<PaginatedActivityList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedActivityList> ListInternalAsync(
         ActivitiesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -123,9 +121,14 @@ public partial class ActivitiesClient
     /// Returns a list of `Activity` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Activities.ListAsync(new ActivitiesListRequest());
+    /// await client.Ats.Activities.ListAsync(
+    ///     new ActivitiesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Activity>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Activity>> ListAsync(
         ActivitiesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -150,8 +153,8 @@ public partial class ActivitiesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -166,7 +169,7 @@ public partial class ActivitiesClient
     ///     new ActivityEndpointRequest { Model = new ActivityRequest(), RemoteUserId = "remote_user_id" }
     /// );
     /// </code></example>
-    public async Task<ActivityResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<ActivityResponse> CreateAsync(
         ActivityEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -225,7 +228,7 @@ public partial class ActivitiesClient
     /// <example><code>
     /// await client.Ats.Activities.RetrieveAsync("id", new ActivitiesRetrieveRequest());
     /// </code></example>
-    public async Task<Activity> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Activity> RetrieveAsync(
         string id,
         ActivitiesRetrieveRequest request,
         RequestOptions? options = null,
@@ -233,7 +236,7 @@ public partial class ActivitiesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -295,7 +298,7 @@ public partial class ActivitiesClient
     /// <example><code>
     /// await client.Ats.Activities.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class DependentsClient
     /// <summary>
     /// Returns a list of `Dependent` objects.
     /// </summary>
-    private async Task<PaginatedDependentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedDependentList> ListInternalAsync(
         DependentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -82,7 +80,7 @@ public partial class DependentsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/dependents",
+                    Path = "dependents",
                     Query = _query,
                     Options = options,
                 },
@@ -116,9 +114,14 @@ public partial class DependentsClient
     /// Returns a list of `Dependent` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Dependents.ListAsync(new DependentsListRequest());
+    /// await client.Hris.Dependents.ListAsync(
+    ///     new DependentsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Dependent>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Dependent>> ListAsync(
         DependentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -143,8 +146,8 @@ public partial class DependentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -157,7 +160,7 @@ public partial class DependentsClient
     /// <example><code>
     /// await client.Hris.Dependents.RetrieveAsync("id", new DependentsRetrieveRequest());
     /// </code></example>
-    public async Task<Dependent> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Dependent> RetrieveAsync(
         string id,
         DependentsRetrieveRequest request,
         RequestOptions? options = null,
@@ -185,10 +188,7 @@ public partial class DependentsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "hris/v1/dependents/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("dependents/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,
                     Options = options,
                 },

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -20,7 +18,7 @@ public partial class ForceResyncClient
     /// <example><code>
     /// await client.Hris.ForceResync.SyncStatusResyncCreateAsync();
     /// </code></example>
-    public async Task<IEnumerable<SyncStatus>> SyncStatusResyncCreateAsync(
+    public async System.Threading.Tasks.Task<IEnumerable<SyncStatus>> SyncStatusResyncCreateAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -31,7 +29,7 @@ public partial class ForceResyncClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = "hris/v1/sync-status/resync",
+                    Path = "sync-status/resync",
                     Options = options,
                 },
                 cancellationToken

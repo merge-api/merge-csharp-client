@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,21 +15,21 @@ public partial class AccountsClient
     /// <summary>
     /// Returns a list of `Account` objects.
     /// </summary>
-    private async Task<PaginatedAccountList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAccountList> ListInternalAsync(
         AccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.AccountType != null)
         {
             _query["account_type"] = request.AccountType;
         }
         if (request.Classification != null)
         {
-            _query["classification"] = request.Classification;
+            _query["classification"] = request.Classification.Value.ToString();
         }
         if (request.CompanyId != null)
         {
@@ -97,7 +95,7 @@ public partial class AccountsClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status;
+            _query["status"] = request.Status.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -139,9 +137,14 @@ public partial class AccountsClient
     /// Returns a list of `Account` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Accounts.ListAsync(new AccountsListRequest());
+    /// await client.Accounting.Accounts.ListAsync(
+    ///     new Merge.Client.Accounting.AccountsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Account>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Account>> ListAsync(
         AccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -166,8 +169,8 @@ public partial class AccountsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -179,10 +182,10 @@ public partial class AccountsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Accounts.CreateAsync(
-    ///     new AccountEndpointRequest { Model = new AccountRequest() }
+    ///     new AccountEndpointRequest { Model = new Merge.Client.Accounting.AccountRequest() }
     /// );
     /// </code></example>
-    public async Task<AccountResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<AccountResponse> CreateAsync(
         AccountEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -239,9 +242,12 @@ public partial class AccountsClient
     /// Returns an `Account` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Accounts.RetrieveAsync("id", new AccountsRetrieveRequest());
+    /// await client.Accounting.Accounts.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Accounting.AccountsRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<Account> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Account> RetrieveAsync(
         string id,
         AccountsRetrieveRequest request,
         RequestOptions? options = null,
@@ -249,7 +255,7 @@ public partial class AccountsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -311,7 +317,7 @@ public partial class AccountsClient
     /// <example><code>
     /// await client.Accounting.Accounts.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

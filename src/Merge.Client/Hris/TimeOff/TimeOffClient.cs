@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class TimeOffClient
     /// <summary>
     /// Returns a list of `TimeOff` objects.
     /// </summary>
-    private async Task<PaginatedTimeOffList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTimeOffList> ListInternalAsync(
         TimeOffListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -49,11 +47,11 @@ public partial class TimeOffClient
         }
         if (request.EndedAfter != null)
         {
-            _query["ended_after"] = request.EndedAfter.Value.ToString(Constants.DateTimeFormat);
+            _query["ended_after"] = request.EndedAfter.Value.ToString();
         }
         if (request.EndedBefore != null)
         {
-            _query["ended_before"] = request.EndedBefore.Value.ToString(Constants.DateTimeFormat);
+            _query["ended_before"] = request.EndedBefore.Value.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -93,7 +91,7 @@ public partial class TimeOffClient
         }
         if (request.RequestType != null)
         {
-            _query["request_type"] = request.RequestType.Value.Stringify();
+            _query["request_type"] = request.RequestType.Value.ToString();
         }
         if (request.ShowEnumOrigins != null)
         {
@@ -101,17 +99,15 @@ public partial class TimeOffClient
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter.Value.ToString(Constants.DateTimeFormat);
+            _query["started_after"] = request.StartedAfter.Value.ToString();
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["started_before"] = request.StartedBefore.Value.ToString();
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status.Value.Stringify();
+            _query["status"] = request.Status.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -119,7 +115,7 @@ public partial class TimeOffClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/time-off",
+                    Path = "time-off",
                     Query = _query,
                     Options = options,
                 },
@@ -153,9 +149,11 @@ public partial class TimeOffClient
     /// Returns a list of `TimeOff` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.TimeOff.ListAsync(new TimeOffListRequest());
+    /// await client.Hris.TimeOff.ListAsync(
+    ///     new TimeOffListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<TimeOff>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<TimeOff>> ListAsync(
         TimeOffListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -180,8 +178,8 @@ public partial class TimeOffClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -194,7 +192,7 @@ public partial class TimeOffClient
     /// <example><code>
     /// await client.Hris.TimeOff.CreateAsync(new TimeOffEndpointRequest { Model = new TimeOffRequest() });
     /// </code></example>
-    public async Task<TimeOffResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<TimeOffResponse> CreateAsync(
         TimeOffEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -215,7 +213,7 @@ public partial class TimeOffClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = "hris/v1/time-off",
+                    Path = "time-off",
                     Body = request,
                     Query = _query,
                     ContentType = "application/json",
@@ -253,7 +251,7 @@ public partial class TimeOffClient
     /// <example><code>
     /// await client.Hris.TimeOff.RetrieveAsync("id", new TimeOffRetrieveRequest());
     /// </code></example>
-    public async Task<TimeOff> RetrieveAsync(
+    public async System.Threading.Tasks.Task<TimeOff> RetrieveAsync(
         string id,
         TimeOffRetrieveRequest request,
         RequestOptions? options = null,
@@ -284,10 +282,7 @@ public partial class TimeOffClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "hris/v1/time-off/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("time-off/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,
                     Options = options,
                 },
@@ -323,7 +318,7 @@ public partial class TimeOffClient
     /// <example><code>
     /// await client.Hris.TimeOff.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -334,7 +329,7 @@ public partial class TimeOffClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/time-off/meta/post",
+                    Path = "time-off/meta/post",
                     Options = options,
                 },
                 cancellationToken

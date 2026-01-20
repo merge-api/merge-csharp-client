@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,14 +15,14 @@ public partial class TimesheetEntriesClient
     /// <summary>
     /// Returns a list of `TimesheetEntry` objects.
     /// </summary>
-    private async Task<PaginatedTimesheetEntryList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTimesheetEntryList> ListInternalAsync(
         TimesheetEntriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -45,11 +43,11 @@ public partial class TimesheetEntriesClient
         }
         if (request.EndedAfter != null)
         {
-            _query["ended_after"] = request.EndedAfter.Value.ToString(Constants.DateTimeFormat);
+            _query["ended_after"] = request.EndedAfter.Value.ToString();
         }
         if (request.EndedBefore != null)
         {
-            _query["ended_before"] = request.EndedBefore.Value.ToString(Constants.DateTimeFormat);
+            _query["ended_before"] = request.EndedBefore.Value.ToString();
         }
         if (request.IncludeDeletedData != null)
         {
@@ -89,13 +87,11 @@ public partial class TimesheetEntriesClient
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter.Value.ToString(Constants.DateTimeFormat);
+            _query["started_after"] = request.StartedAfter.Value.ToString();
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["started_before"] = request.StartedBefore.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -103,7 +99,7 @@ public partial class TimesheetEntriesClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/timesheet-entries",
+                    Path = "timesheet-entries",
                     Query = _query,
                     Options = options,
                 },
@@ -137,9 +133,14 @@ public partial class TimesheetEntriesClient
     /// Returns a list of `TimesheetEntry` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.TimesheetEntries.ListAsync(new TimesheetEntriesListRequest());
+    /// await client.Hris.TimesheetEntries.ListAsync(
+    ///     new TimesheetEntriesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<TimesheetEntry>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<TimesheetEntry>> ListAsync(
         TimesheetEntriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -164,8 +165,8 @@ public partial class TimesheetEntriesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -180,7 +181,7 @@ public partial class TimesheetEntriesClient
     ///     new TimesheetEntryEndpointRequest { Model = new TimesheetEntryRequest() }
     /// );
     /// </code></example>
-    public async Task<TimesheetEntryResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<TimesheetEntryResponse> CreateAsync(
         TimesheetEntryEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -201,7 +202,7 @@ public partial class TimesheetEntriesClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = "hris/v1/timesheet-entries",
+                    Path = "timesheet-entries",
                     Body = request,
                     Query = _query,
                     ContentType = "application/json",
@@ -239,7 +240,7 @@ public partial class TimesheetEntriesClient
     /// <example><code>
     /// await client.Hris.TimesheetEntries.RetrieveAsync("id", new TimesheetEntriesRetrieveRequest());
     /// </code></example>
-    public async Task<TimesheetEntry> RetrieveAsync(
+    public async System.Threading.Tasks.Task<TimesheetEntry> RetrieveAsync(
         string id,
         TimesheetEntriesRetrieveRequest request,
         RequestOptions? options = null,
@@ -247,7 +248,7 @@ public partial class TimesheetEntriesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -263,7 +264,7 @@ public partial class TimesheetEntriesClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "hris/v1/timesheet-entries/{0}",
+                        "timesheet-entries/{0}",
                         ValueConvert.ToPathParameterString(id)
                     ),
                     Query = _query,
@@ -301,7 +302,7 @@ public partial class TimesheetEntriesClient
     /// <example><code>
     /// await client.Hris.TimesheetEntries.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -312,7 +313,7 @@ public partial class TimesheetEntriesClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/timesheet-entries/meta/post",
+                    Path = "timesheet-entries/meta/post",
                     Options = options,
                 },
                 cancellationToken
