@@ -61,6 +61,12 @@ public record TicketsListRequest
     public string? CreatorId { get; set; }
 
     /// <summary>
+    /// If provided, will only return tickets created by the creator_ids; multiple creator_ids can be separated by commas.
+    /// </summary>
+    [JsonIgnore]
+    public string? CreatorIds { get; set; }
+
+    /// <summary>
     /// The pagination cursor value.
     /// </summary>
     [JsonIgnore]
@@ -120,6 +126,12 @@ public record TicketsListRequest
     /// </summary>
     [JsonIgnore]
     public DateTime? ModifiedBefore { get; set; }
+
+    /// <summary>
+    /// If provided, will only return tickets with this name.
+    /// </summary>
+    [JsonIgnore]
+    public string? Name { get; set; }
 
     /// <summary>
     /// Number of results to return per page.
@@ -190,7 +202,7 @@ public record TicketsListRequest
     /// If provided, will only return tickets of this status.
     /// </summary>
     [JsonIgnore]
-    public string? Status { get; set; }
+    public TicketsListRequestStatus? Status { get; set; }
 
     /// <summary>
     /// If provided, will only return tickets matching the tags; multiple tags can be separated by commas.

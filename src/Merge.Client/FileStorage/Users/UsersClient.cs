@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.FileStorage;
@@ -17,7 +15,7 @@ public partial class UsersClient
     /// <summary>
     /// Returns a list of `User` objects.
     /// </summary>
-    private async Task<PaginatedUserList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedUserList> ListInternalAsync(
         UsersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -114,9 +112,14 @@ public partial class UsersClient
     /// Returns a list of `User` objects.
     /// </summary>
     /// <example><code>
-    /// await client.FileStorage.Users.ListAsync(new UsersListRequest());
+    /// await client.FileStorage.Users.ListAsync(
+    ///     new Merge.Client.FileStorage.UsersListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<User>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<User>> ListAsync(
         UsersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -141,8 +144,8 @@ public partial class UsersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -153,9 +156,12 @@ public partial class UsersClient
     /// Returns a `User` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.FileStorage.Users.RetrieveAsync("id", new UsersRetrieveRequest());
+    /// await client.FileStorage.Users.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.FileStorage.UsersRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<User> RetrieveAsync(
+    public async System.Threading.Tasks.Task<User> RetrieveAsync(
         string id,
         UsersRetrieveRequest request,
         RequestOptions? options = null,

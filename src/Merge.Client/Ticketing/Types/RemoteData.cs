@@ -21,6 +21,9 @@ public record RemoteData
     [JsonPropertyName("path")]
     public required string Path { get; set; }
 
+    /// <summary>
+    /// The data returned from the third-party for this object in its original, unnormalized format.
+    /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("data")]
     public object? Data { get; set; }

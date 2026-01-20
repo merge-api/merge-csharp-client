@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -17,14 +15,14 @@ public partial class ContactsClient
     /// <summary>
     /// Returns a list of `Contact` objects.
     /// </summary>
-    private async Task<PaginatedContactList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedContactList> ListInternalAsync(
         ContactsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -38,6 +36,10 @@ public partial class ContactsClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
+        }
+        if (request.EmailAddress != null)
+        {
+            _query["email_address"] = request.EmailAddress;
         }
         if (request.IncludeDeletedData != null)
         {
@@ -111,9 +113,14 @@ public partial class ContactsClient
     /// Returns a list of `Contact` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Contacts.ListAsync(new ContactsListRequest());
+    /// await client.Ticketing.Contacts.ListAsync(
+    ///     new Merge.Client.Ticketing.ContactsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Contact>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Contact>> ListAsync(
         ContactsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -138,8 +145,8 @@ public partial class ContactsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -151,10 +158,10 @@ public partial class ContactsClient
     /// </summary>
     /// <example><code>
     /// await client.Ticketing.Contacts.CreateAsync(
-    ///     new TicketingContactEndpointRequest { Model = new ContactRequest() }
+    ///     new TicketingContactEndpointRequest { Model = new Merge.Client.Ticketing.ContactRequest() }
     /// );
     /// </code></example>
-    public async Task<TicketingContactResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<TicketingContactResponse> CreateAsync(
         TicketingContactEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -211,9 +218,12 @@ public partial class ContactsClient
     /// Returns a `Contact` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Contacts.RetrieveAsync("id", new ContactsRetrieveRequest());
+    /// await client.Ticketing.Contacts.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Ticketing.ContactsRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<Contact> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Contact> RetrieveAsync(
         string id,
         ContactsRetrieveRequest request,
         RequestOptions? options = null,
@@ -221,7 +231,7 @@ public partial class ContactsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -275,7 +285,7 @@ public partial class ContactsClient
     /// <example><code>
     /// await client.Ticketing.Contacts.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

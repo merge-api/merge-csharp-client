@@ -1,6 +1,3 @@
-using System.Net.Http;
-using System.Threading;
-using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -20,7 +17,7 @@ public partial class DeleteAccountClient
     /// <example><code>
     /// await client.Hris.DeleteAccount.DeleteAsync();
     /// </code></example>
-    public async global::System.Threading.Tasks.Task DeleteAsync(
+    public async System.Threading.Tasks.Task DeleteAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -31,7 +28,7 @@ public partial class DeleteAccountClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = "hris/v1/delete-account",
+                    Path = "delete-account",
                     Options = options,
                 },
                 cancellationToken

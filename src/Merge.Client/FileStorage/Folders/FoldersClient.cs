@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.FileStorage;
@@ -17,7 +15,7 @@ public partial class FoldersClient
     /// <summary>
     /// Returns a list of `Folder` objects.
     /// </summary>
-    private async Task<PaginatedFolderList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedFolderList> ListInternalAsync(
         FoldersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -123,9 +121,11 @@ public partial class FoldersClient
     /// Returns a list of `Folder` objects.
     /// </summary>
     /// <example><code>
-    /// await client.FileStorage.Folders.ListAsync(new FoldersListRequest());
+    /// await client.FileStorage.Folders.ListAsync(
+    ///     new FoldersListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Folder>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Folder>> ListAsync(
         FoldersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -150,8 +150,8 @@ public partial class FoldersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -166,7 +166,7 @@ public partial class FoldersClient
     ///     new FileStorageFolderEndpointRequest { Model = new FolderRequest() }
     /// );
     /// </code></example>
-    public async Task<FileStorageFolderResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<FileStorageFolderResponse> CreateAsync(
         FileStorageFolderEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -225,7 +225,7 @@ public partial class FoldersClient
     /// <example><code>
     /// await client.FileStorage.Folders.RetrieveAsync("id", new FoldersRetrieveRequest());
     /// </code></example>
-    public async Task<Folder> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Folder> RetrieveAsync(
         string id,
         FoldersRetrieveRequest request,
         RequestOptions? options = null,
@@ -287,7 +287,7 @@ public partial class FoldersClient
     /// <example><code>
     /// await client.FileStorage.Folders.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

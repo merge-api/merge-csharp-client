@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class TagsClient
     /// <summary>
     /// Returns a list of `Tag` objects.
     /// </summary>
-    private async Task<PaginatedTagList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTagList> ListInternalAsync(
         TagsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -110,9 +108,14 @@ public partial class TagsClient
     /// Returns a list of `Tag` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Tags.ListAsync(new TagsListRequest());
+    /// await client.Ats.Tags.ListAsync(
+    ///     new Merge.Client.Ats.TagsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Tag>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Tag>> ListAsync(
         TagsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +140,8 @@ public partial class TagsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
