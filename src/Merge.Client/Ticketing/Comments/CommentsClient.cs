@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -17,7 +15,7 @@ public partial class CommentsClient
     /// <summary>
     /// Returns a list of `Comment` objects.
     /// </summary>
-    private async Task<PaginatedCommentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCommentList> ListInternalAsync(
         CommentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -69,9 +67,7 @@ public partial class CommentsClient
         }
         if (request.RemoteCreatedAfter != null)
         {
-            _query["remote_created_after"] = request.RemoteCreatedAfter.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["remote_created_after"] = request.RemoteCreatedAfter.Value.ToString();
         }
         if (request.RemoteId != null)
         {
@@ -121,9 +117,11 @@ public partial class CommentsClient
     /// Returns a list of `Comment` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Comments.ListAsync(new CommentsListRequest());
+    /// await client.Ticketing.Comments.ListAsync(
+    ///     new CommentsListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Comment>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Comment>> ListAsync(
         CommentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -148,8 +146,8 @@ public partial class CommentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -164,7 +162,7 @@ public partial class CommentsClient
     ///     new CommentEndpointRequest { Model = new CommentRequest() }
     /// );
     /// </code></example>
-    public async Task<CommentResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<CommentResponse> CreateAsync(
         CommentEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -223,7 +221,7 @@ public partial class CommentsClient
     /// <example><code>
     /// await client.Ticketing.Comments.RetrieveAsync("id", new CommentsRetrieveRequest());
     /// </code></example>
-    public async Task<Comment> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Comment> RetrieveAsync(
         string id,
         CommentsRetrieveRequest request,
         RequestOptions? options = null,
@@ -285,7 +283,7 @@ public partial class CommentsClient
     /// <example><code>
     /// await client.Ticketing.Comments.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

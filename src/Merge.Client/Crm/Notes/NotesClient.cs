@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,7 +15,7 @@ public partial class NotesClient
     /// <summary>
     /// Returns a list of `Note` objects.
     /// </summary>
-    private async Task<PaginatedNoteList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedNoteList> ListInternalAsync(
         NotesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -132,7 +130,7 @@ public partial class NotesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         NotesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -213,9 +211,11 @@ public partial class NotesClient
     /// Returns a list of `Note` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Notes.ListAsync(new NotesListRequest());
+    /// await client.Crm.Notes.ListAsync(
+    ///     new NotesListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Note>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Note>> ListAsync(
         NotesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -240,8 +240,8 @@ public partial class NotesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -254,7 +254,7 @@ public partial class NotesClient
     /// <example><code>
     /// await client.Crm.Notes.CreateAsync(new NoteEndpointRequest { Model = new NoteRequest() });
     /// </code></example>
-    public async Task<NoteResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<NoteResponse> CreateAsync(
         NoteEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -313,7 +313,7 @@ public partial class NotesClient
     /// <example><code>
     /// await client.Crm.Notes.RetrieveAsync("id", new NotesRetrieveRequest());
     /// </code></example>
-    public async Task<Note> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Note> RetrieveAsync(
         string id,
         NotesRetrieveRequest request,
         RequestOptions? options = null,
@@ -381,7 +381,7 @@ public partial class NotesClient
     /// <example><code>
     /// await client.Crm.Notes.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -425,9 +425,14 @@ public partial class NotesClient
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Notes.RemoteFieldClassesListAsync(new NotesRemoteFieldClassesListRequest());
+    /// await client.Crm.Notes.RemoteFieldClassesListAsync(
+    ///     new NotesRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         NotesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -452,8 +457,8 @@ public partial class NotesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -17,7 +15,7 @@ public partial class TeamsClient
     /// <summary>
     /// Returns a list of `Team` objects.
     /// </summary>
-    private async Task<PaginatedTeamList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTeamList> ListInternalAsync(
         TeamsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -110,9 +108,14 @@ public partial class TeamsClient
     /// Returns a list of `Team` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Teams.ListAsync(new TeamsListRequest());
+    /// await client.Ticketing.Teams.ListAsync(
+    ///     new Merge.Client.Ticketing.TeamsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Team>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Team>> ListAsync(
         TeamsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +140,8 @@ public partial class TeamsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -149,9 +152,9 @@ public partial class TeamsClient
     /// Returns a `Team` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Teams.RetrieveAsync("id", new TeamsRetrieveRequest());
+    /// await client.Ticketing.Teams.RetrieveAsync("id", new Merge.Client.Ticketing.TeamsRetrieveRequest());
     /// </code></example>
-    public async Task<Team> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Team> RetrieveAsync(
         string id,
         TeamsRetrieveRequest request,
         RequestOptions? options = null,

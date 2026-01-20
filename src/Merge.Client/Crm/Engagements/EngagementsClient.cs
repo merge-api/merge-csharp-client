@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,7 +15,7 @@ public partial class EngagementsClient
     /// <summary>
     /// Returns a list of `Engagement` objects.
     /// </summary>
-    private async Task<PaginatedEngagementList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEngagementList> ListInternalAsync(
         EngagementsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -79,13 +77,11 @@ public partial class EngagementsClient
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter.Value.ToString(Constants.DateTimeFormat);
+            _query["started_after"] = request.StartedAfter.Value.ToString();
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["started_before"] = request.StartedBefore.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -126,7 +122,7 @@ public partial class EngagementsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         EngagementsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -207,9 +203,14 @@ public partial class EngagementsClient
     /// Returns a list of `Engagement` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Engagements.ListAsync(new EngagementsListRequest());
+    /// await client.Crm.Engagements.ListAsync(
+    ///     new EngagementsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Engagement>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Engagement>> ListAsync(
         EngagementsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -234,8 +235,8 @@ public partial class EngagementsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -250,7 +251,7 @@ public partial class EngagementsClient
     ///     new EngagementEndpointRequest { Model = new EngagementRequest() }
     /// );
     /// </code></example>
-    public async Task<EngagementResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<EngagementResponse> CreateAsync(
         EngagementEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -309,7 +310,7 @@ public partial class EngagementsClient
     /// <example><code>
     /// await client.Crm.Engagements.RetrieveAsync("id", new EngagementsRetrieveRequest());
     /// </code></example>
-    public async Task<Engagement> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Engagement> RetrieveAsync(
         string id,
         EngagementsRetrieveRequest request,
         RequestOptions? options = null,
@@ -380,7 +381,7 @@ public partial class EngagementsClient
     ///     new PatchedEngagementEndpointRequest { Model = new PatchedEngagementRequest() }
     /// );
     /// </code></example>
-    public async Task<EngagementResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<EngagementResponse> PartialUpdateAsync(
         string id,
         PatchedEngagementEndpointRequest request,
         RequestOptions? options = null,
@@ -441,10 +442,14 @@ public partial class EngagementsClient
     /// Returns metadata for `Engagement` PATCHs.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Engagements.MetaPatchRetrieveAsync("id");
+    /// await client.Crm.Engagements.MetaPatchRetrieveAsync(
+    ///     "id",
+    ///     new EngagementsMetaPatchRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
+        EngagementsMetaPatchRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -493,7 +498,7 @@ public partial class EngagementsClient
     /// <example><code>
     /// await client.Crm.Engagements.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -538,10 +543,13 @@ public partial class EngagementsClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.Engagements.RemoteFieldClassesListAsync(
-    ///     new EngagementsRemoteFieldClassesListRequest()
+    ///     new EngagementsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         EngagementsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -566,8 +574,8 @@ public partial class EngagementsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

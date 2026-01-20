@@ -25,10 +25,17 @@ public record ContactsListRequest
     public string? Cursor { get; set; }
 
     /// <summary>
+    /// If provided, will only return Contacts that match this email.
+    /// </summary>
+    [JsonIgnore]
+    public string? EmailAddress { get; set; }
+
+    /// <summary>
     /// Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     /// </summary>
     [JsonIgnore]
-    public IEnumerable<string> Expand { get; set; } = new List<string>();
+    public IEnumerable<ContactsListRequestExpandItem> Expand { get; set; } =
+        new List<ContactsListRequestExpandItem>();
 
     /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).

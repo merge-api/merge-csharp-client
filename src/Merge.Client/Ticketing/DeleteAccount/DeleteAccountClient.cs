@@ -1,6 +1,3 @@
-using System.Net.Http;
-using System.Threading;
-using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -20,7 +17,7 @@ public partial class DeleteAccountClient
     /// <example><code>
     /// await client.Ticketing.DeleteAccount.DeleteAsync();
     /// </code></example>
-    public async global::System.Threading.Tasks.Task DeleteAsync(
+    public async System.Threading.Tasks.Task DeleteAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

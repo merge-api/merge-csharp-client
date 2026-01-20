@@ -10,7 +10,8 @@ public record ContactsRetrieveRequest
     /// Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     /// </summary>
     [JsonIgnore]
-    public IEnumerable<string> Expand { get; set; } = new List<string>();
+    public IEnumerable<ContactsRetrieveRequestExpandItem> Expand { get; set; } =
+        new List<ContactsRetrieveRequestExpandItem>();
 
     /// <summary>
     /// Whether to include the original data Merge fetched from the third-party to produce these models.

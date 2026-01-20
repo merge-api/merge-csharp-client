@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 using OneOf;
 
@@ -20,10 +18,14 @@ public partial class AsyncPassthroughClient
     /// </summary>
     /// <example><code>
     /// await client.Hris.AsyncPassthrough.CreateAsync(
-    ///     new DataPassthroughRequest { Method = MethodEnum.Get, Path = "/scooters" }
+    ///     new Merge.Client.Hris.DataPassthroughRequest
+    ///     {
+    ///         Method = Merge.Client.Hris.MethodEnum.Get,
+    ///         Path = "/scooters",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<AsyncPassthroughReciept> CreateAsync(
+    public async System.Threading.Tasks.Task<AsyncPassthroughReciept> CreateAsync(
         DataPassthroughRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -35,7 +37,7 @@ public partial class AsyncPassthroughClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = "hris/v1/async-passthrough",
+                    Path = "async-passthrough",
                     Body = request,
                     ContentType = "application/json",
                     Options = options,
@@ -70,10 +72,14 @@ public partial class AsyncPassthroughClient
     /// Retrieves data from earlier async-passthrough POST request
     /// </summary>
     /// <example><code>
-    /// await client.Hris.AsyncPassthrough.RetrieveAsync("async_passthrough_receipt_id");
+    /// await client.Hris.AsyncPassthrough.RetrieveAsync(
+    ///     "async_passthrough_receipt_id",
+    ///     new Merge.Client.Hris.AsyncPassthroughRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<OneOf<RemoteResponse, string>> RetrieveAsync(
+    public async System.Threading.Tasks.Task<OneOf<RemoteResponse, string>> RetrieveAsync(
         string asyncPassthroughReceiptId,
+        AsyncPassthroughRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -85,7 +91,7 @@ public partial class AsyncPassthroughClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "hris/v1/async-passthrough/{0}",
+                        "async-passthrough/{0}",
                         ValueConvert.ToPathParameterString(asyncPassthroughReceiptId)
                     ),
                     Options = options,
