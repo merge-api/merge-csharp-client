@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 using OneOf;
 
@@ -20,10 +18,14 @@ public partial class AsyncPassthroughClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.AsyncPassthrough.CreateAsync(
-    ///     new DataPassthroughRequest { Method = MethodEnum.Get, Path = "/scooters" }
+    ///     new Merge.Client.Crm.DataPassthroughRequest
+    ///     {
+    ///         Method = Merge.Client.Crm.MethodEnum.Get,
+    ///         Path = "/scooters",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<AsyncPassthroughReciept> CreateAsync(
+    public async System.Threading.Tasks.Task<AsyncPassthroughReciept> CreateAsync(
         DataPassthroughRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -70,10 +72,14 @@ public partial class AsyncPassthroughClient
     /// Retrieves data from earlier async-passthrough POST request
     /// </summary>
     /// <example><code>
-    /// await client.Crm.AsyncPassthrough.RetrieveAsync("async_passthrough_receipt_id");
+    /// await client.Crm.AsyncPassthrough.RetrieveAsync(
+    ///     "async_passthrough_receipt_id",
+    ///     new Merge.Client.Crm.AsyncPassthroughRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<OneOf<RemoteResponse, string>> RetrieveAsync(
+    public async System.Threading.Tasks.Task<OneOf<RemoteResponse, string>> RetrieveAsync(
         string asyncPassthroughReceiptId,
+        AsyncPassthroughRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

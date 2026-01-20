@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,7 +15,7 @@ public partial class LeadsClient
     /// <summary>
     /// Returns a list of `Lead` objects.
     /// </summary>
-    private async Task<PaginatedLeadList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedLeadList> ListInternalAsync(
         LeadsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -136,7 +134,7 @@ public partial class LeadsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         LeadsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -217,9 +215,11 @@ public partial class LeadsClient
     /// Returns a list of `Lead` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Leads.ListAsync(new LeadsListRequest());
+    /// await client.Crm.Leads.ListAsync(
+    ///     new LeadsListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Lead>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Lead>> ListAsync(
         LeadsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -244,8 +244,8 @@ public partial class LeadsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -258,7 +258,7 @@ public partial class LeadsClient
     /// <example><code>
     /// await client.Crm.Leads.CreateAsync(new LeadEndpointRequest { Model = new LeadRequest() });
     /// </code></example>
-    public async Task<LeadResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<LeadResponse> CreateAsync(
         LeadEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -317,7 +317,7 @@ public partial class LeadsClient
     /// <example><code>
     /// await client.Crm.Leads.RetrieveAsync("id", new LeadsRetrieveRequest());
     /// </code></example>
-    public async Task<Lead> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Lead> RetrieveAsync(
         string id,
         LeadsRetrieveRequest request,
         RequestOptions? options = null,
@@ -385,7 +385,7 @@ public partial class LeadsClient
     /// <example><code>
     /// await client.Crm.Leads.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -429,9 +429,14 @@ public partial class LeadsClient
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Leads.RemoteFieldClassesListAsync(new LeadsRemoteFieldClassesListRequest());
+    /// await client.Crm.Leads.RemoteFieldClassesListAsync(
+    ///     new LeadsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         LeadsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -456,8 +461,8 @@ public partial class LeadsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
