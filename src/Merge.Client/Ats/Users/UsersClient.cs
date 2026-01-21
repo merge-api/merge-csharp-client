@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class UsersClient
     /// <summary>
     /// Returns a list of `RemoteUser` objects.
     /// </summary>
-    private async Task<PaginatedRemoteUserList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteUserList> ListInternalAsync(
         UsersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -72,7 +70,7 @@ public partial class UsersClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -80,7 +78,7 @@ public partial class UsersClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -122,9 +120,14 @@ public partial class UsersClient
     /// Returns a list of `RemoteUser` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Users.ListAsync(new UsersListRequest());
+    /// await client.Ats.Users.ListAsync(
+    ///     new Merge.Client.Ats.UsersListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<RemoteUser>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteUser>> ListAsync(
         UsersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -149,8 +152,8 @@ public partial class UsersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -161,9 +164,9 @@ public partial class UsersClient
     /// Returns a `RemoteUser` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Users.RetrieveAsync("id", new UsersRetrieveRequest());
+    /// await client.Ats.Users.RetrieveAsync("id", new Merge.Client.Ats.UsersRetrieveRequest());
     /// </code></example>
-    public async Task<RemoteUser> RetrieveAsync(
+    public async System.Threading.Tasks.Task<RemoteUser> RetrieveAsync(
         string id,
         UsersRetrieveRequest request,
         RequestOptions? options = null,
@@ -181,11 +184,11 @@ public partial class UsersClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(

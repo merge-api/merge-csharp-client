@@ -1,7 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -18,7 +15,7 @@ public partial class CandidatesClient
     /// <summary>
     /// Returns a list of `Candidate` objects.
     /// </summary>
-    private async Task<PaginatedCandidateList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCandidateList> ListInternalAsync(
         CandidatesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -128,9 +125,14 @@ public partial class CandidatesClient
     /// Returns a list of `Candidate` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Candidates.ListAsync(new CandidatesListRequest());
+    /// await client.Ats.Candidates.ListAsync(
+    ///     new CandidatesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Candidate>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Candidate>> ListAsync(
         CandidatesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -155,8 +157,8 @@ public partial class CandidatesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -171,7 +173,7 @@ public partial class CandidatesClient
     ///     new CandidateEndpointRequest { Model = new CandidateRequest(), RemoteUserId = "remote_user_id" }
     /// );
     /// </code></example>
-    public async Task<CandidateResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<CandidateResponse> CreateAsync(
         CandidateEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -230,7 +232,7 @@ public partial class CandidatesClient
     /// <example><code>
     /// await client.Ats.Candidates.RetrieveAsync("id", new CandidatesRetrieveRequest());
     /// </code></example>
-    public async Task<Candidate> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Candidate> RetrieveAsync(
         string id,
         CandidatesRetrieveRequest request,
         RequestOptions? options = null,
@@ -299,7 +301,7 @@ public partial class CandidatesClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<CandidateResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<CandidateResponse> PartialUpdateAsync(
         string id,
         PatchedCandidateEndpointRequest request,
         RequestOptions? options = null,
@@ -362,12 +364,18 @@ public partial class CandidatesClient
     /// <example><code>
     /// await client.Ats.Candidates.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new CandidatesIgnoreCreateRequest
+    ///     {
+    ///         Body = new Merge.Client.Ats.IgnoreCommonModelRequest
+    ///         {
+    ///             Reason = Merge.Client.Ats.ReasonEnum.GeneralCustomerRequest,
+    ///         },
+    ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task IgnoreCreateAsync(
+    public async System.Threading.Tasks.Task IgnoreCreateAsync(
         string modelId,
-        IgnoreCommonModelRequest request,
+        CandidatesIgnoreCreateRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -382,7 +390,7 @@ public partial class CandidatesClient
                         "ats/v1/candidates/ignore/{0}",
                         ValueConvert.ToPathParameterString(modelId)
                     ),
-                    Body = request,
+                    Body = request.Body,
                     ContentType = "application/json",
                     Options = options,
                 },
@@ -407,10 +415,11 @@ public partial class CandidatesClient
     /// Returns metadata for `Candidate` PATCHs.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Candidates.MetaPatchRetrieveAsync("id");
+    /// await client.Ats.Candidates.MetaPatchRetrieveAsync("id", new CandidatesMetaPatchRetrieveRequest());
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
+        CandidatesMetaPatchRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -459,7 +468,7 @@ public partial class CandidatesClient
     /// <example><code>
     /// await client.Ats.Candidates.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

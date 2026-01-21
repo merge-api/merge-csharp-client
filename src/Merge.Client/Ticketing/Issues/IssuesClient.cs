@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -17,7 +15,7 @@ public partial class IssuesClient
     /// <summary>
     /// Gets all issues for Organization.
     /// </summary>
-    private async Task<PaginatedIssueList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedIssueList> ListInternalAsync(
         IssuesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -42,15 +40,11 @@ public partial class IssuesClient
         }
         if (request.FirstIncidentTimeAfter != null)
         {
-            _query["first_incident_time_after"] = request.FirstIncidentTimeAfter.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["first_incident_time_after"] = request.FirstIncidentTimeAfter.Value.ToString();
         }
         if (request.FirstIncidentTimeBefore != null)
         {
-            _query["first_incident_time_before"] = request.FirstIncidentTimeBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["first_incident_time_before"] = request.FirstIncidentTimeBefore.Value.ToString();
         }
         if (request.IncludeMuted != null)
         {
@@ -62,15 +56,11 @@ public partial class IssuesClient
         }
         if (request.LastIncidentTimeAfter != null)
         {
-            _query["last_incident_time_after"] = request.LastIncidentTimeAfter.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["last_incident_time_after"] = request.LastIncidentTimeAfter.Value.ToString();
         }
         if (request.LastIncidentTimeBefore != null)
         {
-            _query["last_incident_time_before"] = request.LastIncidentTimeBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["last_incident_time_before"] = request.LastIncidentTimeBefore.Value.ToString();
         }
         if (request.LinkedAccountId != null)
         {
@@ -128,9 +118,14 @@ public partial class IssuesClient
     /// Gets all issues for Organization.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Issues.ListAsync(new IssuesListRequest());
+    /// await client.Ticketing.Issues.ListAsync(
+    ///     new Merge.Client.Ticketing.IssuesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Issue>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Issue>> ListAsync(
         IssuesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -155,8 +150,8 @@ public partial class IssuesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -167,10 +162,14 @@ public partial class IssuesClient
     /// Get a specific issue.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Issues.RetrieveAsync("id");
+    /// await client.Ticketing.Issues.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Ticketing.IssuesRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<Issue> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Issue> RetrieveAsync(
         string id,
+        IssuesRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class CreditNotesClient
     /// <summary>
     /// Returns a list of `CreditNote` objects.
     /// </summary>
-    private async Task<PaginatedCreditNoteList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCreditNoteList> ListInternalAsync(
         CreditNotesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -85,15 +83,11 @@ public partial class CreditNotesClient
         }
         if (request.TransactionDateAfter != null)
         {
-            _query["transaction_date_after"] = request.TransactionDateAfter.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["transaction_date_after"] = request.TransactionDateAfter.Value.ToString();
         }
         if (request.TransactionDateBefore != null)
         {
-            _query["transaction_date_before"] = request.TransactionDateBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["transaction_date_before"] = request.TransactionDateBefore.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -135,9 +129,14 @@ public partial class CreditNotesClient
     /// Returns a list of `CreditNote` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.CreditNotes.ListAsync(new CreditNotesListRequest());
+    /// await client.Accounting.CreditNotes.ListAsync(
+    ///     new CreditNotesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<CreditNote>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<CreditNote>> ListAsync(
         CreditNotesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -162,8 +161,8 @@ public partial class CreditNotesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -178,7 +177,7 @@ public partial class CreditNotesClient
     ///     new CreditNoteEndpointRequest { Model = new CreditNoteRequest() }
     /// );
     /// </code></example>
-    public async Task<CreditNoteResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<CreditNoteResponse> CreateAsync(
         CreditNoteEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -237,7 +236,7 @@ public partial class CreditNotesClient
     /// <example><code>
     /// await client.Accounting.CreditNotes.RetrieveAsync("id", new CreditNotesRetrieveRequest());
     /// </code></example>
-    public async Task<CreditNote> RetrieveAsync(
+    public async System.Threading.Tasks.Task<CreditNote> RetrieveAsync(
         string id,
         CreditNotesRetrieveRequest request,
         RequestOptions? options = null,
@@ -307,7 +306,7 @@ public partial class CreditNotesClient
     /// <example><code>
     /// await client.Accounting.CreditNotes.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

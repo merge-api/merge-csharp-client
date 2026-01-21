@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class PurchaseOrdersClient
     /// <summary>
     /// Returns a list of `PurchaseOrder` objects.
     /// </summary>
-    private async Task<PaginatedPurchaseOrderList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedPurchaseOrderList> ListInternalAsync(
         PurchaseOrdersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -63,15 +61,11 @@ public partial class PurchaseOrdersClient
         }
         if (request.IssueDateAfter != null)
         {
-            _query["issue_date_after"] = request.IssueDateAfter.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["issue_date_after"] = request.IssueDateAfter.Value.ToString();
         }
         if (request.IssueDateBefore != null)
         {
-            _query["issue_date_before"] = request.IssueDateBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["issue_date_before"] = request.IssueDateBefore.Value.ToString();
         }
         if (request.ModifiedAfter != null)
         {
@@ -91,7 +85,7 @@ public partial class PurchaseOrdersClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -99,7 +93,7 @@ public partial class PurchaseOrdersClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -140,7 +134,7 @@ public partial class PurchaseOrdersClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListInternalAsync(
         PurchaseOrdersLineItemsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -214,7 +208,7 @@ public partial class PurchaseOrdersClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         PurchaseOrdersRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -289,9 +283,14 @@ public partial class PurchaseOrdersClient
     /// Returns a list of `PurchaseOrder` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.PurchaseOrders.ListAsync(new PurchaseOrdersListRequest());
+    /// await client.Accounting.PurchaseOrders.ListAsync(
+    ///     new PurchaseOrdersListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<PurchaseOrder>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<PurchaseOrder>> ListAsync(
         PurchaseOrdersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -316,8 +315,8 @@ public partial class PurchaseOrdersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -332,7 +331,7 @@ public partial class PurchaseOrdersClient
     ///     new PurchaseOrderEndpointRequest { Model = new PurchaseOrderRequest() }
     /// );
     /// </code></example>
-    public async Task<PurchaseOrderResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<PurchaseOrderResponse> CreateAsync(
         PurchaseOrderEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -391,7 +390,7 @@ public partial class PurchaseOrdersClient
     /// <example><code>
     /// await client.Accounting.PurchaseOrders.RetrieveAsync("id", new PurchaseOrdersRetrieveRequest());
     /// </code></example>
-    public async Task<PurchaseOrder> RetrieveAsync(
+    public async System.Threading.Tasks.Task<PurchaseOrder> RetrieveAsync(
         string id,
         PurchaseOrdersRetrieveRequest request,
         RequestOptions? options = null,
@@ -416,11 +415,11 @@ public partial class PurchaseOrdersClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -466,10 +465,15 @@ public partial class PurchaseOrdersClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.PurchaseOrders.LineItemsRemoteFieldClassesListAsync(
-    ///     new PurchaseOrdersLineItemsRemoteFieldClassesListRequest()
+    ///     new PurchaseOrdersLineItemsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> LineItemsRemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<
+        Pager<RemoteFieldClass>
+    > LineItemsRemoteFieldClassesListAsync(
         PurchaseOrdersLineItemsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -494,8 +498,8 @@ public partial class PurchaseOrdersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -508,7 +512,7 @@ public partial class PurchaseOrdersClient
     /// <example><code>
     /// await client.Accounting.PurchaseOrders.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -553,10 +557,13 @@ public partial class PurchaseOrdersClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.PurchaseOrders.RemoteFieldClassesListAsync(
-    ///     new PurchaseOrdersRemoteFieldClassesListRequest()
+    ///     new PurchaseOrdersRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         PurchaseOrdersRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -581,8 +588,8 @@ public partial class PurchaseOrdersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
