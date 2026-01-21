@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,14 +15,14 @@ public partial class BalanceSheetsClient
     /// <summary>
     /// Returns a list of `BalanceSheet` objects.
     /// </summary>
-    private async Task<PaginatedBalanceSheetList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedBalanceSheetList> ListInternalAsync(
         BalanceSheetsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -115,9 +113,14 @@ public partial class BalanceSheetsClient
     /// Returns a list of `BalanceSheet` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.BalanceSheets.ListAsync(new BalanceSheetsListRequest());
+    /// await client.Accounting.BalanceSheets.ListAsync(
+    ///     new BalanceSheetsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<BalanceSheet>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<BalanceSheet>> ListAsync(
         BalanceSheetsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +145,8 @@ public partial class BalanceSheetsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -156,7 +159,7 @@ public partial class BalanceSheetsClient
     /// <example><code>
     /// await client.Accounting.BalanceSheets.RetrieveAsync("id", new BalanceSheetsRetrieveRequest());
     /// </code></example>
-    public async Task<BalanceSheet> RetrieveAsync(
+    public async System.Threading.Tasks.Task<BalanceSheet> RetrieveAsync(
         string id,
         BalanceSheetsRetrieveRequest request,
         RequestOptions? options = null,
@@ -164,7 +167,7 @@ public partial class BalanceSheetsClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);

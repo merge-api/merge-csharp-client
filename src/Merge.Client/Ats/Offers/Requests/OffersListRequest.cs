@@ -83,7 +83,7 @@ public record OffersListRequest
     /// Deprecated. Use show_enum_origins.
     /// </summary>
     [JsonIgnore]
-    public string? RemoteFields { get; set; }
+    public OffersListRequestRemoteFields? RemoteFields { get; set; }
 
     /// <summary>
     /// The API provider's ID for the given object.
@@ -95,7 +95,7 @@ public record OffersListRequest
     /// A comma separated list of enum field names for which you'd like the original values to be returned, instead of Merge's normalized enum values. [Learn more](https://help.merge.dev/en/articles/8950958-show_enum_origins-query-parameter)
     /// </summary>
     [JsonIgnore]
-    public string? ShowEnumOrigins { get; set; }
+    public OffersListRequestShowEnumOrigins? ShowEnumOrigins { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

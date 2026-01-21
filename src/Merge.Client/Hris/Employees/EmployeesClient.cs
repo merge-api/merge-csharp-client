@@ -1,7 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -18,7 +15,7 @@ public partial class EmployeesClient
     /// <summary>
     /// Returns a list of `Employee` objects.
     /// </summary>
-    private async Task<PaginatedEmployeeList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEmployeeList> ListInternalAsync(
         EmployeesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -50,7 +47,7 @@ public partial class EmployeesClient
         }
         if (request.EmploymentStatus != null)
         {
-            _query["employment_status"] = request.EmploymentStatus.Value.Stringify();
+            _query["employment_status"] = request.EmploymentStatus.Value.ToString();
         }
         if (request.EmploymentType != null)
         {
@@ -136,13 +133,11 @@ public partial class EmployeesClient
         }
         if (request.StartedAfter != null)
         {
-            _query["started_after"] = request.StartedAfter.Value.ToString(Constants.DateTimeFormat);
+            _query["started_after"] = request.StartedAfter.Value.ToString();
         }
         if (request.StartedBefore != null)
         {
-            _query["started_before"] = request.StartedBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["started_before"] = request.StartedBefore.Value.ToString();
         }
         if (request.TeamId != null)
         {
@@ -150,15 +145,11 @@ public partial class EmployeesClient
         }
         if (request.TerminatedAfter != null)
         {
-            _query["terminated_after"] = request.TerminatedAfter.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["terminated_after"] = request.TerminatedAfter.Value.ToString();
         }
         if (request.TerminatedBefore != null)
         {
-            _query["terminated_before"] = request.TerminatedBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["terminated_before"] = request.TerminatedBefore.Value.ToString();
         }
         if (request.WorkEmail != null)
         {
@@ -174,7 +165,7 @@ public partial class EmployeesClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/employees",
+                    Path = "employees",
                     Query = _query,
                     Options = options,
                 },
@@ -208,9 +199,14 @@ public partial class EmployeesClient
     /// Returns a list of `Employee` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Employees.ListAsync(new EmployeesListRequest());
+    /// await client.Hris.Employees.ListAsync(
+    ///     new Merge.Client.Hris.EmployeesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Employee>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Employee>> ListAsync(
         EmployeesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -235,8 +231,8 @@ public partial class EmployeesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -251,7 +247,7 @@ public partial class EmployeesClient
     ///     new EmployeeEndpointRequest { Model = new EmployeeRequest() }
     /// );
     /// </code></example>
-    public async Task<EmployeeResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<EmployeeResponse> CreateAsync(
         EmployeeEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -272,7 +268,7 @@ public partial class EmployeesClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = "hris/v1/employees",
+                    Path = "employees",
                     Body = request,
                     Query = _query,
                     ContentType = "application/json",
@@ -308,9 +304,9 @@ public partial class EmployeesClient
     /// Returns an `Employee` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Employees.RetrieveAsync("id", new EmployeesRetrieveRequest());
+    /// await client.Hris.Employees.RetrieveAsync("id", new Merge.Client.Hris.EmployeesRetrieveRequest());
     /// </code></example>
-    public async Task<Employee> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Employee> RetrieveAsync(
         string id,
         EmployeesRetrieveRequest request,
         RequestOptions? options = null,
@@ -347,10 +343,7 @@ public partial class EmployeesClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "hris/v1/employees/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("employees/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,
                     Options = options,
                 },
@@ -386,12 +379,18 @@ public partial class EmployeesClient
     /// <example><code>
     /// await client.Hris.Employees.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new EmployeesIgnoreCreateRequest
+    ///     {
+    ///         Body = new Merge.Client.Hris.IgnoreCommonModelRequest
+    ///         {
+    ///             Reason = Merge.Client.Hris.ReasonEnum.GeneralCustomerRequest,
+    ///         },
+    ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task IgnoreCreateAsync(
+    public async System.Threading.Tasks.Task IgnoreCreateAsync(
         string modelId,
-        IgnoreCommonModelRequest request,
+        EmployeesIgnoreCreateRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -403,10 +402,10 @@ public partial class EmployeesClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
-                        "hris/v1/employees/ignore/{0}",
+                        "employees/ignore/{0}",
                         ValueConvert.ToPathParameterString(modelId)
                     ),
-                    Body = request,
+                    Body = request.Body,
                     ContentType = "application/json",
                     Options = options,
                 },
@@ -433,7 +432,7 @@ public partial class EmployeesClient
     /// <example><code>
     /// await client.Hris.Employees.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -444,7 +443,7 @@ public partial class EmployeesClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/employees/meta/post",
+                    Path = "employees/meta/post",
                     Options = options,
                 },
                 cancellationToken

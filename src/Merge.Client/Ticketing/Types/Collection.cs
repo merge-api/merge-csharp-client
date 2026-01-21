@@ -79,6 +79,24 @@ public record Collection
     public OneOf<string, Collection>? ParentCollection { get; set; }
 
     /// <summary>
+    /// The 3rd party url of the Collection.
+    /// </summary>
+    [JsonPropertyName("collection_url")]
+    public string? CollectionUrl { get; set; }
+
+    /// <summary>
+    /// When the third party's collection was created.
+    /// </summary>
+    [JsonPropertyName("remote_created_at")]
+    public DateTime? RemoteCreatedAt { get; set; }
+
+    /// <summary>
+    /// When the third party's collection was updated.
+    /// </summary>
+    [JsonPropertyName("remote_updated_at")]
+    public DateTime? RemoteUpdatedAt { get; set; }
+
+    /// <summary>
     /// Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/).
     /// </summary>
     [JsonPropertyName("remote_was_deleted")]

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,14 +15,14 @@ public partial class CustomObjectClassesClient
     /// <summary>
     /// Returns a list of `CustomObjectClass` objects.
     /// </summary>
-    private async Task<PaginatedCustomObjectClassList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCustomObjectClassList> ListInternalAsync(
         CustomObjectClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CreatedAfter != null)
         {
             _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
@@ -111,9 +109,14 @@ public partial class CustomObjectClassesClient
     /// Returns a list of `CustomObjectClass` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.CustomObjectClasses.ListAsync(new CustomObjectClassesListRequest());
+    /// await client.Crm.CustomObjectClasses.ListAsync(
+    ///     new CustomObjectClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<CustomObjectClass>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<CustomObjectClass>> ListAsync(
         CustomObjectClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -138,8 +141,8 @@ public partial class CustomObjectClassesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -152,7 +155,7 @@ public partial class CustomObjectClassesClient
     /// <example><code>
     /// await client.Crm.CustomObjectClasses.RetrieveAsync("id", new CustomObjectClassesRetrieveRequest());
     /// </code></example>
-    public async Task<CustomObjectClass> RetrieveAsync(
+    public async System.Threading.Tasks.Task<CustomObjectClass> RetrieveAsync(
         string id,
         CustomObjectClassesRetrieveRequest request,
         RequestOptions? options = null,
@@ -160,7 +163,7 @@ public partial class CustomObjectClassesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);

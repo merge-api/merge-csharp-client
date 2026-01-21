@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class ApplicationsClient
     /// <summary>
     /// Returns a list of `Application` objects.
     /// </summary>
-    private async Task<PaginatedApplicationList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedApplicationList> ListInternalAsync(
         ApplicationsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -135,9 +133,14 @@ public partial class ApplicationsClient
     /// Returns a list of `Application` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Applications.ListAsync(new ApplicationsListRequest());
+    /// await client.Ats.Applications.ListAsync(
+    ///     new ApplicationsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Application>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Application>> ListAsync(
         ApplicationsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -162,8 +165,8 @@ public partial class ApplicationsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -185,7 +188,7 @@ public partial class ApplicationsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<ApplicationResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<ApplicationResponse> CreateAsync(
         ApplicationEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -244,7 +247,7 @@ public partial class ApplicationsClient
     /// <example><code>
     /// await client.Ats.Applications.RetrieveAsync("id", new ApplicationsRetrieveRequest());
     /// </code></example>
-    public async Task<Application> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Application> RetrieveAsync(
         string id,
         ApplicationsRetrieveRequest request,
         RequestOptions? options = null,
@@ -306,7 +309,7 @@ public partial class ApplicationsClient
     /// <example><code>
     /// await client.Ats.Applications.ChangeStageCreateAsync("id", new UpdateApplicationStageRequest());
     /// </code></example>
-    public async Task<ApplicationResponse> ChangeStageCreateAsync(
+    public async System.Threading.Tasks.Task<ApplicationResponse> ChangeStageCreateAsync(
         string id,
         UpdateApplicationStageRequest request,
         RequestOptions? options = null,
@@ -369,7 +372,7 @@ public partial class ApplicationsClient
     /// <example><code>
     /// await client.Ats.Applications.MetaPostRetrieveAsync(new ApplicationsMetaPostRetrieveRequest());
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         ApplicationsMetaPostRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

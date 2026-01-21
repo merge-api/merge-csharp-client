@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -18,9 +16,11 @@ public partial class FieldMappingClient
     /// Get all Field Mappings for this Linked Account. Field Mappings are mappings between third-party Remote Fields and user defined Merge fields. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
     /// </summary>
     /// <example><code>
-    /// await client.Hris.FieldMapping.FieldMappingsRetrieveAsync(new FieldMappingsRetrieveRequest());
+    /// await client.Hris.FieldMapping.FieldMappingsRetrieveAsync(
+    ///     new Merge.Client.Hris.FieldMappingsRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync(
+    public async System.Threading.Tasks.Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync(
         FieldMappingsRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -39,7 +39,7 @@ public partial class FieldMappingClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/field-mappings",
+                    Path = "field-mappings",
                     Query = _query,
                     Options = options,
                 },
@@ -74,7 +74,7 @@ public partial class FieldMappingClient
     /// </summary>
     /// <example><code>
     /// await client.Hris.FieldMapping.FieldMappingsCreateAsync(
-    ///     new CreateFieldMappingRequest
+    ///     new Merge.Client.Hris.CreateFieldMappingRequest
     ///     {
     ///         TargetFieldName = "example_target_field_name",
     ///         TargetFieldDescription = "this is a example description of the target field",
@@ -85,7 +85,7 @@ public partial class FieldMappingClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<FieldMappingInstanceResponse> FieldMappingsCreateAsync(
+    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsCreateAsync(
         CreateFieldMappingRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -104,7 +104,7 @@ public partial class FieldMappingClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = "hris/v1/field-mappings",
+                    Path = "field-mappings",
                     Body = request,
                     Query = _query,
                     ContentType = "application/json",
@@ -140,10 +140,14 @@ public partial class FieldMappingClient
     /// Deletes Field Mappings for a Linked Account. All data related to this Field Mapping will be deleted and these changes will be reflected after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.FieldMapping.FieldMappingsDestroyAsync("field_mapping_id");
+    /// await client.Hris.FieldMapping.FieldMappingsDestroyAsync(
+    ///     "field_mapping_id",
+    ///     new Merge.Client.Hris.FieldMappingsDestroyRequest()
+    /// );
     /// </code></example>
-    public async Task<FieldMappingInstanceResponse> FieldMappingsDestroyAsync(
+    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsDestroyAsync(
         string fieldMappingId,
+        FieldMappingsDestroyRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -155,7 +159,7 @@ public partial class FieldMappingClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
                     Path = string.Format(
-                        "hris/v1/field-mappings/{0}",
+                        "field-mappings/{0}",
                         ValueConvert.ToPathParameterString(fieldMappingId)
                     ),
                     Options = options,
@@ -192,10 +196,10 @@ public partial class FieldMappingClient
     /// <example><code>
     /// await client.Hris.FieldMapping.FieldMappingsPartialUpdateAsync(
     ///     "field_mapping_id",
-    ///     new PatchedEditFieldMappingRequest()
+    ///     new Merge.Client.Hris.PatchedEditFieldMappingRequest()
     /// );
     /// </code></example>
-    public async Task<FieldMappingInstanceResponse> FieldMappingsPartialUpdateAsync(
+    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsPartialUpdateAsync(
         string fieldMappingId,
         PatchedEditFieldMappingRequest request,
         RequestOptions? options = null,
@@ -209,7 +213,7 @@ public partial class FieldMappingClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format(
-                        "hris/v1/field-mappings/{0}",
+                        "field-mappings/{0}",
                         ValueConvert.ToPathParameterString(fieldMappingId)
                     ),
                     Body = request,
@@ -246,9 +250,11 @@ public partial class FieldMappingClient
     /// Get all remote fields for a Linked Account. Remote fields are third-party fields that are accessible after initial sync if remote_data is enabled. You can use remote fields to override existing Merge fields or map a new Merge field. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
     /// </summary>
     /// <example><code>
-    /// await client.Hris.FieldMapping.RemoteFieldsRetrieveAsync(new RemoteFieldsRetrieveRequest());
+    /// await client.Hris.FieldMapping.RemoteFieldsRetrieveAsync(
+    ///     new Merge.Client.Hris.RemoteFieldsRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<RemoteFieldApiResponse> RemoteFieldsRetrieveAsync(
+    public async System.Threading.Tasks.Task<RemoteFieldApiResponse> RemoteFieldsRetrieveAsync(
         RemoteFieldsRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -269,7 +275,7 @@ public partial class FieldMappingClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/remote-fields",
+                    Path = "remote-fields",
                     Query = _query,
                     Options = options,
                 },
@@ -305,7 +311,7 @@ public partial class FieldMappingClient
     /// <example><code>
     /// await client.Hris.FieldMapping.TargetFieldsRetrieveAsync();
     /// </code></example>
-    public async Task<ExternalTargetFieldApiResponse> TargetFieldsRetrieveAsync(
+    public async System.Threading.Tasks.Task<ExternalTargetFieldApiResponse> TargetFieldsRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -316,7 +322,7 @@ public partial class FieldMappingClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/target-fields",
+                    Path = "target-fields",
                     Options = options,
                 },
                 cancellationToken
