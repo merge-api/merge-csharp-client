@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class LinkedAccountsClient
     /// <summary>
     /// List linked accounts for your organization.
     /// </summary>
-    private async Task<PaginatedAccountDetailsAndActionsList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAccountDetailsAndActionsList> ListInternalAsync(
         LinkedAccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -26,7 +24,7 @@ public partial class LinkedAccountsClient
         var _query = new Dictionary<string, object>();
         if (request.Category != null)
         {
-            _query["category"] = request.Category.Value.Stringify();
+            _query["category"] = request.Category.Value.ToString();
         }
         if (request.Cursor != null)
         {
@@ -82,7 +80,7 @@ public partial class LinkedAccountsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/linked-accounts",
+                    Path = "linked-accounts",
                     Query = _query,
                     Options = options,
                 },
@@ -116,9 +114,14 @@ public partial class LinkedAccountsClient
     /// List linked accounts for your organization.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.LinkedAccounts.ListAsync(new LinkedAccountsListRequest());
+    /// await client.Hris.LinkedAccounts.ListAsync(
+    ///     new Merge.Client.Hris.LinkedAccountsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<AccountDetailsAndActions>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<AccountDetailsAndActions>> ListAsync(
         LinkedAccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -143,8 +146,8 @@ public partial class LinkedAccountsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

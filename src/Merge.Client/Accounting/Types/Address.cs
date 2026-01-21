@@ -57,6 +57,9 @@ public record Address
     [JsonPropertyName("city")]
     public string? City { get; set; }
 
+    /// <summary>
+    /// The address's state or region.
+    /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("state")]
     public object? State { get; set; }

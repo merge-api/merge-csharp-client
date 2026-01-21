@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class GroupsClient
     /// <summary>
     /// Returns a list of `Group` objects.
     /// </summary>
-    private async Task<PaginatedGroupList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedGroupList> ListInternalAsync(
         GroupsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,7 +74,7 @@ public partial class GroupsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -84,7 +82,7 @@ public partial class GroupsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         if (request.Types != null)
         {
@@ -96,7 +94,7 @@ public partial class GroupsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/groups",
+                    Path = "groups",
                     Query = _query,
                     Options = options,
                 },
@@ -130,9 +128,14 @@ public partial class GroupsClient
     /// Returns a list of `Group` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Groups.ListAsync(new GroupsListRequest());
+    /// await client.Hris.Groups.ListAsync(
+    ///     new Merge.Client.Hris.GroupsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Group>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Group>> ListAsync(
         GroupsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -157,8 +160,8 @@ public partial class GroupsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -169,9 +172,9 @@ public partial class GroupsClient
     /// Returns a `Group` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Groups.RetrieveAsync("id", new GroupsRetrieveRequest());
+    /// await client.Hris.Groups.RetrieveAsync("id", new Merge.Client.Hris.GroupsRetrieveRequest());
     /// </code></example>
-    public async Task<Group> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Group> RetrieveAsync(
         string id,
         GroupsRetrieveRequest request,
         RequestOptions? options = null,
@@ -189,11 +192,11 @@ public partial class GroupsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -201,10 +204,7 @@ public partial class GroupsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "hris/v1/groups/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("groups/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,
                     Options = options,
                 },

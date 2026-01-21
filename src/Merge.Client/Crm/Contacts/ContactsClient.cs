@@ -1,7 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -18,7 +15,7 @@ public partial class ContactsClient
     /// <summary>
     /// Returns a list of `Contact` objects.
     /// </summary>
-    private async Task<PaginatedContactList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedContactList> ListInternalAsync(
         ContactsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -129,7 +126,7 @@ public partial class ContactsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         ContactsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -210,9 +207,14 @@ public partial class ContactsClient
     /// Returns a list of `Contact` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Contacts.ListAsync(new ContactsListRequest());
+    /// await client.Crm.Contacts.ListAsync(
+    ///     new Merge.Client.Crm.ContactsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Contact>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Contact>> ListAsync(
         ContactsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -237,8 +239,8 @@ public partial class ContactsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -250,10 +252,10 @@ public partial class ContactsClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.Contacts.CreateAsync(
-    ///     new CrmContactEndpointRequest { Model = new ContactRequest() }
+    ///     new CrmContactEndpointRequest { Model = new Merge.Client.Crm.ContactRequest() }
     /// );
     /// </code></example>
-    public async Task<CrmContactResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<CrmContactResponse> CreateAsync(
         CrmContactEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -310,9 +312,9 @@ public partial class ContactsClient
     /// Returns a `Contact` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Contacts.RetrieveAsync("id", new ContactsRetrieveRequest());
+    /// await client.Crm.Contacts.RetrieveAsync("id", new Merge.Client.Crm.ContactsRetrieveRequest());
     /// </code></example>
-    public async Task<Contact> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Contact> RetrieveAsync(
         string id,
         ContactsRetrieveRequest request,
         RequestOptions? options = null,
@@ -383,7 +385,7 @@ public partial class ContactsClient
     ///     new PatchedCrmContactEndpointRequest { Model = new PatchedContactRequest() }
     /// );
     /// </code></example>
-    public async Task<CrmContactResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<CrmContactResponse> PartialUpdateAsync(
         string id,
         PatchedCrmContactEndpointRequest request,
         RequestOptions? options = null,
@@ -446,12 +448,18 @@ public partial class ContactsClient
     /// <example><code>
     /// await client.Crm.Contacts.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new ContactsIgnoreCreateRequest
+    ///     {
+    ///         Body = new Merge.Client.Crm.IgnoreCommonModelRequest
+    ///         {
+    ///             Reason = Merge.Client.Crm.ReasonEnum.GeneralCustomerRequest,
+    ///         },
+    ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task IgnoreCreateAsync(
+    public async System.Threading.Tasks.Task IgnoreCreateAsync(
         string modelId,
-        IgnoreCommonModelRequest request,
+        ContactsIgnoreCreateRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -466,7 +474,7 @@ public partial class ContactsClient
                         "crm/v1/contacts/ignore/{0}",
                         ValueConvert.ToPathParameterString(modelId)
                     ),
-                    Body = request,
+                    Body = request.Body,
                     ContentType = "application/json",
                     Options = options,
                 },
@@ -491,10 +499,11 @@ public partial class ContactsClient
     /// Returns metadata for `CRMContact` PATCHs.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Contacts.MetaPatchRetrieveAsync("id");
+    /// await client.Crm.Contacts.MetaPatchRetrieveAsync("id", new ContactsMetaPatchRetrieveRequest());
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
+        ContactsMetaPatchRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -543,7 +552,7 @@ public partial class ContactsClient
     /// <example><code>
     /// await client.Crm.Contacts.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -587,9 +596,14 @@ public partial class ContactsClient
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Contacts.RemoteFieldClassesListAsync(new ContactsRemoteFieldClassesListRequest());
+    /// await client.Crm.Contacts.RemoteFieldClassesListAsync(
+    ///     new Merge.Client.Crm.ContactsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         ContactsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -614,8 +628,8 @@ public partial class ContactsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

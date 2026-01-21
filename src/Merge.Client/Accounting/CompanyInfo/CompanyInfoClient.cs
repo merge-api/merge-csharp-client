@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class CompanyInfoClient
     /// <summary>
     /// Returns a list of `CompanyInfo` objects.
     /// </summary>
-    private async Task<PaginatedCompanyInfoList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCompanyInfoList> ListInternalAsync(
         CompanyInfoListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -111,9 +109,14 @@ public partial class CompanyInfoClient
     /// Returns a list of `CompanyInfo` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.CompanyInfo.ListAsync(new CompanyInfoListRequest());
+    /// await client.Accounting.CompanyInfo.ListAsync(
+    ///     new CompanyInfoListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<CompanyInfo>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<CompanyInfo>> ListAsync(
         CompanyInfoListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -138,8 +141,8 @@ public partial class CompanyInfoClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -152,7 +155,7 @@ public partial class CompanyInfoClient
     /// <example><code>
     /// await client.Accounting.CompanyInfo.RetrieveAsync("id", new CompanyInfoRetrieveRequest());
     /// </code></example>
-    public async Task<CompanyInfo> RetrieveAsync(
+    public async System.Threading.Tasks.Task<CompanyInfo> RetrieveAsync(
         string id,
         CompanyInfoRetrieveRequest request,
         RequestOptions? options = null,

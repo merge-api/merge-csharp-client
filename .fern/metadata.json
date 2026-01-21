@@ -1,0 +1,22 @@
+{
+  "cliVersion": "3.31.1",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "2.9.3",
+  "generatorConfig": {
+    "namespace": "Merge.Client",
+    "package-id": "Merge.Client",
+    "client-class-name": "BaseMergeClient",
+    "root-client-class-access": "internal",
+    "exported-client-class-name": "MergeClient",
+    "base-exception-class-name": "MergeException",
+    "base-api-exception-class-name": "MergeApiException",
+    "environment-class-name": "MergeEnvironment",
+    "root-namespace-for-core-classes": false,
+    "pascal-case-environments": false,
+    "simplify-object-dictionaries": false,
+    "experimental-enable-forward-compatible-enums": true,
+    "additional-properties": false,
+    "inline-path-parameters": false,
+    "use-discriminated-unions": false
+  }
+}

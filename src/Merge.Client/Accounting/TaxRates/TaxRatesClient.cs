@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,14 +15,14 @@ public partial class TaxRatesClient
     /// <summary>
     /// Returns a list of `TaxRate` objects.
     /// </summary>
-    private async Task<PaginatedTaxRateList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTaxRateList> ListInternalAsync(
         TaxRatesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.CompanyId != null)
         {
             _query["company_id"] = request.CompanyId;
@@ -119,9 +117,11 @@ public partial class TaxRatesClient
     /// Returns a list of `TaxRate` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.TaxRates.ListAsync(new TaxRatesListRequest());
+    /// await client.Accounting.TaxRates.ListAsync(
+    ///     new TaxRatesListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<TaxRate>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<TaxRate>> ListAsync(
         TaxRatesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -146,8 +146,8 @@ public partial class TaxRatesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -160,7 +160,7 @@ public partial class TaxRatesClient
     /// <example><code>
     /// await client.Accounting.TaxRates.RetrieveAsync("id", new TaxRatesRetrieveRequest());
     /// </code></example>
-    public async Task<TaxRate> RetrieveAsync(
+    public async System.Threading.Tasks.Task<TaxRate> RetrieveAsync(
         string id,
         TaxRatesRetrieveRequest request,
         RequestOptions? options = null,
@@ -168,7 +168,7 @@ public partial class TaxRatesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
