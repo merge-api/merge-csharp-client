@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,17 +15,17 @@ public partial class BankInfoClient
     /// <summary>
     /// Returns a list of `BankInfo` objects.
     /// </summary>
-    private async Task<PaginatedBankInfoList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedBankInfoList> ListInternalAsync(
         BankInfoListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.AccountType != null)
         {
-            _query["account_type"] = request.AccountType.Value.Stringify();
+            _query["account_type"] = request.AccountType.Value.ToString();
         }
         if (request.BankName != null)
         {
@@ -85,7 +83,7 @@ public partial class BankInfoClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -93,7 +91,7 @@ public partial class BankInfoClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -101,7 +99,7 @@ public partial class BankInfoClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/bank-info",
+                    Path = "bank-info",
                     Query = _query,
                     Options = options,
                 },
@@ -135,9 +133,11 @@ public partial class BankInfoClient
     /// Returns a list of `BankInfo` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.BankInfo.ListAsync(new BankInfoListRequest());
+    /// await client.Hris.BankInfo.ListAsync(
+    ///     new BankInfoListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<BankInfo>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<BankInfo>> ListAsync(
         BankInfoListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -162,8 +162,8 @@ public partial class BankInfoClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -176,7 +176,7 @@ public partial class BankInfoClient
     /// <example><code>
     /// await client.Hris.BankInfo.RetrieveAsync("id", new BankInfoRetrieveRequest());
     /// </code></example>
-    public async Task<BankInfo> RetrieveAsync(
+    public async System.Threading.Tasks.Task<BankInfo> RetrieveAsync(
         string id,
         BankInfoRetrieveRequest request,
         RequestOptions? options = null,
@@ -184,7 +184,7 @@ public partial class BankInfoClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
@@ -195,11 +195,11 @@ public partial class BankInfoClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -207,10 +207,7 @@ public partial class BankInfoClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "hris/v1/bank-info/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("bank-info/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,
                     Options = options,
                 },

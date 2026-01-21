@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -19,10 +17,14 @@ public partial class PassthroughClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.Passthrough.CreateAsync(
-    ///     new DataPassthroughRequest { Method = MethodEnum.Get, Path = "/scooters" }
+    ///     new Merge.Client.Crm.DataPassthroughRequest
+    ///     {
+    ///         Method = Merge.Client.Crm.MethodEnum.Get,
+    ///         Path = "/scooters",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<RemoteResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<RemoteResponse> CreateAsync(
         DataPassthroughRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

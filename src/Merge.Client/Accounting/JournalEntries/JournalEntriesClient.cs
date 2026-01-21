@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class JournalEntriesClient
     /// <summary>
     /// Returns a list of `JournalEntry` objects.
     /// </summary>
-    private async Task<PaginatedJournalEntryList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedJournalEntryList> ListInternalAsync(
         JournalEntriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -83,15 +81,11 @@ public partial class JournalEntriesClient
         }
         if (request.TransactionDateAfter != null)
         {
-            _query["transaction_date_after"] = request.TransactionDateAfter.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["transaction_date_after"] = request.TransactionDateAfter.Value.ToString();
         }
         if (request.TransactionDateBefore != null)
         {
-            _query["transaction_date_before"] = request.TransactionDateBefore.Value.ToString(
-                Constants.DateTimeFormat
-            );
+            _query["transaction_date_before"] = request.TransactionDateBefore.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
@@ -132,7 +126,7 @@ public partial class JournalEntriesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> LinesRemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> LinesRemoteFieldClassesListInternalAsync(
         JournalEntriesLinesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -206,7 +200,7 @@ public partial class JournalEntriesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         JournalEntriesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -281,9 +275,14 @@ public partial class JournalEntriesClient
     /// Returns a list of `JournalEntry` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.JournalEntries.ListAsync(new JournalEntriesListRequest());
+    /// await client.Accounting.JournalEntries.ListAsync(
+    ///     new JournalEntriesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<JournalEntry>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<JournalEntry>> ListAsync(
         JournalEntriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -308,8 +307,8 @@ public partial class JournalEntriesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -324,7 +323,7 @@ public partial class JournalEntriesClient
     ///     new JournalEntryEndpointRequest { Model = new JournalEntryRequest() }
     /// );
     /// </code></example>
-    public async Task<JournalEntryResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<JournalEntryResponse> CreateAsync(
         JournalEntryEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -383,7 +382,7 @@ public partial class JournalEntriesClient
     /// <example><code>
     /// await client.Accounting.JournalEntries.RetrieveAsync("id", new JournalEntriesRetrieveRequest());
     /// </code></example>
-    public async Task<JournalEntry> RetrieveAsync(
+    public async System.Threading.Tasks.Task<JournalEntry> RetrieveAsync(
         string id,
         JournalEntriesRetrieveRequest request,
         RequestOptions? options = null,
@@ -450,10 +449,15 @@ public partial class JournalEntriesClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.JournalEntries.LinesRemoteFieldClassesListAsync(
-    ///     new JournalEntriesLinesRemoteFieldClassesListRequest()
+    ///     new JournalEntriesLinesRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> LinesRemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<
+        Pager<RemoteFieldClass>
+    > LinesRemoteFieldClassesListAsync(
         JournalEntriesLinesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -478,8 +482,8 @@ public partial class JournalEntriesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -492,7 +496,7 @@ public partial class JournalEntriesClient
     /// <example><code>
     /// await client.Accounting.JournalEntries.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -537,10 +541,13 @@ public partial class JournalEntriesClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.JournalEntries.RemoteFieldClassesListAsync(
-    ///     new JournalEntriesRemoteFieldClassesListRequest()
+    ///     new JournalEntriesRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         JournalEntriesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -565,8 +572,8 @@ public partial class JournalEntriesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

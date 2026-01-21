@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class InterviewsClient
     /// <summary>
     /// Returns a list of `ScheduledInterview` objects.
     /// </summary>
-    private async Task<PaginatedScheduledInterviewList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedScheduledInterviewList> ListInternalAsync(
         InterviewsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -85,7 +83,7 @@ public partial class InterviewsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.RemoteId != null)
         {
@@ -93,7 +91,7 @@ public partial class InterviewsClient
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -135,9 +133,14 @@ public partial class InterviewsClient
     /// Returns a list of `ScheduledInterview` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Interviews.ListAsync(new InterviewsListRequest());
+    /// await client.Ats.Interviews.ListAsync(
+    ///     new InterviewsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<ScheduledInterview>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<ScheduledInterview>> ListAsync(
         InterviewsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -162,8 +165,8 @@ public partial class InterviewsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -182,7 +185,7 @@ public partial class InterviewsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<ScheduledInterviewResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<ScheduledInterviewResponse> CreateAsync(
         ScheduledInterviewEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -241,7 +244,7 @@ public partial class InterviewsClient
     /// <example><code>
     /// await client.Ats.Interviews.RetrieveAsync("id", new InterviewsRetrieveRequest());
     /// </code></example>
-    public async Task<ScheduledInterview> RetrieveAsync(
+    public async System.Threading.Tasks.Task<ScheduledInterview> RetrieveAsync(
         string id,
         InterviewsRetrieveRequest request,
         RequestOptions? options = null,
@@ -260,11 +263,11 @@ public partial class InterviewsClient
         }
         if (request.RemoteFields != null)
         {
-            _query["remote_fields"] = request.RemoteFields.ToString();
+            _query["remote_fields"] = request.RemoteFields.Value.Stringify();
         }
         if (request.ShowEnumOrigins != null)
         {
-            _query["show_enum_origins"] = request.ShowEnumOrigins.ToString();
+            _query["show_enum_origins"] = request.ShowEnumOrigins.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -311,7 +314,7 @@ public partial class InterviewsClient
     /// <example><code>
     /// await client.Ats.Interviews.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,14 +15,14 @@ public partial class EmployeesClient
     /// <summary>
     /// Returns a list of `Employee` objects.
     /// </summary>
-    private async Task<PaginatedEmployeeList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEmployeeList> ListInternalAsync(
         EmployeesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
@@ -85,9 +83,14 @@ public partial class EmployeesClient
     /// Returns a list of `Employee` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Employees.ListAsync(new EmployeesListRequest());
+    /// await client.Accounting.Employees.ListAsync(
+    ///     new Merge.Client.Accounting.EmployeesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Employee>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Employee>> ListAsync(
         EmployeesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -112,8 +115,8 @@ public partial class EmployeesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -124,9 +127,12 @@ public partial class EmployeesClient
     /// Returns an `Employee` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Employees.RetrieveAsync("id", new EmployeesRetrieveRequest());
+    /// await client.Accounting.Employees.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Accounting.EmployeesRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<Employee> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Employee> RetrieveAsync(
         string id,
         EmployeesRetrieveRequest request,
         RequestOptions? options = null,
@@ -134,7 +140,7 @@ public partial class EmployeesClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
         if (request.IncludeRemoteData != null)
         {
             _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);

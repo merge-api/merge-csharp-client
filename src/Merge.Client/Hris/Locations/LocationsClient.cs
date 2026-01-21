@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class LocationsClient
     /// <summary>
     /// Returns a list of `Location` objects.
     /// </summary>
-    private async Task<PaginatedLocationList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedLocationList> ListInternalAsync(
         LocationsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -52,7 +50,7 @@ public partial class LocationsClient
         }
         if (request.LocationType != null)
         {
-            _query["location_type"] = request.LocationType.Value.Stringify();
+            _query["location_type"] = request.LocationType.Value.ToString();
         }
         if (request.ModifiedAfter != null)
         {
@@ -88,7 +86,7 @@ public partial class LocationsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "hris/v1/locations",
+                    Path = "locations",
                     Query = _query,
                     Options = options,
                 },
@@ -122,9 +120,11 @@ public partial class LocationsClient
     /// Returns a list of `Location` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Locations.ListAsync(new LocationsListRequest());
+    /// await client.Hris.Locations.ListAsync(
+    ///     new LocationsListRequest { Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw" }
+    /// );
     /// </code></example>
-    public async Task<Pager<Location>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Location>> ListAsync(
         LocationsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -149,8 +149,8 @@ public partial class LocationsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -163,7 +163,7 @@ public partial class LocationsClient
     /// <example><code>
     /// await client.Hris.Locations.RetrieveAsync("id", new LocationsRetrieveRequest());
     /// </code></example>
-    public async Task<Location> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Location> RetrieveAsync(
         string id,
         LocationsRetrieveRequest request,
         RequestOptions? options = null,
@@ -193,10 +193,7 @@ public partial class LocationsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "hris/v1/locations/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("locations/{0}", ValueConvert.ToPathParameterString(id)),
                     Query = _query,
                     Options = options,
                 },

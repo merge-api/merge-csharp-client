@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.FileStorage;
@@ -19,10 +17,10 @@ public partial class FieldMappingClient
     /// </summary>
     /// <example><code>
     /// await client.FileStorage.FieldMapping.FieldMappingsRetrieveAsync(
-    ///     new FieldMappingsRetrieveRequest()
+    ///     new Merge.Client.FileStorage.FieldMappingsRetrieveRequest()
     /// );
     /// </code></example>
-    public async Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync(
+    public async System.Threading.Tasks.Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync(
         FieldMappingsRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -76,7 +74,7 @@ public partial class FieldMappingClient
     /// </summary>
     /// <example><code>
     /// await client.FileStorage.FieldMapping.FieldMappingsCreateAsync(
-    ///     new CreateFieldMappingRequest
+    ///     new Merge.Client.FileStorage.CreateFieldMappingRequest
     ///     {
     ///         TargetFieldName = "example_target_field_name",
     ///         TargetFieldDescription = "this is a example description of the target field",
@@ -87,7 +85,7 @@ public partial class FieldMappingClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<FieldMappingInstanceResponse> FieldMappingsCreateAsync(
+    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsCreateAsync(
         CreateFieldMappingRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,10 +140,14 @@ public partial class FieldMappingClient
     /// Deletes Field Mappings for a Linked Account. All data related to this Field Mapping will be deleted and these changes will be reflected after the next scheduled sync. This will cause the next sync for this Linked Account to sync **ALL** data from start.
     /// </summary>
     /// <example><code>
-    /// await client.FileStorage.FieldMapping.FieldMappingsDestroyAsync("field_mapping_id");
+    /// await client.FileStorage.FieldMapping.FieldMappingsDestroyAsync(
+    ///     "field_mapping_id",
+    ///     new Merge.Client.FileStorage.FieldMappingsDestroyRequest()
+    /// );
     /// </code></example>
-    public async Task<FieldMappingInstanceResponse> FieldMappingsDestroyAsync(
+    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsDestroyAsync(
         string fieldMappingId,
+        FieldMappingsDestroyRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -194,10 +196,10 @@ public partial class FieldMappingClient
     /// <example><code>
     /// await client.FileStorage.FieldMapping.FieldMappingsPartialUpdateAsync(
     ///     "field_mapping_id",
-    ///     new PatchedEditFieldMappingRequest()
+    ///     new Merge.Client.FileStorage.PatchedEditFieldMappingRequest()
     /// );
     /// </code></example>
-    public async Task<FieldMappingInstanceResponse> FieldMappingsPartialUpdateAsync(
+    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsPartialUpdateAsync(
         string fieldMappingId,
         PatchedEditFieldMappingRequest request,
         RequestOptions? options = null,
@@ -248,9 +250,11 @@ public partial class FieldMappingClient
     /// Get all remote fields for a Linked Account. Remote fields are third-party fields that are accessible after initial sync if remote_data is enabled. You can use remote fields to override existing Merge fields or map a new Merge field. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
     /// </summary>
     /// <example><code>
-    /// await client.FileStorage.FieldMapping.RemoteFieldsRetrieveAsync(new RemoteFieldsRetrieveRequest());
+    /// await client.FileStorage.FieldMapping.RemoteFieldsRetrieveAsync(
+    ///     new Merge.Client.FileStorage.RemoteFieldsRetrieveRequest()
+    /// );
     /// </code></example>
-    public async Task<RemoteFieldApiResponse> RemoteFieldsRetrieveAsync(
+    public async System.Threading.Tasks.Task<RemoteFieldApiResponse> RemoteFieldsRetrieveAsync(
         RemoteFieldsRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -307,7 +311,7 @@ public partial class FieldMappingClient
     /// <example><code>
     /// await client.FileStorage.FieldMapping.TargetFieldsRetrieveAsync();
     /// </code></example>
-    public async Task<ExternalTargetFieldApiResponse> TargetFieldsRetrieveAsync(
+    public async System.Threading.Tasks.Task<ExternalTargetFieldApiResponse> TargetFieldsRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
