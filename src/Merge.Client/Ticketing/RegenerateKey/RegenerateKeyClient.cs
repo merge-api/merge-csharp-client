@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -19,10 +17,10 @@ public partial class RegenerateKeyClient
     /// </summary>
     /// <example><code>
     /// await client.Ticketing.RegenerateKey.CreateAsync(
-    ///     new RemoteKeyForRegenerationRequest { Name = "Remote Deployment Key 1" }
+    ///     new Merge.Client.Ticketing.RemoteKeyForRegenerationRequest { Name = "Remote Deployment Key 1" }
     /// );
     /// </code></example>
-    public async Task<RemoteKey> CreateAsync(
+    public async System.Threading.Tasks.Task<RemoteKey> CreateAsync(
         RemoteKeyForRegenerationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

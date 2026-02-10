@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class TimeOffClient
     /// <summary>
     /// Returns a list of `TimeOff` objects.
     /// </summary>
-    private async Task<PaginatedTimeOffList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTimeOffList> ListInternalAsync(
         TimeOffListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -153,9 +151,33 @@ public partial class TimeOffClient
     /// Returns a list of `TimeOff` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.TimeOff.ListAsync(new TimeOffListRequest());
+    /// await client.Hris.TimeOff.ListAsync(
+    ///     new TimeOffListRequest
+    ///     {
+    ///         ApproverId = "approver_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EmployeeId = "employee_id",
+    ///         EndedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         EndedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteFields = TimeOffListRequestRemoteFields.RequestType,
+    ///         RemoteId = "remote_id",
+    ///         RequestType = TimeOffListRequestRequestType.Bereavement,
+    ///         ShowEnumOrigins = TimeOffListRequestShowEnumOrigins.RequestType,
+    ///         StartedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         StartedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Status = TimeOffListRequestStatus.Approved,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<TimeOff>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<TimeOff>> ListAsync(
         TimeOffListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -180,8 +202,8 @@ public partial class TimeOffClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -192,9 +214,16 @@ public partial class TimeOffClient
     /// Creates a `TimeOff` object with the given values.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.TimeOff.CreateAsync(new TimeOffEndpointRequest { Model = new TimeOffRequest() });
+    /// await client.Hris.TimeOff.CreateAsync(
+    ///     new TimeOffEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new TimeOffRequest(),
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<TimeOffResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<TimeOffResponse> CreateAsync(
         TimeOffEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -251,9 +280,18 @@ public partial class TimeOffClient
     /// Returns a `TimeOff` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.TimeOff.RetrieveAsync("id", new TimeOffRetrieveRequest());
+    /// await client.Hris.TimeOff.RetrieveAsync(
+    ///     "id",
+    ///     new TimeOffRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = TimeOffRetrieveRequestRemoteFields.RequestType,
+    ///         ShowEnumOrigins = TimeOffRetrieveRequestShowEnumOrigins.RequestType,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<TimeOff> RetrieveAsync(
+    public async System.Threading.Tasks.Task<TimeOff> RetrieveAsync(
         string id,
         TimeOffRetrieveRequest request,
         RequestOptions? options = null,
@@ -323,7 +361,7 @@ public partial class TimeOffClient
     /// <example><code>
     /// await client.Hris.TimeOff.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -17,7 +15,7 @@ public partial class IssuesClient
     /// <summary>
     /// Gets all issues for Organization.
     /// </summary>
-    private async Task<PaginatedIssueList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedIssueList> ListInternalAsync(
         IssuesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -128,9 +126,27 @@ public partial class IssuesClient
     /// Gets all issues for Organization.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Issues.ListAsync(new IssuesListRequest());
+    /// await client.Ticketing.Issues.ListAsync(
+    ///     new Merge.Client.Ticketing.IssuesListRequest
+    ///     {
+    ///         AccountToken = "account_token",
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EndDate = "end_date",
+    ///         EndUserOrganizationName = "end_user_organization_name",
+    ///         FirstIncidentTimeAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         FirstIncidentTimeBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         IncludeMuted = "include_muted",
+    ///         IntegrationName = "integration_name",
+    ///         LastIncidentTimeAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         LastIncidentTimeBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         LinkedAccountId = "linked_account_id",
+    ///         PageSize = 1,
+    ///         StartDate = "start_date",
+    ///         Status = Merge.Client.Ticketing.IssuesListRequestStatus.Ongoing,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Issue>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Issue>> ListAsync(
         IssuesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -155,8 +171,8 @@ public partial class IssuesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -169,7 +185,7 @@ public partial class IssuesClient
     /// <example><code>
     /// await client.Ticketing.Issues.RetrieveAsync("id");
     /// </code></example>
-    public async Task<Issue> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Issue> RetrieveAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

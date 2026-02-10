@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class OfficesClient
     /// <summary>
     /// Returns a list of `Office` objects.
     /// </summary>
-    private async Task<PaginatedOfficeList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedOfficeList> ListInternalAsync(
         OfficesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -110,9 +108,23 @@ public partial class OfficesClient
     /// Returns a list of `Office` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Offices.ListAsync(new OfficesListRequest());
+    /// await client.Ats.Offices.ListAsync(
+    ///     new OfficesListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Office>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Office>> ListAsync(
         OfficesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +149,8 @@ public partial class OfficesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -149,9 +161,12 @@ public partial class OfficesClient
     /// Returns an `Office` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Offices.RetrieveAsync("id", new OfficesRetrieveRequest());
+    /// await client.Ats.Offices.RetrieveAsync(
+    ///     "id",
+    ///     new OfficesRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<Office> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Office> RetrieveAsync(
         string id,
         OfficesRetrieveRequest request,
         RequestOptions? options = null,

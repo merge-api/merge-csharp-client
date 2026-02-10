@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class PayGroupsClient
     /// <summary>
     /// Returns a list of `PayGroup` objects.
     /// </summary>
-    private async Task<PaginatedPayGroupList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedPayGroupList> ListInternalAsync(
         PayGroupsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -110,9 +108,23 @@ public partial class PayGroupsClient
     /// Returns a list of `PayGroup` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.PayGroups.ListAsync(new PayGroupsListRequest());
+    /// await client.Hris.PayGroups.ListAsync(
+    ///     new PayGroupsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<PayGroup>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<PayGroup>> ListAsync(
         PayGroupsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +149,8 @@ public partial class PayGroupsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -149,9 +161,12 @@ public partial class PayGroupsClient
     /// Returns a `PayGroup` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.PayGroups.RetrieveAsync("id", new PayGroupsRetrieveRequest());
+    /// await client.Hris.PayGroups.RetrieveAsync(
+    ///     "id",
+    ///     new PayGroupsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<PayGroup> RetrieveAsync(
+    public async System.Threading.Tasks.Task<PayGroup> RetrieveAsync(
         string id,
         PayGroupsRetrieveRequest request,
         RequestOptions? options = null,

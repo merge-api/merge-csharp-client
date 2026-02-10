@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -20,7 +18,7 @@ public partial class AccountDetailsClient
     /// <example><code>
     /// await client.Hris.AccountDetails.RetrieveAsync();
     /// </code></example>
-    public async Task<AccountDetails> RetrieveAsync(
+    public async System.Threading.Tasks.Task<AccountDetails> RetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

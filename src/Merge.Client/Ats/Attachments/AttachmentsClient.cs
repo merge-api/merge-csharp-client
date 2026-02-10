@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class AttachmentsClient
     /// <summary>
     /// Returns a list of `Attachment` objects.
     /// </summary>
-    private async Task<PaginatedAttachmentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAttachmentList> ListInternalAsync(
         AttachmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -123,9 +121,26 @@ public partial class AttachmentsClient
     /// Returns a list of `Attachment` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Attachments.ListAsync(new AttachmentsListRequest());
+    /// await client.Ats.Attachments.ListAsync(
+    ///     new Merge.Client.Ats.AttachmentsListRequest
+    ///     {
+    ///         CandidateId = "candidate_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteFields = "attachment_type",
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = "attachment_type",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Attachment>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Attachment>> ListAsync(
         AttachmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -150,8 +165,8 @@ public partial class AttachmentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -165,12 +180,14 @@ public partial class AttachmentsClient
     /// await client.Ats.Attachments.CreateAsync(
     ///     new AttachmentEndpointRequest
     ///     {
-    ///         Model = new AttachmentRequest(),
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new Merge.Client.Ats.AttachmentRequest(),
     ///         RemoteUserId = "remote_user_id",
     ///     }
     /// );
     /// </code></example>
-    public async Task<AttachmentResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<AttachmentResponse> CreateAsync(
         AttachmentEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -227,9 +244,18 @@ public partial class AttachmentsClient
     /// Returns an `Attachment` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Attachments.RetrieveAsync("id", new AttachmentsRetrieveRequest());
+    /// await client.Ats.Attachments.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Ats.AttachmentsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "attachment_type",
+    ///         ShowEnumOrigins = "attachment_type",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Attachment> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Attachment> RetrieveAsync(
         string id,
         AttachmentsRetrieveRequest request,
         RequestOptions? options = null,
@@ -299,7 +325,7 @@ public partial class AttachmentsClient
     /// <example><code>
     /// await client.Ats.Attachments.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

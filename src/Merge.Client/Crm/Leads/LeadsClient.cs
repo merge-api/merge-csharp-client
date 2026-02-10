@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,7 +15,7 @@ public partial class LeadsClient
     /// <summary>
     /// Returns a list of `Lead` objects.
     /// </summary>
-    private async Task<PaginatedLeadList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedLeadList> ListInternalAsync(
         LeadsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -136,7 +134,7 @@ public partial class LeadsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         LeadsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -217,9 +215,29 @@ public partial class LeadsClient
     /// Returns a list of `Lead` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Leads.ListAsync(new LeadsListRequest());
+    /// await client.Crm.Leads.ListAsync(
+    ///     new LeadsListRequest
+    ///     {
+    ///         ConvertedAccountId = "converted_account_id",
+    ///         ConvertedContactId = "converted_contact_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EmailAddresses = "email_addresses",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         OwnerId = "owner_id",
+    ///         PageSize = 1,
+    ///         PhoneNumbers = "phone_numbers",
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Lead>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Lead>> ListAsync(
         LeadsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -244,8 +262,8 @@ public partial class LeadsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -256,9 +274,16 @@ public partial class LeadsClient
     /// Creates a `Lead` object with the given values.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Leads.CreateAsync(new LeadEndpointRequest { Model = new LeadRequest() });
+    /// await client.Crm.Leads.CreateAsync(
+    ///     new LeadEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new LeadRequest(),
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<LeadResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<LeadResponse> CreateAsync(
         LeadEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -315,9 +340,17 @@ public partial class LeadsClient
     /// Returns a `Lead` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Leads.RetrieveAsync("id", new LeadsRetrieveRequest());
+    /// await client.Crm.Leads.RetrieveAsync(
+    ///     "id",
+    ///     new LeadsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Lead> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Lead> RetrieveAsync(
         string id,
         LeadsRetrieveRequest request,
         RequestOptions? options = null,
@@ -385,7 +418,7 @@ public partial class LeadsClient
     /// <example><code>
     /// await client.Crm.Leads.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -429,9 +462,21 @@ public partial class LeadsClient
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Leads.RemoteFieldClassesListAsync(new LeadsRemoteFieldClassesListRequest());
+    /// await client.Crm.Leads.RemoteFieldClassesListAsync(
+    ///     new LeadsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         LeadsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -456,8 +501,8 @@ public partial class LeadsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

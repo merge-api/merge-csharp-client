@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class TimeOffBalancesClient
     /// <summary>
     /// Returns a list of `TimeOffBalance` objects.
     /// </summary>
-    private async Task<PaginatedTimeOffBalanceList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTimeOffBalanceList> ListInternalAsync(
         TimeOffBalancesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -127,9 +125,27 @@ public partial class TimeOffBalancesClient
     /// Returns a list of `TimeOffBalance` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.TimeOffBalances.ListAsync(new TimeOffBalancesListRequest());
+    /// await client.Hris.TimeOffBalances.ListAsync(
+    ///     new TimeOffBalancesListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EmployeeId = "employee_id",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         PolicyType = TimeOffBalancesListRequestPolicyType.Bereavement,
+    ///         RemoteFields = "policy_type",
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = "policy_type",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<TimeOffBalance>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<TimeOffBalance>> ListAsync(
         TimeOffBalancesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -154,8 +170,8 @@ public partial class TimeOffBalancesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -166,9 +182,18 @@ public partial class TimeOffBalancesClient
     /// Returns a `TimeOffBalance` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.TimeOffBalances.RetrieveAsync("id", new TimeOffBalancesRetrieveRequest());
+    /// await client.Hris.TimeOffBalances.RetrieveAsync(
+    ///     "id",
+    ///     new TimeOffBalancesRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "policy_type",
+    ///         ShowEnumOrigins = "policy_type",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<TimeOffBalance> RetrieveAsync(
+    public async System.Threading.Tasks.Task<TimeOffBalance> RetrieveAsync(
         string id,
         TimeOffBalancesRetrieveRequest request,
         RequestOptions? options = null,

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class EmploymentsClient
     /// <summary>
     /// Returns a list of `Employment` objects.
     /// </summary>
-    private async Task<PaginatedEmploymentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEmploymentList> ListInternalAsync(
         EmploymentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -127,9 +125,27 @@ public partial class EmploymentsClient
     /// Returns a list of `Employment` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Employments.ListAsync(new EmploymentsListRequest());
+    /// await client.Hris.Employments.ListAsync(
+    ///     new EmploymentsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EmployeeId = "employee_id",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         OrderBy = EmploymentsListRequestOrderBy.EffectiveDateDescending,
+    ///         PageSize = 1,
+    ///         RemoteFields = EmploymentsListRequestRemoteFields.EmploymentType,
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = EmploymentsListRequestShowEnumOrigins.EmploymentType,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Employment>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Employment>> ListAsync(
         EmploymentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -154,8 +170,8 @@ public partial class EmploymentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -166,9 +182,18 @@ public partial class EmploymentsClient
     /// Returns an `Employment` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Employments.RetrieveAsync("id", new EmploymentsRetrieveRequest());
+    /// await client.Hris.Employments.RetrieveAsync(
+    ///     "id",
+    ///     new EmploymentsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = EmploymentsRetrieveRequestRemoteFields.EmploymentType,
+    ///         ShowEnumOrigins = EmploymentsRetrieveRequestShowEnumOrigins.EmploymentType,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Employment> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Employment> RetrieveAsync(
         string id,
         EmploymentsRetrieveRequest request,
         RequestOptions? options = null,

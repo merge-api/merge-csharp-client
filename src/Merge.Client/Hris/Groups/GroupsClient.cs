@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class GroupsClient
     /// <summary>
     /// Returns a list of `Group` objects.
     /// </summary>
-    private async Task<PaginatedGroupList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedGroupList> ListInternalAsync(
         GroupsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -130,9 +128,28 @@ public partial class GroupsClient
     /// Returns a list of `Group` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Groups.ListAsync(new GroupsListRequest());
+    /// await client.Hris.Groups.ListAsync(
+    ///     new Merge.Client.Hris.GroupsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonlyUsedAsTeam = "is_commonly_used_as_team",
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Names = "names",
+    ///         PageSize = 1,
+    ///         RemoteFields = "type",
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = "type",
+    ///         Types = "types",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Group>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Group>> ListAsync(
         GroupsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -157,8 +174,8 @@ public partial class GroupsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -169,9 +186,18 @@ public partial class GroupsClient
     /// Returns a `Group` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Groups.RetrieveAsync("id", new GroupsRetrieveRequest());
+    /// await client.Hris.Groups.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Hris.GroupsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "type",
+    ///         ShowEnumOrigins = "type",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Group> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Group> RetrieveAsync(
         string id,
         GroupsRetrieveRequest request,
         RequestOptions? options = null,

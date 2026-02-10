@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class TransactionsClient
     /// <summary>
     /// Returns a list of `Transaction` objects.
     /// </summary>
-    private async Task<PaginatedTransactionList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTransactionList> ListInternalAsync(
         TransactionsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -127,9 +125,26 @@ public partial class TransactionsClient
     /// Returns a list of `Transaction` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Transactions.ListAsync(new TransactionsListRequest());
+    /// await client.Accounting.Transactions.ListAsync(
+    ///     new TransactionsListRequest
+    ///     {
+    ///         CompanyId = "company_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///         TransactionDateAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         TransactionDateBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Transaction>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Transaction>> ListAsync(
         TransactionsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -154,8 +169,8 @@ public partial class TransactionsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -166,9 +181,12 @@ public partial class TransactionsClient
     /// Returns a `Transaction` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Transactions.RetrieveAsync("id", new TransactionsRetrieveRequest());
+    /// await client.Accounting.Transactions.RetrieveAsync(
+    ///     "id",
+    ///     new TransactionsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<Transaction> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Transaction> RetrieveAsync(
         string id,
         TransactionsRetrieveRequest request,
         RequestOptions? options = null,

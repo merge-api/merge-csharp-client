@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -17,7 +15,7 @@ public partial class CommentsClient
     /// <summary>
     /// Returns a list of `Comment` objects.
     /// </summary>
-    private async Task<PaginatedCommentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCommentList> ListInternalAsync(
         CommentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -121,9 +119,25 @@ public partial class CommentsClient
     /// Returns a list of `Comment` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Comments.ListAsync(new CommentsListRequest());
+    /// await client.Ticketing.Comments.ListAsync(
+    ///     new CommentsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteCreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         RemoteId = "remote_id",
+    ///         TicketId = "ticket_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Comment>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Comment>> ListAsync(
         CommentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -148,8 +162,8 @@ public partial class CommentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -161,10 +175,15 @@ public partial class CommentsClient
     /// </summary>
     /// <example><code>
     /// await client.Ticketing.Comments.CreateAsync(
-    ///     new CommentEndpointRequest { Model = new CommentRequest() }
+    ///     new CommentEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new CommentRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<CommentResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<CommentResponse> CreateAsync(
         CommentEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -221,9 +240,12 @@ public partial class CommentsClient
     /// Returns a `Comment` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Comments.RetrieveAsync("id", new CommentsRetrieveRequest());
+    /// await client.Ticketing.Comments.RetrieveAsync(
+    ///     "id",
+    ///     new CommentsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<Comment> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Comment> RetrieveAsync(
         string id,
         CommentsRetrieveRequest request,
         RequestOptions? options = null,
@@ -285,7 +307,7 @@ public partial class CommentsClient
     /// <example><code>
     /// await client.Ticketing.Comments.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

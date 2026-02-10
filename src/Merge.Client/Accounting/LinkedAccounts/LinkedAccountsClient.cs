@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class LinkedAccountsClient
     /// <summary>
     /// List linked accounts for your organization.
     /// </summary>
-    private async Task<PaginatedAccountDetailsAndActionsList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAccountDetailsAndActionsList> ListInternalAsync(
         LinkedAccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -116,9 +114,26 @@ public partial class LinkedAccountsClient
     /// List linked accounts for your organization.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.LinkedAccounts.ListAsync(new LinkedAccountsListRequest());
+    /// await client.Accounting.LinkedAccounts.ListAsync(
+    ///     new Merge.Client.Accounting.LinkedAccountsListRequest
+    ///     {
+    ///         Category = Merge.Client.Accounting.LinkedAccountsListRequestCategory.Accounting,
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EndUserEmailAddress = "end_user_email_address",
+    ///         EndUserOrganizationName = "end_user_organization_name",
+    ///         EndUserOriginId = "end_user_origin_id",
+    ///         EndUserOriginIds = "end_user_origin_ids",
+    ///         Id = "id",
+    ///         Ids = "ids",
+    ///         IncludeDuplicates = true,
+    ///         IntegrationName = "integration_name",
+    ///         IsTestAccount = "is_test_account",
+    ///         PageSize = 1,
+    ///         Status = "status",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<AccountDetailsAndActions>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<AccountDetailsAndActions>> ListAsync(
         LinkedAccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -143,8 +158,8 @@ public partial class LinkedAccountsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

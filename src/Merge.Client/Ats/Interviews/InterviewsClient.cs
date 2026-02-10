@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class InterviewsClient
     /// <summary>
     /// Returns a list of `ScheduledInterview` objects.
     /// </summary>
-    private async Task<PaginatedScheduledInterviewList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedScheduledInterviewList> ListInternalAsync(
         InterviewsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -135,9 +133,29 @@ public partial class InterviewsClient
     /// Returns a list of `ScheduledInterview` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Interviews.ListAsync(new InterviewsListRequest());
+    /// await client.Ats.Interviews.ListAsync(
+    ///     new InterviewsListRequest
+    ///     {
+    ///         ApplicationId = "application_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         JobId = "job_id",
+    ///         JobInterviewStageId = "job_interview_stage_id",
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         OrganizerId = "organizer_id",
+    ///         PageSize = 1,
+    ///         RemoteFields = "status",
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = "status",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<ScheduledInterview>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<ScheduledInterview>> ListAsync(
         InterviewsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -162,8 +180,8 @@ public partial class InterviewsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -177,12 +195,14 @@ public partial class InterviewsClient
     /// await client.Ats.Interviews.CreateAsync(
     ///     new ScheduledInterviewEndpointRequest
     ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
     ///         Model = new ScheduledInterviewRequest(),
     ///         RemoteUserId = "remote_user_id",
     ///     }
     /// );
     /// </code></example>
-    public async Task<ScheduledInterviewResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<ScheduledInterviewResponse> CreateAsync(
         ScheduledInterviewEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -239,9 +259,18 @@ public partial class InterviewsClient
     /// Returns a `ScheduledInterview` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Interviews.RetrieveAsync("id", new InterviewsRetrieveRequest());
+    /// await client.Ats.Interviews.RetrieveAsync(
+    ///     "id",
+    ///     new InterviewsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "status",
+    ///         ShowEnumOrigins = "status",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<ScheduledInterview> RetrieveAsync(
+    public async System.Threading.Tasks.Task<ScheduledInterview> RetrieveAsync(
         string id,
         InterviewsRetrieveRequest request,
         RequestOptions? options = null,
@@ -311,7 +340,7 @@ public partial class InterviewsClient
     /// <example><code>
     /// await client.Ats.Interviews.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class ScorecardsClient
     /// <summary>
     /// Returns a list of `Scorecard` objects.
     /// </summary>
-    private async Task<PaginatedScorecardList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedScorecardList> ListInternalAsync(
         ScorecardsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -131,9 +129,28 @@ public partial class ScorecardsClient
     /// Returns a list of `Scorecard` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Scorecards.ListAsync(new ScorecardsListRequest());
+    /// await client.Ats.Scorecards.ListAsync(
+    ///     new ScorecardsListRequest
+    ///     {
+    ///         ApplicationId = "application_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         InterviewId = "interview_id",
+    ///         InterviewerId = "interviewer_id",
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteFields = "overall_recommendation",
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = "overall_recommendation",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Scorecard>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Scorecard>> ListAsync(
         ScorecardsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -158,8 +175,8 @@ public partial class ScorecardsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -170,9 +187,18 @@ public partial class ScorecardsClient
     /// Returns a `Scorecard` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Scorecards.RetrieveAsync("id", new ScorecardsRetrieveRequest());
+    /// await client.Ats.Scorecards.RetrieveAsync(
+    ///     "id",
+    ///     new ScorecardsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "overall_recommendation",
+    ///         ShowEnumOrigins = "overall_recommendation",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Scorecard> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Scorecard> RetrieveAsync(
         string id,
         ScorecardsRetrieveRequest request,
         RequestOptions? options = null,

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class BankFeedAccountsClient
     /// <summary>
     /// Returns a list of `BankFeedAccount` objects.
     /// </summary>
-    private async Task<PaginatedBankFeedAccountList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedBankFeedAccountList> ListInternalAsync(
         BankFeedAccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -84,9 +82,18 @@ public partial class BankFeedAccountsClient
     /// Returns a list of `BankFeedAccount` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.BankFeedAccounts.ListAsync(new BankFeedAccountsListRequest());
+    /// await client.Accounting.BankFeedAccounts.ListAsync(
+    ///     new BankFeedAccountsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         PageSize = 1,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<BankFeedAccount>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<BankFeedAccount>> ListAsync(
         BankFeedAccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -111,8 +118,8 @@ public partial class BankFeedAccountsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -124,10 +131,15 @@ public partial class BankFeedAccountsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.BankFeedAccounts.CreateAsync(
-    ///     new BankFeedAccountEndpointRequest { Model = new BankFeedAccountRequest() }
+    ///     new BankFeedAccountEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new BankFeedAccountRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<BankFeedAccountResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<BankFeedAccountResponse> CreateAsync(
         BankFeedAccountEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -184,9 +196,12 @@ public partial class BankFeedAccountsClient
     /// Returns a `BankFeedAccount` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.BankFeedAccounts.RetrieveAsync("id", new BankFeedAccountsRetrieveRequest());
+    /// await client.Accounting.BankFeedAccounts.RetrieveAsync(
+    ///     "id",
+    ///     new BankFeedAccountsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<BankFeedAccount> RetrieveAsync(
+    public async System.Threading.Tasks.Task<BankFeedAccount> RetrieveAsync(
         string id,
         BankFeedAccountsRetrieveRequest request,
         RequestOptions? options = null,
@@ -247,7 +262,7 @@ public partial class BankFeedAccountsClient
     /// <example><code>
     /// await client.Accounting.BankFeedAccounts.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

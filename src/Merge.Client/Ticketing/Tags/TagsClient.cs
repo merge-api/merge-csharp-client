@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -17,7 +15,7 @@ public partial class TagsClient
     /// <summary>
     /// Returns a list of `Tag` objects.
     /// </summary>
-    private async Task<PaginatedTagList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTagList> ListInternalAsync(
         TagsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -110,9 +108,23 @@ public partial class TagsClient
     /// Returns a list of `Tag` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Tags.ListAsync(new TagsListRequest());
+    /// await client.Ticketing.Tags.ListAsync(
+    ///     new Merge.Client.Ticketing.TagsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Tag>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Tag>> ListAsync(
         TagsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +149,8 @@ public partial class TagsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -149,9 +161,12 @@ public partial class TagsClient
     /// Returns a `Tag` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Tags.RetrieveAsync("id", new TagsRetrieveRequest());
+    /// await client.Ticketing.Tags.RetrieveAsync(
+    ///     "id",
+    ///     new TagsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<Tag> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Tag> RetrieveAsync(
         string id,
         TagsRetrieveRequest request,
         RequestOptions? options = null,

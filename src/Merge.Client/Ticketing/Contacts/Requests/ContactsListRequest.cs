@@ -25,6 +25,12 @@ public record ContactsListRequest
     public string? Cursor { get; set; }
 
     /// <summary>
+    /// If provided, will only return Contacts that match this email.
+    /// </summary>
+    [JsonIgnore]
+    public string? EmailAddress { get; set; }
+
+    /// <summary>
     /// Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     /// </summary>
     [JsonIgnore]

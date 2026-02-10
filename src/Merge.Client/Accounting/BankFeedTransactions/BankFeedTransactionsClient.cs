@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class BankFeedTransactionsClient
     /// <summary>
     /// Returns a list of `BankFeedTransaction` objects.
     /// </summary>
-    private async Task<PaginatedBankFeedTransactionList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedBankFeedTransactionList> ListInternalAsync(
         BankFeedTransactionsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -115,9 +113,24 @@ public partial class BankFeedTransactionsClient
     /// Returns a list of `BankFeedTransaction` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.BankFeedTransactions.ListAsync(new BankFeedTransactionsListRequest());
+    /// await client.Accounting.BankFeedTransactions.ListAsync(
+    ///     new BankFeedTransactionsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         IsProcessed = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<BankFeedTransaction>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<BankFeedTransaction>> ListAsync(
         BankFeedTransactionsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +155,8 @@ public partial class BankFeedTransactionsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -155,10 +168,15 @@ public partial class BankFeedTransactionsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.BankFeedTransactions.CreateAsync(
-    ///     new BankFeedTransactionEndpointRequest { Model = new BankFeedTransactionRequestRequest() }
+    ///     new BankFeedTransactionEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new BankFeedTransactionRequestRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<BankFeedTransactionResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<BankFeedTransactionResponse> CreateAsync(
         BankFeedTransactionEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -217,10 +235,10 @@ public partial class BankFeedTransactionsClient
     /// <example><code>
     /// await client.Accounting.BankFeedTransactions.RetrieveAsync(
     ///     "id",
-    ///     new BankFeedTransactionsRetrieveRequest()
+    ///     new BankFeedTransactionsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
     /// );
     /// </code></example>
-    public async Task<BankFeedTransaction> RetrieveAsync(
+    public async System.Threading.Tasks.Task<BankFeedTransaction> RetrieveAsync(
         string id,
         BankFeedTransactionsRetrieveRequest request,
         RequestOptions? options = null,
@@ -282,7 +300,7 @@ public partial class BankFeedTransactionsClient
     /// <example><code>
     /// await client.Accounting.BankFeedTransactions.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

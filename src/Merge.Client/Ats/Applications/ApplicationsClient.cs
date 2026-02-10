@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class ApplicationsClient
     /// <summary>
     /// Returns a list of `Application` objects.
     /// </summary>
-    private async Task<PaginatedApplicationList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedApplicationList> ListInternalAsync(
         ApplicationsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -135,9 +133,29 @@ public partial class ApplicationsClient
     /// Returns a list of `Application` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Applications.ListAsync(new ApplicationsListRequest());
+    /// await client.Ats.Applications.ListAsync(
+    ///     new ApplicationsListRequest
+    ///     {
+    ///         CandidateId = "candidate_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreditedToId = "credited_to_id",
+    ///         CurrentStageId = "current_stage_id",
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         JobId = "job_id",
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RejectReasonId = "reject_reason_id",
+    ///         RemoteId = "remote_id",
+    ///         Source = "source",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Application>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Application>> ListAsync(
         ApplicationsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -162,8 +180,8 @@ public partial class ApplicationsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -180,12 +198,14 @@ public partial class ApplicationsClient
     /// await client.Ats.Applications.CreateAsync(
     ///     new ApplicationEndpointRequest
     ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
     ///         Model = new ApplicationRequest(),
     ///         RemoteUserId = "remote_user_id",
     ///     }
     /// );
     /// </code></example>
-    public async Task<ApplicationResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<ApplicationResponse> CreateAsync(
         ApplicationEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -242,9 +262,12 @@ public partial class ApplicationsClient
     /// Returns an `Application` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Applications.RetrieveAsync("id", new ApplicationsRetrieveRequest());
+    /// await client.Ats.Applications.RetrieveAsync(
+    ///     "id",
+    ///     new ApplicationsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<Application> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Application> RetrieveAsync(
         string id,
         ApplicationsRetrieveRequest request,
         RequestOptions? options = null,
@@ -304,9 +327,12 @@ public partial class ApplicationsClient
     /// Updates the `current_stage` field of an `Application` object
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Applications.ChangeStageCreateAsync("id", new UpdateApplicationStageRequest());
+    /// await client.Ats.Applications.ChangeStageCreateAsync(
+    ///     "id",
+    ///     new UpdateApplicationStageRequest { IsDebugMode = true, RunAsync = true }
+    /// );
     /// </code></example>
-    public async Task<ApplicationResponse> ChangeStageCreateAsync(
+    public async System.Threading.Tasks.Task<ApplicationResponse> ChangeStageCreateAsync(
         string id,
         UpdateApplicationStageRequest request,
         RequestOptions? options = null,
@@ -367,9 +393,14 @@ public partial class ApplicationsClient
     /// Returns metadata for `Application` POSTs.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Applications.MetaPostRetrieveAsync(new ApplicationsMetaPostRetrieveRequest());
+    /// await client.Ats.Applications.MetaPostRetrieveAsync(
+    ///     new ApplicationsMetaPostRetrieveRequest
+    ///     {
+    ///         ApplicationRemoteTemplateId = "application_remote_template_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         ApplicationsMetaPostRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

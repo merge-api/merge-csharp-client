@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class AccountingPeriodsClient
     /// <summary>
     /// Returns a list of `AccountingPeriod` objects.
     /// </summary>
-    private async Task<PaginatedAccountingPeriodList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAccountingPeriodList> ListInternalAsync(
         AccountingPeriodsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -84,9 +82,18 @@ public partial class AccountingPeriodsClient
     /// Returns a list of `AccountingPeriod` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.AccountingPeriods.ListAsync(new AccountingPeriodsListRequest());
+    /// await client.Accounting.AccountingPeriods.ListAsync(
+    ///     new AccountingPeriodsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         PageSize = 1,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<AccountingPeriod>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<AccountingPeriod>> ListAsync(
         AccountingPeriodsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -111,8 +118,8 @@ public partial class AccountingPeriodsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -125,10 +132,10 @@ public partial class AccountingPeriodsClient
     /// <example><code>
     /// await client.Accounting.AccountingPeriods.RetrieveAsync(
     ///     "id",
-    ///     new AccountingPeriodsRetrieveRequest()
+    ///     new AccountingPeriodsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
     /// );
     /// </code></example>
-    public async Task<AccountingPeriod> RetrieveAsync(
+    public async System.Threading.Tasks.Task<AccountingPeriod> RetrieveAsync(
         string id,
         AccountingPeriodsRetrieveRequest request,
         RequestOptions? options = null,

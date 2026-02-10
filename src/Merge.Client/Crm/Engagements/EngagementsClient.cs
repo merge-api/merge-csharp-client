@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,7 +15,7 @@ public partial class EngagementsClient
     /// <summary>
     /// Returns a list of `Engagement` objects.
     /// </summary>
-    private async Task<PaginatedEngagementList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEngagementList> ListInternalAsync(
         EngagementsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -126,7 +124,7 @@ public partial class EngagementsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         EngagementsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -207,9 +205,26 @@ public partial class EngagementsClient
     /// Returns a list of `Engagement` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Engagements.ListAsync(new EngagementsListRequest());
+    /// await client.Crm.Engagements.ListAsync(
+    ///     new EngagementsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///         StartedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         StartedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Engagement>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Engagement>> ListAsync(
         EngagementsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -234,8 +249,8 @@ public partial class EngagementsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -247,10 +262,15 @@ public partial class EngagementsClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.Engagements.CreateAsync(
-    ///     new EngagementEndpointRequest { Model = new EngagementRequest() }
+    ///     new EngagementEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new EngagementRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<EngagementResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<EngagementResponse> CreateAsync(
         EngagementEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -307,9 +327,17 @@ public partial class EngagementsClient
     /// Returns an `Engagement` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Engagements.RetrieveAsync("id", new EngagementsRetrieveRequest());
+    /// await client.Crm.Engagements.RetrieveAsync(
+    ///     "id",
+    ///     new EngagementsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Engagement> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Engagement> RetrieveAsync(
         string id,
         EngagementsRetrieveRequest request,
         RequestOptions? options = null,
@@ -377,10 +405,15 @@ public partial class EngagementsClient
     /// <example><code>
     /// await client.Crm.Engagements.PartialUpdateAsync(
     ///     "id",
-    ///     new PatchedEngagementEndpointRequest { Model = new PatchedEngagementRequest() }
+    ///     new PatchedEngagementEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new PatchedEngagementRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<EngagementResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<EngagementResponse> PartialUpdateAsync(
         string id,
         PatchedEngagementEndpointRequest request,
         RequestOptions? options = null,
@@ -443,7 +476,7 @@ public partial class EngagementsClient
     /// <example><code>
     /// await client.Crm.Engagements.MetaPatchRetrieveAsync("id");
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -493,7 +526,7 @@ public partial class EngagementsClient
     /// <example><code>
     /// await client.Crm.Engagements.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -538,10 +571,20 @@ public partial class EngagementsClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.Engagements.RemoteFieldClassesListAsync(
-    ///     new EngagementsRemoteFieldClassesListRequest()
+    ///     new EngagementsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         EngagementsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -566,8 +609,8 @@ public partial class EngagementsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

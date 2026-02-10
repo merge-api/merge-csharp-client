@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -19,10 +17,10 @@ public partial class GenerateKeyClient
     /// </summary>
     /// <example><code>
     /// await client.Hris.GenerateKey.CreateAsync(
-    ///     new GenerateRemoteKeyRequest { Name = "Remote Deployment Key 1" }
+    ///     new Merge.Client.Hris.GenerateRemoteKeyRequest { Name = "Remote Deployment Key 1" }
     /// );
     /// </code></example>
-    public async Task<RemoteKey> CreateAsync(
+    public async System.Threading.Tasks.Task<RemoteKey> CreateAsync(
         GenerateRemoteKeyRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

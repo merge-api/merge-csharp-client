@@ -16,7 +16,7 @@ public record AccountsListRequest
     /// If provided, will only return accounts with this classification.
     /// </summary>
     [JsonIgnore]
-    public string? Classification { get; set; }
+    public AccountsListRequestClassification? Classification { get; set; }
 
     /// <summary>
     /// If provided, will only return accounts for this company.
@@ -112,7 +112,7 @@ public record AccountsListRequest
     /// If provided, will only return accounts with this status.
     /// </summary>
     [JsonIgnore]
-    public string? Status { get; set; }
+    public AccountsListRequestStatus? Status { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

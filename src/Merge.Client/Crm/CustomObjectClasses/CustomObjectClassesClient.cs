@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,7 +15,7 @@ public partial class CustomObjectClassesClient
     /// <summary>
     /// Returns a list of `CustomObjectClass` objects.
     /// </summary>
-    private async Task<PaginatedCustomObjectClassList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCustomObjectClassList> ListInternalAsync(
         CustomObjectClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -111,9 +109,23 @@ public partial class CustomObjectClassesClient
     /// Returns a list of `CustomObjectClass` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.CustomObjectClasses.ListAsync(new CustomObjectClassesListRequest());
+    /// await client.Crm.CustomObjectClasses.ListAsync(
+    ///     new CustomObjectClassesListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<CustomObjectClass>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<CustomObjectClass>> ListAsync(
         CustomObjectClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -138,8 +150,8 @@ public partial class CustomObjectClassesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -150,9 +162,12 @@ public partial class CustomObjectClassesClient
     /// Returns a `CustomObjectClass` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.CustomObjectClasses.RetrieveAsync("id", new CustomObjectClassesRetrieveRequest());
+    /// await client.Crm.CustomObjectClasses.RetrieveAsync(
+    ///     "id",
+    ///     new CustomObjectClassesRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<CustomObjectClass> RetrieveAsync(
+    public async System.Threading.Tasks.Task<CustomObjectClass> RetrieveAsync(
         string id,
         CustomObjectClassesRetrieveRequest request,
         RequestOptions? options = null,

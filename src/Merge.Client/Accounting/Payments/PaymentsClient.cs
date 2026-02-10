@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class PaymentsClient
     /// <summary>
     /// Returns a list of `Payment` objects.
     /// </summary>
-    private async Task<PaginatedPaymentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedPaymentList> ListInternalAsync(
         PaymentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -140,7 +138,7 @@ public partial class PaymentsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListInternalAsync(
         PaymentsLineItemsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -214,7 +212,7 @@ public partial class PaymentsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         PaymentsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -289,9 +287,29 @@ public partial class PaymentsClient
     /// Returns a list of `Payment` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Payments.ListAsync(new PaymentsListRequest());
+    /// await client.Accounting.Payments.ListAsync(
+    ///     new PaymentsListRequest
+    ///     {
+    ///         AccountId = "account_id",
+    ///         CompanyId = "company_id",
+    ///         ContactId = "contact_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///         TransactionDateAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         TransactionDateBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Payment>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Payment>> ListAsync(
         PaymentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -316,8 +334,8 @@ public partial class PaymentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -329,10 +347,15 @@ public partial class PaymentsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Payments.CreateAsync(
-    ///     new PaymentEndpointRequest { Model = new PaymentRequest() }
+    ///     new PaymentEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new PaymentRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<PaymentResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<PaymentResponse> CreateAsync(
         PaymentEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -389,9 +412,17 @@ public partial class PaymentsClient
     /// Returns a `Payment` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Payments.RetrieveAsync("id", new PaymentsRetrieveRequest());
+    /// await client.Accounting.Payments.RetrieveAsync(
+    ///     "id",
+    ///     new PaymentsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Payment> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Payment> RetrieveAsync(
         string id,
         PaymentsRetrieveRequest request,
         RequestOptions? options = null,
@@ -459,10 +490,15 @@ public partial class PaymentsClient
     /// <example><code>
     /// await client.Accounting.Payments.PartialUpdateAsync(
     ///     "id",
-    ///     new PatchedPaymentEndpointRequest { Model = new PatchedPaymentRequest() }
+    ///     new PatchedPaymentEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new PatchedPaymentRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<PaymentResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<PaymentResponse> PartialUpdateAsync(
         string id,
         PatchedPaymentEndpointRequest request,
         RequestOptions? options = null,
@@ -524,10 +560,21 @@ public partial class PaymentsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Payments.LineItemsRemoteFieldClassesListAsync(
-    ///     new PaymentsLineItemsRemoteFieldClassesListRequest()
+    ///     new PaymentsLineItemsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> LineItemsRemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<
+        Pager<RemoteFieldClass>
+    > LineItemsRemoteFieldClassesListAsync(
         PaymentsLineItemsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -552,8 +599,8 @@ public partial class PaymentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -566,7 +613,7 @@ public partial class PaymentsClient
     /// <example><code>
     /// await client.Accounting.Payments.MetaPatchRetrieveAsync("id");
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -616,7 +663,7 @@ public partial class PaymentsClient
     /// <example><code>
     /// await client.Accounting.Payments.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -661,10 +708,19 @@ public partial class PaymentsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Payments.RemoteFieldClassesListAsync(
-    ///     new PaymentsRemoteFieldClassesListRequest()
+    ///     new PaymentsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         PaymentsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -689,8 +745,8 @@ public partial class PaymentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

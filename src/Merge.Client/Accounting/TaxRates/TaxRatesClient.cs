@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class TaxRatesClient
     /// <summary>
     /// Returns a list of `TaxRate` objects.
     /// </summary>
-    private async Task<PaginatedTaxRateList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTaxRateList> ListInternalAsync(
         TaxRatesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -119,9 +117,25 @@ public partial class TaxRatesClient
     /// Returns a list of `TaxRate` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.TaxRates.ListAsync(new TaxRatesListRequest());
+    /// await client.Accounting.TaxRates.ListAsync(
+    ///     new TaxRatesListRequest
+    ///     {
+    ///         CompanyId = "company_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Name = "name",
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<TaxRate>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<TaxRate>> ListAsync(
         TaxRatesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -146,8 +160,8 @@ public partial class TaxRatesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -158,9 +172,12 @@ public partial class TaxRatesClient
     /// Returns a `TaxRate` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.TaxRates.RetrieveAsync("id", new TaxRatesRetrieveRequest());
+    /// await client.Accounting.TaxRates.RetrieveAsync(
+    ///     "id",
+    ///     new TaxRatesRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<TaxRate> RetrieveAsync(
+    public async System.Threading.Tasks.Task<TaxRate> RetrieveAsync(
         string id,
         TaxRatesRetrieveRequest request,
         RequestOptions? options = null,

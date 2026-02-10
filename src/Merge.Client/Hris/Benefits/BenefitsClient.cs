@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class BenefitsClient
     /// <summary>
     /// Returns a list of `Benefit` objects.
     /// </summary>
-    private async Task<PaginatedBenefitList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedBenefitList> ListInternalAsync(
         BenefitsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -115,9 +113,24 @@ public partial class BenefitsClient
     /// Returns a list of `Benefit` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Benefits.ListAsync(new BenefitsListRequest());
+    /// await client.Hris.Benefits.ListAsync(
+    ///     new BenefitsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EmployeeId = "employee_id",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Benefit>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Benefit>> ListAsync(
         BenefitsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +155,8 @@ public partial class BenefitsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -154,9 +167,12 @@ public partial class BenefitsClient
     /// Returns a `Benefit` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Benefits.RetrieveAsync("id", new BenefitsRetrieveRequest());
+    /// await client.Hris.Benefits.RetrieveAsync(
+    ///     "id",
+    ///     new BenefitsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<Benefit> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Benefit> RetrieveAsync(
         string id,
         BenefitsRetrieveRequest request,
         RequestOptions? options = null,

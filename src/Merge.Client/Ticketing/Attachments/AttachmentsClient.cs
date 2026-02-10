@@ -1,7 +1,4 @@
-using System.IO;
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -18,7 +15,7 @@ public partial class AttachmentsClient
     /// <summary>
     /// Returns a list of `Attachment` objects.
     /// </summary>
-    private async Task<PaginatedAttachmentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAttachmentList> ListInternalAsync(
         AttachmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -122,9 +119,25 @@ public partial class AttachmentsClient
     /// Returns a list of `Attachment` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Attachments.ListAsync(new AttachmentsListRequest());
+    /// await client.Ticketing.Attachments.ListAsync(
+    ///     new Merge.Client.Ticketing.AttachmentsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteCreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         RemoteId = "remote_id",
+    ///         TicketId = "ticket_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Attachment>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Attachment>> ListAsync(
         AttachmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -149,8 +162,8 @@ public partial class AttachmentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -162,10 +175,15 @@ public partial class AttachmentsClient
     /// </summary>
     /// <example><code>
     /// await client.Ticketing.Attachments.CreateAsync(
-    ///     new TicketingAttachmentEndpointRequest { Model = new AttachmentRequest() }
+    ///     new TicketingAttachmentEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new Merge.Client.Ticketing.AttachmentRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<TicketingAttachmentResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<TicketingAttachmentResponse> CreateAsync(
         TicketingAttachmentEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -222,9 +240,16 @@ public partial class AttachmentsClient
     /// Returns an `Attachment` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Attachments.RetrieveAsync("id", new AttachmentsRetrieveRequest());
+    /// await client.Ticketing.Attachments.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Ticketing.AttachmentsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Attachment> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Attachment> RetrieveAsync(
         string id,
         AttachmentsRetrieveRequest request,
         RequestOptions? options = null,
@@ -283,7 +308,7 @@ public partial class AttachmentsClient
     /// <summary>
     /// Returns the `File` content with the given `id` as a stream of bytes.
     /// </summary>
-    public async Task<System.IO.Stream> DownloadRetrieveAsync(
+    public async System.Threading.Tasks.Task<System.IO.Stream> DownloadRetrieveAsync(
         string id,
         AttachmentsDownloadRetrieveRequest request,
         RequestOptions? options = null,
@@ -335,7 +360,7 @@ public partial class AttachmentsClient
     /// <example><code>
     /// await client.Ticketing.Attachments.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

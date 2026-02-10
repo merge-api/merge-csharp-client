@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -18,9 +16,18 @@ public partial class ProjectsClient
     /// Returns a list of `Project` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Projects.ListAsync(new ProjectsListRequest());
+    /// await client.Accounting.Projects.ListAsync(
+    ///     new Merge.Client.Accounting.ProjectsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         PageSize = 1,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<PaginatedProjectList> ListAsync(
+    public async System.Threading.Tasks.Task<PaginatedProjectList> ListAsync(
         ProjectsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -88,9 +95,16 @@ public partial class ProjectsClient
     /// Returns a `Project` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Projects.RetrieveAsync("id", new ProjectsRetrieveRequest());
+    /// await client.Accounting.Projects.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Accounting.ProjectsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Project> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Project> RetrieveAsync(
         string id,
         ProjectsRetrieveRequest request,
         RequestOptions? options = null,

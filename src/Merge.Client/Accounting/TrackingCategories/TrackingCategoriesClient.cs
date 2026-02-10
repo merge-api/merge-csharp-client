@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class TrackingCategoriesClient
     /// <summary>
     /// Returns a list of `TrackingCategory` objects.
     /// </summary>
-    private async Task<PaginatedTrackingCategoryList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTrackingCategoryList> ListInternalAsync(
         TrackingCategoriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -27,7 +25,7 @@ public partial class TrackingCategoriesClient
         _query["expand"] = request.Expand.Select(_value => _value.ToString()).ToList();
         if (request.CategoryType != null)
         {
-            _query["category_type"] = request.CategoryType;
+            _query["category_type"] = request.CategoryType.Value.Stringify();
         }
         if (request.CompanyId != null)
         {
@@ -93,7 +91,7 @@ public partial class TrackingCategoriesClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status;
+            _query["status"] = request.Status.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -135,9 +133,29 @@ public partial class TrackingCategoriesClient
     /// Returns a list of `TrackingCategory` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.TrackingCategories.ListAsync(new TrackingCategoriesListRequest());
+    /// await client.Accounting.TrackingCategories.ListAsync(
+    ///     new TrackingCategoriesListRequest
+    ///     {
+    ///         CategoryType = TrackingCategoriesListRequestCategoryType.Empty,
+    ///         CompanyId = "company_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Name = "name",
+    ///         PageSize = 1,
+    ///         RemoteFields = "status",
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = "status",
+    ///         Status = TrackingCategoriesListRequestStatus.Empty,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<TrackingCategory>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<TrackingCategory>> ListAsync(
         TrackingCategoriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -162,8 +180,8 @@ public partial class TrackingCategoriesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -176,10 +194,16 @@ public partial class TrackingCategoriesClient
     /// <example><code>
     /// await client.Accounting.TrackingCategories.RetrieveAsync(
     ///     "id",
-    ///     new TrackingCategoriesRetrieveRequest()
+    ///     new TrackingCategoriesRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "status",
+    ///         ShowEnumOrigins = "status",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<TrackingCategory> RetrieveAsync(
+    public async System.Threading.Tasks.Task<TrackingCategory> RetrieveAsync(
         string id,
         TrackingCategoriesRetrieveRequest request,
         RequestOptions? options = null,

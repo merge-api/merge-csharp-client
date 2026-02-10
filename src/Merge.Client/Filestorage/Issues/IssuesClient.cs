@@ -1,0 +1,231 @@
+using System.Text.Json;
+using Merge.Client.Core;
+
+namespace Merge.Client.Filestorage;
+
+public partial class IssuesClient
+{
+    private RawClient _client;
+
+    internal IssuesClient(RawClient client)
+    {
+        _client = client;
+    }
+
+    /// <summary>
+    /// Gets all issues for Organization.
+    /// </summary>
+    private async System.Threading.Tasks.Task<PaginatedIssueList> ListInternalAsync(
+        IssuesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.AccountToken != null)
+        {
+            _query["account_token"] = request.AccountToken;
+        }
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.EndDate != null)
+        {
+            _query["end_date"] = request.EndDate;
+        }
+        if (request.EndUserOrganizationName != null)
+        {
+            _query["end_user_organization_name"] = request.EndUserOrganizationName;
+        }
+        if (request.FirstIncidentTimeAfter != null)
+        {
+            _query["first_incident_time_after"] = request.FirstIncidentTimeAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
+        }
+        if (request.FirstIncidentTimeBefore != null)
+        {
+            _query["first_incident_time_before"] = request.FirstIncidentTimeBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
+        }
+        if (request.IncludeMuted != null)
+        {
+            _query["include_muted"] = request.IncludeMuted;
+        }
+        if (request.IntegrationName != null)
+        {
+            _query["integration_name"] = request.IntegrationName;
+        }
+        if (request.LastIncidentTimeAfter != null)
+        {
+            _query["last_incident_time_after"] = request.LastIncidentTimeAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
+        }
+        if (request.LastIncidentTimeBefore != null)
+        {
+            _query["last_incident_time_before"] = request.LastIncidentTimeBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
+        }
+        if (request.LinkedAccountId != null)
+        {
+            _query["linked_account_id"] = request.LinkedAccountId;
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.Value.ToString();
+        }
+        if (request.StartDate != null)
+        {
+            _query["start_date"] = request.StartDate;
+        }
+        if (request.Status != null)
+        {
+            _query["status"] = request.Status.Value.Stringify();
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "filestorage/v1/issues",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedIssueList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Gets all issues for Organization.
+    /// </summary>
+    /// <example><code>
+    /// await client.Filestorage.Issues.ListAsync(
+    ///     new Merge.Client.Filestorage.IssuesListRequest
+    ///     {
+    ///         AccountToken = "account_token",
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EndDate = "end_date",
+    ///         EndUserOrganizationName = "end_user_organization_name",
+    ///         FirstIncidentTimeAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         FirstIncidentTimeBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         IncludeMuted = "include_muted",
+    ///         IntegrationName = "integration_name",
+    ///         LastIncidentTimeAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         LastIncidentTimeBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         LinkedAccountId = "linked_account_id",
+    ///         PageSize = 1,
+    ///         StartDate = "start_date",
+    ///         Status = Merge.Client.Filestorage.IssuesListRequestStatus.Ongoing,
+    ///     }
+    /// );
+    /// </code></example>
+    public async System.Threading.Tasks.Task<Pager<Issue>> ListAsync(
+        IssuesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            IssuesListRequest,
+            RequestOptions?,
+            PaginatedIssueList,
+            string?,
+            Issue
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response.Next,
+                response => response.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
+    }
+
+    /// <summary>
+    /// Get a specific issue.
+    /// </summary>
+    /// <example><code>
+    /// await client.Filestorage.Issues.RetrieveAsync("id");
+    /// </code></example>
+    public async System.Threading.Tasks.Task<Issue> RetrieveAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "filestorage/v1/issues/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<Issue>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+}

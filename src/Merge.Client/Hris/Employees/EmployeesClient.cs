@@ -1,7 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -18,7 +15,7 @@ public partial class EmployeesClient
     /// <summary>
     /// Returns a list of `Employee` objects.
     /// </summary>
-    private async Task<PaginatedEmployeeList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEmployeeList> ListInternalAsync(
         EmployeesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -208,9 +205,45 @@ public partial class EmployeesClient
     /// Returns a list of `Employee` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Employees.ListAsync(new EmployeesListRequest());
+    /// await client.Hris.Employees.ListAsync(
+    ///     new Merge.Client.Hris.EmployeesListRequest
+    ///     {
+    ///         CompanyId = "company_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         DisplayFullName = "display_full_name",
+    ///         EmploymentStatus = EmployeesListRequestEmploymentStatus.Active,
+    ///         EmploymentType = "employment_type",
+    ///         FirstName = "first_name",
+    ///         Groups = "groups",
+    ///         HomeLocationId = "home_location_id",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeSensitiveFields = true,
+    ///         IncludeShellData = true,
+    ///         JobTitle = "job_title",
+    ///         LastName = "last_name",
+    ///         ManagerId = "manager_id",
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         PayGroupId = "pay_group_id",
+    ///         PersonalEmail = "personal_email",
+    ///         RemoteFields = EmployeesListRequestRemoteFields.EmploymentStatus,
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = EmployeesListRequestShowEnumOrigins.EmploymentStatus,
+    ///         StartedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         StartedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         TeamId = "team_id",
+    ///         TerminatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         TerminatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         WorkEmail = "work_email",
+    ///         WorkLocationId = "work_location_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Employee>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Employee>> ListAsync(
         EmployeesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -235,8 +268,8 @@ public partial class EmployeesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -248,10 +281,15 @@ public partial class EmployeesClient
     /// </summary>
     /// <example><code>
     /// await client.Hris.Employees.CreateAsync(
-    ///     new EmployeeEndpointRequest { Model = new EmployeeRequest() }
+    ///     new EmployeeEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new EmployeeRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<EmployeeResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<EmployeeResponse> CreateAsync(
         EmployeeEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -308,9 +346,19 @@ public partial class EmployeesClient
     /// Returns an `Employee` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Employees.RetrieveAsync("id", new EmployeesRetrieveRequest());
+    /// await client.Hris.Employees.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Hris.EmployeesRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeSensitiveFields = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = EmployeesRetrieveRequestRemoteFields.EmploymentStatus,
+    ///         ShowEnumOrigins = EmployeesRetrieveRequestShowEnumOrigins.EmploymentStatus,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Employee> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Employee> RetrieveAsync(
         string id,
         EmployeesRetrieveRequest request,
         RequestOptions? options = null,
@@ -386,10 +434,13 @@ public partial class EmployeesClient
     /// <example><code>
     /// await client.Hris.Employees.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new Merge.Client.Hris.IgnoreCommonModelRequest
+    ///     {
+    ///         Reason = Merge.Client.Hris.ReasonEnum.GeneralCustomerRequest,
+    ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task IgnoreCreateAsync(
+    public async System.Threading.Tasks.Task IgnoreCreateAsync(
         string modelId,
         IgnoreCommonModelRequest request,
         RequestOptions? options = null,
@@ -433,7 +484,7 @@ public partial class EmployeesClient
     /// <example><code>
     /// await client.Hris.Employees.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

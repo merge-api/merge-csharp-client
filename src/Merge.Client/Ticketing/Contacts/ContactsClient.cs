@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -17,7 +15,7 @@ public partial class ContactsClient
     /// <summary>
     /// Returns a list of `Contact` objects.
     /// </summary>
-    private async Task<PaginatedContactList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedContactList> ListInternalAsync(
         ContactsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -38,6 +36,10 @@ public partial class ContactsClient
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
+        }
+        if (request.EmailAddress != null)
+        {
+            _query["email_address"] = request.EmailAddress;
         }
         if (request.IncludeDeletedData != null)
         {
@@ -111,9 +113,24 @@ public partial class ContactsClient
     /// Returns a list of `Contact` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Contacts.ListAsync(new ContactsListRequest());
+    /// await client.Ticketing.Contacts.ListAsync(
+    ///     new Merge.Client.Ticketing.ContactsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EmailAddress = "email_address",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Contact>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Contact>> ListAsync(
         ContactsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -138,8 +155,8 @@ public partial class ContactsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -151,10 +168,15 @@ public partial class ContactsClient
     /// </summary>
     /// <example><code>
     /// await client.Ticketing.Contacts.CreateAsync(
-    ///     new TicketingContactEndpointRequest { Model = new ContactRequest() }
+    ///     new TicketingContactEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new Merge.Client.Ticketing.ContactRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<TicketingContactResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<TicketingContactResponse> CreateAsync(
         TicketingContactEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -211,9 +233,16 @@ public partial class ContactsClient
     /// Returns a `Contact` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.Contacts.RetrieveAsync("id", new ContactsRetrieveRequest());
+    /// await client.Ticketing.Contacts.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Ticketing.ContactsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Contact> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Contact> RetrieveAsync(
         string id,
         ContactsRetrieveRequest request,
         RequestOptions? options = null,
@@ -275,7 +304,7 @@ public partial class ContactsClient
     /// <example><code>
     /// await client.Ticketing.Contacts.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
