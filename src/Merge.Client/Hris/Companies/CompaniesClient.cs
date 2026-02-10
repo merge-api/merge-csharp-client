@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class CompaniesClient
     /// <summary>
     /// Returns a list of `Company` objects.
     /// </summary>
-    private async Task<PaginatedCompanyList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCompanyList> ListInternalAsync(
         CompaniesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -110,9 +108,23 @@ public partial class CompaniesClient
     /// Returns a list of `Company` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Companies.ListAsync(new CompaniesListRequest());
+    /// await client.Hris.Companies.ListAsync(
+    ///     new CompaniesListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Company>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Company>> ListAsync(
         CompaniesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +149,8 @@ public partial class CompaniesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -149,9 +161,12 @@ public partial class CompaniesClient
     /// Returns a `Company` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Companies.RetrieveAsync("id", new CompaniesRetrieveRequest());
+    /// await client.Hris.Companies.RetrieveAsync(
+    ///     "id",
+    ///     new CompaniesRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<Company> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Company> RetrieveAsync(
         string id,
         CompaniesRetrieveRequest request,
         RequestOptions? options = null,

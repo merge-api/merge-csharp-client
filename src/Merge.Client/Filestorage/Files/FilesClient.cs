@@ -1,0 +1,607 @@
+using System.Text.Json;
+using Merge.Client.Core;
+
+namespace Merge.Client.Filestorage;
+
+public partial class FilesClient
+{
+    private RawClient _client;
+
+    internal FilesClient(RawClient client)
+    {
+        _client = client;
+    }
+
+    /// <summary>
+    /// Returns a list of `File` objects.
+    /// </summary>
+    private async System.Threading.Tasks.Task<PaginatedFileList> ListInternalAsync(
+        FilesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
+        if (request.CreatedAfter != null)
+        {
+            _query["created_after"] = request.CreatedAfter.Value.ToString(Constants.DateTimeFormat);
+        }
+        if (request.CreatedBefore != null)
+        {
+            _query["created_before"] = request.CreatedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
+        }
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.DriveId != null)
+        {
+            _query["drive_id"] = request.DriveId;
+        }
+        if (request.FolderId != null)
+        {
+            _query["folder_id"] = request.FolderId;
+        }
+        if (request.IncludeDeletedData != null)
+        {
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
+        }
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
+        if (request.MimeType != null)
+        {
+            _query["mime_type"] = request.MimeType;
+        }
+        if (request.ModifiedAfter != null)
+        {
+            _query["modified_after"] = request.ModifiedAfter.Value.ToString(
+                Constants.DateTimeFormat
+            );
+        }
+        if (request.ModifiedBefore != null)
+        {
+            _query["modified_before"] = request.ModifiedBefore.Value.ToString(
+                Constants.DateTimeFormat
+            );
+        }
+        if (request.Name != null)
+        {
+            _query["name"] = request.Name;
+        }
+        if (request.OrderBy != null)
+        {
+            _query["order_by"] = request.OrderBy.Value.Stringify();
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.Value.ToString();
+        }
+        if (request.RemoteId != null)
+        {
+            _query["remote_id"] = request.RemoteId;
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "filestorage/v1/files",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedFileList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns metadata to construct authenticated file download requests, allowing you to download files directly from the third-party.
+    /// </summary>
+    private async System.Threading.Tasks.Task<PaginatedDownloadRequestMetaList> DownloadRequestMetaListInternalAsync(
+        FilesDownloadRequestMetaListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.CreatedAfter != null)
+        {
+            _query["created_after"] = request.CreatedAfter;
+        }
+        if (request.CreatedBefore != null)
+        {
+            _query["created_before"] = request.CreatedBefore;
+        }
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.IncludeDeletedData != null)
+        {
+            _query["include_deleted_data"] = JsonUtils.Serialize(request.IncludeDeletedData.Value);
+        }
+        if (request.MimeTypes != null)
+        {
+            _query["mime_types"] = request.MimeTypes;
+        }
+        if (request.ModifiedAfter != null)
+        {
+            _query["modified_after"] = request.ModifiedAfter;
+        }
+        if (request.ModifiedBefore != null)
+        {
+            _query["modified_before"] = request.ModifiedBefore;
+        }
+        if (request.OrderBy != null)
+        {
+            _query["order_by"] = request.OrderBy.Value.Stringify();
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.Value.ToString();
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "filestorage/v1/files/download/request-meta",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedDownloadRequestMetaList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a list of `File` objects.
+    /// </summary>
+    /// <example><code>
+    /// await client.Filestorage.Files.ListAsync(
+    ///     new FilesListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         DriveId = "drive_id",
+    ///         FolderId = "folder_id",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         MimeType = "mime_type",
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Name = "name",
+    ///         OrderBy = FilesListRequestOrderBy.CreatedAtDescending,
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
+    /// </code></example>
+    public async System.Threading.Tasks.Task<Pager<File>> ListAsync(
+        FilesListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            FilesListRequest,
+            RequestOptions?,
+            PaginatedFileList,
+            string?,
+            File
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response.Next,
+                response => response.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
+    }
+
+    /// <summary>
+    /// Creates a `File` object with the given values.
+    /// </summary>
+    /// <example><code>
+    /// await client.Filestorage.Files.CreateAsync(
+    ///     new FileStorageFileEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new FileRequest(),
+    ///     }
+    /// );
+    /// </code></example>
+    public async System.Threading.Tasks.Task<FileStorageFileResponse> CreateAsync(
+        FileStorageFileEndpointRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.IsDebugMode != null)
+        {
+            _query["is_debug_mode"] = JsonUtils.Serialize(request.IsDebugMode.Value);
+        }
+        if (request.RunAsync != null)
+        {
+            _query["run_async"] = JsonUtils.Serialize(request.RunAsync.Value);
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "filestorage/v1/files",
+                    Body = request,
+                    Query = _query,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<FileStorageFileResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns a `File` object with the given `id`.
+    /// </summary>
+    /// <example><code>
+    /// await client.Filestorage.Files.RetrieveAsync(
+    ///     "id",
+    ///     new FilesRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
+    /// </code></example>
+    public async System.Threading.Tasks.Task<File> RetrieveAsync(
+        string id,
+        FilesRetrieveRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        _query["expand"] = request.Expand.Select(_value => _value.Stringify()).ToList();
+        if (request.IncludeRemoteData != null)
+        {
+            _query["include_remote_data"] = JsonUtils.Serialize(request.IncludeRemoteData.Value);
+        }
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "filestorage/v1/files/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<File>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns the `File` content with the given `id` as a stream of bytes.
+    /// </summary>
+    public async System.Threading.Tasks.Task<System.IO.Stream> DownloadRetrieveAsync(
+        string id,
+        FilesDownloadRetrieveRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.IncludeShellData != null)
+        {
+            _query["include_shell_data"] = JsonUtils.Serialize(request.IncludeShellData.Value);
+        }
+        if (request.MimeType != null)
+        {
+            _query["mime_type"] = request.MimeType;
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "filestorage/v1/files/{0}/download",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return await response.Raw.Content.ReadAsStreamAsync();
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns metadata to construct an authenticated file download request for a singular file, allowing you to download file directly from the third-party.
+    /// </summary>
+    /// <example><code>
+    /// await client.Filestorage.Files.DownloadRequestMetaRetrieveAsync(
+    ///     "id",
+    ///     new FilesDownloadRequestMetaRetrieveRequest { MimeType = "mime_type" }
+    /// );
+    /// </code></example>
+    public async System.Threading.Tasks.Task<DownloadRequestMeta> DownloadRequestMetaRetrieveAsync(
+        string id,
+        FilesDownloadRequestMetaRetrieveRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.MimeType != null)
+        {
+            _query["mime_type"] = request.MimeType;
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "filestorage/v1/files/{0}/download/request-meta",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<DownloadRequestMeta>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Returns metadata to construct authenticated file download requests, allowing you to download files directly from the third-party.
+    /// </summary>
+    /// <example><code>
+    /// await client.Filestorage.Files.DownloadRequestMetaListAsync(
+    ///     new FilesDownloadRequestMetaListRequest
+    ///     {
+    ///         CreatedAfter = "created_after",
+    ///         CreatedBefore = "created_before",
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         MimeTypes = "mime_types",
+    ///         ModifiedAfter = "modified_after",
+    ///         ModifiedBefore = "modified_before",
+    ///         OrderBy = FilesDownloadRequestMetaListRequestOrderBy.CreatedAtDescending,
+    ///         PageSize = 1,
+    ///     }
+    /// );
+    /// </code></example>
+    public async System.Threading.Tasks.Task<
+        Pager<DownloadRequestMeta>
+    > DownloadRequestMetaListAsync(
+        FilesDownloadRequestMetaListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            FilesDownloadRequestMetaListRequest,
+            RequestOptions?,
+            PaginatedDownloadRequestMetaList,
+            string?,
+            DownloadRequestMeta
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                DownloadRequestMetaListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response.Next,
+                response => response.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
+    }
+
+    /// <summary>
+    /// Returns metadata for `FileStorageFile` POSTs.
+    /// </summary>
+    /// <example><code>
+    /// await client.Filestorage.Files.MetaPostRetrieveAsync();
+    /// </code></example>
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "filestorage/v1/files/meta/post",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<MetaResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+}

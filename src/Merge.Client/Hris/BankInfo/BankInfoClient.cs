@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class BankInfoClient
     /// <summary>
     /// Returns a list of `BankInfo` objects.
     /// </summary>
-    private async Task<PaginatedBankInfoList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedBankInfoList> ListInternalAsync(
         BankInfoListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -135,9 +133,29 @@ public partial class BankInfoClient
     /// Returns a list of `BankInfo` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.BankInfo.ListAsync(new BankInfoListRequest());
+    /// await client.Hris.BankInfo.ListAsync(
+    ///     new BankInfoListRequest
+    ///     {
+    ///         AccountType = BankInfoListRequestAccountType.Checking,
+    ///         BankName = "bank_name",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EmployeeId = "employee_id",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         OrderBy = BankInfoListRequestOrderBy.RemoteCreatedAtDescending,
+    ///         PageSize = 1,
+    ///         RemoteFields = "account_type",
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = "account_type",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<BankInfo>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<BankInfo>> ListAsync(
         BankInfoListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -162,8 +180,8 @@ public partial class BankInfoClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -174,9 +192,18 @@ public partial class BankInfoClient
     /// Returns a `BankInfo` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.BankInfo.RetrieveAsync("id", new BankInfoRetrieveRequest());
+    /// await client.Hris.BankInfo.RetrieveAsync(
+    ///     "id",
+    ///     new BankInfoRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "account_type",
+    ///         ShowEnumOrigins = "account_type",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<BankInfo> RetrieveAsync(
+    public async System.Threading.Tasks.Task<BankInfo> RetrieveAsync(
         string id,
         BankInfoRetrieveRequest request,
         RequestOptions? options = null,

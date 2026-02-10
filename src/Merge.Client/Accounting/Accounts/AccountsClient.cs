@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class AccountsClient
     /// <summary>
     /// Returns a list of `Account` objects.
     /// </summary>
-    private async Task<PaginatedAccountList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAccountList> ListInternalAsync(
         AccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -31,7 +29,7 @@ public partial class AccountsClient
         }
         if (request.Classification != null)
         {
-            _query["classification"] = request.Classification;
+            _query["classification"] = request.Classification.Value.Stringify();
         }
         if (request.CompanyId != null)
         {
@@ -97,7 +95,7 @@ public partial class AccountsClient
         }
         if (request.Status != null)
         {
-            _query["status"] = request.Status;
+            _query["status"] = request.Status.Value.Stringify();
         }
         var response = await _client
             .SendRequestAsync(
@@ -139,9 +137,30 @@ public partial class AccountsClient
     /// Returns a list of `Account` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Accounts.ListAsync(new AccountsListRequest());
+    /// await client.Accounting.Accounts.ListAsync(
+    ///     new Merge.Client.Accounting.AccountsListRequest
+    ///     {
+    ///         AccountType = "account_type",
+    ///         Classification = AccountsListRequestClassification.Empty,
+    ///         CompanyId = "company_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Name = "name",
+    ///         PageSize = 1,
+    ///         RemoteFields = AccountsListRequestRemoteFields.Classification,
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = AccountsListRequestShowEnumOrigins.Classification,
+    ///         Status = AccountsListRequestStatus.Empty,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Account>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Account>> ListAsync(
         AccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -166,8 +185,8 @@ public partial class AccountsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -179,10 +198,15 @@ public partial class AccountsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Accounts.CreateAsync(
-    ///     new AccountEndpointRequest { Model = new AccountRequest() }
+    ///     new AccountEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new Merge.Client.Accounting.AccountRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<AccountResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<AccountResponse> CreateAsync(
         AccountEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -239,9 +263,18 @@ public partial class AccountsClient
     /// Returns an `Account` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Accounts.RetrieveAsync("id", new AccountsRetrieveRequest());
+    /// await client.Accounting.Accounts.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Accounting.AccountsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = AccountsRetrieveRequestRemoteFields.Classification,
+    ///         ShowEnumOrigins = AccountsRetrieveRequestShowEnumOrigins.Classification,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Account> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Account> RetrieveAsync(
         string id,
         AccountsRetrieveRequest request,
         RequestOptions? options = null,
@@ -311,7 +344,7 @@ public partial class AccountsClient
     /// <example><code>
     /// await client.Accounting.Accounts.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

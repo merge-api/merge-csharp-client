@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class CompanyInfoClient
     /// <summary>
     /// Returns a list of `CompanyInfo` objects.
     /// </summary>
-    private async Task<PaginatedCompanyInfoList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCompanyInfoList> ListInternalAsync(
         CompanyInfoListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -111,9 +109,23 @@ public partial class CompanyInfoClient
     /// Returns a list of `CompanyInfo` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.CompanyInfo.ListAsync(new CompanyInfoListRequest());
+    /// await client.Accounting.CompanyInfo.ListAsync(
+    ///     new CompanyInfoListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<CompanyInfo>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<CompanyInfo>> ListAsync(
         CompanyInfoListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -138,8 +150,8 @@ public partial class CompanyInfoClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -150,9 +162,12 @@ public partial class CompanyInfoClient
     /// Returns a `CompanyInfo` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.CompanyInfo.RetrieveAsync("id", new CompanyInfoRetrieveRequest());
+    /// await client.Accounting.CompanyInfo.RetrieveAsync(
+    ///     "id",
+    ///     new CompanyInfoRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<CompanyInfo> RetrieveAsync(
+    public async System.Threading.Tasks.Task<CompanyInfo> RetrieveAsync(
         string id,
         CompanyInfoRetrieveRequest request,
         RequestOptions? options = null,

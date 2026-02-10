@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,7 +15,7 @@ public partial class OpportunitiesClient
     /// <summary>
     /// Returns a list of `Opportunity` objects.
     /// </summary>
-    private async Task<PaginatedOpportunityList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedOpportunityList> ListInternalAsync(
         OpportunitiesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -146,7 +144,7 @@ public partial class OpportunitiesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         OpportunitiesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -227,9 +225,31 @@ public partial class OpportunitiesClient
     /// Returns a list of `Opportunity` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Opportunities.ListAsync(new OpportunitiesListRequest());
+    /// await client.Crm.Opportunities.ListAsync(
+    ///     new OpportunitiesListRequest
+    ///     {
+    ///         AccountId = "account_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         OwnerId = "owner_id",
+    ///         PageSize = 1,
+    ///         RemoteCreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         RemoteFields = "status",
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = "status",
+    ///         StageId = "stage_id",
+    ///         Status = OpportunitiesListRequestStatus.Lost,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Opportunity>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Opportunity>> ListAsync(
         OpportunitiesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -254,8 +274,8 @@ public partial class OpportunitiesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -267,10 +287,15 @@ public partial class OpportunitiesClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.Opportunities.CreateAsync(
-    ///     new OpportunityEndpointRequest { Model = new OpportunityRequest() }
+    ///     new OpportunityEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new OpportunityRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<OpportunityResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<OpportunityResponse> CreateAsync(
         OpportunityEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -327,9 +352,19 @@ public partial class OpportunitiesClient
     /// Returns an `Opportunity` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Opportunities.RetrieveAsync("id", new OpportunitiesRetrieveRequest());
+    /// await client.Crm.Opportunities.RetrieveAsync(
+    ///     "id",
+    ///     new OpportunitiesRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "status",
+    ///         ShowEnumOrigins = "status",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Opportunity> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Opportunity> RetrieveAsync(
         string id,
         OpportunitiesRetrieveRequest request,
         RequestOptions? options = null,
@@ -405,10 +440,15 @@ public partial class OpportunitiesClient
     /// <example><code>
     /// await client.Crm.Opportunities.PartialUpdateAsync(
     ///     "id",
-    ///     new PatchedOpportunityEndpointRequest { Model = new PatchedOpportunityRequest() }
+    ///     new PatchedOpportunityEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new PatchedOpportunityRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<OpportunityResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<OpportunityResponse> PartialUpdateAsync(
         string id,
         PatchedOpportunityEndpointRequest request,
         RequestOptions? options = null,
@@ -471,7 +511,7 @@ public partial class OpportunitiesClient
     /// <example><code>
     /// await client.Crm.Opportunities.MetaPatchRetrieveAsync("id");
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -521,7 +561,7 @@ public partial class OpportunitiesClient
     /// <example><code>
     /// await client.Crm.Opportunities.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -566,10 +606,20 @@ public partial class OpportunitiesClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.Opportunities.RemoteFieldClassesListAsync(
-    ///     new OpportunitiesRemoteFieldClassesListRequest()
+    ///     new OpportunitiesRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         OpportunitiesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -594,8 +644,8 @@ public partial class OpportunitiesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

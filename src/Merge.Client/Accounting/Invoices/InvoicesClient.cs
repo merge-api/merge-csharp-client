@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class InvoicesClient
     /// <summary>
     /// Returns a list of `Invoice` objects.
     /// </summary>
-    private async Task<PaginatedInvoiceList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedInvoiceList> ListInternalAsync(
         InvoicesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -156,7 +154,7 @@ public partial class InvoicesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> LineItemsRemoteFieldClassesListInternalAsync(
         InvoicesLineItemsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -230,7 +228,7 @@ public partial class InvoicesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         InvoicesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -305,9 +303,33 @@ public partial class InvoicesClient
     /// Returns a list of `Invoice` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Invoices.ListAsync(new InvoicesListRequest());
+    /// await client.Accounting.Invoices.ListAsync(
+    ///     new InvoicesListRequest
+    ///     {
+    ///         CompanyId = "company_id",
+    ///         ContactId = "contact_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         IssueDateAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         IssueDateBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Number = "number",
+    ///         PageSize = 1,
+    ///         RemoteFields = "type",
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = "type",
+    ///         Status = InvoicesListRequestStatus.Draft,
+    ///         Type = InvoicesListRequestType.AccountsPayable,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Invoice>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Invoice>> ListAsync(
         InvoicesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -332,8 +354,8 @@ public partial class InvoicesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -346,10 +368,15 @@ public partial class InvoicesClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Invoices.CreateAsync(
-    ///     new InvoiceEndpointRequest { Model = new InvoiceRequest() }
+    ///     new InvoiceEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new InvoiceRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<InvoiceResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<InvoiceResponse> CreateAsync(
         InvoiceEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -406,9 +433,19 @@ public partial class InvoicesClient
     /// Returns an `Invoice` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Invoices.RetrieveAsync("id", new InvoicesRetrieveRequest());
+    /// await client.Accounting.Invoices.RetrieveAsync(
+    ///     "id",
+    ///     new InvoicesRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "type",
+    ///         ShowEnumOrigins = "type",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Invoice> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Invoice> RetrieveAsync(
         string id,
         InvoicesRetrieveRequest request,
         RequestOptions? options = null,
@@ -484,10 +521,15 @@ public partial class InvoicesClient
     /// <example><code>
     /// await client.Accounting.Invoices.PartialUpdateAsync(
     ///     "id",
-    ///     new PatchedInvoiceEndpointRequest { Model = new InvoiceRequest() }
+    ///     new PatchedInvoiceEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new InvoiceRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<InvoiceResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<InvoiceResponse> PartialUpdateAsync(
         string id,
         PatchedInvoiceEndpointRequest request,
         RequestOptions? options = null,
@@ -549,10 +591,21 @@ public partial class InvoicesClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Invoices.LineItemsRemoteFieldClassesListAsync(
-    ///     new InvoicesLineItemsRemoteFieldClassesListRequest()
+    ///     new InvoicesLineItemsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> LineItemsRemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<
+        Pager<RemoteFieldClass>
+    > LineItemsRemoteFieldClassesListAsync(
         InvoicesLineItemsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -577,8 +630,8 @@ public partial class InvoicesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -591,7 +644,7 @@ public partial class InvoicesClient
     /// <example><code>
     /// await client.Accounting.Invoices.MetaPatchRetrieveAsync("id");
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -641,7 +694,7 @@ public partial class InvoicesClient
     /// <example><code>
     /// await client.Accounting.Invoices.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -686,10 +739,19 @@ public partial class InvoicesClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Invoices.RemoteFieldClassesListAsync(
-    ///     new InvoicesRemoteFieldClassesListRequest()
+    ///     new InvoicesRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         InvoicesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -714,8 +776,8 @@ public partial class InvoicesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

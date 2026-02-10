@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class LocationsClient
     /// <summary>
     /// Returns a list of `Location` objects.
     /// </summary>
-    private async Task<PaginatedLocationList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedLocationList> ListInternalAsync(
         LocationsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -122,9 +120,26 @@ public partial class LocationsClient
     /// Returns a list of `Location` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Locations.ListAsync(new LocationsListRequest());
+    /// await client.Hris.Locations.ListAsync(
+    ///     new LocationsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         LocationType = LocationsListRequestLocationType.Home,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteFields = LocationsListRequestRemoteFields.Country,
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = LocationsListRequestShowEnumOrigins.Country,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Location>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Location>> ListAsync(
         LocationsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -149,8 +164,8 @@ public partial class LocationsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -161,9 +176,18 @@ public partial class LocationsClient
     /// Returns a `Location` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Locations.RetrieveAsync("id", new LocationsRetrieveRequest());
+    /// await client.Hris.Locations.RetrieveAsync(
+    ///     "id",
+    ///     new LocationsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = LocationsRetrieveRequestRemoteFields.Country,
+    ///         ShowEnumOrigins = LocationsRetrieveRequestShowEnumOrigins.Country,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Location> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Location> RetrieveAsync(
         string id,
         LocationsRetrieveRequest request,
         RequestOptions? options = null,

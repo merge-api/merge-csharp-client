@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -18,9 +16,11 @@ public partial class FieldMappingClient
     /// Get all Field Mappings for this Linked Account. Field Mappings are mappings between third-party Remote Fields and user defined Merge fields. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
     /// </summary>
     /// <example><code>
-    /// await client.Ats.FieldMapping.FieldMappingsRetrieveAsync(new FieldMappingsRetrieveRequest());
+    /// await client.Ats.FieldMapping.FieldMappingsRetrieveAsync(
+    ///     new Merge.Client.Ats.FieldMappingsRetrieveRequest { ExcludeRemoteFieldMetadata = true }
+    /// );
     /// </code></example>
-    public async Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync(
+    public async System.Threading.Tasks.Task<FieldMappingApiInstanceResponse> FieldMappingsRetrieveAsync(
         FieldMappingsRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -74,8 +74,9 @@ public partial class FieldMappingClient
     /// </summary>
     /// <example><code>
     /// await client.Ats.FieldMapping.FieldMappingsCreateAsync(
-    ///     new CreateFieldMappingRequest
+    ///     new Merge.Client.Ats.CreateFieldMappingRequest
     ///     {
+    ///         ExcludeRemoteFieldMetadata = true,
     ///         TargetFieldName = "example_target_field_name",
     ///         TargetFieldDescription = "this is a example description of the target field",
     ///         RemoteFieldTraversalPath = new List&lt;object&gt;() { "example_remote_field" },
@@ -85,7 +86,7 @@ public partial class FieldMappingClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<FieldMappingInstanceResponse> FieldMappingsCreateAsync(
+    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsCreateAsync(
         CreateFieldMappingRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,7 +143,7 @@ public partial class FieldMappingClient
     /// <example><code>
     /// await client.Ats.FieldMapping.FieldMappingsDestroyAsync("field_mapping_id");
     /// </code></example>
-    public async Task<FieldMappingInstanceResponse> FieldMappingsDestroyAsync(
+    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsDestroyAsync(
         string fieldMappingId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -192,10 +193,10 @@ public partial class FieldMappingClient
     /// <example><code>
     /// await client.Ats.FieldMapping.FieldMappingsPartialUpdateAsync(
     ///     "field_mapping_id",
-    ///     new PatchedEditFieldMappingRequest()
+    ///     new Merge.Client.Ats.PatchedEditFieldMappingRequest()
     /// );
     /// </code></example>
-    public async Task<FieldMappingInstanceResponse> FieldMappingsPartialUpdateAsync(
+    public async System.Threading.Tasks.Task<FieldMappingInstanceResponse> FieldMappingsPartialUpdateAsync(
         string fieldMappingId,
         PatchedEditFieldMappingRequest request,
         RequestOptions? options = null,
@@ -246,9 +247,15 @@ public partial class FieldMappingClient
     /// Get all remote fields for a Linked Account. Remote fields are third-party fields that are accessible after initial sync if remote_data is enabled. You can use remote fields to override existing Merge fields or map a new Merge field. [Learn more](https://docs.merge.dev/supplemental-data/field-mappings/overview/).
     /// </summary>
     /// <example><code>
-    /// await client.Ats.FieldMapping.RemoteFieldsRetrieveAsync(new RemoteFieldsRetrieveRequest());
+    /// await client.Ats.FieldMapping.RemoteFieldsRetrieveAsync(
+    ///     new Merge.Client.Ats.RemoteFieldsRetrieveRequest
+    ///     {
+    ///         CommonModels = "common_models",
+    ///         IncludeExampleValues = "include_example_values",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<RemoteFieldApiResponse> RemoteFieldsRetrieveAsync(
+    public async System.Threading.Tasks.Task<RemoteFieldApiResponse> RemoteFieldsRetrieveAsync(
         RemoteFieldsRetrieveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -305,7 +312,7 @@ public partial class FieldMappingClient
     /// <example><code>
     /// await client.Ats.FieldMapping.TargetFieldsRetrieveAsync();
     /// </code></example>
-    public async Task<ExternalTargetFieldApiResponse> TargetFieldsRetrieveAsync(
+    public async System.Threading.Tasks.Task<ExternalTargetFieldApiResponse> TargetFieldsRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

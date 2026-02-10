@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class ExpensesClient
     /// <summary>
     /// Returns a list of `Expense` objects.
     /// </summary>
-    private async Task<PaginatedExpenseList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedExpenseList> ListInternalAsync(
         ExpensesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -132,7 +130,7 @@ public partial class ExpensesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> LinesRemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> LinesRemoteFieldClassesListInternalAsync(
         ExpensesLinesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -206,7 +204,7 @@ public partial class ExpensesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         ExpensesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -281,9 +279,27 @@ public partial class ExpensesClient
     /// Returns a list of `Expense` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Expenses.ListAsync(new ExpensesListRequest());
+    /// await client.Accounting.Expenses.ListAsync(
+    ///     new ExpensesListRequest
+    ///     {
+    ///         CompanyId = "company_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///         TransactionDateAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         TransactionDateBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Expense>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Expense>> ListAsync(
         ExpensesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -308,8 +324,8 @@ public partial class ExpensesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -321,10 +337,15 @@ public partial class ExpensesClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Expenses.CreateAsync(
-    ///     new ExpenseEndpointRequest { Model = new ExpenseRequest() }
+    ///     new ExpenseEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new ExpenseRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<ExpenseResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<ExpenseResponse> CreateAsync(
         ExpenseEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -381,9 +402,17 @@ public partial class ExpensesClient
     /// Returns an `Expense` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Expenses.RetrieveAsync("id", new ExpensesRetrieveRequest());
+    /// await client.Accounting.Expenses.RetrieveAsync(
+    ///     "id",
+    ///     new ExpensesRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Expense> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Expense> RetrieveAsync(
         string id,
         ExpensesRetrieveRequest request,
         RequestOptions? options = null,
@@ -450,10 +479,21 @@ public partial class ExpensesClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Expenses.LinesRemoteFieldClassesListAsync(
-    ///     new ExpensesLinesRemoteFieldClassesListRequest()
+    ///     new ExpensesLinesRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> LinesRemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<
+        Pager<RemoteFieldClass>
+    > LinesRemoteFieldClassesListAsync(
         ExpensesLinesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -478,8 +518,8 @@ public partial class ExpensesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -492,7 +532,7 @@ public partial class ExpensesClient
     /// <example><code>
     /// await client.Accounting.Expenses.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -537,10 +577,19 @@ public partial class ExpensesClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.Expenses.RemoteFieldClassesListAsync(
-    ///     new ExpensesRemoteFieldClassesListRequest()
+    ///     new ExpensesRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         ExpensesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -565,8 +614,8 @@ public partial class ExpensesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

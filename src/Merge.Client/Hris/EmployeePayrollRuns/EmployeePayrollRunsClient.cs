@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class EmployeePayrollRunsClient
     /// <summary>
     /// Returns a list of `EmployeePayrollRun` objects.
     /// </summary>
-    private async Task<PaginatedEmployeePayrollRunList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEmployeePayrollRunList> ListInternalAsync(
         EmployeePayrollRunsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,9 +135,29 @@ public partial class EmployeePayrollRunsClient
     /// Returns a list of `EmployeePayrollRun` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.EmployeePayrollRuns.ListAsync(new EmployeePayrollRunsListRequest());
+    /// await client.Hris.EmployeePayrollRuns.ListAsync(
+    ///     new EmployeePayrollRunsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EmployeeId = "employee_id",
+    ///         EndedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         EndedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         PayrollRunId = "payroll_run_id",
+    ///         RemoteId = "remote_id",
+    ///         StartedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         StartedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<EmployeePayrollRun>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<EmployeePayrollRun>> ListAsync(
         EmployeePayrollRunsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -164,8 +182,8 @@ public partial class EmployeePayrollRunsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -176,9 +194,12 @@ public partial class EmployeePayrollRunsClient
     /// Returns an `EmployeePayrollRun` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.EmployeePayrollRuns.RetrieveAsync("id", new EmployeePayrollRunsRetrieveRequest());
+    /// await client.Hris.EmployeePayrollRuns.RetrieveAsync(
+    ///     "id",
+    ///     new EmployeePayrollRunsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<EmployeePayrollRun> RetrieveAsync(
+    public async System.Threading.Tasks.Task<EmployeePayrollRun> RetrieveAsync(
         string id,
         EmployeePayrollRunsRetrieveRequest request,
         RequestOptions? options = null,

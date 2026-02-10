@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class DepartmentsClient
     /// <summary>
     /// Returns a list of `Department` objects.
     /// </summary>
-    private async Task<PaginatedDepartmentList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedDepartmentList> ListInternalAsync(
         DepartmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -110,9 +108,23 @@ public partial class DepartmentsClient
     /// Returns a list of `Department` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Departments.ListAsync(new DepartmentsListRequest());
+    /// await client.Ats.Departments.ListAsync(
+    ///     new DepartmentsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Department>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Department>> ListAsync(
         DepartmentsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +149,8 @@ public partial class DepartmentsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -149,9 +161,12 @@ public partial class DepartmentsClient
     /// Returns a `Department` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Departments.RetrieveAsync("id", new DepartmentsRetrieveRequest());
+    /// await client.Ats.Departments.RetrieveAsync(
+    ///     "id",
+    ///     new DepartmentsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<Department> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Department> RetrieveAsync(
         string id,
         DepartmentsRetrieveRequest request,
         RequestOptions? options = null,

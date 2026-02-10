@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class VendorCreditsClient
     /// <summary>
     /// Returns a list of `VendorCredit` objects.
     /// </summary>
-    private async Task<PaginatedVendorCreditList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedVendorCreditList> ListInternalAsync(
         VendorCreditsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -127,9 +125,26 @@ public partial class VendorCreditsClient
     /// Returns a list of `VendorCredit` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.VendorCredits.ListAsync(new VendorCreditsListRequest());
+    /// await client.Accounting.VendorCredits.ListAsync(
+    ///     new VendorCreditsListRequest
+    ///     {
+    ///         CompanyId = "company_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///         TransactionDateAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         TransactionDateBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<VendorCredit>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<VendorCredit>> ListAsync(
         VendorCreditsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -154,8 +169,8 @@ public partial class VendorCreditsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -167,10 +182,15 @@ public partial class VendorCreditsClient
     /// </summary>
     /// <example><code>
     /// await client.Accounting.VendorCredits.CreateAsync(
-    ///     new VendorCreditEndpointRequest { Model = new VendorCreditRequest() }
+    ///     new VendorCreditEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new VendorCreditRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<VendorCreditResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<VendorCreditResponse> CreateAsync(
         VendorCreditEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -227,9 +247,12 @@ public partial class VendorCreditsClient
     /// Returns a `VendorCredit` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.VendorCredits.RetrieveAsync("id", new VendorCreditsRetrieveRequest());
+    /// await client.Accounting.VendorCredits.RetrieveAsync(
+    ///     "id",
+    ///     new VendorCreditsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<VendorCredit> RetrieveAsync(
+    public async System.Threading.Tasks.Task<VendorCredit> RetrieveAsync(
         string id,
         VendorCreditsRetrieveRequest request,
         RequestOptions? options = null,
@@ -291,7 +314,7 @@ public partial class VendorCreditsClient
     /// <example><code>
     /// await client.Accounting.VendorCredits.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

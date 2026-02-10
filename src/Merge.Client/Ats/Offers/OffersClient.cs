@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class OffersClient
     /// <summary>
     /// Returns a list of `Offer` objects.
     /// </summary>
-    private async Task<PaginatedOfferList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedOfferList> ListInternalAsync(
         OffersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -127,9 +125,27 @@ public partial class OffersClient
     /// Returns a list of `Offer` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Offers.ListAsync(new OffersListRequest());
+    /// await client.Ats.Offers.ListAsync(
+    ///     new OffersListRequest
+    ///     {
+    ///         ApplicationId = "application_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatorId = "creator_id",
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteFields = "status",
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = "status",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Offer>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Offer>> ListAsync(
         OffersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -154,8 +170,8 @@ public partial class OffersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -166,9 +182,18 @@ public partial class OffersClient
     /// Returns an `Offer` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Offers.RetrieveAsync("id", new OffersRetrieveRequest());
+    /// await client.Ats.Offers.RetrieveAsync(
+    ///     "id",
+    ///     new OffersRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "status",
+    ///         ShowEnumOrigins = "status",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Offer> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Offer> RetrieveAsync(
         string id,
         OffersRetrieveRequest request,
         RequestOptions? options = null,

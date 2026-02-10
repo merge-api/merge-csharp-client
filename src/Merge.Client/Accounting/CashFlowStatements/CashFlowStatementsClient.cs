@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class CashFlowStatementsClient
     /// <summary>
     /// Returns a list of `CashFlowStatement` objects.
     /// </summary>
-    private async Task<PaginatedCashFlowStatementList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCashFlowStatementList> ListInternalAsync(
         CashFlowStatementsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -115,9 +113,24 @@ public partial class CashFlowStatementsClient
     /// Returns a list of `CashFlowStatement` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.CashFlowStatements.ListAsync(new CashFlowStatementsListRequest());
+    /// await client.Accounting.CashFlowStatements.ListAsync(
+    ///     new CashFlowStatementsListRequest
+    ///     {
+    ///         CompanyId = "company_id",
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<CashFlowStatement>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<CashFlowStatement>> ListAsync(
         CashFlowStatementsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +155,8 @@ public partial class CashFlowStatementsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -156,10 +169,10 @@ public partial class CashFlowStatementsClient
     /// <example><code>
     /// await client.Accounting.CashFlowStatements.RetrieveAsync(
     ///     "id",
-    ///     new CashFlowStatementsRetrieveRequest()
+    ///     new CashFlowStatementsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
     /// );
     /// </code></example>
-    public async Task<CashFlowStatement> RetrieveAsync(
+    public async System.Threading.Tasks.Task<CashFlowStatement> RetrieveAsync(
         string id,
         CashFlowStatementsRetrieveRequest request,
         RequestOptions? options = null,

@@ -10,7 +10,7 @@ public record TrackingCategoriesListRequest
     /// If provided, will only return tracking categories with this type.
     /// </summary>
     [JsonIgnore]
-    public string? CategoryType { get; set; }
+    public TrackingCategoriesListRequestCategoryType? CategoryType { get; set; }
 
     /// <summary>
     /// If provided, will only return tracking categories for this company.
@@ -106,7 +106,7 @@ public record TrackingCategoriesListRequest
     /// If provided, will only return tracking categories with this status.
     /// </summary>
     [JsonIgnore]
-    public string? Status { get; set; }
+    public TrackingCategoriesListRequestStatus? Status { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

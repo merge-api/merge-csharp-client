@@ -125,7 +125,7 @@ public record ContactsListRequest
     /// If provided, will only return Contacts that match this status.
     /// </summary>
     [JsonIgnore]
-    public string? Status { get; set; }
+    public ContactsListRequestStatus? Status { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

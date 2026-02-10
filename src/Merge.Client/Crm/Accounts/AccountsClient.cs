@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,7 +15,7 @@ public partial class AccountsClient
     /// <summary>
     /// Returns a list of `Account` objects.
     /// </summary>
-    private async Task<PaginatedAccountList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAccountList> ListInternalAsync(
         AccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -124,7 +122,7 @@ public partial class AccountsClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         AccountsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -205,9 +203,26 @@ public partial class AccountsClient
     /// Returns a list of `Account` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Accounts.ListAsync(new AccountsListRequest());
+    /// await client.Crm.Accounts.ListAsync(
+    ///     new Merge.Client.Crm.AccountsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Name = "name",
+    ///         OwnerId = "owner_id",
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Account>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Account>> ListAsync(
         AccountsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -232,8 +247,8 @@ public partial class AccountsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -245,10 +260,15 @@ public partial class AccountsClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.Accounts.CreateAsync(
-    ///     new CrmAccountEndpointRequest { Model = new AccountRequest() }
+    ///     new CrmAccountEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new Merge.Client.Crm.AccountRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<CrmAccountResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<CrmAccountResponse> CreateAsync(
         CrmAccountEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -305,9 +325,17 @@ public partial class AccountsClient
     /// Returns an `Account` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Accounts.RetrieveAsync("id", new AccountsRetrieveRequest());
+    /// await client.Crm.Accounts.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Crm.AccountsRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Account> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Account> RetrieveAsync(
         string id,
         AccountsRetrieveRequest request,
         RequestOptions? options = null,
@@ -375,10 +403,15 @@ public partial class AccountsClient
     /// <example><code>
     /// await client.Crm.Accounts.PartialUpdateAsync(
     ///     "id",
-    ///     new PatchedCrmAccountEndpointRequest { Model = new PatchedAccountRequest() }
+    ///     new PatchedCrmAccountEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new PatchedAccountRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<CrmAccountResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<CrmAccountResponse> PartialUpdateAsync(
         string id,
         PatchedCrmAccountEndpointRequest request,
         RequestOptions? options = null,
@@ -441,7 +474,7 @@ public partial class AccountsClient
     /// <example><code>
     /// await client.Crm.Accounts.MetaPatchRetrieveAsync("id");
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -491,7 +524,7 @@ public partial class AccountsClient
     /// <example><code>
     /// await client.Crm.Accounts.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -535,9 +568,21 @@ public partial class AccountsClient
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Accounts.RemoteFieldClassesListAsync(new AccountsRemoteFieldClassesListRequest());
+    /// await client.Crm.Accounts.RemoteFieldClassesListAsync(
+    ///     new AccountsRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         AccountsRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -562,8 +607,8 @@ public partial class AccountsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

@@ -1,0 +1,168 @@
+using System.Text.Json;
+using Merge.Client.Core;
+
+namespace Merge.Client.Filestorage;
+
+public partial class LinkedAccountsClient
+{
+    private RawClient _client;
+
+    internal LinkedAccountsClient(RawClient client)
+    {
+        _client = client;
+    }
+
+    /// <summary>
+    /// List linked accounts for your organization.
+    /// </summary>
+    private async System.Threading.Tasks.Task<PaginatedAccountDetailsAndActionsList> ListInternalAsync(
+        LinkedAccountsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Category != null)
+        {
+            _query["category"] = request.Category.Value.Stringify();
+        }
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        if (request.EndUserEmailAddress != null)
+        {
+            _query["end_user_email_address"] = request.EndUserEmailAddress;
+        }
+        if (request.EndUserOrganizationName != null)
+        {
+            _query["end_user_organization_name"] = request.EndUserOrganizationName;
+        }
+        if (request.EndUserOriginId != null)
+        {
+            _query["end_user_origin_id"] = request.EndUserOriginId;
+        }
+        if (request.EndUserOriginIds != null)
+        {
+            _query["end_user_origin_ids"] = request.EndUserOriginIds;
+        }
+        if (request.Id != null)
+        {
+            _query["id"] = request.Id;
+        }
+        if (request.Ids != null)
+        {
+            _query["ids"] = request.Ids;
+        }
+        if (request.IncludeDuplicates != null)
+        {
+            _query["include_duplicates"] = JsonUtils.Serialize(request.IncludeDuplicates.Value);
+        }
+        if (request.IntegrationName != null)
+        {
+            _query["integration_name"] = request.IntegrationName;
+        }
+        if (request.IsTestAccount != null)
+        {
+            _query["is_test_account"] = request.IsTestAccount;
+        }
+        if (request.PageSize != null)
+        {
+            _query["page_size"] = request.PageSize.Value.ToString();
+        }
+        if (request.Status != null)
+        {
+            _query["status"] = request.Status;
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "filestorage/v1/linked-accounts",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<PaginatedAccountDetailsAndActionsList>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new MergeException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new MergeApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// List linked accounts for your organization.
+    /// </summary>
+    /// <example><code>
+    /// await client.Filestorage.LinkedAccounts.ListAsync(
+    ///     new Merge.Client.Filestorage.LinkedAccountsListRequest
+    ///     {
+    ///         Category = Merge.Client.Filestorage.LinkedAccountsListRequestCategory.Accounting,
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EndUserEmailAddress = "end_user_email_address",
+    ///         EndUserOrganizationName = "end_user_organization_name",
+    ///         EndUserOriginId = "end_user_origin_id",
+    ///         EndUserOriginIds = "end_user_origin_ids",
+    ///         Id = "id",
+    ///         Ids = "ids",
+    ///         IncludeDuplicates = true,
+    ///         IntegrationName = "integration_name",
+    ///         IsTestAccount = "is_test_account",
+    ///         PageSize = 1,
+    ///         Status = "status",
+    ///     }
+    /// );
+    /// </code></example>
+    public async System.Threading.Tasks.Task<Pager<AccountDetailsAndActions>> ListAsync(
+        LinkedAccountsListRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            LinkedAccountsListRequest,
+            RequestOptions?,
+            PaginatedAccountDetailsAndActionsList,
+            string?,
+            AccountDetailsAndActions
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListInternalAsync,
+                (request, cursor) =>
+                {
+                    request.Cursor = cursor;
+                },
+                response => response.Next,
+                response => response.Results?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
+    }
+}

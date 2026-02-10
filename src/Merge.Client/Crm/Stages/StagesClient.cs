@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,7 +15,7 @@ public partial class StagesClient
     /// <summary>
     /// Returns a list of `Stage` objects.
     /// </summary>
-    private async Task<PaginatedStageList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedStageList> ListInternalAsync(
         StagesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -115,7 +113,7 @@ public partial class StagesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         StagesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -196,9 +194,24 @@ public partial class StagesClient
     /// Returns a list of `Stage` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Stages.ListAsync(new StagesListRequest());
+    /// await client.Crm.Stages.ListAsync(
+    ///     new StagesListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Stage>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Stage>> ListAsync(
         StagesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -223,8 +236,8 @@ public partial class StagesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -235,9 +248,17 @@ public partial class StagesClient
     /// Returns a `Stage` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Stages.RetrieveAsync("id", new StagesRetrieveRequest());
+    /// await client.Crm.Stages.RetrieveAsync(
+    ///     "id",
+    ///     new StagesRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Stage> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Stage> RetrieveAsync(
         string id,
         StagesRetrieveRequest request,
         RequestOptions? options = null,
@@ -302,9 +323,21 @@ public partial class StagesClient
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Stages.RemoteFieldClassesListAsync(new StagesRemoteFieldClassesListRequest());
+    /// await client.Crm.Stages.RemoteFieldClassesListAsync(
+    ///     new StagesRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         StagesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -329,8 +362,8 @@ public partial class StagesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,7 +15,7 @@ public partial class TasksClient
     /// <summary>
     /// Returns a list of `Task` objects.
     /// </summary>
-    private async Task<PaginatedTaskList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTaskList> ListInternalAsync(
         TasksListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -116,7 +114,7 @@ public partial class TasksClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         TasksRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -197,9 +195,24 @@ public partial class TasksClient
     /// Returns a list of `Task` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Tasks.ListAsync(new TasksListRequest());
+    /// await client.Crm.Tasks.ListAsync(
+    ///     new TasksListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Task>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Task>> ListAsync(
         TasksListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -224,8 +237,8 @@ public partial class TasksClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -236,9 +249,16 @@ public partial class TasksClient
     /// Creates a `Task` object with the given values.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Tasks.CreateAsync(new TaskEndpointRequest { Model = new TaskRequest() });
+    /// await client.Crm.Tasks.CreateAsync(
+    ///     new TaskEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new TaskRequest(),
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<TaskResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<TaskResponse> CreateAsync(
         TaskEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -295,9 +315,17 @@ public partial class TasksClient
     /// Returns a `Task` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Tasks.RetrieveAsync("id", new TasksRetrieveRequest());
+    /// await client.Crm.Tasks.RetrieveAsync(
+    ///     "id",
+    ///     new TasksRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Task> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Task> RetrieveAsync(
         string id,
         TasksRetrieveRequest request,
         RequestOptions? options = null,
@@ -365,10 +393,15 @@ public partial class TasksClient
     /// <example><code>
     /// await client.Crm.Tasks.PartialUpdateAsync(
     ///     "id",
-    ///     new PatchedTaskEndpointRequest { Model = new PatchedTaskRequest() }
+    ///     new PatchedTaskEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new PatchedTaskRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<TaskResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<TaskResponse> PartialUpdateAsync(
         string id,
         PatchedTaskEndpointRequest request,
         RequestOptions? options = null,
@@ -431,7 +464,7 @@ public partial class TasksClient
     /// <example><code>
     /// await client.Crm.Tasks.MetaPatchRetrieveAsync("id");
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -481,7 +514,7 @@ public partial class TasksClient
     /// <example><code>
     /// await client.Crm.Tasks.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -525,9 +558,21 @@ public partial class TasksClient
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.Tasks.RemoteFieldClassesListAsync(new TasksRemoteFieldClassesListRequest());
+    /// await client.Crm.Tasks.RemoteFieldClassesListAsync(
+    ///     new TasksRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         TasksRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -552,8 +597,8 @@ public partial class TasksClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

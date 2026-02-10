@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -18,9 +16,18 @@ public partial class AddressesClient
     /// Returns an `Address` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.Addresses.RetrieveAsync("id", new AddressesRetrieveRequest());
+    /// await client.Accounting.Addresses.RetrieveAsync(
+    ///     "id",
+    ///     new AddressesRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "type",
+    ///         ShowEnumOrigins = "type",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Address> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Address> RetrieveAsync(
         string id,
         AddressesRetrieveRequest request,
         RequestOptions? options = null,

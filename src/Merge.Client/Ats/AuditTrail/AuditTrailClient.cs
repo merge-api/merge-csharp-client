@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class AuditTrailClient
     /// <summary>
     /// Gets a list of audit trail events.
     /// </summary>
-    private async Task<PaginatedAuditLogEventList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedAuditLogEventList> ListInternalAsync(
         AuditTrailListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -88,9 +86,19 @@ public partial class AuditTrailClient
     /// Gets a list of audit trail events.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.AuditTrail.ListAsync(new AuditTrailListRequest());
+    /// await client.Ats.AuditTrail.ListAsync(
+    ///     new Merge.Client.Ats.AuditTrailListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EndDate = "end_date",
+    ///         EventType = "event_type",
+    ///         PageSize = 1,
+    ///         StartDate = "start_date",
+    ///         UserEmail = "user_email",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<AuditLogEvent>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<AuditLogEvent>> ListAsync(
         AuditTrailListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -115,8 +123,8 @@ public partial class AuditTrailClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

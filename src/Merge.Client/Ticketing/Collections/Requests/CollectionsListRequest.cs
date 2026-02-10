@@ -10,7 +10,7 @@ public record CollectionsListRequest
     /// If provided, will only return collections of the given type.
     /// </summary>
     [JsonIgnore]
-    public string? CollectionType { get; set; }
+    public CollectionsListRequestCollectionType? CollectionType { get; set; }
 
     /// <summary>
     /// If provided, will only return objects created after this datetime.
@@ -65,6 +65,12 @@ public record CollectionsListRequest
     /// </summary>
     [JsonIgnore]
     public DateTime? ModifiedBefore { get; set; }
+
+    /// <summary>
+    /// If provided, will only return collections with this name.
+    /// </summary>
+    [JsonIgnore]
+    public string? Name { get; set; }
 
     /// <summary>
     /// Number of results to return per page.

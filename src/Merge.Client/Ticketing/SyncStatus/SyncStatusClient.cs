@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ticketing;
@@ -17,7 +15,7 @@ public partial class SyncStatusClient
     /// <summary>
     /// Get sync status for the current sync and the most recently finished sync. `last_sync_start` represents the most recent time any sync began. `last_sync_finished` represents the most recent time any sync completed. These timestamps may correspond to different sync instances which may result in a sync start time being later than a separate sync completed time. To ensure you are retrieving the latest available data reference the `last_sync_finished` timestamp where `last_sync_result` is `DONE`. Possible values for `status` and `last_sync_result` are `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`. Learn more about sync status in our [Help Center](https://help.merge.dev/en/articles/8184193-merge-sync-statuses).
     /// </summary>
-    private async Task<PaginatedSyncStatusList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedSyncStatusList> ListInternalAsync(
         SyncStatusListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -72,9 +70,15 @@ public partial class SyncStatusClient
     /// Get sync status for the current sync and the most recently finished sync. `last_sync_start` represents the most recent time any sync began. `last_sync_finished` represents the most recent time any sync completed. These timestamps may correspond to different sync instances which may result in a sync start time being later than a separate sync completed time. To ensure you are retrieving the latest available data reference the `last_sync_finished` timestamp where `last_sync_result` is `DONE`. Possible values for `status` and `last_sync_result` are `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`. Learn more about sync status in our [Help Center](https://help.merge.dev/en/articles/8184193-merge-sync-statuses).
     /// </summary>
     /// <example><code>
-    /// await client.Ticketing.SyncStatus.ListAsync(new SyncStatusListRequest());
+    /// await client.Ticketing.SyncStatus.ListAsync(
+    ///     new Merge.Client.Ticketing.SyncStatusListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         PageSize = 1,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<SyncStatus>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<SyncStatus>> ListAsync(
         SyncStatusListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -99,8 +103,8 @@ public partial class SyncStatusClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

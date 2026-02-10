@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class TeamsClient
     /// <summary>
     /// Returns a list of `Team` objects.
     /// </summary>
-    private async Task<PaginatedTeamList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTeamList> ListInternalAsync(
         TeamsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -115,9 +113,24 @@ public partial class TeamsClient
     /// Returns a list of `Team` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Teams.ListAsync(new TeamsListRequest());
+    /// await client.Hris.Teams.ListAsync(
+    ///     new Merge.Client.Hris.TeamsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         ParentTeamId = "parent_team_id",
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Team>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Team>> ListAsync(
         TeamsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +155,8 @@ public partial class TeamsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -154,9 +167,12 @@ public partial class TeamsClient
     /// Returns a `Team` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.Teams.RetrieveAsync("id", new TeamsRetrieveRequest());
+    /// await client.Hris.Teams.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Hris.TeamsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<Team> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Team> RetrieveAsync(
         string id,
         TeamsRetrieveRequest request,
         RequestOptions? options = null,

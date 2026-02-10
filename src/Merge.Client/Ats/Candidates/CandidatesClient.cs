@@ -1,7 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
-using global::System.Threading.Tasks;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -18,7 +15,7 @@ public partial class CandidatesClient
     /// <summary>
     /// Returns a list of `Candidate` objects.
     /// </summary>
-    private async Task<PaginatedCandidateList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedCandidateList> ListInternalAsync(
         CandidatesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -128,9 +125,27 @@ public partial class CandidatesClient
     /// Returns a list of `Candidate` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Candidates.ListAsync(new CandidatesListRequest());
+    /// await client.Ats.Candidates.ListAsync(
+    ///     new CandidatesListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EmailAddresses = "email_addresses",
+    ///         FirstName = "first_name",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         LastName = "last_name",
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///         Tags = "tags",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<Candidate>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<Candidate>> ListAsync(
         CandidatesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -155,8 +170,8 @@ public partial class CandidatesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -168,10 +183,16 @@ public partial class CandidatesClient
     /// </summary>
     /// <example><code>
     /// await client.Ats.Candidates.CreateAsync(
-    ///     new CandidateEndpointRequest { Model = new CandidateRequest(), RemoteUserId = "remote_user_id" }
+    ///     new CandidateEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new CandidateRequest(),
+    ///         RemoteUserId = "remote_user_id",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<CandidateResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<CandidateResponse> CreateAsync(
         CandidateEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -228,9 +249,12 @@ public partial class CandidatesClient
     /// Returns a `Candidate` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Candidates.RetrieveAsync("id", new CandidatesRetrieveRequest());
+    /// await client.Ats.Candidates.RetrieveAsync(
+    ///     "id",
+    ///     new CandidatesRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<Candidate> RetrieveAsync(
+    public async System.Threading.Tasks.Task<Candidate> RetrieveAsync(
         string id,
         CandidatesRetrieveRequest request,
         RequestOptions? options = null,
@@ -294,12 +318,14 @@ public partial class CandidatesClient
     ///     "id",
     ///     new PatchedCandidateEndpointRequest
     ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
     ///         Model = new PatchedCandidateRequest(),
     ///         RemoteUserId = "remote_user_id",
     ///     }
     /// );
     /// </code></example>
-    public async Task<CandidateResponse> PartialUpdateAsync(
+    public async System.Threading.Tasks.Task<CandidateResponse> PartialUpdateAsync(
         string id,
         PatchedCandidateEndpointRequest request,
         RequestOptions? options = null,
@@ -362,10 +388,13 @@ public partial class CandidatesClient
     /// <example><code>
     /// await client.Ats.Candidates.IgnoreCreateAsync(
     ///     "model_id",
-    ///     new IgnoreCommonModelRequest { Reason = ReasonEnum.GeneralCustomerRequest }
+    ///     new Merge.Client.Ats.IgnoreCommonModelRequest
+    ///     {
+    ///         Reason = Merge.Client.Ats.ReasonEnum.GeneralCustomerRequest,
+    ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task IgnoreCreateAsync(
+    public async System.Threading.Tasks.Task IgnoreCreateAsync(
         string modelId,
         IgnoreCommonModelRequest request,
         RequestOptions? options = null,
@@ -409,7 +438,7 @@ public partial class CandidatesClient
     /// <example><code>
     /// await client.Ats.Candidates.MetaPatchRetrieveAsync("id");
     /// </code></example>
-    public async Task<MetaResponse> MetaPatchRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPatchRetrieveAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -459,7 +488,7 @@ public partial class CandidatesClient
     /// <example><code>
     /// await client.Ats.Candidates.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

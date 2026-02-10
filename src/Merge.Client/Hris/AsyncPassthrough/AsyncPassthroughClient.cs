@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 using OneOf;
 
@@ -20,10 +18,14 @@ public partial class AsyncPassthroughClient
     /// </summary>
     /// <example><code>
     /// await client.Hris.AsyncPassthrough.CreateAsync(
-    ///     new DataPassthroughRequest { Method = MethodEnum.Get, Path = "/scooters" }
+    ///     new Merge.Client.Hris.DataPassthroughRequest
+    ///     {
+    ///         Method = Merge.Client.Hris.MethodEnum.Get,
+    ///         Path = "/scooters",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<AsyncPassthroughReciept> CreateAsync(
+    public async System.Threading.Tasks.Task<AsyncPassthroughReciept> CreateAsync(
         DataPassthroughRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -72,7 +74,7 @@ public partial class AsyncPassthroughClient
     /// <example><code>
     /// await client.Hris.AsyncPassthrough.RetrieveAsync("async_passthrough_receipt_id");
     /// </code></example>
-    public async Task<OneOf<RemoteResponse, string>> RetrieveAsync(
+    public async System.Threading.Tasks.Task<OneOf<RemoteResponse, string>> RetrieveAsync(
         string asyncPassthroughReceiptId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class RejectReasonsClient
     /// <summary>
     /// Returns a list of `RejectReason` objects.
     /// </summary>
-    private async Task<PaginatedRejectReasonList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRejectReasonList> ListInternalAsync(
         RejectReasonsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -110,9 +108,23 @@ public partial class RejectReasonsClient
     /// Returns a list of `RejectReason` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.RejectReasons.ListAsync(new RejectReasonsListRequest());
+    /// await client.Ats.RejectReasons.ListAsync(
+    ///     new RejectReasonsListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<RejectReason>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<RejectReason>> ListAsync(
         RejectReasonsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,8 +149,8 @@ public partial class RejectReasonsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -149,9 +161,12 @@ public partial class RejectReasonsClient
     /// Returns a `RejectReason` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.RejectReasons.RetrieveAsync("id", new RejectReasonsRetrieveRequest());
+    /// await client.Ats.RejectReasons.RetrieveAsync(
+    ///     "id",
+    ///     new RejectReasonsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<RejectReason> RetrieveAsync(
+    public async System.Threading.Tasks.Task<RejectReason> RetrieveAsync(
         string id,
         RejectReasonsRetrieveRequest request,
         RequestOptions? options = null,

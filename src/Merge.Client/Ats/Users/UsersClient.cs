@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class UsersClient
     /// <summary>
     /// Returns a list of `RemoteUser` objects.
     /// </summary>
-    private async Task<PaginatedRemoteUserList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteUserList> ListInternalAsync(
         UsersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -122,9 +120,26 @@ public partial class UsersClient
     /// Returns a list of `RemoteUser` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Users.ListAsync(new UsersListRequest());
+    /// await client.Ats.Users.ListAsync(
+    ///     new Merge.Client.Ats.UsersListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         Email = "email",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteFields = "access_role",
+    ///         RemoteId = "remote_id",
+    ///         ShowEnumOrigins = "access_role",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<RemoteUser>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteUser>> ListAsync(
         UsersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -149,8 +164,8 @@ public partial class UsersClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -161,9 +176,18 @@ public partial class UsersClient
     /// Returns a `RemoteUser` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.Users.RetrieveAsync("id", new UsersRetrieveRequest());
+    /// await client.Ats.Users.RetrieveAsync(
+    ///     "id",
+    ///     new Merge.Client.Ats.UsersRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         RemoteFields = "access_role",
+    ///         ShowEnumOrigins = "access_role",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<RemoteUser> RetrieveAsync(
+    public async System.Threading.Tasks.Task<RemoteUser> RetrieveAsync(
         string id,
         UsersRetrieveRequest request,
         RequestOptions? options = null,

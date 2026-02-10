@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Hris;
@@ -17,7 +15,7 @@ public partial class TimesheetEntriesClient
     /// <summary>
     /// Returns a list of `TimesheetEntry` objects.
     /// </summary>
-    private async Task<PaginatedTimesheetEntryList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedTimesheetEntryList> ListInternalAsync(
         TimesheetEntriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,9 +135,29 @@ public partial class TimesheetEntriesClient
     /// Returns a list of `TimesheetEntry` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.TimesheetEntries.ListAsync(new TimesheetEntriesListRequest());
+    /// await client.Hris.TimesheetEntries.ListAsync(
+    ///     new TimesheetEntriesListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         EmployeeId = "employee_id",
+    ///         EndedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         EndedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         OrderBy = TimesheetEntriesListRequestOrderBy.StartTimeDescending,
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///         StartedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         StartedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<TimesheetEntry>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<TimesheetEntry>> ListAsync(
         TimesheetEntriesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -164,8 +182,8 @@ public partial class TimesheetEntriesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -177,10 +195,15 @@ public partial class TimesheetEntriesClient
     /// </summary>
     /// <example><code>
     /// await client.Hris.TimesheetEntries.CreateAsync(
-    ///     new TimesheetEntryEndpointRequest { Model = new TimesheetEntryRequest() }
+    ///     new TimesheetEntryEndpointRequest
+    ///     {
+    ///         IsDebugMode = true,
+    ///         RunAsync = true,
+    ///         Model = new TimesheetEntryRequest(),
+    ///     }
     /// );
     /// </code></example>
-    public async Task<TimesheetEntryResponse> CreateAsync(
+    public async System.Threading.Tasks.Task<TimesheetEntryResponse> CreateAsync(
         TimesheetEntryEndpointRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -237,9 +260,12 @@ public partial class TimesheetEntriesClient
     /// Returns a `TimesheetEntry` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Hris.TimesheetEntries.RetrieveAsync("id", new TimesheetEntriesRetrieveRequest());
+    /// await client.Hris.TimesheetEntries.RetrieveAsync(
+    ///     "id",
+    ///     new TimesheetEntriesRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<TimesheetEntry> RetrieveAsync(
+    public async System.Threading.Tasks.Task<TimesheetEntry> RetrieveAsync(
         string id,
         TimesheetEntriesRetrieveRequest request,
         RequestOptions? options = null,
@@ -301,7 +327,7 @@ public partial class TimesheetEntriesClient
     /// <example><code>
     /// await client.Hris.TimesheetEntries.MetaPostRetrieveAsync();
     /// </code></example>
-    public async Task<MetaResponse> MetaPostRetrieveAsync(
+    public async System.Threading.Tasks.Task<MetaResponse> MetaPostRetrieveAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

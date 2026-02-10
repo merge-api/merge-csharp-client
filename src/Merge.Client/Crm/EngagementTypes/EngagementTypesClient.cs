@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -17,7 +15,7 @@ public partial class EngagementTypesClient
     /// <summary>
     /// Returns a list of `EngagementType` objects.
     /// </summary>
-    private async Task<PaginatedEngagementTypeList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedEngagementTypeList> ListInternalAsync(
         EngagementTypesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -115,7 +113,7 @@ public partial class EngagementTypesClient
     /// <summary>
     /// Returns a list of `RemoteFieldClass` objects.
     /// </summary>
-    private async Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedRemoteFieldClassList> RemoteFieldClassesListInternalAsync(
         EngagementTypesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -196,9 +194,24 @@ public partial class EngagementTypesClient
     /// Returns a list of `EngagementType` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.EngagementTypes.ListAsync(new EngagementTypesListRequest());
+    /// await client.Crm.EngagementTypes.ListAsync(
+    ///     new EngagementTypesListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<EngagementType>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<EngagementType>> ListAsync(
         EngagementTypesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -223,8 +236,8 @@ public partial class EngagementTypesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -235,9 +248,17 @@ public partial class EngagementTypesClient
     /// Returns an `EngagementType` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Crm.EngagementTypes.RetrieveAsync("id", new EngagementTypesRetrieveRequest());
+    /// await client.Crm.EngagementTypes.RetrieveAsync(
+    ///     "id",
+    ///     new EngagementTypesRetrieveRequest
+    ///     {
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<EngagementType> RetrieveAsync(
+    public async System.Threading.Tasks.Task<EngagementType> RetrieveAsync(
         string id,
         EngagementTypesRetrieveRequest request,
         RequestOptions? options = null,
@@ -303,10 +324,20 @@ public partial class EngagementTypesClient
     /// </summary>
     /// <example><code>
     /// await client.Crm.EngagementTypes.RemoteFieldClassesListAsync(
-    ///     new EngagementTypesRemoteFieldClassesListRequest()
+    ///     new EngagementTypesRemoteFieldClassesListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeRemoteFields = true,
+    ///         IncludeShellData = true,
+    ///         IsCommonModelField = true,
+    ///         IsCustom = true,
+    ///         PageSize = 1,
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
+    public async System.Threading.Tasks.Task<Pager<RemoteFieldClass>> RemoteFieldClassesListAsync(
         EngagementTypesRemoteFieldClassesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -331,8 +362,8 @@ public partial class EngagementTypesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);

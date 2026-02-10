@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Accounting;
@@ -17,7 +15,7 @@ public partial class PaymentTermsClient
     /// <summary>
     /// Returns a list of `PaymentTerm` objects.
     /// </summary>
-    private async Task<PaginatedPaymentTermList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedPaymentTermList> ListInternalAsync(
         PaymentTermsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -85,9 +83,18 @@ public partial class PaymentTermsClient
     /// Returns a list of `PaymentTerm` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.PaymentTerms.ListAsync(new PaymentTermsListRequest());
+    /// await client.Accounting.PaymentTerms.ListAsync(
+    ///     new PaymentTermsListRequest
+    ///     {
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         PageSize = 1,
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<PaymentTerm>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<PaymentTerm>> ListAsync(
         PaymentTermsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -112,8 +119,8 @@ public partial class PaymentTermsClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -124,9 +131,12 @@ public partial class PaymentTermsClient
     /// Returns a `PaymentTerm` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Accounting.PaymentTerms.RetrieveAsync("id", new PaymentTermsRetrieveRequest());
+    /// await client.Accounting.PaymentTerms.RetrieveAsync(
+    ///     "id",
+    ///     new PaymentTermsRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<PaymentTerm> RetrieveAsync(
+    public async System.Threading.Tasks.Task<PaymentTerm> RetrieveAsync(
         string id,
         PaymentTermsRetrieveRequest request,
         RequestOptions? options = null,

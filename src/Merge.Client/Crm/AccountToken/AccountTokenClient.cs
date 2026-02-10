@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Crm;
@@ -20,7 +18,7 @@ public partial class AccountTokenClient
     /// <example><code>
     /// await client.Crm.AccountToken.RetrieveAsync("public_token");
     /// </code></example>
-    public async Task<AccountToken> RetrieveAsync(
+    public async System.Threading.Tasks.Task<AccountToken> RetrieveAsync(
         string publicToken,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

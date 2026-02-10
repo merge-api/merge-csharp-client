@@ -1,6 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using Merge.Client.Core;
 
 namespace Merge.Client.Ats;
@@ -17,7 +15,7 @@ public partial class JobInterviewStagesClient
     /// <summary>
     /// Returns a list of `JobInterviewStage` objects.
     /// </summary>
-    private async Task<PaginatedJobInterviewStageList> ListInternalAsync(
+    private async System.Threading.Tasks.Task<PaginatedJobInterviewStageList> ListInternalAsync(
         JobInterviewStagesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -115,9 +113,24 @@ public partial class JobInterviewStagesClient
     /// Returns a list of `JobInterviewStage` objects.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.JobInterviewStages.ListAsync(new JobInterviewStagesListRequest());
+    /// await client.Ats.JobInterviewStages.ListAsync(
+    ///     new JobInterviewStagesListRequest
+    ///     {
+    ///         CreatedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         CreatedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Cursor = "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+    ///         IncludeDeletedData = true,
+    ///         IncludeRemoteData = true,
+    ///         IncludeShellData = true,
+    ///         JobId = "job_id",
+    ///         ModifiedAfter = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         ModifiedBefore = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         PageSize = 1,
+    ///         RemoteId = "remote_id",
+    ///     }
+    /// );
     /// </code></example>
-    public async Task<Pager<JobInterviewStage>> ListAsync(
+    public async System.Threading.Tasks.Task<Pager<JobInterviewStage>> ListAsync(
         JobInterviewStagesListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -142,8 +155,8 @@ public partial class JobInterviewStagesClient
                 {
                     request.Cursor = cursor;
                 },
-                response => response?.Next,
-                response => response?.Results?.ToList(),
+                response => response.Next,
+                response => response.Results?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -154,9 +167,12 @@ public partial class JobInterviewStagesClient
     /// Returns a `JobInterviewStage` object with the given `id`.
     /// </summary>
     /// <example><code>
-    /// await client.Ats.JobInterviewStages.RetrieveAsync("id", new JobInterviewStagesRetrieveRequest());
+    /// await client.Ats.JobInterviewStages.RetrieveAsync(
+    ///     "id",
+    ///     new JobInterviewStagesRetrieveRequest { IncludeRemoteData = true, IncludeShellData = true }
+    /// );
     /// </code></example>
-    public async Task<JobInterviewStage> RetrieveAsync(
+    public async System.Threading.Tasks.Task<JobInterviewStage> RetrieveAsync(
         string id,
         JobInterviewStagesRetrieveRequest request,
         RequestOptions? options = null,
